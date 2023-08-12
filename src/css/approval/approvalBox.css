@@ -1,0 +1,155 @@
+
+.apv-title{
+    display: flex;
+    margin: 10px 10px 30px 30px;
+    font-size: 40px;
+}
+
+.apv-topmenu{
+    display: flex;
+    width: 1520px;
+    height: 50px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.apv-topmenu-ul{
+    display: flex;
+    text-align: center; 
+}
+
+.apv-topmenu-ul li{
+    display: flex;
+    width: 304px;
+    height: 80px;
+    /* border-radius: 6px; */
+    background: #10479A;
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    justify-content: center;
+    align-items: center;
+}
+
+.apv-topmenu-ul li:hover{
+    background: #FFC338;
+    color: #000;
+    font-weight: 600;
+}
+
+/* 수신함 */
+.apv-topmenu-r-ul{
+    display: flex;
+    text-align: center; 
+}
+
+.apv-topmenu-r-ul li{
+    display: flex;
+    width: 380px;
+    height: 80px;
+    /* border-radius: 6px; */
+    background: #10479A;
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    justify-content: center;
+    align-items: center;
+}
+
+.apv-topmenu-r-ul li:hover{
+    background: #FFC338;
+    color: #000;
+    font-weight: 600;
+}
+
+/* 결재함 결과 테이블 */
+.apv-boxresult-table{
+    border-collapse: collapse;
+    margin: 30px ;
+    width: 1520px;
+    height: 820px;
+    border: #7B7B7B solid 1px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.apv-boxresult-table th{
+    height: 40px;
+    background-color: #EEE;
+    border: #7B7B7B solid 1px;
+}
+
+.apv-boxresult-table th.column1{
+    width: 300px;
+} 
+.apv-boxresult-table th.column2{
+    width: 620px;
+}
+.apv-boxresult-table th.column3{
+    width: 300px; 
+}
+.apv-boxresult-table th.column4{
+    width: 300px;
+}
+.apv-boxresult-table th.column11{
+    width: 280px;
+}
+.apv-boxresult-table th.column12{
+    width: 480px;
+}
+.apv-boxresult-table th.column13{
+    width: 200px;
+}
+.apv-boxresult-table th.column14{
+    width: 280px;
+}
+.apv-boxresult-table th.column15{
+    width: 280px;
+}
+
+.apv-boxresult-table td{
+    height: 25px;
+    flex-direction: column;
+    justify-content: center;
+    border: #7B7B7B solid 1px;
+}
+
+/* 페이징 */
+.paging{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.paging>span{
+    width: 34px;
+    height: 34px;
+    color: #FFF;
+    background: #10479A;
+    text-align: center;
+    font-size: 24px;
+    text-align: center;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.paging>span:hover{
+    color: #000;
+    background: #FFC338;
+}
+
+
+footer{
+    margin: 50px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    }
