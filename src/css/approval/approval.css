@@ -10,6 +10,7 @@ body {
 section {
     display: flex;
     width: 1840px;
+    font-size: 20px;
 
 }
 .container{
@@ -19,19 +20,19 @@ section {
 }
 
 /* 왼쪽 메뉴바 */
-.leftmenu{
+.leftMenu{
     display: flex;
 }
 
-/* 왼쪽 아이콘 메뉴바 */
-.leftmenu1{
+/* 왼쪽 아이콘 메뉴바 */ 
+.leftMenu1{
     background: #10479A;
     width: 80px;
     height: 1000px;
 }
 
 /* 왼쪽 카테고리 메뉴바*/
-.leftmenu2{
+.leftMenu2{
     height: 1000px;
     border-color: #000;
     border-right-style: solid;
@@ -40,20 +41,20 @@ section {
     border-bottom-width: 1px;
 }
 
-.mainlogo>img{
+.mainLogo>img{
     margin: 20px 0px 34px 26px;
     width: 205px;
     height: 36px;
 }
 
-.maintitle{
+.mainTitle{
     color: #000;
     text-align: center;
     font-size: 40px;
     margin-bottom: 60px;
 }
 
-.apv-navibox{
+.apvNaviBox{
     width: 247px;
     height: 768px;
     padding: 12px;
@@ -61,7 +62,7 @@ section {
     box-sizing: border-box
 }
 
-.apv-navibox-top{
+.apvNaviBoxTop{
     display: flex;
     width: 197px;
     height: 50px;
@@ -76,12 +77,12 @@ section {
     font-size: 24px;
 }
 
-.apv-navibox-ul li:hover{
+.apvNaviBoxUl li:hover{
     background-color: #EEE;
     font-weight: 600;
 }
 
-.apv-navibox-maintitle{
+.apvNaviBoxMainTitle{
     display: flex;
     width: 197px;
     height: 34px;
@@ -95,13 +96,13 @@ section {
     font-size: 20px;
 }
 
-.apv-navibox-emp{
+.apvNaviBoxEmp{
     height: 10px;
 }
-.apv-navibox-ul{
+.apvNaviBoxUl{
     padding: 0;
 }
-.apv-navibox-ul>li{
+.apvNaviBoxUl>li{
     display: flex;
     width: 197px;
     height: 26px;
@@ -114,11 +115,11 @@ section {
 
 /* 전자결재 메인 */
 
-.apv-mainbox{
+.apvMain{
     display:inline-flex;
 }
 
-.apv-maintoday{
+.apvMainToday{
     display: flex;
     border-collapse: collapse;
     margin: 30px;
@@ -128,7 +129,7 @@ section {
     height: auto;
 }
 
-.apv-maintoday th{
+.apvMainToday th{
     background: #FFC338;
     width: 400px;
     height: 44px;
@@ -136,33 +137,33 @@ section {
     border-bottom: #10479A solid 4px;
     text-align: center;
     font-size: 24px;
-}
+} 
 
-.apv-maintoday td{
+.apvMainToday td{
     width: 200px;
     height: 53px;
     text-align: center;
     font-size: 24px;
 }
-.apv-maintoday .today1{
+.apvMainToday .today1{
     border-right: #10479A solid 4px;
 }
 
-.apv-mainbox1{
+.apvMainBox{
     width: 900px;
     height: 160px;
     margin-left: 200px;
 }
 
-.apv-mainbox1>span{
+.apvMainBox>span{
     border: solid 1px ;
 }
 
-.apv-mainbox1-rightbox{
+.apvMainBoxRightBox{
     display: flex;
 }
 
-.apv-mainbox1-right{
+.apvMainBoxRight{
     display: flex;
     flex-direction: column;
     margin: 30px 10px;
@@ -175,7 +176,7 @@ section {
     align-items: flex-start;
 }
 
-.apv-mainbox1-right.apv-mainbox1-right .row1{
+.apvMainBoxRight.apvMainBoxRight .row1{
     text-align:center;
     justify-content: center;
     align-items: center;
@@ -186,7 +187,7 @@ section {
     font-weight: 500;
     border-bottom: 2px solid #10479A ;
 }
-.apv-mainbox1-right.apv-mainbox1-right .row2{
+.apvMainBoxRight.apvMainBoxRight .row2{
     text-align:center;
     justify-content: center;
     align-items: center;
@@ -196,16 +197,16 @@ section {
     font-size: 24px;
 }
 
-.apv-mainlist{
+.apvMainList{
     margin: 100px 30px 30px 30px;
     display:inline-flex;
 }
 
-.apv-mainlist-my{
+.apvMainListMy{
     margin-right: 200px;   
 }
 
-.apv-mainlist-l-title{
+.apvMainListLTitle{
     display: flex;
     width: 300px;
     height: 50px;
@@ -222,11 +223,11 @@ section {
     font-weight: 600;
 }
 
-.apv-mainlist-rm-list{
+.apvMainListRmList{
     display:inline-flex;
 }
 
-.apv-mainlist-mylist>div {
+.apvMainListMyList>div {
     flex-direction: column;
     display: flex;
     width: 300px;
@@ -239,11 +240,11 @@ section {
     border-bottom: none;    
     list-style-type:none;
 }
-.apv-mainlist-mylist > div:last-child {
+.apvMainListMyList > div:last-child {
     border-bottom: 1px solid #7B7B7B;    
 }
 
-.apv-mainlist-r-title{
+.apvMainListRTitle{
     display: flex;
     width: auto;
     height: 50px;
@@ -260,15 +261,15 @@ section {
     margin-bottom: 40px;
     }
 
-.apv-mainlist-rm-list{
+.apvMainListRmList{
     display:inline-flex;
 }
 
-.apv-mainlist-r-list-emp{
+.apvMainListRListEmp{
     width: 50px;
 }
 
-.apv-mainlist-r-list .listtitle{
+.apvMainListRList .listTitle{
     flex-direction: column;
     display: flex;
     width: 300px;
@@ -283,7 +284,7 @@ section {
 
 }
 
-.apv-mainlist-r-list > div {
+.apvMainListRList > div {
     flex-direction: column;
     display: flex;
     width: 300px;
@@ -297,12 +298,12 @@ section {
     list-style-type:none;
     }
 
-.apv-mainlist-r-list > div:last-child {
+.apvMainListRList > div:last-child {
     border-bottom: 1px solid #7B7B7B;
     }
 
     /* 결재 상단바*/
-.apv-topbar{
+.apvTopBar{
     display: flex;
     width: auto;
     height: 55px;
@@ -310,11 +311,11 @@ section {
     align-items: center;
 }
 
-.apv-topbar>div{
+.apvTopBar>div{
     margin-left: 50px;
 }
 
-.apv-topbar>div>button{
+.apvTopBar>div>button{
     height: 40px;
     margin-right: 20px;
     padding: 0px 12px;
@@ -323,7 +324,7 @@ section {
     border: 0.5px solid #7B7B7B;
 }
 
-.apv-topbar>div>button.summit{
+.apvTopBar>div>button.summit{
     background: #FFC338;
 }
 
@@ -344,7 +345,7 @@ section {
 }
 
 /* 결재라인 */
-.apv-apvline{
+.apvApvLine{
     float: right;
     margin-right: 20px;
     width: 600px;
@@ -354,7 +355,7 @@ section {
     align-items: center;
     justify-content: flex-end;
 }
-.apv-apvlinebox{
+.apvApvLineBox{
     width: 150px;
     text-align:center;
     justify-content: center;
@@ -362,7 +363,7 @@ section {
     flex-direction: column;
 }
 
-.apv-apvlinebox .row1 {
+.apvApvLineBox .row1 {
     display: flex;
     height: 30px;
     background: #EEEEEE;
@@ -372,7 +373,7 @@ section {
     justify-content: center;
     align-items: center;
 }
-.apv-apvlinebox .row2 {
+.apvApvLineBox .row2 {
     display: flex;
     height: 115px;
     text-align: center;
@@ -381,7 +382,7 @@ section {
     border-right: 1px solid #7B7B7B;
     border-left: 1px solid #7B7B7B;
 }
-.apv-apvlinebox .row3{
+.apvApvLineBox .row3{
     display: flex;
     height: 30px;
     background: #EEEEEE;
@@ -391,7 +392,7 @@ section {
     border: 1px solid #7B7B7B;
 }
 
-.apv-apvlinebox .row4, .row7, .row10 {
+.apvApvLineBox .row4, .row7, .row10 {
     display: flex;
     height: 30px;
     background: #EEEEEE;
@@ -403,7 +404,7 @@ section {
     justify-content: center;
     align-items: center;
 }
-.apv-apvlinebox .row5, .row8, .row11{
+.apvApvLineBox .row5, .row8, .row11{
     display: flex;
     height: 115px;
     text-align: center;
@@ -411,7 +412,7 @@ section {
     justify-content: center;
     border-right: 1px solid #7B7B7B;
 }
-.apv-apvlinebox .row6, .row9, .row12{
+.apvApvLineBox .row6, .row9, .row12{
     display: flex;
     height: 30px;
     background: #EEEEEE;

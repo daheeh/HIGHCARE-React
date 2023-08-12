@@ -1,7 +1,7 @@
 import React from 'react';
-import ApvMenu from './apvMenuCopy';
-import ApvSummitBar from './apvSmmitbarCopy';
-import ApvSummitLine from './apvSummitlineCopy'; 
+import ApvMenu from './apvMenu';
+import ApvSummitBar from './apvSmmitbar';
+import ApvSummitLine from './apvSummitline'; 
 import Footer from '../Footer';
 import '../css/approval/approvalBiz.css';
 import '../css/approval/approval.css';

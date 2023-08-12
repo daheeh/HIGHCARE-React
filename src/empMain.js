@@ -7,7 +7,7 @@ function AppLayout({ children }) {
         <div>
             <nav>
                 <p>전자결재</p>
-                <Link to="/approval/mainpage">Electronic payment main</Link>
+                <Link to="/approval/mainpage">전자결재 메인페이지</Link>
             </nav>
             <main>
                 {children}

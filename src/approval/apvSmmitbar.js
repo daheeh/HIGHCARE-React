@@ -2,7 +2,7 @@ import React from 'react';
 
 function ApvSummitBar() {
 	return (
-	<div className="apv-topbar">
+	<div className="apvTopBar">
 		<div>
 			<button class="summit">제출</button>
 			<button>파일첨부</button>
