@@ -1,29 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import ApvMain from './approval/mainpage';
+import { Link } from 'react-router-dom';
 
-function AppLayout({ children }) {
-    return (
-        <div>
-            <nav>
-                <p>전자결재</p>
-                <Link to="/approval/mainpage">전자결재 메인페이지</Link>
-            </nav>
-            <main>
-                {children}
-            </main>
-        </div>
-    );
-}
 
 function EmpMain() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<AppLayout />} />
-                <Route path="/approval/mainpage" element={<ApvMain />} />
-            </Routes>
-        </Router>
+
+        <div>
+        <nav>
+            <p>전자결재</p>
+            <Link to="/approval/mainpage">전자결재 메인페이지</Link>
+        </nav>
+    </div>
     );
 }
 

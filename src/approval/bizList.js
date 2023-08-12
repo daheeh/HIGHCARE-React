@@ -1,15 +1,16 @@
 import React from 'react';
-import '../css/approval/approval.css';
+import { Link } from 'react-router-dom';
+
 
 function BizList() {
     return (
         <div className="apvMainListRList">
             <div className="listTitle">업무</div>
-            <div><a href="/approval/biz1">기안서</a></div> 
-            <div><a href="/HTML/approval/biz2.html">회의록</a></div> 
-            <div><a href="/HTML/approval/biz3.html">출장신청서</a></div> 
-            <div><a href="/HTML/approval/biz4.html">공문</a></div> 
-            <div><a href="/HTML/approval/biz5.html">custom</a></div> 
+            <div><Link to="/approval/biz1">기안서</Link></div> 
+            <div><Link to="/approval/biz2">회의록</Link></div> 
+            <div><Link to="/approval/biz3">출장신청서</Link></div> 
+            <div><Link to="/approval/biz4">공문</Link></div> 
+            <div><Link to="/approval/biz5">custom</Link></div> 
         </div>
 
     );
