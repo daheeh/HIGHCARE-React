@@ -9,21 +9,12 @@ import './App.css';
 function App() {
   return (
     <Router>
-    <div className="App">
-          <header className="App-header">
-            <EmpMain />
-          </header>
-        </div>
-    <div>
-      <nav>
-      </nav>
       <Routes>
+        <Route path="/" element={<EmpMain />} />
         <Route path="/approval/mainpage" element={<ApvMain />} />
         <Route path="/approval" element={<BizList />} />
         <Route path="/approval/biz1" element={<Biz1 />} />
-
       </Routes>
-    </div>
     </Router>
   );
 }
