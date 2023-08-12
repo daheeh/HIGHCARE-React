@@ -1,12 +1,12 @@
 
-import ApvMain from './approval/biz1Copy';
+import EmpMain from './empMain';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ApvMain />
+        <EmpMain />
       </header>
     </div>
   );

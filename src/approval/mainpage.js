@@ -17,7 +17,7 @@ function ApvMain() {
                         <div className="apvMainbox">
                             <table className="apvMaintoday">
                                 <tr>
-                                    <th colspan="2">TODAY</th>
+                                    <th colSpan="2">TODAY</th>
                                 </tr>
                                 <tr> 
                                     <td className="today1">결재진행중</td>
