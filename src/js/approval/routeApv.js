@@ -15,6 +15,13 @@ import Exp4 from './exp4';
 import Exp5 from './exp5';
 import Exp6 from './exp6';
 import Exp7 from './exp7';
+import Hrm1 from './hrm1';
+import Hrm2 from './hrm2';
+import Hrm3 from './hrm3';
+import Hrm4 from './hrm4';
+import Hrm5 from './hrm5';
+import Hrm6 from './hrm6';
+import Hrm7 from './hrm7';
 import ReceiveBox from './receivebox';
 import WriteBox from './writebox';
 
@@ -43,6 +50,15 @@ function RouteApv() {
         <Route path="/approval/exp5" element={<Exp5 />} />
         <Route path="/approval/exp6" element={<Exp6 />} />
         <Route path="/approval/exp7" element={<Exp7 />} />
+
+        <Route path="/approval/hrm1" element={<Hrm1 />} />
+        <Route path="/approval/hrm2" element={<Hrm2 />} />
+        <Route path="/approval/hrm3" element={<Hrm3 />} />
+        <Route path="/approval/hrm4" element={<Hrm4 />} />
+        <Route path="/approval/hrm5" element={<Hrm5 />} />
+        <Route path="/approval/hrm6" element={<Hrm6 />} />
+        <Route path="/approval/hrm7" element={<Hrm7 />} />
+
       </Routes>
     </Router>
   );
