@@ -17,19 +17,14 @@ function ApvMain() {
                     <ApvMenu />
                     <div>
                         <div className="apvMain">
-                            <table className="apvMainToday">
-                                <tr>
-                                    <th colSpan="2">TODAY</th>
-                                </tr>
-                                <tr> 
-                                    <td className="today1">결재진행중</td>
-                                    <td>긴급</td>
-                                </tr>
-                                <tr>
-                                    <td className="today1">100건</td>
-                                    <td>50건</td>
-                                </tr>
-                            </table>
+                            <div className="apvMainToday">
+                                <div className="header">TODAY</div>
+                                <div className="cell1">결재진행중</div>
+                                <div className="cell2">긴급</div>
+                                <div className="cell1">100건</div>
+                                <div className="cell2">50건</div>
+                            </div>
+
                             <div className="apvMainBox">
                                 <div className="apvMainBoxRightBox">
                                     <div className="apvMainBoxRight">
