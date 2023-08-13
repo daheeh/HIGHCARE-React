@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ApvMenu() {
 	return (
@@ -10,13 +11,15 @@ function ApvMenu() {
 						<img src="/img/highcareLogo.png" alt="High Care Logo" />
 					</div>
 					<div class="mainTitle">
-						<a href="/HTML/approval/mainpage.html">전자결재</a></div>
+						<Link to="/approval/mainpage">전자결재</Link>
+					</div>
 					<div class="apvNaviBox">
 						<div class="apvNaviBoxTop">
-							<a href="/HTML/approval/biz1.html">작성하기</a></div>
+							<Link to="/approval/biz1">작성하기</Link>
+						</div>
 						<div class="apvNaviBoxEmp"></div>
 						<div class="apvNaviBoxMainTitle">
-							<a href="/HTML/approval/writeBox.html">결재함</a>
+							<Link to="/approval/WriteBox">결재함</Link>
 						</div>
 						<ul class="apvNaviBoxUl">   
 							<li>결재 예정</li>
@@ -27,7 +30,8 @@ function ApvMenu() {
 						</ul>
 						<div class="apvNaviBoxEmp"></div>
 						<div class="apvNaviBoxMainTitle">
-							<a href="/HTML/approval/receiveBox.html">수신함</a></div>
+							<Link to="/approval/ReceiveBox">수신함</Link>
+						</div>
 						<div class="apvNaviBoxEmp"></div>
 						<div class="apvNaviBoxMainTitle">MY 결재 양식</div>
 						<ul class="apvNaviBoxUl">    

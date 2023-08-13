@@ -1,0 +1,118 @@
+import React from 'react';
+import ApvMenu from './apvMenu';
+import ApvSummitBar from './apvSmmitbar';
+import ApvSummitLine from './apvSummitline'; 
+import Footer from '../../Footer';
+import '../../css/approval/approvalExp.css';
+import '../../css/approval/approval.css';
+
+function Exp2() {
+    return (
+        <html lang="ko">
+            <head>
+                <title>지출결의서(다건)</title>
+            </head>
+            <body>
+                <section>
+                    <ApvMenu />
+                    <div>
+                        <ApvSummitBar />
+                        <div className="container">
+                            <div className="apv-apvtitle">지출결의서(다건)</div>
+                            <ApvSummitLine />
+							<div class="apv-content">
+								<div class="apv-content-title-exp1">
+									<div class="column1">지급요청일자</div>
+									<div class="column2"><input class="input1" type="date" placeholder="날짜 입력"/></div>
+									<div class="column3">합계</div>
+									<div class="column4">50,000원</div>
+								</div>
+								<div class="apv-content-detail2">- 1 -</div>
+								<div class="apv-content-detail-exp1-title">
+									<div class="column11">지급처</div>
+									<div class="column12">내역</div>
+									<div class="column13">금액</div>
+									<div class="column14">적요</div>
+								</div>
+								<div class="apv-content-detail-exp1-content">
+									<div class="apv-content-detail-exp1-list">
+										<div class="column21"><input class="input1"/></div>
+										<div class="column22"><input class="input1"/></div>
+										<div class="column23"><input class="input1" type="number"/></div>
+										<div class="column24"><input class="input1"/></div>
+									</div>
+								</div>
+								<div class="apv-content-title-exp1-2">
+									<div class="column41">예금주</div>
+									<div class="column42"><input class="input1" placeholder="예금주 입력"/></div>
+									<div class="column43">은행</div>
+									<div class="column44"><input class="input1" placeholder="은행 입력"/></div>
+								</div>
+								<div class="apv-content-title-exp1-3">
+									<div class="column45">계좌번호</div>
+									<div class="column46"><input class="input1" placeholder="계좌번호 입력"/></div>
+								</div>
+								<div class="apv-content-detail2">- 2 -</div>
+								<div class="apv-content-detail-exp1-title">
+									<div class="column11">지급처</div>
+									<div class="column12">내역</div>
+									<div class="column13">금액</div>
+									<div class="column14">적요</div>
+								</div>
+								<div class="apv-content-detail-exp1-content">
+									<div class="apv-content-detail-exp1-list">
+										<div class="column21"><input class="input1"/></div>
+										<div class="column22"><input class="input1"/></div>
+										<div class="column23"><input class="input1" type="number"/></div>
+										<div class="column24"><input class="input1"/></div>
+									</div>
+								</div>
+								<div class="apv-content-title-exp1-2">
+									<div class="column41">예금주</div>
+									<div class="column42"><input class="input1" placeholder="예금주 입력"/></div>
+									<div class="column43">은행</div>
+									<div class="column44"><input class="input1" placeholder="은행 입력"/></div>
+								</div>
+								<div class="apv-content-title-exp1-3">
+									<div class="column45">계좌번호</div>
+									<div class="column46"><input class="input1" placeholder="계좌번호 입력"/></div>
+								</div>
+								<div class="apv-content-detail2">- 3 -</div>
+								<div class="apv-content-detail-exp1-title">
+									<div class="column11">지급처</div>
+									<div class="column12">내역</div>
+									<div class="column13">금액</div>
+									<div class="column14">적요</div>
+								</div>
+								<div class="apv-content-detail-exp1-content">
+									<div class="apv-content-detail-exp1-list">
+										<div class="column21"><input class="input1"/></div>
+										<div class="column22"><input class="input1"/></div>
+										<div class="column23"><input class="input1" type="number"/></div>
+										<div class="column24"><input class="input1"/></div>
+									</div>
+								</div>
+								<div class="apv-content-title-exp1-2">
+									<div class="column41">예금주</div>
+									<div class="column42"><input class="input1" placeholder="예금주 입력"/></div>
+									<div class="column43">은행</div>
+									<div class="column44"><input class="input1" placeholder="은행 입력"/></div>
+								</div>
+								<div class="apv-content-title-exp1-3">
+									<div class="column45">계좌번호</div>
+									<div class="column46"><input class="input1" placeholder="계좌번호 입력"/></div>
+								</div>
+								
+
+								<div class="apv-content-detail">위와 같이 지급을 요청합니다.</div>
+							</div>
+						</div>
+					</div>
+				</section>
+                <Footer />
+            </body>
+        </html>
+    );
+}
+
+export default Exp2;
