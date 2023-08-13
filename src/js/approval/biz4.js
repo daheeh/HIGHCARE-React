@@ -2,11 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
-import ApvSummitLine from './apvSummitline'; 
-import Biz4Offcial from './biz4Offcial'; 
-import Footer from '../Footer';
-import '../css/approval/approvalBiz.css';
-import '../css/approval/approval.css';
+import Footer from '../../Footer';
+import '../../css/approval/approvalBiz.css';
+import '../../css/approval/approval.css';
 
 function Biz4() {
     return (

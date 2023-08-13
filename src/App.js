@@ -1,13 +1,13 @@
 
 import EmpMain from './empMain';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ApvMain from './approval/mainpage';
-import Biz1 from './approval/biz1';
-import Biz2 from './approval/biz2';
-import Biz3 from './approval/biz3';
-import Biz4 from './approval/biz4';
-import Biz4Offcial from './approval/biz4Offcial';
-import Biz5 from './approval/biz5';
+import ApvMain from './js/approval/mainpage';
+import Biz1 from './js/approval/biz1';
+import Biz2 from './js/approval/biz2';
+import Biz3 from './js/approval/biz3';
+import Biz4 from './js/approval/biz4';
+import Biz4Offcial from './js/approval/biz4Offcial';
+import Biz5 from './js/approval/biz5';
 import './App.css';
 
 function App() {

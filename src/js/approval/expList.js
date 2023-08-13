@@ -1,5 +1,4 @@
 import React from 'react';
-import '../css/approval/approval.css';
 
 function ExpList() {
     return (

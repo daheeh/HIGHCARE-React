@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 function ApvMenu() {
 	return (
 		<section>
@@ -8,7 +7,7 @@ function ApvMenu() {
 				<div class="leftMenu1"></div>
 				<div class="leftMenu2">
 					<div class="mainLogo">
-						<img src="/img/HIGH CARE.png"/>
+						<img src="/img/highcareLogo.png" alt="High Care Logo" />
 					</div>
 					<div class="mainTitle">
 						<a href="/HTML/approval/mainpage.html">전자결재</a></div>
