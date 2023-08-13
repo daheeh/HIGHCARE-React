@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Routes, Route, Link } from 'react-router-dom';
 import ApvMain from './approval/mainpage';
 
 function AppLayout({ children }) {
@@ -7,7 +7,7 @@ function AppLayout({ children }) {
         <div>
             <nav>
                 <p>전자결재</p>
-                <Link to="/approval/mainpage">Electronic payment main</Link>
+                <Link to="/approval">Electronic payment main</Link>
             </nav>
             <main>
                 {children}
@@ -18,12 +18,12 @@ function AppLayout({ children }) {
 
 function EmpMain() {
     return (
-        <Router>
+        // <Router>
             <Routes>
                 <Route path="/" element={<AppLayout />} />
-                <Route path="/approval/mainpage" element={<ApvMain />} />
+                <Route path="mainpage" element={<ApvMain />} />
             </Routes>
-        </Router>
+        // </Router>
     );
 }
 

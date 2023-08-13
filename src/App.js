@@ -1,14 +1,26 @@
 
 import EmpMain from './empMain';
 import './App.css';
+import AdminTest from './admin/admin-test';
+import { Route, Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <EmpMain />
-      </header>
-    </div>
+    <Router>
+      <div className="">
+        <header className="">
+          
+          <EmpMain />
+          <AdminTest/>
+        </header>
+        <Routes>
+          <Route path="/*" element={<EmpMain />} />
+          <Route path="/admin/*" element={<AdminTest />} />
+        </Routes>
+      </div>
+    </Router>
+
+
   );
 }
 
