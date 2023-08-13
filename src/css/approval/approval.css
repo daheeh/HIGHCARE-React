@@ -23,7 +23,7 @@ section {
     display: flex;
 }
 
-/* 왼쪽 아이콘 메뉴바 */
+/* 왼쪽 아이콘 메뉴바 */ 
 .leftmenu1{
     background: #10479A;
     width: 80px;
@@ -136,7 +136,7 @@ section {
     border-bottom: #10479A solid 4px;
     text-align: center;
     font-size: 24px;
-}
+} 
 
 .apv-maintoday td{
     width: 200px;
