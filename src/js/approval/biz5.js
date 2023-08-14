@@ -18,15 +18,15 @@ function Biz5() {
                     <div>
                         <ApvSummitBar />
                         <div className="container">
-						<div><input class="apv-apvtitle-custom" placeholder="양식 제목"/></div>
+						<div><input className="apv-apvtitle-custom" placeholder="양식 제목"/></div>
                             <ApvSummitLine />
-								<div class="apv-content">
-									<div class="apv-content-title">
-										<div class="column1">제목</div>
-										<div><input class="column2" placeholder="제목 입력"/></div>
+								<div className="apv-content">
+									<div className="apv-content-title">
+										<div className="column1">제목</div>
+										<div><input className="column2" placeholder="제목 입력"/></div>
 									</div>
-									<div class="apv-content-detail">상세내용</div>
-									<div class="apv-content-detail-coment2">  sodyd</div>
+									<div className="apv-content-detail">상세내용</div>
+									<div className="apv-content-detail-coment2">  sodyd</div>
 								</div>
 							</div>
 						</div>																	

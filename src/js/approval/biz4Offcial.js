@@ -11,12 +11,12 @@ function Biz4Offcial() {
             <body>
 			<section>
 				<div>
-					<div class="container">
+					<div className="container">
 						<div>
-							<div class="apv-apvtitle"><img src="/img/HIGH CARE.png"/></div>
-							<div class="apv-official-top">
-								<div class="apv-official1">(우) 12334 서울 종로구 인사동길 12 대일빌딩</div>
-								<div class="apv-official2">
+							<div className="apv-apvtitle"><img src="/img/HIGH CARE.png"/></div>
+							<div className="apv-official-top">
+								<div className="apv-official1">(우) 12334 서울 종로구 인사동길 12 대일빌딩</div>
+								<div className="apv-official2">
 									<div>담당자 : </div>
 									<div>김나경 </div>
 									<div>/ 전화 : </div>
@@ -29,28 +29,28 @@ function Biz4Offcial() {
 							</div>
 						</div>
 
-						<div class="apv-content">
-							<div class="apv-official-bottom">
-								<div class="column1">문서번호</div>
-								<div class="column2">123123123123</div>
+						<div className="apv-content">
+							<div className="apv-official-bottom">
+								<div className="column1">문서번호</div>
+								<div className="column2">123123123123</div>
 							</div>
-							<div class="apv-official-bottom">
-								<div class="column1">수신처</div>
-								<div class="column2"></div>
+							<div className="apv-official-bottom">
+								<div className="column1">수신처</div>
+								<div className="column2"></div>
 							</div>
-							<div class="apv-official-bottom">
-								<div class="column1">제목</div>
-								<div class="column2"></div>
+							<div className="apv-official-bottom">
+								<div className="column1">제목</div>
+								<div className="column2"></div>
 							</div>
-							<div class="apv-official-bottom2">
+							<div className="apv-official-bottom2">
 							</div>
-							<div class="apv-content-detail-coment"> sodyd</div>
-							<div class="apv-content-detail2">-아래-</div>
-							<div class="apv-content-detail-coment2">어쩌고저쩌고</div>
+							<div className="apv-content-detail-coment"> sodyd</div>
+							<div className="apv-content-detail2">-아래-</div>
+							<div className="apv-content-detail-coment2">어쩌고저쩌고</div>
 						</div>
-						<div class="highcare-stamp">
-							<div class="highcare-text">하이케어</div>
-							<div><img src="/img/HIGHCARE-stamp.png" alt="High Care" class="highcare-image"/></div>
+						<div className="highcare-stamp">
+							<div className="highcare-text">하이케어</div>
+							<div><img src="/img/HIGHCARE-stamp.png" alt="High Care" className="highcare-image"/></div>
 						</div>
 					</div>
 				</div>
