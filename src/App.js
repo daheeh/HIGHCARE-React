@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RouteApv from './js/approval/routeApv';
 import './App.css';
-import Manage from './js/commons/manage';
 import LeftNavibar from './js/commons/leftnavibar';
 import Footer from './Footer';
+import ManageApv from './js/managed/pages/ManageApv';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <LeftNavibar />
             <div style={{ flex: 1 }}>
               <RouteApv />
-              <Manage />
+              <ManageApv />
             </div>
           </div>
           <div style={{ display: 'flex'}}>

@@ -1,0 +1,78 @@
+
+
+.mng-mem-crud-btn {
+    display: flex;
+    font-size: 16px;    
+    width: 300px;
+    height: 60px;
+}
+
+.mng-mem-crud-btn > button {
+    font-size: 16px !important;
+    width: 80px ;
+    height: 30px;
+}
+
+
+.mng-user-list-category, .mng-user-list-category-2 {
+    display: flex;
+    font-size: 14px;
+    width: 1400px;
+    height: 40px;
+    margin-left: 20px;
+    text-align: center;
+    border-top: 1px lightgray solid;
+
+    
+}
+
+
+.mng-user-list-category div { 
+    width: 180px;    
+    align-self: center;
+
+    
+    
+}
+
+.mng-user-list-category select { 
+    
+    width: 80px;
+    text-align: center;
+}
+
+.mng-paging {
+    justify-content: center;
+}
+
+.mng-paging  button  {
+    background: none;
+
+    width: 30px;
+    height: 30px;
+    
+}
+
+.leftbtn {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/src/images/arrow-l.png");
+}
+
+.center {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.rightbtn {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/src/images/arrow-r.png");
+}
+
