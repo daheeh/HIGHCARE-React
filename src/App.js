@@ -1,9 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import RouteApv from './js/approval/routeApv';
-import './App.css';
 import LeftNavibar from './js/commons/leftnavibar';
 import Footer from './Footer';
-import ManageApv from './js/managed/pages/ManageApv';
+import ManageApv from './js/managed/features/ManageApv';
 
 function App() {
   return (

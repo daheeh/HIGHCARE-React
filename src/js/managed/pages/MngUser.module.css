@@ -1,20 +1,20 @@
 
 
-.mng-mem-crud-btn {
+.crudBtn {
     display: flex;
     font-size: 16px;    
     width: 300px;
     height: 60px;
 }
 
-.mng-mem-crud-btn > button {
+.crudBtn button {
     font-size: 16px !important;
     width: 80px ;
     height: 30px;
 }
 
 
-.mng-user-list-category, .mng-user-list-category-2 {
+.category {
     display: flex;
     font-size: 14px;
     width: 1400px;
@@ -27,7 +27,7 @@
 }
 
 
-.mng-user-list-category div { 
+.category div { 
     width: 180px;    
     align-self: center;
 
@@ -35,22 +35,21 @@
     
 }
 
-.mng-user-list-category select { 
+.category select { 
     
     width: 80px;
     text-align: center;
 }
 
-.mng-paging {
+.paging {
     justify-content: center;
 }
 
-.mng-paging  button  {
+.paging button  {
     background: none;
-
     width: 30px;
     height: 30px;
-    
+    margin: 20px 0px;
 }
 
 .leftbtn {
@@ -61,7 +60,7 @@
     background-image: url("/src/images/arrow-l.png");
 }
 
-.center {
+.centerbtn {
     width: 20px;
     height: 20px;
     background-size: contain;
@@ -75,4 +74,5 @@
     background-repeat: no-repeat;
     background-image: url("/src/images/arrow-r.png");
 }
+
 
