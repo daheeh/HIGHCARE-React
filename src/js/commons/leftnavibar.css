@@ -1,0 +1,47 @@
+
+.navibox {
+    text-align: -webkit-center;
+    width: 100px;
+    height: auto;
+    background-color: #10479A;
+
+}
+
+.navibox div {
+
+    margin: 40px 0px;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #10479A;
+
+}
+
+.navimenu-main{
+    background-image: url("/src/images/home-search-outline.png");
+}
+
+.navimenu-note{
+    background-image: url("/src/images/note.png");
+}
+
+.navimenu-pm{
+    background-image: url("/src/images/oragnization.png");
+}
+
+.navimenu-approval{
+    background-image: url("/src/images/approval.png");
+}
+
+.navimenu-mypage{
+    background-image: url("/src/images/men.png");
+}
+
+.navimenu-schedule{
+    background-image: url("/src/images/clock.png");
+}
+
+.navimenu-reservation{
+    background-image: url("/src/images/reserve.png");
+}
