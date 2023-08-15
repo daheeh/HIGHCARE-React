@@ -55,8 +55,8 @@ function MngUser(){
             <div>
 
             </div>
-            <div className={MngUserCss.paging}>
-                <div style={{justifyContent:'center', display:'flex'}}>                        
+            <div className={MngUserCss.paging} style={{marginLeft:500}}>
+                <div style={{justifyContent:'', display:'flex'}}>                        
                     <button>
                     <div className={MngUserCss.leftbtn}/>
                     </button>
@@ -68,7 +68,7 @@ function MngUser(){
                     </button>
                 </div>
             </div>
-                <div style={{justifyContent:'center', display:'flex', alignItems:'flex-end'}}>
+                <div style={{justifyContent:'', marginLeft:'400px', display:'flex', alignItems:'flex-end'}}>
                     <div>
                         <select style={{marginRight:10}}>
                             <option value="nameAndMail" selected>이름+이메일</option>

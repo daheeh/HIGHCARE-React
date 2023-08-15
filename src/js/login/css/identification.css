@@ -86,8 +86,7 @@ div[class*="flex"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-
+    cursor: pointer;
 } 
 
 .authtext-flex > div:hover {
@@ -151,6 +150,8 @@ div[class*="flex"] {
     background-color: white;
     color: #10479A;
     font-weight: bold;
+    cursor: pointer;
+
 }
 
 .authbutton:hover {
@@ -159,7 +160,7 @@ div[class*="flex"] {
 }
 
 .grid1{
-    width: 100px !important;
+    width: 140px !important;
     height: 30px;
     display: inline-block;
     margin-right: 10px; 
@@ -187,6 +188,12 @@ div[class*="flex"] {
     background-color: #10479A;
     color: white;
     border-radius: 6px;
+}
+
+.nextbtn:hover, .step2btn-1:hover, .step2btn-2:hover {
+    background-color: rgba(255, 195, 56, 1);
+    cursor: pointer;
+
 }
 
 

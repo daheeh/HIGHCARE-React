@@ -21,6 +21,13 @@
     font-size: 16px;
 }
 
+.searchbox button:hover {
+    width: 70px;
+    height: 30px;
+    font-size: 16px;
+    background-color:#FFC338;
+}
+
 .searchbox input, .searchbox select {
     width: 150px;
     height: 30px;

@@ -10,9 +10,8 @@ function ManageApv(){
 
     return (
 
-        <div>
+        <>
 
-            <Routes>
                 <Route path="/" element={<ManageTest />}/>
                 
                 <Route path="/login" element={<LoginPage />} />
@@ -20,15 +19,12 @@ function ManageApv(){
                 <Route path="/login/findaccount/step2" element={<Step2 />} />
                 <Route path="/login/findaccount/pass-reset" element={<Step2pass />} />
 
-            </Routes>
-            <Routes>
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/management/user" element={<MngUser />} />
                 <Route path="/admin/management/system/log" element={<MngLog />} />
                 
                 
-            </Routes>
-        </div>
+        </>
 
     )
 }

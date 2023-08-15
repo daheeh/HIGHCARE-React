@@ -77,7 +77,7 @@ function phoneAuth(){
         <div className="authbox"> 
             <div className="infobox">
                 <div>
-                    <div className="grid1">이 &nbsp; &nbsp; &nbsp; &nbsp;름</div>
+                    <div className="grid1">이름</div>
                     <input className="name" type="text"/>
                 </div>
                 <div className="info-flex">
@@ -102,7 +102,7 @@ function emailAuth(){
         <div className="authbox"> 
             <div className="infobox">
             <div>
-                <div className="grid1">이 &nbsp; &nbsp; &nbsp; &nbsp;름</div>
+                <div className="grid1">이름</div>
                 <input className="name" type="text"/>
             </div>
             <div className="info-flex">

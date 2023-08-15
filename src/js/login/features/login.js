@@ -11,10 +11,12 @@ function Login(){
             <div className="login-container">
                 <div className="input-group">
                     <div className="id-group">
-                        <input type="text" id="username" name="username" required />
+                        <input type="text" id="username" 
+                        name="username" placeholder="아이디를 입력하세요." required />
                     </div>
                     <div className="password-group">
-                        <input type="password" id="password" name="password" required />
+                        <input type="password" id="password" 
+                        name="password" placeholder="비밀번호를 입력하세요."required />
                     </div>
                 </div>
                 <div className="button-group">

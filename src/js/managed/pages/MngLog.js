@@ -14,7 +14,7 @@ function MngLog(){
             <div className={MngLogCss.title}>멤버 접근로그</div>
 
             <div className={MngLogCss.searchbox}>
-                <div style={{width:50, marginLeft:20, fontSize:18}}>이 름 :</div>
+                <div style={{width:80, marginLeft:20, fontSize:20}}>이 름 :</div>
                 <input type="search"/>
                 <button>검 색</button>
             </div>  
@@ -43,7 +43,7 @@ function MngLog(){
             </div>
 
             <div className={MngUserCss.paging}>
-                <div style={{justifyContent:'center', display:'flex', marginTop:30}}>                        
+                <div style={{justifyContent:'', marginLeft:'600px', display:'flex', marginTop:30}}>                        
                     <button>
                         <div className={MngUserCss.leftbtn}/>
                     </button>

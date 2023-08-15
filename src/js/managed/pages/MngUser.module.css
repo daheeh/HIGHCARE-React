@@ -1,4 +1,4 @@
-
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap'); */
 
 .crudBtn {
     display: flex;
@@ -17,7 +17,7 @@
 .category {
     display: flex;
     font-size: 14px;
-    width: 1400px;
+    width: 1200px;
     height: 40px;
     margin-left: 20px;
     text-align: center;

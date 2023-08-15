@@ -1,0 +1,6 @@
+.footerDiv {
+    /* border-top: solid 1px black; */
+    display: 'flex';
+    flex-direction: 'center';
+    margin-left: 60px;
+}
