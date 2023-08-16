@@ -4,6 +4,8 @@ import './App.css';
 import Manage from './js/commons/manage';
 import LeftNavibar from './js/commons/leftnavibar';
 import Footer from './Footer';
+import PmManage from './js/pm/pmmanage';
+import PmTest from './js/pm/pm-test';
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
             <LeftNavibar />
             <div style={{ flex: 1 }}>
               <RouteApv />
-              <Manage />
+              <PmManage />
             </div>
           </div>
           <div style={{ display: 'flex'}}>
