@@ -1,0 +1,65 @@
+.title{
+
+    text-align: center;
+    padding: 40px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.task-table {
+    border-collapse: collapse;
+    width: 1520px;
+    margin-top: 20px;
+    margin-left: 80px;
+}
+
+.task-table th, .task-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.task-table th  {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+
+/* 달력, 토글 아웃라인  */
+.input1, .categorystate, .workinput {
+    border: none;
+    outline: none;
+    text-align: center;
+
+
+}
+
+/* 신청버튼 */
+.submit-button button {
+    font-size: 16px;
+    padding: 12px 20px; 
+    background-color: #FFC338;
+    background-color: #10479A;
+    border: #ddd;
+    border-radius: 6px;
+    color:white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.submit-button {
+    text-align: right;
+    margin-right: 350px;
+}
+
+
+
+
+
+
+
+
+

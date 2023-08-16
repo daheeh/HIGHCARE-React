@@ -1,9 +1,5 @@
 import { useState } from "react";
-<<<<<<< HEAD:src/js/login/features/identification.js
-import "../css/identification.css";
-=======
 import "./identification.css"
->>>>>>> cfd678aa40a7a4add02346e811e8e5094f339f54:src/pages/login/identification.js
 import { Link } from "react-router-dom";
 
 function Identification(){
