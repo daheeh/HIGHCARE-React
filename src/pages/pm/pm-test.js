@@ -14,6 +14,7 @@ function PmTest(){
             <Link to="/pm/member-annual">개인 연차 조회</Link><br></br>
             <Link to="/pm/pm-resist">사원등록하기</Link><br></br>
             <Link to="/pm/work">근태 관리</Link><br></br>
+            <Link to="/pm/treeview">조직도</Link>
             </nav>
         </div>
     )

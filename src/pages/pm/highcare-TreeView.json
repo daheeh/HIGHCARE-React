@@ -1,0 +1,73 @@
+[
+    {
+        "id": 1,
+        "parent" : 0,
+        "droppable": true,
+        "text": "경영 지원 본부"
+    },
+    {
+        "id" : 2,
+        "parent" : 1,
+        "droppable": true,
+        "text": "기획팀"
+    },
+    {
+        "id" : 3,
+        "parent" : 1,
+        "text": "인사총무팀"
+    },
+    {
+        "id" : 4,
+        "parent" : 0,
+        "droppable": true,
+        "text": "보험 본부"
+    },
+    {
+        "id" : 5,
+        "parent" : 4,
+        "text": "보험 1팀"
+    },
+    {
+        "id" : 6,
+        "parent" : 4,
+        "text": "보험 2팀"
+    },
+    {
+        "id" : 7,
+        "parent" : 4,
+        "text": "보험 영업팀"
+    },
+    {
+        "id" : 8,
+        "parent" : 0,
+        "droppable":true,
+        "text": "재경 본부"
+    },
+    {
+        "id" : 9,
+        "parent" : 8,
+        "text": "재무 회계팀"
+    },
+    {
+        "id" : 10,
+        "parent" : 0,
+        "droppable":true,
+        "text": "정보시스템 본부"
+    },
+    {
+        "id" : 11,
+        "parent" : 10,
+        "text": "정보시스템 본부"
+    },
+    {
+        "id" : 12,
+        "parent" : 2,
+        "text": "조혜란 팀장"
+    },
+    {
+        "id" : 13,
+        "parent" : 2,
+        "text": "황다혜 부장"
+    }
+    
+]
