@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../css/identification.css"
+import "./identification.css"
 
 
 function Idcheck(){

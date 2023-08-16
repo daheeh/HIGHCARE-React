@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../css/identification.css"
+import "./identification.css"
 import { Link } from "react-router-dom";
 
 function Identification(){

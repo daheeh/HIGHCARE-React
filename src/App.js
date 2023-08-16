@@ -1,5 +1,4 @@
-import { BrowserRouter, Outlet, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import Layout from './js/layouts/Layout';
+import { BrowserRouter, Route, BrowserRouter as Routes} from 'react-router-dom';
 import ApvMain from './js/approval/mainpage';
 import Biz1 from './js/approval/biz1';
 import Biz2 from './js/approval/biz2';
@@ -24,14 +23,16 @@ import Hrm7 from './js/approval/hrm7';
 import ReceiveBox from './js/approval/receivebox';
 import WriteBox from './js/approval/writebox';
 
-import LoginPage from './js/login/pages/logins';
-import EmpMain from './empMain';
-import ManageTest from './js/managed/pages/mng-test';
-import { Step1, Step2, Step2pass } from './js/login/pages/findaccount';
-import AdminPage from './js/admin/AdminPage';
-import MngUser from './js/managed/pages/MngUser';
-import MngLog from './js/managed/pages/MngLog';
-import MainLayOut from './js/layouts/MainLayOut';
+
+import Layout from "./layouts/Layout";
+import MainLayOut from "./layouts/MainLayOut";
+import Login from "./pages/login/Login";
+import Step1 from "./pages/login/findaccount";
+import Step2 from "./pages/login/findaccount";
+import Step2pass from "./pages/login/findaccount";
+import AdminPage from "./pages/admin/AdminPage";
+import MngUser from "./pages/managed/MngUser";
+import MngLog from "./pages/managed/MngLog";
 
 
 function App() {
@@ -74,7 +75,7 @@ function App() {
             <Route path="/approval/hrm6" element={<Hrm6 />} />
             <Route path="/approval/hrm7" element={<Hrm7 />} />
 
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/login/findaccount/step1" element={<Step1 />} />
             <Route path="/login/findaccount/step2" element={<Step2 />} />
             <Route path="/login/findaccount/pass-reset" element={<Step2pass />} />

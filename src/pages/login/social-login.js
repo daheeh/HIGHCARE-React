@@ -1,4 +1,4 @@
-import '../css/social-login.css'
+import './social-login.css'
 
 function SocialLogin(){
 

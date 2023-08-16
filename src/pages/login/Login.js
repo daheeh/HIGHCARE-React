@@ -1,15 +1,15 @@
-import Login from '../features/login';
-import SocialLogin from '../features/social-login';
+import Logininfo from './logininfo';
+import SocialLogin from './social-login';
 import React from 'react';
 
-function LoginPage() {
+function Login() {
 
 
   return (
 
     <div className="">
       <div className="">
-        <Login />
+        <Logininfo />
       </div>
       <div className="">
         <SocialLogin />
@@ -20,4 +20,4 @@ function LoginPage() {
 }
 
 
-export default LoginPage;
+export default Login;

@@ -57,7 +57,7 @@
     height: 20px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/src/images/arrow-l.png");
+    background-image: url("/public/images/arrow-l.png");
 }
 
 .centerbtn {
@@ -72,7 +72,7 @@
     height: 20px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/src/images/arrow-r.png");
+    background-image: url("/public/images/arrow-r.png");
 }
 
 

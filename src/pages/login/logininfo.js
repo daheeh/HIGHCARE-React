@@ -1,9 +1,9 @@
 import React from "react";
-import '../css/login.css'
+import './login.css'
 import { Link } from "react-router-dom";
 
 
-function Login(){
+function Logininfo(){
 
     return (
         <div>
@@ -44,4 +44,4 @@ function Login(){
 
 }
 
-export default Login
+export default Logininfo;

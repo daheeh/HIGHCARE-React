@@ -1,6 +1,6 @@
-import Identification from '../features/identification.js';
-import StepHeader from '../features/stepheader.js';
-import {LoginOfPass, PassReset } from '../features/idcheck.js';
+import Identification from './identification.js';
+import StepHeader from './stepheader.js';
+import {LoginOfPass, PassReset } from './idcheck.js';
 
 
 function Step1() {

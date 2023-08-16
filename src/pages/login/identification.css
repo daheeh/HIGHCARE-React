@@ -57,7 +57,7 @@ div[class*="flex"] {
     height: 200px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("/src/images/cellphone-lock.png");
+    background-image: url("/public/images/cellphone-lock.png");
 }
 
 
@@ -67,7 +67,7 @@ div[class*="flex"] {
     height: 200px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("/src/images/email-lock-outline.png");
+    background-image: url("/public/images/email-lock-outline.png");
 }
 
 .authtext-flex{

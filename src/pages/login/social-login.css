@@ -27,20 +27,20 @@
 
 
 #googlelabel {
-    background-image: url("/src/images/google.png");
+    background-image: url("/public/images/google.png");
     background-color: #4285F4;    
 }
 
 /* 카카오 로그인 이미지 */
 #kakaolabel {
-background-image: url("/src/images/kakao.png");
+background-image: url("/public/images/kakao.png");
 background-color: #FEE500;
 
 }
 
 /* 네이버 로그인 이미지 */
 #naverlabel {
-    background-image: url("/src/images/naver.png");
+    background-image: url("/public/images/naver.png");
     background-color: #03c75a;
 
 }

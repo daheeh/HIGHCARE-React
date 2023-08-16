@@ -41,10 +41,9 @@ body {
     font-size: 1.2em;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("/src/images/HIGH\ CARE.png");
+    background-image: url("/public/images/HIGH\ CARE.png");
     width: 200px;
     margin-left: 80px;
-    /* margin-bottom: 40px; */
 }
 
 .HeaderBtn{
