@@ -15,8 +15,8 @@ function ReceiveBox() {
                     <ApvMenu />
                     <div>
                         <div className="apv-apvtitle">수신함</div>
-                            <div class="apv-topmenu">
-                                <ul class="apv-topmenu-r-ul">
+                            <div className="apv-topmenu">
+                                <ul className="apv-topmenu-r-ul">
                                     <li>결재 진행중</li>
                                     <li>결재 완료</li>
                                     <li>결재 반려</li>
@@ -24,13 +24,13 @@ function ReceiveBox() {
                                 </ul>
                             </div>
                             <div>
-                                <table class="apv-boxresult-table">
+                                <table className="apv-boxresult-table">
                                     <tr>
-                                        <th class="column11">문서번호</th>
-                                        <th class="column12">제목</th>
-                                        <th class="column12">작성자</th>
-                                        <th class="column13">문서분류</th>
-                                        <th class="column14">작성일자</th>
+                                        <th className="column11">문서번호</th>
+                                        <th className="column12">제목</th>
+                                        <th className="column12">작성자</th>
+                                        <th className="column13">문서분류</th>
+                                        <th className="column14">작성일자</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -138,7 +138,7 @@ function ReceiveBox() {
                                         <td></td>
                                     </tr>
                                 </table>
-                                <div class="paging">
+                                <div className="paging">
                                     <span>1</span>
                                     <span>2</span>
                                     <span>3</span>

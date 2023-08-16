@@ -20,31 +20,31 @@ function Biz3() {
                         <div className="container">
                             <div className="apv-apvtitle">출장신청서</div>
                             <ApvSummitLine />
-							<div class="apv-content">
-								<div class="apv-content-title">
-									<div class="column1">출장목적</div>
-									<div class="column2"><input class="input1" placeholder="출장 목적 입력"/></div>
+							<div className="apv-content">
+								<div className="apv-content-title">
+									<div className="column1">출장목적</div>
+									<div className="column2"><input className="input1" placeholder="출장 목적 입력"/></div>
 								</div>
-								<div class="apv-content-title-biz3">
-									<div class="column1">출장기간</div>
-									<div class="column2"><input class="input1" type="date"/></div>
-									<div class="column2"><input class="input1" type="time"/></div>
-									<div class="column3">~</div>
-									<div class="column2"><input cla ss="input1" type="date"/></div>
-									<div class="column2"><input class="input1" type="time"/></div>
-									<div class="column2">(1일)</div>
+								<div className="apv-content-title-biz3">
+									<div className="column1">출장기간</div>
+									<div className="column2"><input className="input1" type="date"/></div>
+									<div className="column2"><input className="input1" type="time"/></div>
+									<div className="column3">~</div>
+									<div className="column2"><input cla ss="input1" type="date"/></div>
+									<div className="column2"><input className="input1" type="time"/></div>
+									<div className="column2">(1일)</div>
 								</div>
-								<div class="apv-content-title">
-									<div class="column1">출장지</div>
-									<div class="column2"><input class="input1" placeholder="출장지 입력"/></div>
+								<div className="apv-content-title">
+									<div className="column1">출장지</div>
+									<div className="column2"><input className="input1" placeholder="출장지 입력"/></div>
 								</div>
-								<div class="apv-content-title">
-									<div class="column1">동반자</div>
-									<div class="column2"><input class="input1" placeholder="사번 입력"/></div>
+								<div className="apv-content-title">
+									<div className="column1">동반자</div>
+									<div className="column2"><input className="input1" placeholder="사번 입력"/></div>
 								</div> 
-								<div class="apv-content-detail">상세내용
+								<div className="apv-content-detail">상세내용
 								</div>
-								<div class="apv-content-detail-coment">
+								<div className="apv-content-detail-coment">
 									<textarea placeholder="내용 작성" rows="11"></textarea>
 								</div> 
 

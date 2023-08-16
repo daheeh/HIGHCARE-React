@@ -15,8 +15,8 @@ function WriteBox() {
                     <ApvMenu />
                     <div>
                         <div className="apv-apvtitle">결재함</div>
-                        <div class="apv-topmenu">
-                            <ul class="apv-topmenu-ul">
+                        <div className="apv-topmenu">
+                            <ul className="apv-topmenu-ul">
                                 <li>결재 예정</li>                    
                                 <li>결재 진행중</li>
                                 <li>결재 완료</li>
@@ -25,12 +25,12 @@ function WriteBox() {
                             </ul>
                         </div>
                         <div>
-                            <table class="apv-boxresult-table">
+                            <table className="apv-boxresult-table">
                                 <tr>
-                                    <th class="column1">문서번호</th>
-                                    <th class="column2">제목</th>
-                                    <th class="column3">문서분류</th>
-                                    <th class="column4">작성일자</th>
+                                    <th className="column1">문서번호</th>
+                                    <th className="column2">제목</th>
+                                    <th className="column3">문서분류</th>
+                                    <th className="column4">작성일자</th>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -124,7 +124,7 @@ function WriteBox() {
                                 </tr>
 
                             </table>
-                            <div class="paging">
+                            <div className="paging">
                                 <span>1</span>
                                 <span>2</span>
                                 <span>3</span>

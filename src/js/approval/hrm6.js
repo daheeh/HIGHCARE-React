@@ -20,7 +20,7 @@ function Hrm6() {
                         <div className="container">
                             <div className="apv-apvtitle">사직서</div>
                             <ApvSummitLine />
-							<div class="apv-content">
+							<div className="apv-content">
 								
 							</div>
 						</div>

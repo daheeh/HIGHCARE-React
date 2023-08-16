@@ -20,21 +20,21 @@ function Biz4() {
                         <div className="container">
                             <div className="apv-apvtitle">공문</div>
                             <Link to="/biz4Offcial">미리보기</Link>
-							<div class="apv-content">
-								<div class="apv-content-title">
-									<div class="column1">제목</div>
-									<div class="column2"><input class="input1" placeholder="제목 입력"/></div>
+							<div className="apv-content">
+								<div className="apv-content-title">
+									<div className="column1">제목</div>
+									<div className="column2"><input className="input1" placeholder="제목 입력"/></div>
 								</div>
-								<div class="apv-content-title">
-									<div class="column1">수신처</div>
-									<div class="column2"><input class="input1" placeholder="수신처 입력"/></div>
+								<div className="apv-content-title">
+									<div className="column1">수신처</div>
+									<div className="column2"><input className="input1" placeholder="수신처 입력"/></div>
 								</div>
-								<div class="apv-content-detail">상세내용</div>
-								<div class="apv-content-detail-coment">
+								<div className="apv-content-detail">상세내용</div>
+								<div className="apv-content-detail-coment">
 									<textarea placeholder="내용 작성" rows="9"></textarea>
 								</div>
-								<div class="apv-content-detail2">-아래-</div>
-								<div class="apv-content-detail-coment2">어쩌고저쩌고</div>
+								<div className="apv-content-detail2">-아래-</div>
+								<div className="apv-content-detail-coment2">어쩌고저쩌고</div>
 							</div>
 						</div>
 					</div>									
