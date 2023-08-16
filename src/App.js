@@ -1,6 +1,3 @@
-
-
-
 import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
@@ -41,6 +38,10 @@ import PmDepartment from "./pages/pm/department";
 import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
+import Businesscardregist from "./pages/mypage/businesscardregist";
+import Mypage from "./pages/mypage/mypage";
+import Customerlog from "./pages/mypage/Customerlog";
+import Worklog from "./pages/mypage/Worklog";
 
 
 function App() {
@@ -96,6 +97,13 @@ function App() {
                 <Route path="/pm/member-annual" element={<PmMemberAnnual />}/>
                 <Route path="/pm/pm-resist" element={<PmMemberResist />}/>
                 <Route path="/pm/work" element={<PmWork />}/>
+
+                <Route path="/mypage" element={<Mypage />} />
+                <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
+                <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
+                <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
+
+                
           </Route>
 
         </Routes>
