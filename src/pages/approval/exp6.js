@@ -2,9 +2,8 @@ import React from 'react';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
 import ApvSummitLine from './apvSummitline'; 
-import Footer from '../../Footer';
-import '../../css/approval/approvalExp.css';
-import '../../css/approval/approval.css';
+import './approvalExp.css';
+import './approval.css';
 
 function Exp6() {
     return (
@@ -51,7 +50,6 @@ function Exp6() {
 						</div>
 					</div>
 				</section>
-                <Footer />
             </body>
         </html>
     );

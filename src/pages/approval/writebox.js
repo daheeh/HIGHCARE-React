@@ -1,8 +1,7 @@
 import React from 'react';
 import ApvMenu from './apvMenu';
-import Footer from '../../Footer';
-import '../../css/approval/approvalBox.css';
-import '../../css/approval/approval.css';
+import './approvalBox.css';
+import './approval.css';
 
 function WriteBox() {
     return (
@@ -134,7 +133,6 @@ function WriteBox() {
                         </div>
                     </div>
                 </section>
-                <Footer />
             </body>
         </html>
     );

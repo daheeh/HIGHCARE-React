@@ -6,8 +6,7 @@ function AdminPage() {
   return (
       <div>
           <p>관리자 메인</p>
-          <Link to="management/user">회원관리</Link><br></br>
-          {/* <Link to="management/system">시스템운영관리</Link><br/> */}
+          <Link to="management/user">회원관리</Link>
           <Link to="management/system/log">로그관리</Link>
       </div>
     ); 

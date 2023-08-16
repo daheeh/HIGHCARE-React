@@ -2,15 +2,14 @@ import React from 'react';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
 import ApvSummitLine from './apvSummitline'; 
-import Footer from '../../Footer';
-import '../../css/approval/approvalExp.css';
-import '../../css/approval/approval.css';
+import './approvalExp.css';
+import './approval.css';
 
-function Exp4() {
+function Exp3() {
     return (
         <html lang="ko">
             <head>
-                <title>출장경비정산서</title>
+                <title>구매품의서xx</title>
             </head>
             <body>
                 <section>
@@ -18,20 +17,14 @@ function Exp4() {
                     <div>
                         <ApvSummitBar />
                         <div className="container">
-                            <div className="apv-apvtitle">출장경비정산서</div>
+                            <div className="apv-apvtitle">구매품의서xx</div>
                             <ApvSummitLine />
 							<div className="apv-content">
 								<div className="apv-content-title-exp1">
-									<div className="column1">출장신청서 번호</div>
-									<div className="column2">123123123</div>
-									<div className="column3">출장기간</div>
-									<div className="column4">1박2일</div> 
-								</div>
-								<div className="apv-content-title-exp1">
-									<div className="column1">출장지</div>
-									<div className="column2">부산 지점</div>
-									<div className="column3">출장인원</div>
-									<div className="column4">1인</div> 
+									<div className="column1">지급요청일자</div>
+									<div className="column2">2023-07-28</div>
+									<div className="column3">지급처</div>
+									<div className="column4">김나경</div>
 								</div>
 								<div className="apv-content-detail">내역</div>
 								<div className="apv-content-detail-exp1-title">
@@ -102,7 +95,6 @@ function Exp4() {
 										<div className="column24"></div>
 									</div>
 								</div>
-
 								<div className="apv-content-detail-exp1-total">
 									<div className="column31">합계</div>
 									<div className="column32">20,000원</div>
@@ -123,11 +115,9 @@ function Exp4() {
 						</div>
 					</div>
 				</section>
-                <Footer />
             </body>
         </html>
     );
 }
 
-export default Exp4;
-
+export default Exp3;

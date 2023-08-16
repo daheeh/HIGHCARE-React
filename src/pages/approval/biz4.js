@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
-import Footer from '../../Footer';
-import '../../css/approval/approvalBiz.css';
-import '../../css/approval/approval.css';
+import './approvalBiz.css';
+import './approval.css';
 
 function Biz4() {
     return (
@@ -39,7 +38,6 @@ function Biz4() {
 						</div>
 					</div>									
 				</section>
-                <Footer />
             </body>
         </html>
     );

@@ -2,9 +2,8 @@ import React from 'react';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
 import ApvSummitLine from './apvSummitline'; 
-import Footer from '../../Footer';
-import '../../css/approval/approvalBiz.css';
-import '../../css/approval/approval.css';
+import './approvalBiz.css';
+import './approval.css';
 
 function Biz1() {
     return (
@@ -35,7 +34,6 @@ function Biz1() {
                         </div>
                     </div>
                 </section>
-                <Footer />
             </body>
         </html>
     );

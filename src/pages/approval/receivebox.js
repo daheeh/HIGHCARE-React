@@ -1,8 +1,7 @@
 import React from 'react';
 import ApvMenu from './apvMenu';
-import Footer from '../../Footer';
-import '../../css/approval/approvalBox.css';
-import '../../css/approval/approval.css';
+import './approvalBox.css';
+import './approval.css';
 
 function ReceiveBox() {
     return (
@@ -148,7 +147,6 @@ function ReceiveBox() {
                             </div>
 					</div>
 				</section>
-                <Footer />
             </body>
         </html>
     );

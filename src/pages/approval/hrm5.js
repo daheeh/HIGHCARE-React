@@ -2,9 +2,8 @@ import React from 'react';
 import ApvMenu from './apvMenu';
 import ApvSummitBar from './apvSmmitbar';
 import ApvSummitLine from './apvSummitline'; 
-import Footer from '../../Footer';
-import '../../css/approval/approvalHrm.css';
-import '../../css/approval/approval.css';
+import './approvalHrm.css';
+import './approval.css';
 
 function Hrm5() {
     return (
@@ -43,8 +42,6 @@ function Hrm5() {
 						</div>
 					</div>									
 				</section>
-
-                <Footer />
             </body>
         </html>
     );

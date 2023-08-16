@@ -23,7 +23,7 @@ a {
 .Navibox div {
     margin: 40px 10px;
 	margin-left: 245px;
-    width: 70%;
+    /* width: 70%; */
     height: 40px;
     background-size: contain;
     background-repeat: no-repeat;

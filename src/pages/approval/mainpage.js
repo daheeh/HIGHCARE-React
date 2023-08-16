@@ -1,10 +1,9 @@
 import React from 'react';
 import ApvMenu from './apvMenu';
-import Footer from '../../Footer';
 import HrmList from './hrmList';
 import ExpList from './expList';
 import BizList from './bizList';
-import '../../css/approval/approval.css';
+import './approval.css';
 
 function ApvMain() {
     return (
@@ -70,7 +69,6 @@ function ApvMain() {
                         </div>
                     </div>
                 </section>
-                <Footer />
             </body>
         </html>
     );

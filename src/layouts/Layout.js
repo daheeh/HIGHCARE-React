@@ -3,8 +3,8 @@ import Footer from "../commons/Footer";
 import Header from "../commons/Header"
 import LeftNavibar from "../commons/leftnavibar"
 import LayoutCSS from "./Layout.module.css"
-import EmpMain from "../js/approval/empMain";
 import ManageTest from "../pages/managed/mng-test";
+import EmpMain from "../pages/approval/empMain";
 
 
 function Layout() {
