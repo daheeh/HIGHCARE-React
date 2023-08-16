@@ -1,0 +1,46 @@
+.social {
+    margin-left: -100px;
+    margin-top: 50px;
+    font-size: 14px;
+    color: gray;
+    text-align: -webkit-center
+}
+
+.social-group {   
+    
+    width: 250px;
+    /* text-align: center; */
+    
+}
+
+.social-group  div {
+    display: block;
+    width: 200px;
+    height: 45px;
+    margin: 30px;
+    border-radius: 6px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    cursor: pointer;
+}
+
+
+#googlelabel {
+    background-image: url("/public/images/google.png");
+    background-color: #4285F4;    
+}
+
+/* 카카오 로그인 이미지 */
+#kakaolabel {
+background-image: url("/public/images/kakao.png");
+background-color: #FEE500;
+
+}
+
+/* 네이버 로그인 이미지 */
+#naverlabel {
+    background-image: url("/public/images/naver.png");
+    background-color: #03c75a;
+
+}

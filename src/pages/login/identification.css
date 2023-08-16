@@ -1,0 +1,255 @@
+
+
+.findAccount {
+    align-items: center;
+    width: 1300px;
+    margin: auto;
+}
+
+.borderLine {
+    margin: 10px 0px 20px 0px;
+    width: 1200px;
+    border: 1px solid #FFC338;
+}
+
+div[class*="flex"] {
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+}
+
+.step1, .step2 {
+    width: 600px;
+    height: 55px;
+    color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.step1 {   
+    background-color: #FFC338;
+}
+
+.step2 {
+    background-color: #10479A;
+}
+
+.authimage-flex {
+    margin-top: 10px;
+    width: 1200px;
+    height: 300px;
+    /* display: inline-block;
+    align-items: center;
+    text-align: center;
+    align-content: center; */
+
+}
+
+.authimage-flex > div {
+    display: inline-flex;
+}
+
+.phoneimage {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("/public/images/cellphone-lock.png");
+}
+
+
+.emailimage {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("/public/images/email-lock-outline.png");
+}
+
+.authtext-flex{
+    width: 1200px;
+    height: 100px;
+
+}
+
+.authtext-flex > div, .authtext-flex > label {
+
+    margin: 0px 100px;
+    width: 400px;
+    height: 55px;
+    background-color: gray;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+} 
+
+.authtext-flex > div:hover {
+
+    background-color: #10479A;
+
+
+
+} 
+
+.find-step-container {
+    font-size: 24px;
+}
+
+@keyframes slideIn {
+    0%  {
+        opacity:50%;
+        transform: translateY(-15%);
+    }
+    100% {
+    opacity: 100%;
+    transform: translateY(0%);
+    }
+}
+
+
+.authbox {
+    margin-top: 50px;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    animation: slideIn 1s ease-out forwards;
+}
+
+.infobox {
+    font-size: 20px;
+    width: 700px;
+    height: 300px;
+    background-color: lightgray;
+    display: flex;
+    /* vertical-align: middle; */
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.infobox input {
+
+    width: 250px;
+    height: 30px;
+    margin: 10px 10px 10px 0px;
+    font-size: 20px;
+    border-radius: 6px;
+    border: 1px solid gray;
+}
+
+.authbutton {
+    width: 140px !important;
+    height: 35px !important;
+    background-color: white;
+    color: #10479A;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.authbutton:hover {
+    background-color: #10479A;
+    color: white;
+}
+
+.grid1{
+    width: 140px !important;
+    height: 30px;
+    display: inline-block;
+    margin-right: 10px; 
+    margin-left: 40px;
+    font-weight: bold;
+}
+
+.localnumber {
+    width: 40px !important;
+    text-align: center;
+    background-color: lightgray;
+}
+
+.nextbutton-container {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+}
+
+.nextbtn
+{
+    margin-top: 50px;
+    width: 130px;
+    height: 50px;
+    background-color: #10479A;
+    color: white;
+    border-radius: 6px;
+}
+
+.nextbtn:hover, .step2btn-1:hover, .step2btn-2:hover {
+    background-color: rgba(255, 195, 56, 1);
+    cursor: pointer;
+
+}
+
+
+.step2idbox {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+}
+
+div[class^="step2id"] div {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 100px 20px;
+}
+
+
+.step2btn{
+    display: flex;
+    justify-content: center;
+}
+
+.step2btn button{
+    width: 200px;
+    height: 50px;
+}
+
+
+.step2btn-1{
+    background-color: #10479A;
+    margin: 30px;
+}
+
+.step2btn-2{
+    background-color: gray;
+    margin: 30px;
+}
+
+.step2pwd {
+    width: 1200px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    color: gray;
+}
+
+.step2pwd input {
+    text-align: center;
+    margin: 10px;
+    border-radius: 6px;
+    width: 250px;
+    height: 30px;
+    border: gray 1px solid;
+}
+
+
+
+
+
+
