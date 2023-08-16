@@ -5,7 +5,6 @@ function ApvMenu() {
 	return (
 		<section>
 			<div className="leftMenu">
-				<div className="leftMenu1"></div>
 				<div className="leftMenu2">
 					<div className="mainLogo">
 						<img src="/img/highcareLogo.png" alt="High Care Logo" />

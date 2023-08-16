@@ -7,26 +7,21 @@ import './approval.css';
 
 function Hrm6() {
     return (
-        <html lang="ko">
-            <head>
-                <title>사직서</title>
-            </head>
-            <body>
-                <section>
-                    <ApvMenu />
-                    <div>
-                        <ApvSummitBar />
-                        <div className="container">
-                            <div className="apv-apvtitle">사직서</div>
-                            <ApvSummitLine />
-							<div className="apv-content">
-								
-							</div>
-						</div>
-					</div>									
-				</section>
-            </body>
-        </html>
+
+        <section>
+            <ApvMenu />
+            <div>
+                <ApvSummitBar />
+                <div className="container">
+                    <div className="apv-apvtitle">사직서</div>
+                    <ApvSummitLine />
+                    <div className="apv-content">
+                        
+                    </div>
+                </div>
+            </div>									
+        </section>
+
     );
 }
 
