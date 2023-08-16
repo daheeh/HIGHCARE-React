@@ -1,0 +1,90 @@
+.title {
+    padding: 40px;
+}
+
+
+body {
+    font-size: 20px;
+    text-align: center;
+
+}
+
+.consultation-form {
+    width: 1520px;
+    height: 910px;
+    margin: 0 auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-gap: 10px; */
+}
+
+.grid-item, .grid-item1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.grid-item1{
+    background-color: lightgray;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: none; /* Remove the border */
+    /* border-bottom: 1px solid #ddd;  */
+    /* Add a bottom border for styling */
+    outline: none; /* Remove the default outline */
+}
+
+textarea {
+    /* width: 100%; */
+    /* padding: 8px; */
+    border: 1px solid lightgray; /* Remove the border */
+    outline: none; 
+    resize: vertical;
+    width: 1512px;
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+
+.submit-button {
+    text-align: center;
+    /* margin-top: 40px; */
+}
+
+/* 신청버튼 */
+.submit-button button {
+    font-size: 16px;
+    padding: 12px 20px; 
+    background-color: #FFC338;
+    background-color: #10479A;
+    border: #ddd;
+    border-radius: 6px;
+    color:white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.consultation-notes {
+    margin: 0px 0px  50px 0px;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    width: 1520px;
+    /* height: 100px; */
+
+}
+
+.notes{
+    border: 1px solid #ddd;
+    background-color: lightgray;
+    line-height: 53px;
+}
+
