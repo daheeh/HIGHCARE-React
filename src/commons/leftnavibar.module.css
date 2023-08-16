@@ -1,0 +1,112 @@
+a {
+	color: inherit; /* 링크 색상을 부모 요소의 색상으로 상속 */
+	text-decoration: none; /* 밑줄 제거 */
+}
+
+
+.Navibox {
+    width: 300px;
+    align-items: flex-end;
+    position: fixed;
+    top: 0;
+    left: -240px;
+    height: 100%;
+	background:#10479A; 
+	transform: translateX(0);
+	color: white;
+	text-decoration: none;
+	
+
+
+}
+
+.Navibox div {
+    margin: 40px 10px;
+	margin-left: 245px;
+    /* width: 70%; */
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+	overflow: hidden;
+	}
+
+.NaviboxActive div {
+	/* padding: 10px; */
+	margin-top: 40px !important;
+    margin: 10px 20px;
+    width: 70%;
+    height: 40px;
+    background-size: 43% !important;
+    background-repeat: no-repeat;
+	overflow: hidden;
+	text-align-last: left;
+
+}
+
+.NaviboxActive {
+    width: 200px;
+    align-items: flex-end;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    height: 100%;
+	background:#10479A; 
+	color: white;
+	transition-duration: 0.5s;
+
+
+}
+
+
+.MenuActive {
+	text-align: right !important;
+	width: 300px;
+    height: max-content !important;
+    background-color: #10479A;
+	color: white;
+    vertical-align: middle;
+	transform: translateX(0px);
+
+}
+
+
+
+.MenuExpander {
+	
+	background-image: url("/public/images/expandbtn.png");
+}
+
+.MenuReducer {
+	background-image: url("/public/images/reducebtn.png");
+
+}
+
+.Main{
+    background-image: url("/public/images/home-search-outline.png");
+}
+
+.Note{
+    background-image: url("/public/images/note.png");
+}
+
+.Pm{
+    background-image: url("/public/images/oragnization.png");
+}
+
+.Approval{
+    background-image: url("/public/images/approval.png");
+}
+
+.Mypage{
+    background-image: url("/public/images/men.png");
+}
+
+.Schedule{
+    background-image: url("/public/images/clock.png");
+}
+
+.Reservation{
+    background-image: url("/public/images/reserve.png");
+}
+
+
