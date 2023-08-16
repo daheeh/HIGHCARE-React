@@ -31,6 +31,15 @@ import Hrm7 from './pages/approval/hrm7';
 import Login from './pages/login/Login';
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/mainpage";
+import PmTest from "./pages/pm/pm-test";
+import PmMenu from "./pages/pm/search";
+import PmAnnual from "./pages/pm/annual";
+import PmCalender from "./pages/pm/cal";
+import PmResist from "./pages/pm/de-resist";
+import PmDepartment from "./pages/pm/department";
+import PmMemberAnnual from "./pages/pm/member-annual";
+import PmMemberResist from "./pages/pm/pm-resist";
+import PmWork from "./pages/pm/work";
 
 
 function App() {
@@ -76,6 +85,16 @@ function App() {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/management/user" element={<MngUser />} />
                 <Route path="/admin/management/system/log" element={<MngLog />} />
+
+                <Route path="/pm" element={<PmTest />}/>
+                <Route path="/pm/search" element={<PmMenu />}/>
+                <Route path="/pm/annual" element={<PmAnnual />}/>
+                <Route path="/pm/cal" element={<PmCalender />}/>
+                <Route path="/pm/de-resist" element={<PmResist />}/>
+                <Route path="/pm/department" element={<PmDepartment />}/>
+                <Route path="/pm/member-annual" element={<PmMemberAnnual />}/>
+                <Route path="/pm/pm-resist" element={<PmMemberResist />}/>
+                <Route path="/pm/work" element={<PmWork />}/>
           </Route>
 
         </Routes>

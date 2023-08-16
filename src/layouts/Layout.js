@@ -5,6 +5,7 @@ import LeftNavibar from "../commons/leftnavibar"
 import LayoutCSS from "./Layout.module.css"
 import ManageTest from "../pages/managed/mng-test";
 import EmpMain from "../pages/approval/empMain";
+import PmTest from "../pages/pm/pm-test";
 
 
 function Layout() {
