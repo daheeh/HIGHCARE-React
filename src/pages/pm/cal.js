@@ -1,6 +1,5 @@
 import React from 'react';
-import '../pm/css/pm-member.css'
-import "../commons/leftnavibar.css"
+import './pm-member.css'
 import PmNav from './pmNav';
 
 function PmCalender() {

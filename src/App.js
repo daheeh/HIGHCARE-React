@@ -1,5 +1,4 @@
 
-
 import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
@@ -32,6 +31,20 @@ import Hrm7 from './pages/approval/Hrm/Hrm7';
 import Login from './pages/login/Login';
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/ApprovalMain";
+import PmTest from "./pages/pm/pm-test";
+import PmMenu from "./pages/pm/search";
+import PmAnnual from "./pages/pm/annual";
+import PmCalender from "./pages/pm/cal";
+import PmResist from "./pages/pm/de-resist";
+import PmDepartment from "./pages/pm/department";
+import PmMemberAnnual from "./pages/pm/member-annual";
+import PmMemberResist from "./pages/pm/pm-resist";
+import PmWork from "./pages/pm/work";
+import Businesscardregist from "./pages/mypage/businesscardregist";
+import Mypage from "./pages/mypage/mypage";
+import Customerlog from "./pages/mypage/customerlog";
+import Worklog from "./pages/mypage/Worklog";
+
 
 
 function App() {
@@ -74,10 +87,19 @@ function App() {
                       <Route path="/login/findaccount/step1" element={<Step1 />} />
                       <Route path="/login/findaccount/step2" element={<Step2 />} />
                       <Route path="/login/findaccount/pass-reset" element={<Step2pass />} />
+                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/management/user" element={<MngUser />} />
+                <Route path="/admin/management/system/log" element={<MngLog />} />
 
-                      <Route path="/admin" element={<AdminPage />} />
-                      <Route path="/admin/management/user" element={<MngUser />} />
-                      <Route path="/admin/management/system/log" element={<MngLog />} />
+                <Route path="/pm" element={<PmTest />}/>
+                <Route path="/pm/search" element={<PmMenu />}/>
+                <Route path="/pm/annual" element={<PmAnnual />}/>
+                <Route path="/pm/cal" element={<PmCalender />}/>
+                <Route path="/pm/de-resist" element={<PmResist />}/>
+                <Route path="/pm/department" element={<PmDepartment />}/>
+                <Route path="/pm/member-annual" element={<PmMemberAnnual />}/>
+                <Route path="/pm/pm-resist" element={<PmMemberResist />}/>
+                <Route path="/pm/work" element={<PmWork />}/>
           </Route>
 
         </Routes>

@@ -1,143 +1,146 @@
 import React from 'react';
-import '../pm/css/pm-member.css'
-import "../commons/leftnavibar.css"
+import './pm-member.css'
 import PmNav from './pmNav';
 
-function PmDepartment() {
+function PmMemberAnnual() {
 	return (
 <section>
 <PmNav/>
-<div>
+<div className="apv-navibox">
         <div className="pm-de-top">
-            <div className="pm-div-font">부서 조회</div>
+            <div className="pm-div-font">개인 연차 조회</div>
         </div>
-            <div>
-            <div className="pm-topmenu">
-                <div className="pm-topmenu"></div>
-                <div className="pm-de">
-                    <table class="pm-department-table">
-                    <tr>
-                        <th className="columnpm1">사원명</th>
-                        <th className="columnpm2">직급</th>
-                        <th className="columnpm3">휴대폰</th>
-                        <th className="columnpm4">부서</th>
-                        <th className="columnpm5">내선전화</th>
-                        <th className="columnpm6">메모</th>
-                        <th className="columnpm7">이메일</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+                <div className="pm-ma-top">
+                <div className='div3'></div>
+                <div className="pm-ma-box2">
+                    <div className="pm-ma-font">총연차</div>
+                    <div className="pm-ma-number">00</div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>발생 연차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>발생 월차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>조정 연차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>이월 연차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>사용 연차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                <div className="pm-line"></div>
+                <div className="pm-ma-box">
+                    <div>잔여 연차</div>
+                    <div className="pm-ma-number">00</div>
+                </div>
+                
+                </div>
+                    <table className="pm-ma-table">
+                    <tr>
+                        <th className="columnpm1">이름</th>
+                        <th className="columnpm2">부서명</th>
+                        <th className="columnpm3">휴가 종류</th>
+                        <th className="columnpm4">사용 연차</th>
+                        <th className="columnpm5">사용 연차 </th>
+                        <th className="columnpm7">연차 사용 기간</th>
+                        <th className="columnpm7">비고</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </table>
                 <div className="paging">
                     <span>1</span>
                     <span>2</span>
@@ -145,8 +148,9 @@ function PmDepartment() {
                     <span>4</span>
                     <span>5</span>
                 </div>
+            </div>
     </section>
 	);
 }
 
-export default PmDepartment;
+export default PmMemberAnnual;
