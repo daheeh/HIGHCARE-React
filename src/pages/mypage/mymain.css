@@ -1,12 +1,13 @@
 a {
     text-decoration: none;
 }
-
+/* 
 body {
     font-family: NanumGothic;
     list-style-type:none;
-}
+} */
 
+/* 이름 수정   */
 section {
     display: flex;
     width: 1840px;

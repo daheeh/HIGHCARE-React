@@ -3,11 +3,11 @@
 }
 
 
-body {
+/* body {
     font-size: 20px;
     text-align: center;
 
-}
+} */
 
 .consultation-form {
     width: 1520px;
@@ -33,8 +33,9 @@ body {
 .grid-item1{
     background-color: lightgray;
 }
-
-input[type="text"] {
+/* 이름 수정  */
+input[id^="consultation"] ,input[id^="customer"], input[id^="birthdate"], input[id^="id"]
+, input[id^="id"], input[id^="insurance"], input[id^="design"]  {
     width: 100%;
     padding: 8px;
     border: none; /* Remove the border */

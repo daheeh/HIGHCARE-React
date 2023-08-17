@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function Mypage() {
-  
+
         return (
         <div>
             <nav>
