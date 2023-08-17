@@ -315,15 +315,21 @@ font-size: 16px;
     width: 150px;
     height: 30px;
     border-radius: 6px;
+    color: white;
     font-size: 20px;
     font-weight: bold;
-    background-color: #FFC338; 
-    border-color: #FFC338;
+    background-color:#10479A; 
+    border-color: #10479A; 
     border-style: none
     /* box-shadow: 0px 0px 0px 0px; */
     /* border: 0;  */
     /* outline: none;  */
 }
+
+.pm-work-button:hover{
+    background-color: #FFC338;
+}
+
 
 
 /* department */
@@ -409,6 +415,11 @@ font-size: 16px;
     color: white;
 }
 
+.pm-department-button:hover {
+    background-color: #FFC338;
+}
+
+
 .pm-de{
     display: flex;
 }
@@ -421,6 +432,10 @@ font-size: 16px;
     color: white;
     text-align: center;
     margin-left: 1220px;
+}
+
+.pm-de-add:hover{
+    background-color: #FFC338;
 }
 
 
@@ -479,6 +494,10 @@ font-size: 16px;
     margin-left: 1170px;
     margin-top: 50px;
 
+}
+
+.pm-regist-button:hover{
+    background-color: #FFC338;
 }
 
 /**/
@@ -686,6 +705,10 @@ font-size: 16px;
     margin-left: 1350px;
 }
 
+.pm-ma-add:hover{
+    background-color:#FFC338;
+}
+
 .pm-cal-search{
     border-radius: 6px;
     text-align: center;
@@ -758,10 +781,14 @@ font-size: 16px;
     align-items: center;
     flex-shrink: 0;
     border-radius: 6px;
-    background: #FFC338;
-    color: #000;
+    background:#10479A;
+    color: white;
     text-align: center;
     font-size: 24px;
+}
+
+.apvNaviBoxTop:hover{
+    background-color: #FFC338;
 }
 
 .apvNaviBoxUl li:hover{
@@ -783,9 +810,15 @@ font-size: 16px;
     font-size: 20px;
 }
 
+.apvNaviBoxMainTitle:hover{
+    background-color: #FFC338;
+}
+
 .apvNaviBoxEmp{
     height: 10px;
 }
+
+
 .apvNaviBoxUl{
     padding: 0;
 }
@@ -826,4 +859,87 @@ font-size: 16px;
 
 .div7{
     margin-left: 90px;
+}
+
+/* TreeView.css
+
+.tree-node {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-icon {
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.open-icon::before {
+    content: "▼";
+}
+
+.closed-icon::before {
+    content: "▶";
+}
+
+.droppable {
+    font-weight: bold;
+    color: blue;
+}
+.node-box {
+    display: inline-block;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.parent-box {
+    background-color: #f0f0f0;
+}
+
+.child-box {
+    background-color: #ffffff;
+}
+   */
+
+/* TreeView.css */
+.tree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tree-node {
+    display: flex;
+    align-items: center;
+}
+
+.node-box {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+}
+
+.parent-box {
+    background-color: #f0f0f0;
+}
+
+.child-box {
+    background-color: #f9f9f9;
+}
+
+.toggle-icon {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.open-icon::before {
+    content: "▼";
+}
+
+.closed-icon::before {
+    content: "▶";
 }
