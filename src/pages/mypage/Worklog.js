@@ -4,16 +4,16 @@ function Worklog() {
 
     return (
 
-        <div className="packing">
+        <div classNameName="packing">
             <div>
-                <h1 class="title">업무일지</h1>
+                <h1 className="title">업무일지</h1>
             </div>
-            <div class="submit-button">
+            <div className="submit-button">
                 <button type="submit">등록</button>
                 <button type="submot">수정</button>
                 <button type="submot">삭제</button>
             </div>
-            <table class="task-table">
+            <table className="task-table">
                 <thead>
                     <tr>
                         <th>선택</th>
@@ -29,73 +29,73 @@ function Worklog() {
                     <tr>
                         <td><input type="checkbox" /></td>
                         <td>
-                            <select class="categorystate">
+                            <select className="categorystate">
                                 <option>진행전</option>
                                 <option>진행중</option>
                                 <option>진행완료</option>진행중
                             </select>
                         </td>
-                        <td><input type="text" class="workinput" placeholder="입력" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
+                        <td><input type="text" className="workinput" placeholder="입력" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
 
                     </tr>
                     <tr>
                         <td><input type="checkbox" /></td>
                         <td>
-                            <select class="categorystate">
+                            <select className="categorystate">
                                 <option>진행전</option>
                                 <option>진행중</option>
                                 <option>진행완료</option>진행중
                             </select>
                         </td>
-                        <td><input type="text" class="workinput" placeholder="입력" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
+                        <td><input type="text" className="workinput" placeholder="입력" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" /></td>
                         <td>
-                            <select class="categorystate">
+                            <select className="categorystate">
                                 <option>진행전</option>
                                 <option>진행중</option>
                                 <option>진행완료</option>진행중
                             </select>
                         </td>
-                        <td><input type="text" class="workinput" placeholder="입력" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
+                        <td><input type="text" className="workinput" placeholder="입력" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" /></td>
                         <td>
-                            <select class="categorystate">
+                            <select className="categorystate">
                                 <option>진행전</option>
                                 <option>진행중</option>
                                 <option>진행완료</option>진행중
                             </select>
                         </td>
-                        <td><input type="text" class="workinput" placeholder="입력" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
+                        <td><input type="text" className="workinput" placeholder="입력" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox" /></td>
                         <td>
-                            <select class="categorystate">
+                            <select className="categorystate">
                                 <option>진행전</option>
                                 <option>진행중</option>
                                 <option>진행완료</option>진행중
                             </select>
                         </td>
-                        <td><input type="text" class="workinput" placeholder="입력" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
-                        <td class="column2"><input class="input1" type="date" /></td>
+                        <td><input type="text" className="workinput" placeholder="입력" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
+                        <td className="column2"><input className="input1" type="date" /></td>
                     </tr>
                 </tbody>
             </table>

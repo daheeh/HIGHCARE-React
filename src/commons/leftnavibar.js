@@ -31,7 +31,11 @@ function LeftNavibar(){
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Schedule}>{isMenuActive && '일정관리'}</div>
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Reservation}>{isMenuActive && '시설예약'}</div>
                     <div className={isMenuActive? NaviCss.MenuActive : ''}>{isMenuActive && '시스템관리'}</div>
+
+                    
             </div>
+
+
         </>
     )
 }

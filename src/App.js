@@ -1,3 +1,4 @@
+
 import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
@@ -40,7 +41,7 @@ import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
-import Customerlog from "./pages/mypage/Customerlog";
+import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
 
 
