@@ -75,7 +75,6 @@ function App() {
                           <Route path="exp7" element={<Exp7 />} />
 
                           <Route path="hrm1" element={<Hrm1 />} />
-
                           <Route path="hrm2" element={<Hrm2 />} />
                           <Route path="hrm3" element={<Hrm3 />} />
                           <Route path="hrm4" element={<Hrm4 />} />
