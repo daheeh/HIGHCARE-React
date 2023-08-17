@@ -44,6 +44,8 @@ import PmWork from "./pages/pm/work";
 import Mypage from "./pages/mypage/mypage";
 // import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
+import Businesscardregist from "./pages/mypage/businesscardregist";
+import Customerlog from "./pages/mypage/Customerlog";
 
 
 
@@ -103,8 +105,8 @@ function App() {
                 <Route path="/pm/work" element={<PmWork />}/>
 
                 <Route path="/mypage" element={<Mypage />} />
-                {/* <Route path="/mypage/list/regist" element={<Businesscardregist />}/> */}
-                {/* <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } /> */}
+                <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
+                <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
                 <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
           </Route>
 
