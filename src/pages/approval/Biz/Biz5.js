@@ -1,10 +1,9 @@
 import React from 'react';
-import ApvMenu from './apvMenu';
-import ApvSummitBar from './apvSmmitbar';
-import ApvSummitLine from './apvSummitline'; 
-import './approvalBiz.css';
-import './approval.css';
-
+import ApvMenu from '../AprovalNav';
+import ApvSummitBar from '../ApvSmmitbar';
+import ApvSummitLine from '../ApvSummitline'; 
+import './ApprovalBiz.css';
+import '../Approval.css';
 function Biz5() {
     return (
         

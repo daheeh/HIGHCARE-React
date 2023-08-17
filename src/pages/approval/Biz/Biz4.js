@@ -1,9 +1,9 @@
 import React from 'react';
+import ApvMenu from '../AprovalNav';
+import ApvSummitBar from '../ApvSmmitbar';
+import './ApprovalBiz.css';
+import '../Approval.css';
 import { Link } from 'react-router-dom';
-import ApvMenu from './apvMenu';
-import ApvSummitBar from './apvSmmitbar';
-import './approvalBiz.css';
-import './approval.css';
 
 function Biz4() {
     return (

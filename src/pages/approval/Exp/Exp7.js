@@ -1,26 +1,26 @@
 import React from 'react';
-import ApvMenu from './apvMenu';
-import ApvSummitBar from './apvSmmitbar';
-import ApvSummitLine from './apvSummitline'; 
-import './approvalExp.css';
-import './approval.css';
+import ApvMenu from '../AprovalNav';
+import ApvSummitBar from '../ApvSmmitbar';
+import ApvSummitLine from '../ApvSummitline'; 
+import './ApprovalExp.css';
+import '../Approval.css';
 
-function Exp5() {
+function Exp7() {
     return (
-    
+
 		<section>
 			<ApvMenu />
 			<div>
 				<ApvSummitBar />
 				<div className="container">
-					<div className="apv-apvtitle">개인경비신청서xx</div>
+					<div className="apv-apvtitle">법인카드사용보고서</div>
 					<ApvSummitLine />
 					<div className="apv-content">
 						<div className="apv-content-title-exp1">
-							<div className="column1">지급요청일자</div>
-							<div className="column2">2023-07-28</div>
-							<div className="column3">지급처</div>
-							<div className="column4">김나경</div>
+							<div className="column1">카드번호</div>
+							<div className="column2">111-1111-11-1111</div>
+							<div className="column3">결제월</div>
+							<div className="column4">4월</div>
 						</div>
 						<div className="apv-content-detail">내역</div>
 						<div className="apv-content-detail-exp1-title">
@@ -96,27 +96,13 @@ function Exp5() {
 							<div className="column31">합계</div>
 							<div className="column32">20,000원</div>
 						</div>
-						<div className="apv-content-title-exp1-2">
-							<div className="column41">예금주</div>
-							<div className="column42">김나경</div>
-							<div className="column43">은행</div>
-							<div className="column44">국민은행</div>
-						</div>
-						<div className="apv-content-title-exp1-3">
-							<div className="column45">계좌번호</div>
-							<div className="column46">111-1111-1111</div>
-						</div>
-
-						<div className="apv-content-detail">위와 같이 지급을 요청합니다.</div>
+						<div className="apv-content-detail3">위와 같이 법인카드 사용 내역을 보고합니다.</div>
 					</div>
 				</div>
 			</div>
 		</section>
-
     );
 }
 
-export default Exp5;
-
-
+export default Exp7;
 

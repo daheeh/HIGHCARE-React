@@ -1,9 +1,9 @@
 import React from 'react';
-import ApvMenu from './apvMenu';
-import HrmList from './hrmList';
-import ExpList from './expList';
-import BizList from './bizList';
-import './approval.css';
+import ApvMenu from './AprovalNav';
+import HrmList from './Hrm/HrmList';
+import ExpList from './Exp/ExpList';
+import BizList from './Biz/BizList';
+import './Approval.css';
 
 function ApvMain() {
     return (

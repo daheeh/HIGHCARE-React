@@ -1,7 +1,7 @@
 import React from 'react';
-import ApvMenu from './apvMenu';
-import './approvalBox.css';
-import './approval.css';
+import ApvMenu from '../AprovalNav';
+import './ApprovalBox.css';
+import '../Approval.css';
 
 function WriteBox() {
     return (

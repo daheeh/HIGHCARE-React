@@ -1,6 +1,6 @@
 import React from 'react';
-import './approvalBiz.css';
-import './approval.css';
+import './ApprovalBiz.css';
+import '../Approval.css';
 
 function Biz4Offcial() {
     return (

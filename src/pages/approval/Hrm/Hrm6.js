@@ -1,9 +1,9 @@
 import React from 'react';
-import ApvMenu from './apvMenu';
-import ApvSummitBar from './apvSmmitbar';
-import ApvSummitLine from './apvSummitline'; 
-import './approvalHrm.css';
-import './approval.css';
+import ApvMenu from '../AprovalNav';
+import ApvSummitBar from '../ApvSmmitbar';
+import ApvSummitLine from '../ApvSummitline'; 
+import './ApprovalHrm.css';
+import '../Approval.css';
 
 function Hrm6() {
     return (

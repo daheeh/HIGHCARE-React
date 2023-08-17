@@ -22,7 +22,7 @@ function LeftNavibar(){
                 </Link>
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Note}>{isMenuActive && '채팅쪽지함'}</div>
                     <div className={isMenuActive? NaviCss.MenuActive :NaviCss.Pm}>{isMenuActive && '인사관리'}</div>
-                <Link to={"approval/mainpage"}>
+                <Link to={"approval"}>
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Approval}>{isMenuActive && '전자결재'}</div>
                 </Link>
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Mypage}>{isMenuActive && '마이페이지'}</div>
