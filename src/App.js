@@ -98,13 +98,6 @@ function App() {
                 <Route path="/pm/member-annual" element={<PmMemberAnnual />}/>
                 <Route path="/pm/pm-resist" element={<PmMemberResist />}/>
                 <Route path="/pm/work" element={<PmWork />}/>
-
-                <Route path="/mypage" element={<Mypage />} />
-                <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
-                <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
-                <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
-
-                
           </Route>
 
         </Routes>

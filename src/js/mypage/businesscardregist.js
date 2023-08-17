@@ -1,11 +1,11 @@
 // import React from 'react';
-// import "../../css/mypage/businesscardregist.css";
-// import "../../css/mypage/mymain.css";
-import "./businesscardregist.css";
-import "./mymain.css";
+import "../../css/mypage/businesscardregist.css";
+import "../../css/mypage/mymain.css";
 
 function Businesscardregist() {
 
+    
+    
     return (
         <>
             <section>
@@ -81,11 +81,14 @@ function Businesscardregist() {
             </div>
             <h3>주소</h3>
             <div className="address-form">
-                <input type="text" name="wPostCode" className="text-field-address" placeholder="우편번호" readonly="readonly"/>
+                <input type="text" name="wPostCode" className="text-field-address" placeholder="우편번호" readonly="readonly"
+                    onclick="DaumPostcode()"/>
                 <input type="button" className="addressbutton" onclick="DaumPostcode()" value="우편번호 찾기"/><br />
-                <input type="text" name="wRoadAddress" className="text-field" placeholder="도로명주소" readonly="readonly"/>
+                <input type="text" name="wRoadAddress" className="text-field" placeholder="도로명주소" readonly="readonly"
+                    onclick="DaumPostcode()"/>
                 <h3></h3>
-                <input type="text" name="wJibunAddress" className="text-field" placeholder="지번주소" readonly="readonly"/>
+                <input type="text" name="wJibunAddress" className="text-field" placeholder="지번주소" readonly="readonly"
+                    onclick="DaumPostcode()"/>
                 <br /><span id="guide"></span>
                 <br /><br /><input type="text" className="text-field" placeholder="나머지 주소" />
             </div>
