@@ -40,9 +40,9 @@ import PmDepartment from "./pages/pm/department";
 import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
-import Businesscardregist from "./pages/mypage/businesscardregist";
+// import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
-import Customerlog from "./pages/mypage/customerlog";
+// import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
 
 
@@ -87,6 +87,8 @@ function App() {
                       <Route path="/login/findaccount/step1" element={<Step1 />} />
                       <Route path="/login/findaccount/step2" element={<Step2 />} />
                       <Route path="/login/findaccount/pass-reset" element={<Step2pass />} />
+
+
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/management/user" element={<MngUser />} />
                 <Route path="/admin/management/system/log" element={<MngLog />} />
@@ -100,6 +102,11 @@ function App() {
                 <Route path="/pm/member-annual" element={<PmMemberAnnual />}/>
                 <Route path="/pm/pm-resist" element={<PmMemberResist />}/>
                 <Route path="/pm/work" element={<PmWork />}/>
+
+                <Route path="/mypage" element={<Mypage />} />
+                {/* <Route path="/mypage/list/regist" element={<Businesscardregist />}/> */}
+                {/* <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } /> */}
+                <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
           </Route>
 
         </Routes>
