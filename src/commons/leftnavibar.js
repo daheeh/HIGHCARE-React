@@ -20,7 +20,9 @@ function LeftNavibar(){
                 <Link to="/">
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Main}>{isMenuActive && 'Home'}</div>
                 </Link>
-                    <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Note}>{isMenuActive && '채팅쪽지함'}</div>
+                <Link to="/chatting">
+                    <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Note}>{isMenuActive && '채팅'}</div>
+                </Link>
                 <Link to="/pm">
                     <div className={isMenuActive? NaviCss.MenuActive :NaviCss.Pm}>{isMenuActive && '인사관리'}</div>
                 </Link>    

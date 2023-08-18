@@ -48,6 +48,8 @@ import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 
+import ModalMain from "./modal/modalMain";
+
 
 
 
@@ -113,6 +115,8 @@ function App() {
                 <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
                 <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
                 <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
+
+                <Route path="/chatting" element={<ModalMain />} />
 
 
           </Route>

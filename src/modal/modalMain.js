@@ -1,10 +1,10 @@
 import React from 'react';
 import Modal from './modal';
-import '../../css/modalMain.css';
+import './modalMain.css';
 
 const { useState } = React;
 
-function App() {
+function ModalMain() {
     const [modal, setModal] = useState(false);
 
     const openModal = () => {
@@ -26,4 +26,4 @@ function App() {
     );
 }
 
-export default App;
+export default ModalMain;
