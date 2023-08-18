@@ -1,0 +1,253 @@
+.content-bullentin-main{
+    
+    width:100vw;
+    font-size: 20px;
+}
+.main-catagory{
+  padding-left: 35px;
+  margin-top: 80px;
+  font-size: 20px;
+}
+.main-catagory span{
+  background-color: ;
+  color: ;
+}
+.comment-count{
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.comment-content{
+  font-size: 16px;
+}
+.comment{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.content-main{
+  margin-top: 70px;
+  padding-left: 50px;
+  padding-right: 200px;
+  width: 100vw;
+}
+.content-main h3{
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+.content-main-main{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  min-height: 500px;
+}
+.content-info{
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.content-info span{
+  margin-right: 10px;
+}
+.comment-detail{
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.write-bulletin{
+  text-align: end;
+  margin-right: 40px;
+  margin-top: 20px;
+  font-size: 20px;
+}
+.bullentin-category span{
+  margin-right: 20px;
+}
+.write-title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.write-title span{
+  margin-right: 20px;
+}
+.content-title{
+    padding-left: 20px;
+    padding-bottom: 10px;
+    margin-top: 70px;
+    /* border-bottom: 1px solid #000; */
+}
+table{
+    width: 100%;
+
+    border-collapse: collapse;
+}
+.permit{
+
+}
+.registration{
+ float: right;
+ margin-right: 90px;
+}
+th,td{
+    text-align: center;
+    border-bottom: 1px solid #444444;
+    font-size: 20px;
+    padding: 5px;
+}
+th{
+    width: 5%;
+}
+td{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.title-head{
+    width: 50%;  
+}
+
+.date-head{
+    width: 10%;
+}
+
+.search {
+    margin-bottom: 50px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    float: right;
+  }
+  
+  .searchTerm {
+    width: 50%;
+    border: 3px solid #00B4CC;
+    border-right: none;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+    margin-left: 70px;
+  }
+  
+  .searchTerm:focus{
+    color: #00B4CC;
+  }
+  
+  .searchButton {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #00B4CC;
+    background: #00B4CC;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+ .wrap{
+    width: 30%;
+    float: right;
+    margin-right: 5px;
+   
+    margin-bottom: 20px;
+  }
+
+  .bullentin-main{
+    padding-left: 10px;
+  }
+
+  .step{
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+    margin-top: 50px;
+  }
+  .step div{
+    text-align: center;
+  }
+  .step div h3{
+    
+    border: 1px solid #000;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    padding-top: 25px;
+    margin-bottom: 0px;
+  }
+  .step-1-content,.step-2-content,#step-3-content{
+    min-height: 400px;
+    min-width: 300xpx;
+    border: 1px solid #000;
+  }
+  .step-3{
+    min-width: 400px;
+  }
+  .step-3 h3{
+    min-width: 400px;
+  }
+li{
+  list-style-type: none;
+  text-align: center;
+  margin-bottom: 10px;
+}
+ul{
+  padding: 0;
+}
+#step-3-content div{
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+#step-3-content img{
+  margin-top: 20px;
+}
+
+.add-content{
+  margin-left: 20px;
+}
+.add-content div{
+  margin-bottom: 10px;
+}
+.add-content div span{
+  display:inline-block;
+  width: 200px;
+  font-size: 16px;
+}
+.add-content span{
+  font-size: 16px;
+}
+.button-list{
+  float:right;
+  margin-right: 50px;
+}
+
+.apply-content{
+  display: flex;
+  margin-bottom: 10px;
+  
+}
+.applay-main{
+  margin-left: 20px;
+}
+.applay-main img{
+  margin-right: 50px;
+}
+.applay-main div div{
+  margin-bottom: 10px;
+}
+
+#reservation-status{
+  border: 1px solid #000;
+  width: 30%;
+  margin: 70px;
+  height: 300px;
+  margin-top: 200px;
+  
+  text-align: center;
+}
+#reservation-status h3{
+  border-bottom: 1px solid #000;
+  padding-bottom: 20px;
+  
+}
+#reservation-status button{
+  margin-top: 20px;
+}
