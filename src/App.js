@@ -49,6 +49,7 @@ import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 
+import BulletinMain from "./pages/bulletin/BulletinMain";
 
 
 
@@ -109,12 +110,16 @@ function App() {
                 <Route path="/pm/work" element={<PmWork />}/>
                 <Route path="/pm/treeview" element={<TreeView />}/>
 
+                <Route path="/bulletin">
+                  <Route index element={<BulletinMain/>}/>
+                </Route>
 
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
                 <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
                 <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
 
+                
 
           </Route>
 
