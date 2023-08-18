@@ -1,4 +1,3 @@
-
 import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
@@ -126,3 +125,4 @@ function App() {
 }
 
 export default App;
+
