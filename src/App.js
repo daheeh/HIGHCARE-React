@@ -50,9 +50,17 @@ import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
+import BulletinBoard from "./pages/bulletin/BulletinBoard";
+import Bulletin from "./pages/bulletin/Bulletin";
+import Thread from "./pages/bulletin/Thread";
+import BullentinWrite from "./pages/bulletin/BullentinWrite";
 
-
-
+import ReservationMain from "./pages/reservation/ReservationMain";
+import Reservation from "./pages/reservation/Reservation";
+import ReservationStatus from "./pages/reservation/ReservationStatus";
+import MyReservationStatus from "./pages/reservation/MyReservationStatus";
+import ResourceAdd from "./pages/reservation/ResourceAdd";
+import Reserve from "./pages/reservation/Reserve";
 
 function App() {
   return (
@@ -110,17 +118,25 @@ function App() {
                 <Route path="/pm/work" element={<PmWork />}/>
                 <Route path="/pm/treeview" element={<TreeView />}/>
 
-                <Route path="/bulletin">
-                  <Route index element={<BulletinMain/>}/>
+                <Route path="/bulletin" element={<BulletinMain/>}>
+                  <Route index element={<Bulletin />}/>
+                  <Route path="board" element={<BulletinBoard/>}/>
+                  <Route path="thread" element={<Thread/>}/>
+                  <Route path="bullentinWrite" element={<BullentinWrite/>}/>
                 </Route>
 
+
+                <Route path="/reservation" element={<ReservationMain/>}>
+                  <Route index element={<Reservation/>}/>
+                  <Route path="status" element={<ReservationStatus/>}/>
+                  <Route path="mystatus" element={<MyReservationStatus/>}/>
+                  <Route path="add" element={<ResourceAdd />}/>
+                  <Route path="reserve" element={<Reserve />}/>
+                </Route>
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/mypage/list/regist" element={<Businesscardregist />}/>
                 <Route path="/mypage/mytemplate/customlog" element={ <Customerlog /> } />
                 <Route path="/mypage/mytemplate/worklog" element={ <Worklog />} />
-
-                
-
           </Route>
 
         </Routes>

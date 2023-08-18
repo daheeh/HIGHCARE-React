@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
 import BulletinNav from "./BulletinNav";
-import Bulletin from "./Bulletin";
+
 
 function BulletinMain(){
     return (
         <>
-            <div style={{display:'flex'}}>
+            <div style={{display:'flex',width: '100vw'}}>
             <BulletinNav />
-            <Bulletin />
+            <Outlet />
             </div>
-            <Outlet/>
         </>
     )
 }

@@ -1,8 +1,9 @@
 import './Bullentin.css';
-function Bulletin(){
+
+function BulletinBoard(){
     return (
         <div className="content-bullentin-main">
-        <h1 className="content-title">인기 게시판</h1>
+        <h1 className="content-title">자유 게시판</h1>
         <div className="wrap">
             <div className="search">
                 <input type="text" className="searchTerm" placeholder="제목 입력하세요."/>
@@ -46,4 +47,4 @@ function Bulletin(){
     )
 }
 
-export default Bulletin;
+export default BulletinBoard;
