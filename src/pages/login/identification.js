@@ -61,7 +61,7 @@ function Identification(){
                     emailAuth()
                 )}
                 <div className="nextbutton-container">
-                    <Link to="/login/findaccount/step2">
+                    <Link to="/login/find/step2">
                         
                     <button className="nextbtn">다음</button>
                     </Link>

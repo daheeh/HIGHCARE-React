@@ -1,24 +1,30 @@
-import MngUserCss from "./MngUser.module.css"
+import { Link } from "react-router-dom";
+import MemberListCss from "./MemberList.module.css"
 
-function MngUser(){
+
+function MemberList(){
     
     return(
 
         <div>
-            <div>멤버 통합관리</div>
+            <div>회원 통합관리</div>
             <div>
                 <div>현재 멤버 수: {}명 </div>
-                <div>정상 {}명 / 임시 {}명 / 중지된멤버 {}명</div>
+                <div>정상 {}명 / 임시 {}명 / 차단 {}명</div>
             </div>
-            <div className={MngUserCss.crudBtn}>
-                <button>회원추가</button>
-                <button>회원수정</button>
-                <button>회원삭제</button>
+            <div className={MemberListCss.crudBtn}>
+                    {/* 임시회원상태만 클릭시 회원등록확정 alert창 띄워지고 권한 일반회원으로 변경됨 */}
+                    <button>회원등록</button>
+                <Link to="modify">
+                    {/* 체크박스 선택된 회원의 정보 수정 페이지 이동(1개만 선택되어야함) */}
+                    <button>회원수정</button>
+                </Link>
+
             </div>
-            <div className={MngUserCss.category}>
+            <div className={MemberListCss.category}>
                     <input type="checkbox"/>
-                    <div>이름</div>         
                     <div>사원번호</div>
+                    <div>이름</div>         
                     <div>
                         <select name="jobCode">
                         <option value="null" disabled hidden selected>직급</option>
@@ -38,9 +44,14 @@ function MngUser(){
                             <option >{}</option>
                         </select>        
                     </div>       
-                    <div>계정상태</div>  
+                    <div>
+                        <select name="accountStatus">
+                            <option value="null" disabled hidden selected>계정상태</option>
+                            <option >{}</option>
+                        </select>
+                    </div>      
             </div>
-            <div className={MngUserCss.category}>
+            <div className={MemberListCss.category}>
                     <input type="checkbox"/>
                     <div>{}</div>         
                     <div>{}</div>         
@@ -55,16 +66,16 @@ function MngUser(){
             <div>
 
             </div>
-            <div className={MngUserCss.paging} style={{marginLeft:500}}>
+            <div className={MemberListCss.paging} style={{marginLeft:500}}>
                 <div style={{justifyContent:'', display:'flex'}}>                        
                     <button>
-                    <div className={MngUserCss.leftbtn}/>
+                    <div className={MemberListCss.leftbtn}/>
                     </button>
                     <button>
-                    <div className={MngUserCss.centerbtn}/>
+                    <div className={MemberListCss.centerbtn}/>
                     </button>
                     <button>
-                    <div className={MngUserCss.rightbtn}/>
+                    <div className={MemberListCss.rightbtn}/>
                     </button>
                 </div>
             </div>
@@ -85,4 +96,4 @@ function MngUser(){
     );
 }
 
-export default MngUser; 
+export default MemberList; 

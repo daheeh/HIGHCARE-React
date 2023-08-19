@@ -1,0 +1,59 @@
+
+.container {
+    
+    font-size: 20px;
+    width: 600px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.container div, .container p {
+    min-width: 100px;
+    display: flex;
+    margin-top: 10px;
+    
+}
+
+.container p {
+    font-size: 16px;
+    color: blue;
+
+}
+
+.container div {
+    margin-left: 50px;
+}
+.label {
+    width: 100px;
+}
+
+.container input  {
+    height: 40px;
+    width: 300px;
+    border-radius: 6px;
+    font-size: 18px;
+    margin-left: auto;
+}
+
+.container input[type="radio"]  {
+    width: 20px;
+    margin-left: -20px;
+
+}
+
+.container label  {
+    margin: auto;
+}
+
+.container button {
+
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    margin: auto;
+
+}
+
+.redbtn {
+    background-color: red;
+}

@@ -1,24 +1,24 @@
 import React from "react";
-import MngLogCss from "./MngLog.module.css"
-import MngUserCss from "./MngUser.module.css"
+import MemberLogStyle from "./MemberLog.module.css"
+import MemberListCss from "./MemberList.module.css"
 
 
 
-function MngLog(){
+function MemberLog(){
 
     return(
 
    
 
         <div>
-            <div className={MngLogCss.title}>멤버 접근로그</div>
+            <div className={MemberLogStyle.title}>회원 접속로그</div>
 
-            <div className={MngLogCss.searchbox}>
+            <div className={MemberLogStyle.searchbox}>
                 <div style={{width:80, marginLeft:20, fontSize:20}}>이 름 :</div>
                 <input type="search"/>
                 <button>검 색</button>
             </div>  
-            <div className={MngLogCss.searchbox}>
+            <div className={MemberLogStyle.searchbox}>
                 <select >
                     <option value="7d" selected>최근 7일간</option>
                     <option value='1m'>최근 한 달간</option>
@@ -29,7 +29,7 @@ function MngLog(){
                 <input type="date"/>까지
             </div>  
                 
-            <div className={MngLogCss.loglist}>
+            <div className={MemberLogStyle.loglist}>
                     <div>시간</div>         
                     <div>이름</div>
                     <div>이메일</div>
@@ -42,16 +42,16 @@ function MngLog(){
                     
             </div>
 
-            <div className={MngUserCss.paging}>
+            <div className={MemberListCss.paging}>
                 <div style={{justifyContent:'', marginLeft:'600px', display:'flex', marginTop:30}}>                        
                     <button>
-                        <div className={MngUserCss.leftbtn}/>
+                        <div className={MemberListCss.leftbtn}/>
                     </button>
                     <button>
-                        <div className={MngUserCss.centerbtn}/>
+                        <div className={MemberListCss.centerbtn}/>
                     </button>
                     <button>
-                        <div className={MngUserCss.rightbtn}/>
+                        <div className={MemberListCss.rightbtn}/>
                     </button>
                 </div>
             </div>
@@ -66,4 +66,4 @@ function MngLog(){
 
 }
 
-export default MngLog;
+export default MemberLog;

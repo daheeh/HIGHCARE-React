@@ -29,7 +29,7 @@ function LoginOfPass(){
                 <Link to="/login">
                     <button className="step2btn-1">로그인 하기</button>
                 </Link>
-                <Link to="/login/findaccount/pass-reset">
+                <Link to="/login/find/reset">
                     <button className="step2btn-2">비밀번호 설정</button>
                 </Link>
     
