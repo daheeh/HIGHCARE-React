@@ -62,7 +62,7 @@ body {
 .logininput input {
     flex-direction: column;
     display: flex;
-    align-items: flex-end;
+    align-items: end;
     border-radius: 6px;
 }
 

@@ -30,6 +30,7 @@ import Hrm7 from './pages/approval/hrm7';
 import Login from './pages/login/Login';
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/mainpage";
+import AuthManager from "./pages/auth/AuthManager";
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/management/user" element={<MngUser />} />
                 <Route path="/admin/management/system/log" element={<MngLog />} />
+                <Route path="/admin/management/auth" element={<AuthManager />} />
           </Route>
 
         </Routes>

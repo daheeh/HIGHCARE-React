@@ -8,6 +8,7 @@ function AdminPage() {
           <p>관리자 메인</p>
           <Link to="management/user">회원관리</Link>
           <Link to="management/system/log">로그관리</Link>
+          <Link to="management/auth">권한 설정</Link>
       </div>
     ); 
 }
