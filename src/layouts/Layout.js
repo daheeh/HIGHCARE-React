@@ -4,7 +4,8 @@ import Header from "../commons/Header"
 import LeftNavibar from "../commons/leftnavibar"
 import LayoutCSS from "./Layout.module.css"
 import ManageTest from "../pages/managed/mng-test";
-import EmpMain from "../pages/approval/empMain";
+// import EmpMain from "../pages/approval/empMain";
+
 
 
 function Layout() {
@@ -15,7 +16,7 @@ function Layout() {
             <LeftNavibar/>
             <main className={ LayoutCSS.main }>
                 <div style={{display:'flex', alignItems:'end', borderBottom:'1px solid lightgray'}}>
-                    <EmpMain/>
+                    {/* <EmpMain/> */}
                     <ManageTest/>
                 </div>
                 <Outlet/>
