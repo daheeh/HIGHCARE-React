@@ -987,3 +987,33 @@ div [class="parent"] {
     display:inline-block;
 
 } */
+
+/* treeview 두번쨰꺼 */
+
+h1, p {
+    font-family: Lato;
+  }
+
+.orgchart{
+    width: 2000px;
+    height: 800px;
+    background-image: none !important;
+}
+.orgchart ul li .oc-node .oc-heading{
+    background-color: #10479A !important;
+}
+
+.orgchart ul li .oc-node .oc-content{
+    border: 1px solid #10479A !important;
+}
+
+.orgchart > ul > li > ul li::before {
+    border-top: 2px solid #10479A !important;
+}
+.orgchart ul li .oc-node:not(:only-child)::after{
+    background-color: #10479A !important;
+}
+
+.orgchart > ul > li > ul li > .oc-node::before{
+    background-color:  #10479A !important;
+}
