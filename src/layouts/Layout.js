@@ -12,11 +12,13 @@ function Layout() {
 
     return (
         <>
+        {/* 에러바운더리 추가하기 */}
+        
             <Header/>
             <LeftNavibar/>
             <main className={ LayoutCSS.main }>
                 <div style={{display:'flex', alignItems:'end', borderBottom:'1px solid lightgray'}}>
-                    <ManageTest/>
+                    {/* <ManageTest/> */}
                 </div>
                 <Outlet/>
             </main>

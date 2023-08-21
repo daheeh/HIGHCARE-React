@@ -1,28 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './login.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import  { loginAction, logoutAction, getmemberAction } from "../../modules/memberSlice"
+import { callLoginAPI } from "../../apis/AuthAPICalls"; 
 
 
 function Logininfo(){
 
+    const navigate = useNavigate();
     
+
+    // selector state를 통해 리듀서에 접근 
+    const loginMember = useSelector(state => state.members);
+    const dispatch = useDispatch();  // action을 보낼 수 있다. 
+
+    const [form, setForm] = useState({
+        id: '',
+        password: ''
+    });
+
+    const onChangeHandler = e => {
+        setForm({
+            ...form,
+            [e.target.name] : e.target.value
+        });
+    };
+
+    const onClickLoginHandler = async () => {
+        await dispatch(callLoginAPI({form}));
+        console.log("callapi 반환");
+        console.log(loginMember);
+        console.log(loginMember.status);
+    }
+
+    useEffect(() => {
+        if (loginMember.status === true) {
+            console.log("[Login] Login SUCCESS {} ", loginMember);
+            navigate(-1);  // 이전 페이지로 돌아가기
+        }
+    }, [loginMember.status, navigate]);
 
     return (
         <div>
-    
             <div className="login-container">
                 <div className="input-group">
                     <div className="id-group">
                         <input type="text" id="username" 
-                        name="username" placeholder="아이디를 입력하세요." required />
+                            name="id" placeholder="아이디를 입력하세요." required
+                            onChange={onChangeHandler}
+                        />
                     </div>
+
                     <div className="password-group">
                         <input type="password" id="password" 
-                        name="password" placeholder="비밀번호를 입력하세요."required />
+                            name="password" placeholder="비밀번호를 입력하세요."required
+                            onChange={onChangeHandler}
+                        />
                     </div>
                 </div>
                 <div className="button-group">
-                    <button type="button">로그인</button>
+                    <button type="button"
+                        onClick={onClickLoginHandler}
+                    >로그인</button>
                 </div>
                 <div className="save-and-find">
                     <div className="save-group">
