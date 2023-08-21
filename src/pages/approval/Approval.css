@@ -9,12 +9,11 @@ body {
 }
 
 section {
-    display: flex;
-    width: 1840px;
     font-size: 20px;
-
 }
-.container{
+
+.containerApv{
+    width: 1500px;
     padding: 0px 50px 50px 50px;
     width: auto;
     height: auto;
@@ -48,12 +47,12 @@ section {
     height: 36px;
 }
 
-.mainTitle{
+.apvMainTitle{
     color: #000;
     text-align: center;
     font-size: 40px;
     margin-top: 30px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .apvNaviBox{
@@ -318,11 +317,14 @@ section {
 
 .apvTopBar>div{
     margin-left: 50px;
+
 }
 
 .apvTopBar>div>button{
-    height: 40px;
-    margin-right: 20px;
+    width: auto;
+    height: auto;
+    min-height: 40px;
+    margin: 0px 20px 0px 0px;
     padding: 0px 12px;
     font-size: 16px;
     border-radius: 6px;
@@ -351,6 +353,7 @@ section {
 
 /* 결재라인 */
 .apvApvLine{
+    
     float: right;
     margin-right: 20px;
     width: 600px;

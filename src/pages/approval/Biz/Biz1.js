@@ -12,7 +12,7 @@ function Biz1() {
             <ApvMenu />
             <div>
                 <ApvSummitBar />
-                <div className="container">
+                <div className="containerApv">
                     <div className="apv-apvtitle">기안서</div>
                     <ApvSummitLine />
                     <div className="apv-content">
