@@ -119,9 +119,7 @@ function App() {
           <Route path="/admin">
             <Route index element={<AdminPage />} />
             <Route path="member" element={<MemberList />} />
-            {/* <Route path="member/regist" element={<MemberRegist />} /> */}
             <Route path="member/modify" element={<MemberModify />} />
-            {/* <Route path="member/delete" element={<MemberDelete />} /> */}
             <Route path="member/log" element={<MemberLog />} />
             <Route path="member/auth" element={<AuthManager />} />
           </Route>

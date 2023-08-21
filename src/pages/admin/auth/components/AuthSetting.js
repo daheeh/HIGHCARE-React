@@ -34,6 +34,8 @@ function AuthSetting() {
                     <input type="checkbox" id='etc'></input><label htmlFor="etc">**메뉴코드 리스트로 불러와야함</label>
                 </div>
             </div>
+            <div style={{textAlign:'center'}}><button>저장</button><button>취소</button></div>
+
         </div>
     )
 
