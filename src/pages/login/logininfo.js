@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 function Logininfo(){
 
+    
+
     return (
         <div>
     
@@ -28,14 +30,16 @@ function Logininfo(){
                         <label htmlFor="saveid">아이디 저장</label>
                     </div>
                     <div className="find-group">
-                        <Link to="/login/findaccount/step1">
+                        <Link to="/login/find/step1">
                         <input type="button" hidden id="findid"/>
                         <label htmlFor="findid">아이디 찾기</label>
                         <input type="checkbox" hidden id="findpass"/>
                         <label htmlFor="findpass">비밀번호 찾기</label>
                         </Link>
+                        <Link to="/login/member/request">
                         <input type="checkbox" hidden id="reqmember"/>
                         <label htmlFor="reqmember">가입요청</label>
+                        </Link>
                     </div>
                 </div>
             </div>

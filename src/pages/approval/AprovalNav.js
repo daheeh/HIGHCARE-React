@@ -6,9 +6,9 @@ function ApvMenu() {
 		<section>
 			<div className="leftMenu">
 				<div className="leftMenu2">
-					<div className="mainLogo">
-						<img src="/img/highcareLogo.png" alt="High Care Logo" />
-					</div>
+					{/* <div className="mainLogo">
+						<img src="/public/images/HIGH CARE.png" alt="High Care Logo" />
+					</div> */}
 					<div className="mainTitle">
 						<Link to="/approval/mainpage">전자결재</Link>
 					</div>

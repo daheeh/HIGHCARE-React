@@ -50,7 +50,7 @@ button {
     font-size: 20px;
 }
 
-.button-group button:hover {
+button:hover {
     background-color: rgba(255, 195, 56, 1);
 }
 
