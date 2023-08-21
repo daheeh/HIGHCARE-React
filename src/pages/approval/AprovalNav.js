@@ -9,8 +9,8 @@ function ApvMenu() {
 					{/* <div className="mainLogo">
 						<img src="/public/images/HIGH CARE.png" alt="High Care Logo" />
 					</div> */}
-					<div className="mainTitle">
-						<Link to="/approval/mainpage">전자결재</Link>
+					<div className="apvMainTitle">
+						<Link to="/approval">전자결재</Link>
 					</div>
 					<div className="apvNaviBox">
 						<div className="apvNaviBoxTop">
