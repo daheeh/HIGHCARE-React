@@ -336,7 +336,7 @@ section {
 }
 
 /* 문서 타이틀 */
-.apv-apvtitle{
+.apvApvTitle{
     display: flex;
     color: #000;
     text-align: center;
@@ -432,7 +432,7 @@ section {
     border-bottom: 1px solid #7B7B7B;
 }
 
-.apv-content{
+.apvContent{
     width: 1500px;
     display: inline-grid;
     margin-top: 40px;
