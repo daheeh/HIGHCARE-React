@@ -1,5 +1,34 @@
 import './Bullentin.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+import {
+    callBulletinAPI
+} from '../../apis/BulletinAPICall'
 function Bulletin(){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const params = useParams();
+    const boards = useSelector(state => state.boardReducer);
+
+    console.log('boards', boards);
+    const [start, setStart] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageEnd, setPageEnd] = useState(1);
+
+    useEffect(
+        () =>{
+            setStart((currentPage - 1) * 5);
+            // dispatch(callBulletinAPI({
+            //     categoryCode: params.categoryCode,
+            //     currentPage: currentPage
+            // }));
+            dispatch(callBulletinAPI());
+        }
+        ,[currentPage]
+        );
+
     return (
         <div className="content-bullentin-main">
         <h1 className="content-title">인기 게시판</h1>
@@ -20,7 +49,6 @@ function Bulletin(){
                 <tr>
                     <th>번호</th>
                     <th className="title-head">제목</th>
-                    <th>부서</th>
                     <th>이름</th>
                     <th>조회수</th>
                     <th>댓글수</th>
@@ -28,15 +56,17 @@ function Bulletin(){
                 </tr>
             </thead>
             <tbody>
+                {Array.isArray(boards)&& boards.map(
+                    (board) => (
                 <tr>
-                    <td className="no">1</td>
-                    <td className="title">제목 1</td>
-                    <td className="department">부서 </td>
-                    <td className="name">이름 </td>
-                    <td className="view">100</td>
-                    <td className="comment-cnt">5</td>
-                    <td className="date">2023-08-05</td>
-                </tr>
+                    <td className="no">{board.bulletinCode}</td>
+                    <td className="title">{board.title}</td>
+                    <td className="name">1</td>
+                    <td className="view">{board.views}</td>
+                    <td className="comment-cnt">1</td>
+                    <td className="date">{board.modifiedDate}</td>
+                </tr>)
+                )}
             </tbody>
         </table>
         <div className="write-bulletin">
