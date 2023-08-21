@@ -20,6 +20,10 @@ function Header() {
         password: ''
     });
 
+    useEffect(()=> {
+        navigate("/", { replace: true });
+    },[ window.localStorage.getItem('accessToken')])
+
     const onChangeHandler = e => {
         setForm({
             ...form,
@@ -41,7 +45,7 @@ function Header() {
         window.location.reload();
     }
 
-    console.log("로그인정보 확인" ,loginMember);
+    // console.log("로그인정보 확인" ,loginMember);
 
     function BeforeLogin() {
 
@@ -52,11 +56,7 @@ function Header() {
                     <button>
                         로그인
                     </button> </Link>
-                <Link to="/admin">
-                    <button>
-                        관리자메인
-                    </button>
-                </Link>
+
 
                 {/* <form>
 
