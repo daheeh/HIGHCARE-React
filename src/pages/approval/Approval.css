@@ -334,7 +334,19 @@ section {
 .apvTopBar>div>button.summit{
     background: #FFC338;
 }
+.apvTopBar>div>button.emergencyActive{
+    background: #FFC338;
+}
 
+.apvLineCount{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+.apvLineCount>button{
+    width: auto;
+    height: 40px;
+}
 /* 문서 타이틀 */
 .apvApvTitle{
     display: flex;
