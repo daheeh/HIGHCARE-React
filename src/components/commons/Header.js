@@ -4,25 +4,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
 
-
 function Header() {
 
     const navigate = useNavigate();
 
     const loginMember = useSelector(state => state.members);
+
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-    const isLogin = window.localStorage.getItem('accessToken') && loginMember.status;
-
+    const isLogin = window.localStorage.getItem('accessToken');
 
     const [form, setForm] = useState({
         id: '',
         password: ''
     });
 
-    useEffect(()=> {
-        navigate("/", { replace: true });
-    },[ window.localStorage.getItem('accessToken')])
+    // useEffect(() => {
+    //     // navigate("/", { replace: true });
+    // }, [isLogin])
 
     const onChangeHandler = e => {
         setForm({
@@ -50,7 +49,7 @@ function Header() {
     function BeforeLogin() {
 
         return (
-            <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom:'auto', marginLeft: 'auto' }}>
+            <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
 
                 <Link to="/login">
                     <button>
@@ -84,21 +83,23 @@ function Header() {
     function AfterLogin() {
 
         return (
-            <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom:'auto', marginLeft: 'auto' }}>
-                <div>{loginMember.dept} {loginMember.name} {loginMember.job}님 반갑습니다.</div>
-                <Link to="/">
+            <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
+                <div style={{ fontWeight: 'bold', color: 'gray' }}>{loginMember.dept} {loginMember.name} {loginMember.job}님 반갑습니다.</div>
+                <Link to="/modifyinfo">
                     <button>
                         내정보수정
-                    </button> </Link>
+                    </button>
+                </Link>
                 <button onClick={onClickLogoutHandler}>
                     로그아웃
                 </button>
-                {loginMember.role && loginMember.role.includes('ADMIN') && <button>관리자페이지</button>}
+                <Link to="/admin">
+                    {loginMember.role && loginMember.role.includes('ADMIN') && <button>관리자페이지</button>}
+                </Link>
             </div>
 
         )
     }
-
 
     return (
         <>
@@ -124,7 +125,11 @@ function Header() {
                 />
                  */}
 
-                {(isLogin == null || isLogin === undefined) ? <BeforeLogin /> : <AfterLogin />}
+                <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '20px', marginLeft: 'auto' }} >
+
+                    {(isLogin == null || isLogin === undefined || loginMember.status === false) ? <BeforeLogin /> : <AfterLogin />}
+
+                </div>
 
             </div>
         </>

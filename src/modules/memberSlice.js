@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const memberSlice = createSlice({
     name: 'members',  // 리듀서 이름 
     initialState: {
@@ -11,8 +9,9 @@ const memberSlice = createSlice({
         name: '',
         dept:'',
         job:'',
-        status: false,
+        isLogin: false,
         role:'',
+        status:'',
         
     },
     reducers: {
@@ -24,8 +23,9 @@ const memberSlice = createSlice({
             state.name = payload.data.memberName; 
             state.dept = payload.data.deptName;
             state.job = payload.data.jobName; 
-            state.status = true; 
+            state.isLogin = true; 
             state.role =payload.data.role;
+            state.status = payload.status;
         },
         logoutAction: (state, {payload}) => {
             state.id = '';
@@ -34,29 +34,28 @@ const memberSlice = createSlice({
             state.name = '';
             state.dept = '';
             state.job = '';  
-            state.status = false; 
+            state.isLogin = false; 
             state.role = '';
-
         },
-        getmemberAction: (state, {payload}) => {
-            console.log("getmember : ", state, payload);
+        reissueAction: (state, {payload}) => {
+            console.log("reissueAction : ", state, payload);
             // action.payload에서 가져온 data 
-            const {id, empNo, name, dept, job, status, role} = payload.data; 
-            state.id = id;
-            state.empNo = empNo;
-            state.name = name; 
-            state.dept = dept;
-            state.job = job; 
-            state.status = status;
-            state.role = role
-
-        }
+            const {id, empNo, name, dept, job, isLogin, role} = payload.data; 
+            // state.id = id;
+            // state.empNo = empNo;
+            // state.name = name; 
+            // state.dept = dept;
+            // state.job = job; 
+            // state.isLogin = isLogin;
+            // state.role = role
+        },
+        
     },
     extraReducers:{}
 })
 
 
 // 액션 생성자 내보내기 
-export const { loginAction, logoutAction, getmemberAction } = memberSlice.actions; 
+export const { loginAction, logoutAction, reissueAction } = memberSlice.actions; 
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

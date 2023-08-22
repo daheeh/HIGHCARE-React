@@ -68,13 +68,22 @@ import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
+import ModifyInfo from "./pages/admin/member/ModifyInfo";
+import { ErrorComponent } from "./errors/ErrorBoundary";
+import { useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
+import PrivateRoute from "./errors/PrivateRoute";
+import LoginVerify from "./utils/LoginVerify";
 
 
 
 function App() {
+
+
   return (
 
     <BrowserRouter>
+
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainLayOut />} />
@@ -112,8 +121,10 @@ function App() {
             <Route path="find/step1" element={<Step1 />} />
             <Route path="find/step2" element={<Step2 />} />
             <Route path="find/reset" element={<Step2pass />} />
-            <Route path="member/request" element={<MemberRequest/>}/>
+            <Route path="member/request" element={<MemberRequest />} />
           </Route>
+
+          <Route path="modifyinfo" element={<ModifyInfo />} />
 
 
           <Route path="/admin">
@@ -159,8 +170,12 @@ function App() {
 
           <Route path="/chatting" element={<ModalMain />} />
         </Route>
+        <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
       </Routes>
+        <ErrorBoundary
+          FallbackComponent={ErrorComponent}
+        ></ErrorBoundary>
 
     </BrowserRouter >
 
