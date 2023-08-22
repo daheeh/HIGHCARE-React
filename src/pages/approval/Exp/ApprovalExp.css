@@ -95,7 +95,7 @@
 }
 
 
-.apvContentDetail-exp1-total{
+.apvContentDetailExp1Total{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: repeat(2, 750px);
@@ -108,7 +108,7 @@
     /* border-bottom: 1px solid #7B7B7B; */
 }
 
-.apvContentDetail-exp1-total > div {
+.apvContentDetailExp1Total > div {
     display: flex;
     border-right: 1px solid #7B7B7B;
     border-bottom: 1px solid #7B7B7B;
@@ -117,7 +117,7 @@
     justify-content: center;
     font-weight: 600;
 }
-.apvContentDetail-exp1-total > div:nth-child(2n) {
+.apvContentDetailExp1Total > div:nth-child(2n) {
     border-right: none;
 }
 
