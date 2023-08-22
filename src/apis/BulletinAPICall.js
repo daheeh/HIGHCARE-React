@@ -1,6 +1,7 @@
 
 import {
     GET_BOARD
+    ,POST_BOARD
 } from '../modules/BoardMocule';
 
 // export const callBulletinAPI = ({categoryCode, currentPage}) => {
@@ -21,7 +22,28 @@ import {
         console.log('result.data', result.data);
         dispatch({ type: GET_BOARD,  payload: result.data });
     }
+   };
 
-   }
+}
 
+export const callBoardNameAddAPI = ({form}) => {
+   const requestURL = `http://localhost:8080/bulletin/boardAdd`;
+
+   return async (dispatch, getState) => {
+
+    const result = await fetch(requestURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*" ,
+            "Access-Control-Allow-Origin": "*" 
+        },
+        body: JSON.stringify({
+            nameBoard: form.nameBoard
+        })
+    })
+    .then(response => response.json());
+
+    dispatch({type: POST_BOARD, payload: result});
+   };
 }

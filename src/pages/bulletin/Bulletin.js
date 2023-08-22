@@ -58,7 +58,8 @@ function Bulletin(){
             <tbody>
                 {Array.isArray(boards)&& boards.map(
                     (board) => (
-                <tr>
+                <tr
+                key={ board.reviewCode }>
                     <td className="no">{board.bulletinCode}</td>
                     <td className="title">{board.title}</td>
                     <td className="name">1</td>
