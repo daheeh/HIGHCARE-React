@@ -20,9 +20,9 @@ function Header() {
         password: ''
     });
 
-    useEffect(()=> {
-        navigate("/", { replace: true });
-    },[ window.localStorage.getItem('accessToken')])
+    // useEffect(()=> {
+    //     navigate("/", { replace: true });
+    // },[ window.localStorage.getItem('accessToken')])
 
     const onChangeHandler = e => {
         setForm({

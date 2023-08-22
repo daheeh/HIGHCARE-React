@@ -1,8 +1,9 @@
 
 import {
     GET_BOARD
+    ,GET_BOARDS
     ,POST_BOARD
-} from '../modules/BoardMocule';
+} from '../modules/BoardModule';
 
 // export const callBulletinAPI = ({categoryCode, currentPage}) => {
    export const callBulletinAPI = () => {
@@ -20,10 +21,28 @@ import {
     .then(response => response.json());
     if(result.status === 200){
         console.log('result.data', result.data);
-        dispatch({ type: GET_BOARD,  payload: result.data });
+        dispatch({ type: GET_BOARD,  payload: result.data});
     }
    };
 
+}
+
+export const callBulletinNavAPI= ()=>{
+    const requestURL = `http://localhost:8080/bulletin/boardTitle`;
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        console.log('게시판 이름', result.data);
+
+        dispatch({type: GET_BOARDS, payload: result.data});
+    }
 }
 
 export const callBoardNameAddAPI = ({form}) => {
