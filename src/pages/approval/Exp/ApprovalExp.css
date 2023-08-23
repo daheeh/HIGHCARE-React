@@ -154,7 +154,7 @@
     text-align: center;
     justify-content: space-around;
     border-top: 1px solid #7B7B7B;
-    border-bottom: 1px solid #7B7B7B;
+
 }
 .apvContentTitleExp1-3 > div{
     display: flex;
@@ -178,6 +178,10 @@
     border-top: 3px solid #7B7B7B;
     background: #EEE;
     font-weight: 600;
+}
+
+.apvContentDetail3{
+    border-top: 3px solid #7B7B7B;
 }
 
 .apv-content-title-exp6{

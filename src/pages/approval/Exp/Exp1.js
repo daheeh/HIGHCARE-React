@@ -257,7 +257,7 @@ function Exp1() {
 							</div>
 						</div>
 
-						<div className="apvContentDetail">위와 같이 지급을 요청합니다.</div>
+						<div className="apvContentDetail3">위와 같이 지급을 요청합니다.</div>
 					</div>
 					<div className='apvLineCount'>
 						<button onClick={handleAddForm}>라인추가</button>

@@ -3,38 +3,33 @@ import { composeWithDevTools} from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
+import adminReducer from './modules/adminSlice'
+import authReducer from './modules/authSlice'
 import { configureStore } from '@reduxjs/toolkit';
-import adminReducer from './modules/adminSlice';
-import authReducer from './modules/authSlice';
-
-// const store = createStore(
-//   rootReducer,
-//   composeWithDevTools(applyMiddleware(ReduxThunk))
-// );
+import approvalReducer from './modules/ApprovalModule';
+import boardReducer from './modules/BoardModule';
 
 
 
-
-// Get persisted state from localStorage
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {};
 
-// Create store using configureStore from @reduxjs/toolkit
 const store = configureStore({
-  reducer: {
-    members: memberReducer,
-    admins: adminReducer,
-    authes: authReducer,
-    root: rootReducer,
-  },
-  preloadedState: persistedState, // Set initial state from localStorage
-  middleware: [ReduxThunk],
+    reducer: {
+        members: memberReducer,
+        approval : approvalReducer,
+        boardtest : boardReducer,
+        admins: adminReducer,
+        authes: authReducer,
+
+    },
+    preloadedState: persistedState, // Set initial state from localStorage
+    middleware: [ReduxThunk]
 });
 
-// Subscribe to store changes and save state to localStorage
 store.subscribe(() => {
-  localStorage.setItem('reduxState', JSON.stringify(store.getState()));
-});
+    localStorage.setItem('reduxState', JSON.stringify(store.getState())); // Save state to localStorage on every state change
+  });
 
 export default store;

@@ -38,11 +38,6 @@ function Header() {
     if(token != null ){
         LoginVerify(token, loginInfo.refreshExp);
     } 
-    
-
-    // useEffect(() => {
-    //     // navigate("/", { replace: true });
-    // }, [isLogin])
 
     const onChangeHandler = e => {
         setForm({
