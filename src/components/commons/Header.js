@@ -36,7 +36,10 @@ function Header() {
     // 토큰만료 검증 
     const token = decodeJwt(window.localStorage.getItem("accessToken"));   
     if(token != null ){
-        LoginVerify(token, loginInfo.refreshExp);
+        if(!LoginVerify(token, loginInfo.refreshExp)){
+            // alert('로그인을 먼저해주세요');
+            navigate("/login", { replace: true });
+        }
     } 
 
     const onChangeHandler = e => {

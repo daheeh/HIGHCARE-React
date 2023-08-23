@@ -41,7 +41,7 @@ function Logininfo() {
 
 
     return (
-        <div>
+        <div  style={{marginTop:100}}>
             <div className="login-container">
                 <div className="input-group">
                     <div className="id-group">

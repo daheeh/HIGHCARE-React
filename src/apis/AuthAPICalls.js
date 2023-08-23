@@ -79,7 +79,7 @@ export const jwtReissueAPI = (id) => {
         
         if(result.status == 401 ){
             alert(result.message);
-            navigator("/");
+            navigator("/", { replace: true } );
         }
 
         console.log('재발급 access token 확인 : ', result);

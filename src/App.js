@@ -85,6 +85,15 @@ function App() {
     <BrowserRouter>
 
       <Routes>
+
+      <Route path="login">
+            <Route index element={<Login />} />
+            <Route path="find/step1" element={<Step1 />} />
+            <Route path="find/step2" element={<Step2 />} />
+            <Route path="find/reset" element={<Step2pass />} />
+            <Route path="member/request" element={<MemberRequest />} />
+          </Route>
+          
         <Route path="/" element={<Layout />}>
           <Route index element={<MainLayOut />} />
           <Route path="approval">
@@ -116,13 +125,7 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          <Route path="login">
-            <Route index element={<Login />} />
-            <Route path="find/step1" element={<Step1 />} />
-            <Route path="find/step2" element={<Step2 />} />
-            <Route path="find/reset" element={<Step2pass />} />
-            <Route path="member/request" element={<MemberRequest />} />
-          </Route>
+          
 
           <Route path="modifyinfo" element={<ModifyInfo />} />
 
