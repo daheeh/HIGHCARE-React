@@ -51,11 +51,7 @@ function Exp2() {
 	console.log('formData.apvExpForms : ', formData.apvExpForms);
 
 	const [sharedProperties, setSharedProperties] = useState({
-    	requestDate: '',
-        payee: '',
-        bank: '',
-        accountHolder: '',
-        accountNumber: ''
+    	requestDate: ''
     });
 
 	const onChangeHandler = (e, index) => {
@@ -116,6 +112,10 @@ function Exp2() {
 				...prevFormData.apvExpForms,
 				{
 					...prevFormData.apvExpForms[0],
+					payee: '',
+					bank: '',
+					accountHolder: '',
+					accountNumber: '',
 					details: '',
 					account: '',
 					amount: '',
@@ -207,59 +207,61 @@ function Exp2() {
 					<ApvSummitLine />	
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
-							<div className="column1">지급요청일자</div>
+						<div className="column1">지급요청일자</div>
 							<div className="column2">
 								<input className="input1" type="date" placeholder="날짜 입력"
-									name="apvExpForms.requestDate" onChange={onChangeHandler}/>
+								name="sharedProperties.requestDate"
+								value={sharedProperties.requestDate} onChange={onChangeHandler}/>
 							</div>
-							<div className="column3">합계</div>
+							<div className="column3">총 합계</div>
 							<div className="column4">{totalAmount}</div>
 						</div>
 						<div className="apvContentDetail2">- 1 -</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
 							<div className="column42">
-								<input className="input1" placeholder="예금주 입력" name='apvExpForms.accountHolder' onChange={onChangeHandler}/>
+							<input className="input1" placeholder="예금주 입력"
+								name='sharedProperties.accountHolder' value={sharedProperties.accountHolder} onChange={onChangeHandler}/>
+							</div>
+							<div className="column43">지급처</div>
+							<div className="column44">
+							<input className="input1" placeholder="지급처 입력"
+								name='sharedProperties.payee' value={sharedProperties.payee} onChange={onChangeHandler}/>
+							</div>
+						</div>
+						<div className="apvContentTitleExp1-2">
+							<div className="column41">계좌번호</div>
+							<div className="column42">
+							<input className="input1" placeholder="계좌번호 입력"
+								name='sharedProperties.accountNumber' value={sharedProperties.accountNumber} onChange={onChangeHandler}/>
 							</div>
 							<div className="column43">은행</div>
 							<div className="column44">
-								<input className="input1" placeholder="은행 입력" name='apvExpForms.bank' onChange={onChangeHandler}/>
-							</div>
-						</div>
-						<div className="apvContentTitleExp1-3">
-							<div className="column45">계좌번호</div>
-							<div className="column46">
-								<input className="input1" placeholder="계좌번호 입력" name='apvExpForms.accountNumber' onChange={onChangeHandler}/>
+							<input className="input1" placeholder="은행 입력"
+								name='sharedProperties.bank' value={sharedProperties.bank} onChange={onChangeHandler}/>
 							</div>
 						</div>
 						<div className="apvContentDetailExp1Title">
-							<div className="column11">지급처</div>
-							<div className="column12">내역</div>
+							<div className="column11">내역</div>
+							<div className="column12">계정과목</div>
 							<div className="column13">금액</div>
 							<div className="column14">적요</div>
 						</div>
 						<div className="apvContentDetailExp1Content">
-							<div className="apvContentDetailExp1List">
-								<div className="column21">
-									<input className="input1" name='apvExpForms.payee' onChange={onChangeHandler}/>
-								</div>
-								<div className="column22">
-									<input className="input1" name='apvExpForms.details' onChange={onChangeHandler}/>
-								</div>
-								<div className="column23">
-									<input className="input1" type="number" name='apvExpForms.amount' onChange={onChangeHandler}/>
-								</div>
-								<div className="column24">
-									<input className="input1" name='apvExpForms.comment' onChange={onChangeHandler}/>
-								</div>
-							</div>
+							{Array.from({ length: formCount }).map((_, index) =>
+								renderApvExpForm(formData.apvExpForms[index] || {}, index)
+							)}
+						</div>
+						<div className="apvContentDetailExp1Total2">
+							<div className="column31">합계</div>
+							<div className="column32">{totalAmount}</div>
 						</div>
 						<div className="apvContentDetail3">위와 같이 지급을 요청합니다.</div>
 					</div>
 					<div>
 						<div className='apvLineCount'>
-							<button >라인추가</button>
-							<button >라인삭제</button>
+							<button onClick={handleAddForm}>라인추가</button>
+							<button onClick={handleRemoveForm}>라인삭제</button>
 						</div>
 					</div>
 				</div>
