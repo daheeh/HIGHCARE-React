@@ -1,46 +1,72 @@
-import './Bullentin.css';
+import BoardStyle from './Bullentin.module.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
+import {
+    callBulletinAPI
+} from '../../apis/BulletinAPICall';
 function BulletinBoard(){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const boards = useSelector(state => state.boardtest);
+    const [start, setStart] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageEnd, setPageEnd] = useState(1);
+    const categoryCode = useParams().categoryCode;
+
+    useEffect(
+        () =>{
+            setStart((currentPage - 1) * 5);
+            dispatch(callBulletinAPI({
+                categoryCode: categoryCode,
+                currentPage: currentPage
+            }));
+            // dispatch(callBulletinAPI());
+            
+        }
+        ,[categoryCode,currentPage]
+        );
+    console.log('categoryCode',categoryCode);
+   const title = categoryCode==1?'전체게시판':(categoryCode==2?'공지사항':(categoryCode==3?'자유게시판':'인기게시판'));
     return (
-        <div className="content-bullentin-main">
-        <h1 className="content-title">자유 게시판</h1>
-        <div className="wrap">
-            <div className="search">
-                <input type="text" className="searchTerm" placeholder="제목 입력하세요."/>
-                <button type="submit" className="searchButton">
-                    <i className="fa fa-search"></i>
+        <div className={BoardStyle.content_bullentin_main}>
+        <h1 className={BoardStyle.content_title}>{title}</h1>
+        <div className={BoardStyle.wrap}>
+            <div className={BoardStyle.search}>
+                <input type="text" className={BoardStyle.searchTerm} placeholder="제목 입력하세요."/>
+                <button type="submit" className={BoardStyle.searchButton}>
+                    <i></i>
                 </button>
             </div>
         </div>
-        <div className="main-catagory">
-            <span>최근글</span>
-            <span>인기글</span>
-        </div>
         <table>
-            <thead>
+        <thead>
                 <tr>
                     <th>번호</th>
-                    <th className="title-head">제목</th>
-                    <th>부서</th>
+                    <th className={BoardStyle.title_head}>제목</th>
                     <th>이름</th>
                     <th>조회수</th>
                     <th>댓글수</th>
-                    <th className="date-head">작성일</th>
+                    <th className={BoardStyle.date_head}>작성일</th>
                 </tr>
             </thead>
             <tbody>
+    
+                {Array.isArray(boards)&& boards.map(
+                    (board) => (
                 <tr>
-                    <td className="no">1</td>
-                    <td className="title">제목 1</td>
-                    <td className="department">부서 </td>
-                    <td className="name">이름 </td>
-                    <td className="view">100</td>
-                    <td className="comment-cnt">5</td>
-                    <td className="date">2023-08-05</td>
-                </tr>
+                    <td className={BoardStyle.no}>{board.bulletinCode}</td>
+                    <td className={BoardStyle.title}>{board.title}</td>
+                    <td className={BoardStyle.name}>1</td>
+                    <td className={BoardStyle.view}>{board.views}</td>
+                    <td className={BoardStyle.comment_cnt}>1</td>
+                    <td className={BoardStyle.date}>{board.modifiedDate}</td>
+                </tr>)
+                )}
             </tbody>
         </table>
-        <div className="write-bulletin">
+            <div className={BoardStyle.write_bulletin}>
             글쓰기
         </div>
     </div>

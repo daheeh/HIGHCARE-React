@@ -33,7 +33,7 @@ function LeftNavibar(){
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Mypage}>{isMenuActive && '마이페이지'}</div>
                 </Link>   
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.Schedule}>{isMenuActive && '일정관리'}</div>
-                <Link to= "/bulletin">
+                <Link to= "/bulletin/board/1">
                     <div className={isMenuActive? NaviCss.MenuActive : NaviCss.bulletin}>{isMenuActive && '게시판'}</div>
                </Link> 
                <Link to="/reservation">

@@ -3,38 +3,43 @@ import BoardNavStyle from './BulletinNavStyle.module.css';
 import Bmodal from './bmodal/Bmodal';
 import { useSelector, useDispatch} from 'react-redux';
 import { useEffect, useState } from 'react'; 
-
-import {
-    callBulletinNavAPI
-} from '../../apis/BulletinAPICall';
+import { NavLink } from 'react-router-dom';
+// import {
+//     callBulletinNavAPI
+// } from '../../apis/BulletinAPICall';
 
 function BulletinNav(){
 
-	const [modal, setModal] = useState(false);
-	const bulletins = useSelector(state => state.boardReducer);
-	const dispatch = useDispatch();
+	// const [modal, setModal] = useState(false);
+	// const bulletins = useSelector(state => state.boardtest);
+	// const dispatch = useDispatch();
 
-	let i = true;
-	console.log('bulletins', bulletins);
 
-	useEffect(
-		() =>{
-			dispatch(callBulletinNavAPI());
-		}
-		,[i]
-	);
 
-	const openModal = () => {
-		setModal(true);
-	};
+	// useEffect(
+	// 	() =>{
+	// 		dispatch(callBulletinNavAPI());
+	// 	}
+	// 	,[]
+	// );
 
-	const closeModal = () =>{
-		setModal(false);
-	};
+	// const openModal = () => {
+	// 	setModal(true);
+	// };
 
-    return (
+	// const closeModal = () =>{
+	// 	setModal(false);
+	// };
+	
+// 	{Array.isArray(bulletins) && bulletins.map(
+// 		(bulletin) => (
+// 			<div key={bulletin.categoryCode} className={BoardNavStyle.apv_navibox_maintitle}>{bulletin.nameBoard}</div>)		
+// 	)}
 
-		<div className={BoardNavStyle.leftmenu}>
+// 	<div className={BoardNavStyle.apv_navibox_maintitle} onClick={openModal}>게시판 추가하기</div>
+// 	{modal && <Bmodal onClose={closeModal}/>}
+return (
+	<div className={BoardNavStyle.leftmenu}>
 		
 			<div className={BoardNavStyle.leftmenu2}>
 				<div className={BoardNavStyle.maintitle}>
@@ -42,15 +47,14 @@ function BulletinNav(){
 				</div>
 				<div className={BoardNavStyle.apv_navibox}>
 					<div className={BoardNavStyle.apv_navibox_top}>
+					<NavLink to="/bulletin/bulletinWrite">
 						작성하기
+						</NavLink>
 					</div>
-					{Array.isArray(bulletins) && bulletins.map(
-						(bulletin) => (
-							<div key={bulletin.categoryCode} className={BoardNavStyle.apv_navibox_maintitle}>{bulletin.nameBoard}</div>)		
-					)}
-
-					<div className={BoardNavStyle.apv_navibox_maintitle} onClick={openModal}>게시판 추가하기</div>
-					{modal && <Bmodal onClose={closeModal}/>}
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/4">인기 게시판</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/1">전체 게시판</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/2">공지 사항</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/3">자유 게시판</NavLink></div>
 				</div>
 			</div>
 		</div>

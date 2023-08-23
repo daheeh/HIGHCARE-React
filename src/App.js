@@ -137,10 +137,11 @@ function App() {
           <Route path="/pm/treeview" element={<TreeView />} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
-            <Route index element={<Bulletin />} />
-            <Route path="board" element={<BulletinBoard />} />
+            {/* <Route index element={<Bulletin />} /> */}
+            
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
             <Route path="thread" element={<Thread />} />
-            <Route path="bullentinWrite" element={<BullentinWrite />} />
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
 

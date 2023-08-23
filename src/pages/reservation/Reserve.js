@@ -1,12 +1,11 @@
-import './Bullentin.css';
-
+import BoardStyle from '../bulletin/Bullentin.module.css';
 function Reserve(){
     return (
-        <div class="content-bullentin-main">
-            <h1 class="content-title">신청하기</h1>
+        <div class={BoardStyle.content_bullentin_main}>
+            <h1 class={BoardStyle.content_title}>신청하기</h1>
             <h2>aaa</h2>
-           <div className="applay-main">
-               <div className="apply-content">
+           <div className={BoardStyle.applay_main}>
+               <div className={BoardStyle.apply_content}>
                 <img src="../../img/dog.jpg" alt="" width="400px" height="200px"/>
                         <div>
                             <div>자원명 : <span>제 3회의실</span></div>
@@ -23,7 +22,7 @@ function Reserve(){
                             <button>예약하기</button>
                         </div>
                     </div>
-                          <div className="content-main-main"></div>
+                          <div className={BoardStyle.content_main_main}></div>
         </div>
     </div>
    
