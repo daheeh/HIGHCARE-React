@@ -33,7 +33,7 @@ import{
                 <div className={modalStyle.bmodal}>
                     <button className={modalStyle.bcloseButton} onClick={onClose}>X</button>
                     <h2 className={modalStyle.modalH}>HIGHCARE</h2>
-                    <p>게시판 추가하기</p>
+                    <p>게시판 추가하기111</p>
                     <input type='text' name='nameBoard' onChange={onChangeHandler} className={modalStyle.inputModal}/><br/>
                     <button className={modalStyle.add} onClick={onClickBoardNameHandler}>추가하기</button>
                 </div>
