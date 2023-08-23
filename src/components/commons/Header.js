@@ -34,10 +34,10 @@ function Header() {
     // const isLogin = window.localStorage.getItem('accessToken');
 
     // 토큰만료 검증 
-    const token = decodeJwt(window.localStorage.getItem("accessToken"));   
-    if(token != null ){
-        LoginVerify(token, loginInfo.refreshExp);
-    } 
+    // const token = decodeJwt(window.localStorage.getItem("accessToken"));   
+    // if(token != null ){
+    //     LoginVerify(token, loginInfo.refreshExp);
+    // } 
 
     const onChangeHandler = e => {
         setForm({
