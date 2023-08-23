@@ -1,15 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 
 const adminSlice = createSlice({
     name: 'admins',  // 리듀서 이름 
     initialState: {
-        payload: ''
+        data: {}
     },
     reducers: {
         modifyMemberAction: (state, {payload}) => {
             return payload;
-        }
-    },
+        },
+        
+    }
 })
 
 

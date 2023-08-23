@@ -1,7 +1,7 @@
 import rootReducer from './modules';
 import { composeWithDevTools} from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
 import adminReducer from './modules/adminSlice'
 import authReducer from './modules/authSlice'
@@ -25,7 +25,7 @@ const store = configureStore({
 
     },
     preloadedState: persistedState, // Set initial state from localStorage
-    middleware: [ReduxThunk]
+    middleware: [thunkMiddleware]
 });
 
 store.subscribe(() => {

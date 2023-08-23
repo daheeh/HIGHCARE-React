@@ -10,7 +10,7 @@ function Header() {
 
     const navigate = useNavigate();
 
-    const loginMember = useSelector(state => state.members);
+    const loginMember = useSelector(state => state.authes);
 
     const loginInfo = {
         id: loginMember.id,
