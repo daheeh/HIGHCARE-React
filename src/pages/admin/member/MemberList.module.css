@@ -1,4 +1,14 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap'); */
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.title div {
+    margin: 10px;
+    font-size: 18px;
+}
 
 .crudBtn {
     display: flex;
@@ -10,6 +20,17 @@
 .crudBtn button {
     font-size: 16px !important;
     width: 80px ;
+    height: 30px;
+}
+
+.excelBtn  {
+    height: 60px;
+}
+
+
+.excelBtn button {
+    font-size: 16px !important;
+    width: 120px ;
     height: 30px;
 }
 

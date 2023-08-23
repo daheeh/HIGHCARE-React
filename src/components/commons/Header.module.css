@@ -67,6 +67,8 @@ body {
 }
 
 .logininput button {
-    height: 50px;
+    height: 40px;
+    width: 110px;
     font-size: 16px;
+    background-color: gray;
 }
