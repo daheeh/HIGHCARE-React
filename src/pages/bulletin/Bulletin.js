@@ -11,7 +11,7 @@ import {
 function Bulletin(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const boards = useSelector(state => state.boardReducer);
+    const boards = useSelector(state => state.boardtest);
     // const boardList = boards.data;
     const params = useParams();
 

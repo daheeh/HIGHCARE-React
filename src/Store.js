@@ -5,13 +5,8 @@ import ReduxThunk from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
 import { configureStore } from '@reduxjs/toolkit';
 import approvalReducer from './modules/ApprovalModule';
-import boardReducer from './modules/BoardMocule';
+import boardReducer from './modules/BoardModule';
 
-const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(ReduxThunk))
-
-);
 
 
 const persistedState = localStorage.getItem('reduxState')
@@ -22,7 +17,7 @@ const store = configureStore({
     reducer: {
         members: memberReducer,
         approval : approvalReducer,
-        board : boardReducer,
+        boardtest : boardReducer
 
     },
     preloadedState: persistedState, // Set initial state from localStorage
