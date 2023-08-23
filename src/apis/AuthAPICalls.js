@@ -1,5 +1,6 @@
 import { loginAction, logoutAction, getLoginInfo } from "../modules/memberSlice"
 import authSettingAction from "../modules/authSlice"
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const callLoginAPI = ({form}) => {
 
@@ -55,6 +56,8 @@ export const callLogoutAPI = () => {
 
 // }
 
+
+
 export const jwtReissueAPI = (id) => {
 
     console.log(id);
@@ -72,13 +75,15 @@ export const jwtReissueAPI = (id) => {
                 "Access-Control-Allow-Origin": "*"  
             }
         })
-        .then(response => response.json());
+        .then(response => response.json())
+        
+        if(result.status == 401 ){
+            alert(result.message);
+            navigator("/");
+        }
 
         console.log('재발급 access token 확인 : ', result);
         window.localStorage.setItem('accessToken', result.data.accessToken);
-
-
-        dispatch(result);
     };
 
 }

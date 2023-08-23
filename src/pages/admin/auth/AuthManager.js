@@ -7,9 +7,6 @@ import LoginVerify from "../../../utils/LoginVerify";
 
 function AuthManager(){
 
-    const token = decodeJwt(window.localStorage.getItem("accessToken"));    
-
-    LoginVerify(token);
     return ( 
 
         <div className={AuthSytle.Auth}>

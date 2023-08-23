@@ -12,6 +12,9 @@ import authReducer from './modules/authSlice';
 //   composeWithDevTools(applyMiddleware(ReduxThunk))
 // );
 
+
+
+
 // Get persisted state from localStorage
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))

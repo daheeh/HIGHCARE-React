@@ -33,17 +33,11 @@ function Logininfo() {
         });
     };
 
-    const onClickLoginHandler = async () => {
+    const onClickLoginHandler = () => {
 
-        dispatch(callLoginAPI({ form }));
+    dispatch(callLoginAPI({ form }));
 
     }
-
-
-    // if(loginMember.length > 0) {
-    //     console.log("[Login] Login is already authenticated by the server");        
-    //     return <Navigate to="/"/>
-    // }
 
 
     return (

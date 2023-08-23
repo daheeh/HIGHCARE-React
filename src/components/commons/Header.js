@@ -3,6 +3,8 @@ import HeaderCSS from './Header.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
+import { decodeJwt } from '../../utils/decodeJwt';
+import LoginVerify from '../../utils/LoginVerify';
 
 function Header() {
 
@@ -10,14 +12,33 @@ function Header() {
 
     const loginMember = useSelector(state => state.members);
 
-    const dispatch = useDispatch();  // action을 보낼 수 있다. 
+    const loginInfo = {
+        id: loginMember.id,
+        refreshExp:loginMember.refreshExp,
+        name: loginMember.name,
+        dept:loginMember.dept,
+        job:loginMember.job,
+        role:loginMember.role,
+        isLogin: loginMember.isLogin,
+        status:loginMember.status,
+    }
 
-    const isLogin = window.localStorage.getItem('accessToken');
+    const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const [form, setForm] = useState({
         id: '',
         password: ''
     });
+
+
+    // const isLogin = window.localStorage.getItem('accessToken');
+
+    // 토큰만료 검증 
+    const token = decodeJwt(window.localStorage.getItem("accessToken"));   
+    if(token != null ){
+        LoginVerify(token, loginInfo.refreshExp);
+    } 
+    
 
     // useEffect(() => {
     //     // navigate("/", { replace: true });
@@ -30,18 +51,17 @@ function Header() {
         });
     };
 
-    const onClickLoginHandler = async () => {
-        await dispatch(callLoginAPI({ form }));
+    const onClickLoginHandler = () => {
+        dispatch(callLoginAPI({ form }));
         console.log("callapi 반환");
-        console.log(loginMember);
-        console.log(loginMember.status);
+        console.log(loginInfo);
+        console.log(loginInfo.status);
     }
 
-    const onClickLogoutHandler = async () => {
-        await dispatch(callLogoutAPI());
-
+    const onClickLogoutHandler = () => {
+        dispatch(callLogoutAPI());
         navigate("/", { replace: true });
-        window.location.reload();
+        
     }
 
     // console.log("로그인정보 확인" ,loginMember);
@@ -84,7 +104,7 @@ function Header() {
 
         return (
             <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
-                <div style={{ fontWeight: 'bold', color: 'gray' }}>{loginMember.dept} {loginMember.name} {loginMember.job}님 반갑습니다.</div>
+                <div style={{ fontWeight: 'bold', color: 'gray' }}>{loginInfo.dept} {loginInfo.name} {loginInfo.job}님 반갑습니다.</div>
                 <Link to="/modifyinfo">
                     <button>
                         내정보수정
@@ -94,7 +114,7 @@ function Header() {
                     로그아웃
                 </button>
                 <Link to="/admin">
-                    {loginMember.role && loginMember.role.includes('ADMIN') && <button>관리자페이지</button>}
+                    {loginInfo.role && loginInfo.role.includes('ADMIN') && <button>관리자페이지</button>}
                 </Link>
             </div>
 
@@ -127,7 +147,8 @@ function Header() {
 
                 <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '20px', marginLeft: 'auto' }} >
 
-                    {(isLogin == null || isLogin === undefined || loginMember.status === false) ? <BeforeLogin /> : <AfterLogin />}
+                    {/* {(isLogin == null || isLogin === undefined || loginMember.status === false) ? <BeforeLogin /> : <AfterLogin />} */}
+                    {(loginInfo.isLogin === false) ? <BeforeLogin /> : <AfterLogin />}
 
                 </div>
 

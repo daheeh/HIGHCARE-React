@@ -6,6 +6,8 @@ const memberSlice = createSlice({
         id: '',
         password:'',
         empNo:'',
+        accessExp:0,
+        refreshExp:0,
         name: '',
         dept:'',
         job:'',
@@ -19,8 +21,10 @@ const memberSlice = createSlice({
                                                 // actions안에 payload, type 원하는 곳에 넘겨주는 역할 
             console.log("login : ", payload);
             // state.id = payload.id;
-            state.empNo = payload.data.empNo;
             state.name = payload.data.memberName; 
+            state.empNo = payload.data.empNo;
+            state.accessExp = payload.data.accessTokenExpiresIn;
+            state.refreshExp = payload.data.refreshTokenExpiresIn;
             state.dept = payload.data.deptName;
             state.job = payload.data.jobName; 
             state.isLogin = true; 
@@ -31,6 +35,8 @@ const memberSlice = createSlice({
             state.id = '';
             state.password = '';
             state.empNo = '';
+            state.accessExp= 0;
+            state.refreshExp = 0;
             state.name = '';
             state.dept = '';
             state.job = '';  
@@ -40,18 +46,12 @@ const memberSlice = createSlice({
         reissueAction: (state, {payload}) => {
             console.log("reissueAction : ", state, payload);
             // action.payload에서 가져온 data 
-            const {id, empNo, name, dept, job, isLogin, role} = payload.data; 
-            // state.id = id;
-            // state.empNo = empNo;
-            // state.name = name; 
-            // state.dept = dept;
-            // state.job = job; 
-            // state.isLogin = isLogin;
-            // state.role = role
-        },
-        
+            const {accessTokenExpiresIn } = payload.data; 
+            state.accessExp = accessTokenExpiresIn;
+
+        }, 
     },
-    extraReducers:{}
+    
 })
 
 
