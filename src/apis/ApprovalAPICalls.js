@@ -117,7 +117,7 @@ export const callApvExp2API = ({formData}) => {
                 method: "POST",
                 headers: {
                     "Accept": "*/*",
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    // "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),

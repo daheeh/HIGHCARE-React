@@ -4,6 +4,8 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
 import { configureStore } from '@reduxjs/toolkit';
+import approvalReducer from './modules/ApprovalModule';
+import boardReducer from './modules/BoardMocule';
 
 // const store = createStore(
 //     rootReducer,
@@ -11,12 +13,24 @@ import { configureStore } from '@reduxjs/toolkit';
 
 // );
 
-export default configureStore({
+
+const persistedState = localStorage.getItem('reduxState')
+  ? JSON.parse(localStorage.getItem('reduxState'))
+  : {};
+  
+const store = configureStore({
     reducer: {
         members: memberReducer,
-        root: rootReducer
+        approval : approvalReducer,
+        board : boardReducer,
     },
+    preloadedState: persistedState, // Set initial state from localStorage
     middleware: [ReduxThunk]
 });
 
-// export default store;
+
+store.subscribe(() => {
+    localStorage.setItem('reduxState', JSON.stringify(store.getState())); // Save state to localStorage on every state change
+  });
+
+export default store;

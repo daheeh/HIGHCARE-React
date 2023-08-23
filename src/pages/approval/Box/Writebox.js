@@ -11,7 +11,7 @@ function WriteBox() {
     const itemsPerPage = 15;
 
     const dispatch = useDispatch();
-    const results = useSelector(state => state.approvalReducer); // 상태값에 대한 리듀서를 등록
+    const results = useSelector(state => state.approval); // 상태값에 대한 리듀서를 등록
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
 
     console.log(results);

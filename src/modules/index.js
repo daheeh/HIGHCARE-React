@@ -5,7 +5,7 @@ import boardReducer from './BoardMocule';
 const rootReducer = combineReducers({
     approvalReducer,
 
-    boardReducer
+    boardReducer,
 
     
 });
