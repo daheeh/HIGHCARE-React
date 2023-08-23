@@ -3,14 +3,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
+
 import {
     callBulletinAPI
-} from '../../apis/BulletinAPICall'
+} from '../../apis/BulletinAPICall';
+
 function Bulletin(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const params = useParams();
     const boards = useSelector(state => state.boardReducer);
+    // const boardList = boards.data;
+    const params = useParams();
+
 
     console.log('boards', boards);
     const [start, setStart] = useState(0);
@@ -19,14 +23,15 @@ function Bulletin(){
 
     useEffect(
         () =>{
-            setStart((currentPage - 1) * 5);
+            // setStart((currentPage - 1) * 5);
             // dispatch(callBulletinAPI({
             //     categoryCode: params.categoryCode,
             //     currentPage: currentPage
             // }));
             dispatch(callBulletinAPI());
+            
         }
-        ,[currentPage]
+        ,[]
         );
 
     return (
@@ -56,10 +61,10 @@ function Bulletin(){
                 </tr>
             </thead>
             <tbody>
+    
                 {Array.isArray(boards)&& boards.map(
                     (board) => (
-                <tr
-                key={ board.reviewCode }>
+                <tr>
                     <td className="no">{board.bulletinCode}</td>
                     <td className="title">{board.title}</td>
                     <td className="name">1</td>

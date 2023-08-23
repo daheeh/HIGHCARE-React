@@ -7,22 +7,23 @@ import { configureStore } from '@reduxjs/toolkit';
 import approvalReducer from './modules/ApprovalModule';
 import boardReducer from './modules/BoardMocule';
 
-// const store = createStore(
-//     rootReducer,
-//     composeWithDevTools(applyMiddleware(ReduxThunk))
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(ReduxThunk))
 
-// );
+);
 
 
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {};
-  
+
 const store = configureStore({
     reducer: {
         members: memberReducer,
         approval : approvalReducer,
         board : boardReducer,
+
     },
     preloadedState: persistedState, // Set initial state from localStorage
     middleware: [ReduxThunk]
