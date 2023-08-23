@@ -68,6 +68,7 @@ import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
+import Profile from "./pages/mypage/profile";
 
 
 
@@ -157,6 +158,7 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+          <Route path="/mypage/profile" element={<Profile />}/>
 
 
           <Route path="/chatting" element={<ModalMain />} />
