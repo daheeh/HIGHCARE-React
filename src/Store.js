@@ -8,6 +8,7 @@ import authReducer from './modules/authSlice'
 import { configureStore } from '@reduxjs/toolkit';
 import approvalReducer from './modules/ApprovalModule';
 import boardReducer from './modules/BoardModule';
+import TreeReduccer from './modules/TreeModule';
 
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
@@ -22,6 +23,7 @@ const store = configureStore({
         boardtest : boardReducer,
         admins: adminReducer,
         authes: authReducer,
+        treeview: TreeReduccer,
 
     },
     preloadedState: persistedState, // Set initial state from localStorage

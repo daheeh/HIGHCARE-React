@@ -7,11 +7,13 @@ const initialState = [];
 export const GET_APROVAL_STATUS = 'approval/GET_APROVAL_STATUS';
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
 export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
+export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
 
 const actions = createActions({
     [GET_APROVAL_STATUS]: () => {},
     [POST_APPROVAL_EXP1]: () => {},
-    [POST_APPROVAL_EXP2]: () => {}
+    [POST_APPROVAL_EXP2]: () => {},
+    [POST_APPROVAL_HRM1]: () => {},
 })
 
 const approvalReducer = handleActions(
@@ -25,6 +27,10 @@ const approvalReducer = handleActions(
         },
 
         [POST_APPROVAL_EXP2]: (state, {payload}) => {
+            return payload;
+        },
+
+        [POST_APPROVAL_HRM1]: (state, {payload}) => {
             return payload;
         }
     },
