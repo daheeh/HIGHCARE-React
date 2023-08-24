@@ -1,6 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginAction, logoutAction } from "../modules/authSlice";
-import store from "../Store";
 
 export const callLoginAPI = ({ form }) => {
 
