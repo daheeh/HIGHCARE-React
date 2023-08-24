@@ -13,8 +13,9 @@ const initialState = {
         role:'',
         status:'',
 }
+
 const authSlice = createSlice({
-    name: 'auths',  // 리듀서 이름 
+    name: 'authes',  // 리듀서 이름 
     initialState,
     reducers: {
         loginAction: (state, {payload}) => {       // state는 잡아놓은 초기값의 value를 가져오는 역할 
