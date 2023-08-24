@@ -6,6 +6,9 @@
         "children": [
           {
             "name": "Grand Child"
+          },
+          {
+            "name": "Grand Child"
           }
         ]
       },
@@ -30,4 +33,5 @@
       }
     ]
   }
+  
   ]
