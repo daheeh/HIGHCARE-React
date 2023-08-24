@@ -9,6 +9,10 @@ import { callApvExp1API } from '../../../apis/ApprovalAPICalls';
 
 function Exp1() {
 
+	// state.members.empNo > state.auths.empNo 변경하기
+	const empNo = useSelector(state => state.members.empNo);
+	console.log("empNo : ", empNo);
+
 	const [formCount, setFormCount] = useState(1);
 	const dispatch = useDispatch();
 	
@@ -23,7 +27,7 @@ function Exp1() {
 		apvStatus:'결재예정',
 		isUrgency: 'F',
 		category: '지출',
-		empNo: 999999,
+		empNo: empNo,
 		apvExpForms:[{
 			requestDate : '',
 			payee: '',
@@ -33,7 +37,7 @@ function Exp1() {
 			details: '',
 			account: '',
 			amount: '',
-			comment: ''
+			comment: '',
 		}]
 	});	
 
