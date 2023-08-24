@@ -1,7 +1,7 @@
 import rootReducer from './modules';
 import { composeWithDevTools} from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
 import adminReducer from './modules/adminSlice'
 import authReducer from './modules/authSlice'
@@ -11,7 +11,7 @@ import boardReducer from './modules/BoardModule';
 import mypageReducer from './modules/MypageModule';
 
 
-
+//새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {};
@@ -28,11 +28,11 @@ const store = configureStore({
 
     },
     preloadedState: persistedState, // Set initial state from localStorage
-    middleware: [ReduxThunk]
+    middleware: [thunkMiddleware]
 });
 
 store.subscribe(() => {
-    localStorage.setItem('reduxState', JSON.stringify(store.getState())); // Save state to localStorage on every state change
+    localStorage.setItem('reduxState', JSON.stringify(store.getState())); 
   });
 
 export default store;

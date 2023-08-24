@@ -1,19 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./profile.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import "./mymain.css";
 // import { callMypageProfileAPI } from '../../../apis/MypageApiCalls';
+import { callMypageProfileAPI } from '../../apis/MypageApiCalls';
+// 
 
 function Profile() {
 
-    const [form, setForm] = useState();
     const dispatch = useDispatch();
 
-    const profile = useSelector(state => state.mypageReducer);
+    const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
+    // const token = decodeJwt(window.localStorage.getItem("accessToken"));  
+    console.log('profile firslt :', );
 
-    console.log('mypage first : ', profile);
 
+    useEffect(
+        () => {
+            dispatch(callMypageProfileAPI(employee.empNo));
+            // empNo로 넘겨야되나? 아니면 employee로 넘겨야되나?
+        }
+        ,[]
+    )
 
+    
     return (
         <>
             <section>
@@ -62,39 +73,39 @@ function Profile() {
                         <div className="content">
                             <h3>프로필사진</h3>
                             {/* <!--  프로필사진을 클릭하면 수정 가능 --> */}
-                            <textarea name='self' id='user_self' cols="40" rows="7"></textarea>
+                            <textarea name='self' id='user_self' cols="40" rows="7" ></textarea>
                             <h3>이름</h3>
-                            <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
-                                maxlength="20" />
+                            <input type="text" name="user_name" id="user_name" className="text-field"
+                                readOnly maxlength="20" />
                             <h3>사번</h3>
-                            <input type="password" name="user_pw" id="user_pw" className="text-field" placeholder="비밀번호"
-                                maxlength="20" />
+                            <input type="password" name="user_pw" id="user_pw" className="text-field"
+                                readOnly maxlength="20" />
                             <h3>직급</h3>
-                            <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
-                                maxlength="20" />
+                            <input type="text" name="user_name" id="user_name" className="text-field"
+                                readOnly maxlength="20" />
                             <h3>전화번호</h3>
-                            <input type="tel" id="user_ph" className="text-field" maxlength="16" placeholder="전화번호" />
+                            <input type="tel" id="user_ph" className="text-field" maxlength="16" readOnly />
 
                         </div>
 
 
                         <div className="content2">
                             <h3>아이디</h3>
-                            <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
-                                maxlength="20" />
+                            <input type="text" name="user_name" id="user_name" className="text-field"
+                                maxlength="20" readOnly />
                             <h3>부서</h3>
-                            <input type="password" name="user_pw" id="user_pw" className="text-field" placeholder="비밀번호"
+                            <input type="password" name="user_pw" id="user_pw" className="text-field" readOnly
                                 maxlength="20" />
                             <h3>부서번호</h3>
-                            <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
-                                maxlength="20" />
+                            <input type="text" name="user_name" id="user_name" className="text-field"
+                                maxlength="20" readOnly />
                             <h3>이메일</h3>
                             <div className="email-form">
                                 <input type="text" id="email_id" name="email_id" className="form_w200" value="" title="이메일 아이디"
-                                    placeholder="이메일" maxlength="18" /><span>@</span>
+                                    maxlength="18" readOnly/><span>@</span>
                                 <input type="text" id="email_domain" name="email_domain" className="form_w200" value=""
-                                    title="도메인" maxlength="18" />
-                                <select className="sel" id="email_sel" title="이메일 도메인 주소 선택" >
+                                    title="도메인" maxlength="18" readOnly />
+                                <select className="sel" id="email_sel" title="이메일 도메인 주소 선택"  >
                                     <option hidden>-선택-</option>
                                     <option value="naver.com">naver.com</option>
                                     <option value="gmail.com">gmail.com</option>
@@ -108,16 +119,16 @@ function Profile() {
                             <h3>주소</h3>
                             {/* <h3>주소 <input type="button" className="submit-btn" id="btnjoin" value="수정"/></h3> */}
                             <div className="address-form">
-                                <input type="text" name="wPostCode" className="text-field-address" placeholder="우편번호" />
-                                <input type="button" className="addressbutton" value="우편번호 찾기" />
-                                    <br /><br />
-                                <input type="text" name="wRoadAddress" className="text-field" placeholder="도로명주소" />
+                                <input type="text" name="wPostCode" className="text-field-address" readOnly/>
+                                <input type="button" className="addressbutton" value="우편번호 찾기" readOnly/>
+                                <br /><br />
+                                <input type="text" name="wRoadAddress" className="text-field" readOnly/>
 
                                 <br /><br />
-                                <input type="text" name="wJibunAddress" className="text-field" placeholder="지번주소" />
+                                <input type="text" name="wJibunAddress" className="text-field" readOnly/>
                                 <br /><span id="guide"></span>
                                 <br />
-                                <input type="text" className="text-field" placeholder="나머지 주소" />
+                                <input type="text" className="text-field" readOnly/>
                             </div>
                         </div>
                     </div>
