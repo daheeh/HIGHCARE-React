@@ -1,7 +1,18 @@
+import { useDispatch, useSelector } from "react-redux";
 import "./profile.css";
+import { useState } from "react";
 // import "./mymain.css";
+// import { callMypageProfileAPI } from '../../../apis/MypageApiCalls';
 
 function Profile() {
+
+    const [form, setForm] = useState();
+    const dispatch = useDispatch();
+
+    const profile = useSelector(state => state.mypageReducer);
+
+    console.log('mypage first : ', profile);
+
 
     return (
         <>
@@ -18,7 +29,7 @@ function Profile() {
                         </div>
                         <div className="apv-navibox">
                             <div className="apv-navibox-top">
-                                <a href="#">수집명함관리</a>
+                                <a href="#">프로필수정</a>
                             </div>
                             <ul className="apv-navibox-ul">
                                 <li>수집명함 등록</li>
