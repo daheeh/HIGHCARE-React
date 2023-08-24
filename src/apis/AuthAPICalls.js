@@ -42,11 +42,11 @@ export const callLogoutAPI = () => {
         try {
 
             await dispatch(logoutAction());
-                console.log("callLogoutAPI : logout 완료");
-            // 로그아웃시 로컬에 있는 리덕스, 토큰 싹 날리기 
+            console.log("callLogoutAPI : logout 완료");
         } catch (error) {
             console.log(error);
         } finally {
+            // 로그아웃시 로컬에 있는 리덕스, 토큰 싹 날리기 
             localStorage.setItem('reduxState', {});
             localStorage.removeItem('accessToken');
             document.cookie = 'RefreshToken' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=C.kr;path=/;';

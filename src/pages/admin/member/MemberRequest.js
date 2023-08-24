@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import MemberReqStyle from "./MemberRequest.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import {  requestMember, selectMember } from "../../../apis/MemberAPICalls";
-import store from "../../../Store";
-import { initialState as membersInitialState } from '../../../modules/memberSlice'; 
 import { membersReset } from "../../../utils/reduxState";
 
 
@@ -22,7 +20,7 @@ function MemberRequest() {
   // 임시회원으로 등록됨 
 
 
-  membersReset();
+  // membersReset();
 
   const [ empNo, setEmpNo]  = useState("");
 
@@ -41,21 +39,12 @@ function MemberRequest() {
 
   const dispatch = useDispatch();
 
-  const onChangeHandler = (e) => {
-    setEmpNo(e.target.value)
-  } 
-  const memberSelectClick = () => {
-    // requestMember(empNo, dispatch);
-    dispatch(selectMember(empNo))
-  }
-  
-  const requestClick = () => {
-    dispatch(requestMember)
-  }
   useEffect(() => {
     if (loadMember) {
+      console.log("loadMember : ", loadMember);
       setForm(form => ({
         ...form, 
+        
         name: loadMember.name,
         jobName: loadMember.jobName,
         deptName: loadMember.deptName,
@@ -63,8 +52,27 @@ function MemberRequest() {
         email: loadMember.email,
       }));
     }
+    console.log("form : ", form);
   }, [loadMember]);
   
+
+  const onChangeHandler = (e) => {
+    setEmpNo(e.target.value)
+    // setForm(
+    //   ...form,
+    //   e.target.name = e.target.value
+    // )
+  } 
+
+  const memberSelectClick = () => {
+    // requestMember(empNo, dispatch);
+    dispatch(selectMember(empNo))
+  }
+  
+  const requestClick = () => {
+    dispatch(requestMember(form));
+  }
+ 
 
   return (
     <div>
@@ -74,7 +82,7 @@ function MemberRequest() {
           <div className="label" htmlFor="name">사번</div>
           <input type="text" name="empNo" required
           placeholder="사원번호 입력"
-            value={empNo}
+            value={empNo||""}
             onChange={onChangeHandler}
           />
           <button name="selectbtn" onClick={memberSelectClick}>사번 조회</button>
@@ -82,25 +90,25 @@ function MemberRequest() {
         <div>
           <div className="label" htmlFor="">이름</div>
           <input type="text" name="name" required disabled 
-            value={form.name}
+            value={form.name||""}
           />
         </div>
         <div>
           <div className="label" htmlFor="">직급</div>
           <input type="text" name="jobName" required disabled 
-            value={form.jobName}
+            value={form.jobName||""}
           />
         </div>
         <div>
           <div className="label" htmlFor="">부서</div>
           <input type="text" name="deptName" required disabled 
-            value={form.deptName}
+            value={form.deptName||""}
           />
         </div>
         <div>
           <div className="label" htmlFor="">연락처</div>
           <input type="text" name="phone" required disabled 
-            value={form.phone}
+            value={form.phone||""}
           />
         </div>
 
@@ -110,7 +118,7 @@ function MemberRequest() {
           <div className="label" htmlFor="">이메일</div>
           <input type="mail" name="mail" required
             placeholder="이메일주소 입력"
-            value={form.email}
+            value={form.email||""}
           />
         </div>
   

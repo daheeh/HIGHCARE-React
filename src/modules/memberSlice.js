@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { requestMember } from "../apis/MemberAPICalls";
+import { selectMember } from "../apis/MemberAPICalls";
 
 const initialState = {
-  data: {},
+  data: "",
 }
 
 
@@ -10,27 +10,20 @@ const memberSlice = createSlice({
   name: 'members',  // 리듀서 이름 
   initialState,
   reducers: {
-    // memberset: (state, { payload }) => {
-    //     console.log("memberSettingAction", payload);
-    //     const { id, empNo, roles } = payload.data;
-    //     state.empNo = empNo;
-    // },
-    // request: (state, {payload}) => {
-    //     return payload;
-    // }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(requestMember.pending, (state, action) => {
+      .addCase(selectMember.pending, (state, action) => {
         console.log("pending.....");
       })
-      .addCase(requestMember.fulfilled, (state, {payload}) => {
+      .addCase(selectMember.fulfilled, (state, {payload}) => {
         // 비동기 작업 성공하면 업데이트됨 
         console.log("fulfilled...!!");
-        state.data = payload.data;        
+        state.data = payload; 
+        console.log("state.data : " , state.data);       
 
       })
-      .addCase(requestMember.rejected, (state, action) => {
+      .addCase(selectMember.rejected, (state, action) => {
         // 비동기 작업이 실패한 경우 -> 나중에 에러 처리 수정하기 
         state.data = '';
         console.log("rejected!!!!!!");

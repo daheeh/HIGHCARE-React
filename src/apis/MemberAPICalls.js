@@ -3,21 +3,22 @@ import axios from "axios";
 
 
 // export async function requestMember(empNo, disaptch) {
-export const selectMember = createAsyncThunk(
-  'select/members',
-  async (empNo,) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/admin/member?empNo=${empNo}`, {
-        headers: {
-          "Authorization": "Bearer " + window.localStorage.getItem("accessToken")
+  export const selectMember = createAsyncThunk(
+    'select/members',
+    async (empNo,) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/admin/member?empNo=${empNo}`, {
+          headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken")
+          }
         }
-      });
-      return response.data;
-    } catch (error) {
-      throw error.response.data;
+        );
+        return response.data;
+      } catch (error) {
+        throw error.response.data;
+      }
     }
-  }
-);
+  );
 
 export const requestMember = createAsyncThunk(
   'request/members',

@@ -10,7 +10,7 @@ import approvalReducer from './modules/ApprovalModule';
 import boardReducer from './modules/BoardModule';
 
 
-
+//새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {};
@@ -29,7 +29,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-    localStorage.setItem('reduxState', JSON.stringify(store.getState())); // Save state to localStorage on every state change
+    localStorage.setItem('reduxState', JSON.stringify(store.getState())); 
   });
 
 export default store;
