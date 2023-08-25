@@ -9,10 +9,11 @@ import '../Approval.css';
 import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';
 
 function Hrm1() {
-	// state.members.empNo > state.auths.empNo 변경하기
-	const members = useSelector(state => state.members);
-	const empNo = members.empNo;
+
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
+	
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -28,7 +29,7 @@ function Hrm1() {
 		apvStatus: '결재진행중',
 		isUrgency: 'F',
 		category: '인사',
-		empNo: members.empNo,
+		empNo: empNo,
 		apvVacations: [{
 			startDate: '',
 			endDate: '',
@@ -139,35 +140,7 @@ const onChangeHandler = (e) => {
 	}
 };
 
-const handleSubmission = async () => {
-    const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
-    const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
 
-    const formDataWithTimestamps = {
-        ...formData,
-        apvVacations: [
-            {
-                ...formData.apvVacations[0],
-                startDate: convertedStartDate,
-                endDate: convertedEndDate,
-            }
-        ]
-    };
-
-    try {
-		const response = await dispatch(callApvHrm1API({ formData }));
-
-		if (response.status === 200) {
-			window.alert("결재 등록 성공");
-			navigate('/approval');
-		} else {
-			window.alert("결재 등록 중 오류가 발생했습니다.");
-		}
-	} catch (error) {
-		console.error("API error:", error);
-		window.alert("API 요청 중 오류가 발생했습니다.");
-	}
-};
 
 
 
@@ -196,6 +169,42 @@ useEffect(() => {
 		writeDate: currentDate
 	}));
 }, []);
+
+const handleSubmission = async () => {
+
+    const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
+    const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
+
+    const formDataWithTimestamps = {
+        ...formData,
+        apvVacations: [
+            {
+                ...formData.apvVacations[0],
+                startDate: convertedStartDate,
+                endDate: convertedEndDate,
+            }
+        ]
+    };
+
+	if (empNo !== undefined) {
+		try {
+			const response = await dispatch(callApvHrm1API({ formData }));
+			if (response.status === 200) {
+				window.alert("결재 등록 성공");
+				navigate('/approval');
+			} else {
+				window.alert("결재 등록 중 오류가 발생했습니다.");
+			}
+		} catch (error) {
+			console.error("API error:", error);
+			window.alert("API 요청 중 오류가 발생했습니다.");
+		}
+	} else {
+		window.alert("재로그인 요청");
+		navigate('/');
+	}
+};
+
 
 console.log('formData : ', formData);
 return (
