@@ -17,7 +17,8 @@ import mypageReducer from './modules/MypageModule';
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
-  ? JSON.parse(localStorage.getItem('reduxState'))
+  // ? JSON.parse(localStorage.getItem('reduxState'))
+  ? (localStorage.getItem('reduxState'))
   : {};
 
 const store = configureStore({

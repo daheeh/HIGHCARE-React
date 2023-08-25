@@ -12,6 +12,7 @@ export const GET_APROVAL_WRITEBOX = 'approval/GET_APROVAL_WRITEBOX';
 
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
 export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
+export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
 
 export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
 export const POST_APPROVAL_HRM3 = 'approval/POST_APPROVAL_HRM3';
@@ -26,6 +27,7 @@ const actions = createActions({
     
     [POST_APPROVAL_EXP1]: () => {},
     [POST_APPROVAL_EXP2]: () => {},
+    [POST_APPROVAL_EXP6]: () => {},
     
     [POST_APPROVAL_HRM1]: () => {},
     [POST_APPROVAL_HRM3]: () => {},
@@ -49,6 +51,10 @@ const approvalReducer = handleActions(
             return payload;
         },
         [POST_APPROVAL_EXP2]: (state, {payload}) => {
+            return payload;
+        },
+
+        [POST_APPROVAL_EXP6]: (state, {payload}) => {
             return payload;
         },
 

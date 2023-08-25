@@ -6,6 +6,7 @@ import {
 
     POST_APPROVAL_EXP1,
     POST_APPROVAL_EXP2,
+    POST_APPROVAL_EXP6,
 
     POST_APPROVAL_HRM1,
     POST_APPROVAL_HRM3,
@@ -125,8 +126,9 @@ export const callApvExp2API = ({formData}) => {
                 method: "POST",
                 headers: {
                     "Accept": "*/*",
-                    // "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
                 },
                 body: JSON.stringify(formData),
             })
@@ -142,6 +144,46 @@ export const callApvExp2API = ({formData}) => {
         
     };    
 };
+
+
+export const callApvExp6API = ({ formData }) => {
+    console.log('[ApprovalAPICalls] callApvExp6API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/exp6`;
+
+    return async (dispatch, getState) => {
+        console.log('[ApprovalAPICalls] callApvExp6API formData : ', formData);
+        try{
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json());
+
+        console.log('[ApprovalAPICalls] callApvExp6API RESULT : ', result);
+
+        dispatch({ type: POST_APPROVAL_EXP6,  payload: result });
+        return result;
+    } catch (error) {
+        console.error('[ApprovalAPICalls] Error in callApvExp6API: ', error);
+        throw error;
+    }
+        
+    };    
+};
+  
+    
+
+
+
+
+
 
 export const callApvHrm1API = ({formData}) => {
 
@@ -168,6 +210,8 @@ export const callApvHrm1API = ({formData}) => {
         console.log('[ApprovalAPICalls] callApvHrm1API RESULT : ', result.data);
 
         dispatch({ type: POST_APPROVAL_HRM1,  payload: result.data });
+        return result;
+        
     } catch (error) {
         console.error('[ApprovalAPICalls] Error in callApvHrm1API: ', error);
         throw error;
