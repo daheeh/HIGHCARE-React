@@ -21,7 +21,7 @@ function Exp1() {
 
 	const exp1 = useSelector(state => state.approvalReducer);
 
-	console.log('exp6 first : ', exp1);
+	console.log('exp1 first : ', exp1);
 
 	const [formData, setFormData] = useState({
 
@@ -78,7 +78,7 @@ function Exp1() {
                 window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
                 setSharedProperties(prevSharedProps => ({
                     ...prevSharedProps,
-                    requestDate: currentDate // Update the requestDate to current date
+                    requestDate: currentDate
                 }));
                 return;
 				}
