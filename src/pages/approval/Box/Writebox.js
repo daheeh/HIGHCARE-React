@@ -10,17 +10,18 @@ function WriteBox() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
 
-    // state.members.empNo > state.auths.empNo 변경하기
-    const empNo = useSelector(state => state.members.empNo);
+    const members = useSelector(state => state.members);
+    const empNo = members?.empNo;
     console.log("empNo : ", empNo);
     
     const dispatch = useDispatch();
-    const results = useSelector(state => state.approval);
+
+	const results = useSelector(state => state.approval);
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
 
-    console.log(results);
     useEffect(() => {
         dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중'}));
+        console.log('results : ', results);
     }, []);
 
     const handleMenuItemClick = (apvStatus) => {
