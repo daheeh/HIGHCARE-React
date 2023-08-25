@@ -21,11 +21,11 @@ function Thread(){
         }
         ,[]
     );
-
+    console.log('boardDetail', boardDetail);
     console.log('bulletinCode', bulletinCode);
     return (
         <>
-        {  boardDetail &&
+        {  boardDetail.bulletinEmployee &&
         <div className={BoardStyle.content_main}>
             <h3>{boardDetail.title} </h3>
             <div className={BoardStyle.content_info}>
