@@ -2,7 +2,7 @@ import { createActions, handleActions} from 'redux-actions';
 
 const initialState = [];
 
-export const GET_MEMBER = 'member/GET_MEMBER';
+export const GET_MEMBER = 'treeview/GET_MEMBER';
 
 
 const actions = createActions({
