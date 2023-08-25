@@ -101,9 +101,10 @@ export const callApvExp1API = ({ formData }) => {
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvExp1API RESULT : ', result.data);
+            console.log('[ApprovalAPICalls] callApvExp1API RESULT : ', result);
 
-            dispatch({ type: POST_APPROVAL_EXP1, payload: result.data });
+            dispatch({ type: POST_APPROVAL_EXP1, payload: result });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvExp1API: ', error);
             throw error;
@@ -209,7 +210,7 @@ export const callApvHrm1API = ({ formData }) => {
 
             console.log('[ApprovalAPICalls] callApvHrm1API RESULT : ', result);
 
-            dispatch({ type: POST_APPROVAL_HRM1, payload: result});
+            dispatch({ type: POST_APPROVAL_HRM1, payload: result });
             return result;
 
         } catch (error) {
@@ -258,7 +259,7 @@ export const callApvHrm3API = ({ formData }) => {
 
 
 
-
+/* 전자결재 양식 - 업무 */
 
 export const callApvBiz1API = ({ formData }) => {
 

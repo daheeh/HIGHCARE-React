@@ -10,8 +10,9 @@ import { callApvExp1API } from '../../../apis/ApprovalAPICalls';
 
 function Exp1() {
 
-	// state.authes.empNo > state.auths.empNo 변경하기
-	const empNo = useSelector(state => state.authes.empNo);
+
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
 	const [formCount, setFormCount] = useState(1);
@@ -50,25 +51,7 @@ function Exp1() {
 		setAmounts(newAmounts);
 	}, [formData.apvExpForms]);
 
-	const handleSubmission = async () => {
-		try {
-			const response = await dispatch(callApvExp1API({ formData }));
 
-			if (response.status === 200) {
-				window.alert("결재 등록 성공");
-				navigate('/approval');
-			} else {
-				window.alert("결재 등록 중 오류가 발생했습니다.");
-			}
-		} catch (error) {
-			console.error("API error:", error);
-			window.alert("API 요청 중 오류가 발생했습니다.");
-		}
-	};
-
-
-
-	console.log('formData.apvExpForms : ', formData.apvExpForms);
 
 	const [sharedProperties, setSharedProperties] = useState({
 		requestDate: '',
@@ -88,11 +71,25 @@ function Exp1() {
 			updatedFormData.apvExpForms[index][field] = value;
 			setFormData(updatedFormData);
 		} else if (nameParts[0] === 'sharedProperties') {
+
+			if (name === 'sharedProperties.requestDate') {
+				const currentDate = new Date().toISOString().split('T')[0];
+            if (value < currentDate) {
+                window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
+                setSharedProperties(prevSharedProps => ({
+                    ...prevSharedProps,
+                    requestDate: currentDate // Update the requestDate to current date
+                }));
+                return;
+				}
+			}
+
 			const field = nameParts[1];
 			const updatedSharedProperties = {
 				...sharedProperties,
 				[field]: value
 			};
+
 			setSharedProperties(updatedSharedProperties);
 			setFormData(prevFormData => ({
 				...prevFormData,
@@ -101,7 +98,9 @@ function Exp1() {
 					...updatedSharedProperties
 				}))
 			}));
-		} else {
+		}  else {
+			
+
 			setFormData(prevFormData => ({
 				...prevFormData,
 				[name]: value
@@ -215,6 +214,29 @@ function Exp1() {
 			</div>
 		);
 	};
+
+	const handleSubmission = async () => {
+		if (empNo !== undefined) {
+			try {
+				const response = await dispatch(callApvExp1API({ formData }));
+
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
+
+	console.log('formData : ', formData);
 
 
 	return (
