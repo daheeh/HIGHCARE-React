@@ -3,36 +3,38 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-// import {
-//     callBoardDetailAPI
-// } from '../../apis/BulletinAPICall'
+import {
+    callBoardDetailAPI
+} from '../../apis/BulletinAPICall'
 
 function Thread(){
     const bulletinCode = useParams().bulletinCode;
     const dispatch =useDispatch();
-    // const board = useSelector(state => state.boardtest);
-    // const boardDetail = board.data;
+    const board = useSelector(state => state.boardtest);
+    const boardDetail = board.data;
 
-    // useEffect(
-    //     ()=>{
-    //         dispatch(callBoardDetailAPI({
-    //             bulletinCode: bulletinCode
-    //         }));
-    //     }
-    //     ,[]
-    // );
+    useEffect(
+        ()=>{
+            dispatch(callBoardDetailAPI({
+                bulletinCode: bulletinCode
+            }));
+        }
+        ,[]
+    );
 
     console.log('bulletinCode', bulletinCode);
     return (
+        <>
+        {  boardDetail &&
         <div className={BoardStyle.content_main}>
-            <h3> 안녕하세요</h3>
+            <h3>{boardDetail.title} </h3>
             <div className={BoardStyle.content_info}>
-                <span>허유일</span>
-                <span>2023-08-12</span>
-                조회수<span>1050</span>
+                <span>{boardDetail.bulletinEmployee.empName}</span>
+                <span>{boardDetail.modifiedDate}</span>
+                조회수<span>{boardDetail.views}</span>
             </div>
             <div className={BoardStyle.content_main_main}>
-                내용
+                {boardDetail.content}
             </div>
         <div className={BoardStyle.comment_content}>
                 <div className={BoardStyle.comment_count}>
@@ -59,8 +61,10 @@ function Thread(){
                 <input type="text"/>
                 <div>등록</div>
             </div>
+            </div> 
         </div>
-    </div>
+}
+        </>
     )
 }
 

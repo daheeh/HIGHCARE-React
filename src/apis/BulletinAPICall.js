@@ -1,9 +1,9 @@
 
-import { response } from 'express';
+
 import {
     GET_BOARD
     ,GET_BOARDS
-    // ,GET_BOARDD
+    ,GET_BOARDD
     ,POST_BOARD
 } from '../modules/BoardModule';
 
@@ -29,25 +29,25 @@ export const callBulletinAPI = ({categoryCode, currentPage}) => {
 
 }
 
-// export const callBoardDetailAPI = ({bulletinCode})=>{
-//     const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
+export const callBoardDetailAPI = ({bulletinCode})=>{
+    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
 
-//     return async (dispatch, getState) => {
-//         const result = await fetch(requestURL,{
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "*/*"
-//             }
-//         })
-//         .then(response => response.json());
-//         if(result.status === 200){
-//         dispatch({ type: GET_BOARDD,  payload: result });
-//         }
-//     };
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+        dispatch({ type: GET_BOARDD,  payload: result });
+        }
+    };
 
 
-// }
+}
 
 export const callBulletinNavAPI= ()=>{
     const requestURL = `http://localhost:8080/bulletin/boardTitle`;
