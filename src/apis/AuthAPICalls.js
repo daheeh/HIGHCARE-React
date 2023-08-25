@@ -28,6 +28,8 @@ export const callLoginAPI = ({ form }) => {
 
         } catch (e) {
             console.error("로그인 문제발생", e.message);
+            localStorage.setItem('reduxState', {});
+
         }
 
     }

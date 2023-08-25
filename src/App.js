@@ -69,12 +69,16 @@ import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
+
+import Profile from "./pages/mypage/profile";
+
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
+
 
 
 
@@ -153,10 +157,11 @@ function App() {
           <Route path="/pm/secondTree" element={<SecondTree />} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
-            <Route index element={<Bulletin />} />
-            <Route path="board" element={<BulletinBoard />} />
+            {/* <Route index element={<Bulletin />} /> */}
+            
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
             <Route path="thread" element={<Thread />} />
-            <Route path="bullentinWrite" element={<BullentinWrite />} />
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
 
@@ -171,6 +176,7 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+          <Route path="/mypage/profile" element={<Profile />}/>
 
 
           <Route path="/chatting" element={<ModalMain />} />

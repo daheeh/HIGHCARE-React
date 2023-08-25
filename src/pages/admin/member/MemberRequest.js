@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {  requestMember, selectMember } from "../../../apis/MemberAPICalls";
 import { membersReset } from "../../../utils/reduxState";
 
-
 // 가입요청 페이지 
 function MemberRequest() {
 
@@ -19,11 +18,12 @@ function MemberRequest() {
 
   // 임시회원으로 등록됨 
 
-
-  // membersReset();
+  membersReset();
 
   const [ empNo, setEmpNo]  = useState("");
 
+  const loadMember = useSelector(state => state.members);
+  const { name, jobName, deptName, phone, email } = loadMember.data;
   const [ form, setForm ] = useState({
     empNo:'',
     name:'',
@@ -33,35 +33,29 @@ function MemberRequest() {
     email:'',
   }); 
 
-
-
-  const loadMember = useSelector(state => state.members.data);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     if (loadMember) {
       console.log("loadMember : ", loadMember);
       setForm(form => ({
         ...form, 
-        
-        name: loadMember.name,
-        jobName: loadMember.jobName,
-        deptName: loadMember.deptName,
-        phone: loadMember.phone,
-        email: loadMember.email,
+        empNo: empNo,
+        name: name,
+        jobName:  jobName,
+        deptName: deptName,
+        phone: phone,
+        email: email,
       }));
     }
     console.log("form : ", form);
+
   }, [loadMember]);
   
 
   const onChangeHandler = (e) => {
     setEmpNo(e.target.value)
-    // setForm(
-    //   ...form,
-    //   e.target.name = e.target.value
-    // )
   } 
 
   const memberSelectClick = () => {

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ApvMenu from './AprovalNav';
 import HrmList from './Hrm/HrmList';
 import ExpList from './Exp/ExpList';
 import BizList from './Biz/BizList';
 import './Approval.css';
+// import { callApvWriteBoxAPI } from '../../../apis/ApprovalAPICalls';
 
 function ApvMain() {
+
+    const members = useSelector(state => state.members);
+    const empNo = members?.empNo;
+    console.log("empNo : ", empNo);
+    
+    const dispatch = useDispatch();
+
+
     return (
 
         <section>
@@ -16,8 +26,8 @@ function ApvMain() {
                         <div className="header">TODAY</div>
                         <div className="cell1">결재진행중</div>
                         <div className="cell2">긴급</div>
-                        <div className="cell1">100건</div>
-                        <div className="cell2">50건</div>
+                        <div className="cell1">결재진행중 개수</div>
+                        <div className="cell2">긴급 개수</div>
                     </div>
 
                     <div className="apvMainBox">

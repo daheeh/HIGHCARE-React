@@ -5,10 +5,10 @@ import {
     ,POST_BOARD
 } from '../modules/BoardModule';
 
-// export const callBulletinAPI = ({categoryCode, currentPage}) => {
-   export const callBulletinAPI = () => {
-//    const requestURL = `http://localhost:8080/bulletin/${categoryCode}?offset=${currentPage}`;
-   const requestURL = `http://localhost:8080/bulletin/board`;
+export const callBulletinAPI = ({categoryCode, currentPage}) => {
+//    export const callBulletinAPI = () => {
+   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}`;
+//    const requestURL = `http://localhost:8080/bulletin/board`;
 
    return async (dispatch, getState) => {
     const result = await fetch(requestURL,{

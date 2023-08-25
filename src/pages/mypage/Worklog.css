@@ -6,6 +6,7 @@
 
 
 .task-table {
+    /* background-color: white; */
     border-collapse: collapse;
     width: 1520px;
     margin-top: 20px;
@@ -13,13 +14,14 @@
 }
 
 .task-table th, .task-table td {
+    background-color: white;
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
 .task-table th  {
-    background-color: #f2f2f2;
+    background-color: lightgray;
     font-weight: bold;
 }
 
@@ -43,12 +45,12 @@
     border-radius: 6px;
     color:white;
     font-weight: bold;
-    font-size: larger;
+  
 }
 
 .submit-button {
-    text-align: right;
     margin-right: 350px;
+
 }
 
 
