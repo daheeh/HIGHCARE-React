@@ -12,6 +12,7 @@ export const GET_APROVAL_WRITEBOX = 'approval/GET_APROVAL_WRITEBOX';
 
 export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
 export const POST_APPROVAL_BIZ2 = 'approval/POST_APPROVAL_BIZ2';
+export const POST_APPROVAL_BIZ3 = 'approval/POST_APPROVAL_BIZ3';
 
 
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
@@ -30,6 +31,7 @@ const actions = createActions({
 
     [POST_APPROVAL_BIZ1]: () => {},
     [POST_APPROVAL_BIZ2]: () => {},
+    [POST_APPROVAL_BIZ3]: () => {},
     
     [POST_APPROVAL_EXP1]: () => {},
     [POST_APPROVAL_EXP2]: () => {},
@@ -55,10 +57,13 @@ const approvalReducer = handleActions(
         [POST_APPROVAL_BIZ1]: (state, {payload}) => {
             return payload;
         },
-
         [POST_APPROVAL_BIZ2]: (state, {payload}) => {
             return payload;
         },
+        [POST_APPROVAL_BIZ3]: (state, {payload}) => {
+            return payload;
+        },
+
 
 
 

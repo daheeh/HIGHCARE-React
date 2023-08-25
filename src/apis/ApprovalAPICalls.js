@@ -88,6 +88,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
 /* 전자결재 양식 - 업무 */
 
+/* 전자결재 - 업무 : biz1 기안서 */
 export const callApvBiz1API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz1API Call');
@@ -122,7 +123,7 @@ export const callApvBiz1API = ({ formData }) => {
     };
 };
 
-
+/* 전자결재 - 업무 : biz2 회의록 */
 export const callApvBiz2API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz2API Call');
@@ -157,9 +158,47 @@ export const callApvBiz2API = ({ formData }) => {
     };
 };
 
+/* 전자결재 - 업무 : biz3 출장신청서 */
+export const callApvBiz3API = ({ formData }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz3API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/biz3`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz3API formData : ', formData);
+        try {
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] callApvBiz3API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz3API: ', error);
+            throw error;
+        }
+
+    };
+};
+
 
 
 /* 전자결재 양식 - 지출 */
+
+/* 전자결재 - 지출 : exp1 지출결의서 */
 export const callApvExp1API = ({ formData }) => {
     console.log('[ApprovalAPICalls] callApvExp1API Call');
 
@@ -191,7 +230,7 @@ export const callApvExp1API = ({ formData }) => {
 };
 
 
-
+/* 전자결재 - 지출 : exp2 지출결의서 */
 export const callApvExp2API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvExp2API Call');
@@ -224,7 +263,7 @@ export const callApvExp2API = ({ formData }) => {
     };
 };
 
-
+/* 전자결재 - 지출 : exp6 경조금 신청서 */
 export const callApvExp6API = ({ formData }) => {
     console.log('[ApprovalAPICalls] callApvExp6API Call');
 
@@ -263,7 +302,7 @@ export const callApvExp6API = ({ formData }) => {
 
 /* 전자결재 양식 - 인사 */
 
-
+/* 전자결재 - 인사 : hrm1 연차신청서, hrm2 기타휴가신청서 */
 export const callApvHrm1API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvHrm1API Call');
@@ -300,6 +339,7 @@ export const callApvHrm1API = ({ formData }) => {
 };
 
 
+/* 전자결재 - 인사 : hrm3 서류발급신청서 */
 export const callApvHrm3API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvHrm3API Call');

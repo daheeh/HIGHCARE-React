@@ -133,7 +133,7 @@
 
 
 
-.apvContentTitle-biz3{
+.apvContentTitleBiz3{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: 375px 225px 225px 30px 225px 225px 195px;
@@ -143,17 +143,17 @@
     justify-content: space-around;
     border-bottom: 1px solid #7B7B7B;
 }
-.apvContentTitle-biz3 > div{
+.apvContentTitleBiz3 > div{
     display: flex;
     height: 80px;
     flex-direction: column;
     justify-content: center;
 }
-.apvContentTitle-biz3 .column1{
+.apvContentTitleBiz3 .column1{
     background: #EEE; 
 }
 
-.apvContentTitle-biz3 > div:nth-child(1){
+.apvContentTitleBiz3 > div:nth-child(1){
     border-right: 1px solid #7B7B7B;
 }
 
