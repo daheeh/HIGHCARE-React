@@ -184,7 +184,7 @@ export const callApvBiz1API = ({formData}) => {
     
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] callApvHrm1API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
         try{
             const result = await fetch(requestURL, {
                 method: "POST",
