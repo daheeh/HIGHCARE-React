@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './login.css'
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { callLoginAPI } from "../../apis/AuthAPICalls";
 
@@ -24,7 +24,7 @@ function Logininfo() {
             
             navigate("/", { replace: true });  // 메인 페이지로 돌아가기
         }
-    }, [loginMember]);
+    }, loginMember);
 
     const onChangeHandler = e => {
         setForm({

@@ -11,12 +11,11 @@ import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';
 function Hrm1() {
 	// state.members.empNo > state.auths.empNo 변경하기
 	const members = useSelector(state => state.members);
-	// console.log("empNo : ", empNo);
+	const empNo = members.empNo;
+	console.log("empNo : ", empNo);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-
 
 	const hrm1 = useSelector(state => state.approvalReducer);
 

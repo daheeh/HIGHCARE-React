@@ -1,6 +1,3 @@
-import rootReducer from './modules';
-import { composeWithDevTools} from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import memberReducer from './modules/memberSlice'
 import adminReducer from './modules/adminSlice'

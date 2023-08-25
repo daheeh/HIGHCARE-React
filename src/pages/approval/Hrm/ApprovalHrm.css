@@ -20,7 +20,7 @@
     background: none;
 }
 
-.apv-content > div:last-child {
+.apvContent > div:last-child {
     border: none;
 }
 
@@ -67,7 +67,7 @@
 
 
 
-.apv-content-hrm2{
+.apvContentHrm2{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: 375px 375px 750px;
@@ -76,7 +76,7 @@
     justify-content: space-around;
     border-bottom: 1px solid #7B7B7B;
 }
-.apv-content-hrm2 > div{
+.apvContentHrm2 > div{
     display: flex;
     border-right: 1px solid #7B7B7B;
     height: 80px;
@@ -84,12 +84,12 @@
     justify-content: center;
     background: #EEE;
 }
-.apv-content-hrm2 > div:nth-child(3n) {
+.apvContentHrm2 > div:nth-child(3n) {
     border-right: none;
     background: none;
 }
 
-/* .apv-content-hrm2 .column2{
+/* .apvContentHrm2 .column2{
     padding-left: 30px;
     justify-content: flex-start;
     flex-direction: row;

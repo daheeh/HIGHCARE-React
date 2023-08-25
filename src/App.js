@@ -1,4 +1,3 @@
-import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
 import { Step1, Step2, Step2pass } from "./pages/login/findaccount"
@@ -78,6 +77,7 @@ import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
+import Layout from "./layouts/Layout";
 
 
 

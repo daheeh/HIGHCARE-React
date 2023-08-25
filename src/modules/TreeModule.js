@@ -12,6 +12,7 @@ const actions = createActions({
 const TreeReduccer = handleActions(
     {
         [GET_MEMBER]: (state, {payload}) => {
+            console.log("payload : ", payload);
             return payload;
         }
     },
