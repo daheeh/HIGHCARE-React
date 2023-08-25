@@ -1,10 +1,9 @@
-import './Bullentin.css'
-
+import BoardStyle from '../bulletin/Bullentin.module.css';
 function ResourceAdd(){
     return (
-        <div className="content-bullentin-main">
-        <h1 className="content-title">자원추가</h1>
-        <div className="add-content">
+        <div className={BoardStyle.content_bullentin_main}>
+        <h1 className={BoardStyle.content_title}>자원추가</h1>
+        <div className={BoardStyle.add_content}>
             <div>
                 <span>자원그룹</span>
                 <select name="" id="">
@@ -39,7 +38,7 @@ function ResourceAdd(){
             </div>
             <span>이용안내</span>
             <div id="summernote"></div>
-            <div className="button-list">
+            <div className={BoardStyle.button_list}>
             <button>등록</button>
             <button>취소</button>
             </div>

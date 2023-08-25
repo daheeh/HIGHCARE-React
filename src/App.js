@@ -38,6 +38,7 @@ import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
+import SecondTree from "./pages/pm/secondTree";
 // import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
 // import Customerlog from "./pages/mypage/customerlog";
@@ -68,15 +69,36 @@ import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
+<<<<<<< HEAD
 import Profile from "./pages/mypage/profile";
+=======
+import ModifyInfo from "./pages/admin/member/ModifyInfo";
+import { ErrorComponent } from "./errors/ErrorBoundary";
+import { useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
+import PrivateRoute from "./errors/PrivateRoute";
+import LoginVerify from "./utils/LoginVerify";
+>>>>>>> a3acf9dce6f4451346f2ed548243a87c8e96a0c1
 
 
 
 function App() {
+
+
   return (
 
     <BrowserRouter>
+
       <Routes>
+
+      <Route path="login">
+            <Route index element={<Login />} />
+            <Route path="find/step1" element={<Step1 />} />
+            <Route path="find/step2" element={<Step2 />} />
+            <Route path="find/reset" element={<Step2pass />} />
+            <Route path="member/request" element={<MemberRequest />} />
+          </Route>
+          
         <Route path="/" element={<Layout />}>
           <Route index element={<MainLayOut />} />
           <Route path="approval">
@@ -108,21 +130,15 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          <Route path="login">
-            <Route index element={<Login />} />
-            <Route path="find/step1" element={<Step1 />} />
-            <Route path="find/step2" element={<Step2 />} />
-            <Route path="find/reset" element={<Step2pass />} />
-            <Route path="member/request" element={<MemberRequest/>}/>
-          </Route>
+          
+
+          <Route path="modifyinfo" element={<ModifyInfo />} />
 
 
           <Route path="/admin">
             <Route index element={<AdminPage />} />
             <Route path="member" element={<MemberList />} />
-            {/* <Route path="member/regist" element={<MemberRegist />} /> */}
             <Route path="member/modify" element={<MemberModify />} />
-            {/* <Route path="member/delete" element={<MemberDelete />} /> */}
             <Route path="member/log" element={<MemberLog />} />
             <Route path="member/auth" element={<AuthManager />} />
           </Route>
@@ -138,12 +154,14 @@ function App() {
           <Route path="/pm/pm-resist" element={<PmMemberResist />} />
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
+          <Route path="/pm/secondTree" element={<SecondTree />} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
-            <Route index element={<Bulletin />} />
-            <Route path="board" element={<BulletinBoard />} />
+            {/* <Route index element={<Bulletin />} /> */}
+            
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
             <Route path="thread" element={<Thread />} />
-            <Route path="bullentinWrite" element={<BullentinWrite />} />
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
 
@@ -163,8 +181,12 @@ function App() {
 
           <Route path="/chatting" element={<ModalMain />} />
         </Route>
+        <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
       </Routes>
+        <ErrorBoundary
+          FallbackComponent={ErrorComponent}
+        ></ErrorBoundary>
 
     </BrowserRouter >
 
@@ -172,4 +194,3 @@ function App() {
 }
 
 export default App;
-

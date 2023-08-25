@@ -2,6 +2,8 @@ import AuthCategory from "./components/AuthCategory";
 import AuthSetting from "./components/AuthSetting";
 import AuthUser from "./components/AuthUser";
 import AuthSytle from "./AuthManager.module.css"
+import { decodeJwt } from "../../../utils/decodeJwt";
+import LoginVerify from "../../../utils/LoginVerify";
 
 function AuthManager(){
 
@@ -9,6 +11,7 @@ function AuthManager(){
 
         <div className={AuthSytle.Auth}>
             <div>
+                
                 <AuthCategory/>
             </div>
             <div>

@@ -1,4 +1,4 @@
-.apv-content-hrm1{
+.apvContentHrm1{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: 375px 1125px;
@@ -7,7 +7,7 @@
     justify-content: space-around;
     border-bottom: 1px solid #7B7B7B;
 }
-.apv-content-hrm1 > div{
+.apvContentHrm1 > div{
     display: flex;
     border-right: 1px solid #7B7B7B;
     height: 80px;
@@ -15,7 +15,7 @@
     justify-content: center;
     background: #EEE;
 }
-.apv-content-hrm1 > div:nth-child(2n) {
+.apvContentHrm1 > div:nth-child(2n) {
     border-right: none;
     background: none;
 }
@@ -24,7 +24,7 @@
     border: none;
 }
 
-.apv-content-hrm1 .column2{
+.apvContentHrm1 .column2{
     padding-left: 30px;
     justify-content: flex-start;
     flex-direction: row;
@@ -34,7 +34,7 @@
     margin-right: 20px; 
 }
 
-.apv-content-detail{
+.apvContentDetail{
     grid-column: 1 / span 8;
     display: flex;
     height: 40px;
@@ -45,18 +45,19 @@
     border-bottom: 1px solid #7B7B7B;
 }
 
-.apv-content-detail-coment{
+.apvContentDetailComent{
     grid-column: 1 / span 8;
     padding: 30px;
     min-height: 500px;
+    width: 100%;
 }
-.apv-content-detail-coment2{
+.apvContentDetailComent2{
     grid-column: 1 / span 8;
     padding: 30px;
     height: 60px;
     border-bottom: 1px solid #7B7B7B;
 }
-.apv-content-detail-coment3{
+.apvContentDetailComent3{
     grid-column: 1 / span 8;
     padding: 30px;
     height: 0px;

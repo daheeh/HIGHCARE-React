@@ -7,8 +7,8 @@ function Login() {
 
   return (
 
-    <div className="">
-      <div className="">
+    <div>
+      <div className="" >
         <Logininfo />
       </div>
       <div className="">

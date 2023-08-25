@@ -1,123 +1,81 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ApvMenu from '../AprovalNav';
 import './ApprovalBox.css';
 import '../Approval.css';
+import { callApvWriteBoxAPI } from '../../../apis/ApprovalAPICalls';
 
 function WriteBox() {
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 15;
+
+    const members = useSelector(state => state.members);
+    const empNo = members?.empNo;
+    console.log("empNo : ", empNo);
+    
+    const dispatch = useDispatch();
+
+	const results = useSelector(state => state.approval);
+    const [selectedStatus, setSelectedStatus] = useState('결재진행중');
+
+    useEffect(() => {
+        dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중'}));
+        console.log('results : ', results);
+    }, []);
+
+    const handleMenuItemClick = (apvStatus) => {
+        dispatch(callApvWriteBoxAPI({ empNo, apvStatus }));
+        setSelectedStatus(apvStatus);
+    };
+
     return (
 
+        
         <section>
             <ApvMenu />
             <div>
-                <div className="apv-apvtitle">결재함</div>
-                <div className="apv-topmenu">
-                    <ul className="apv-topmenu-ul">
-                        <li>결재 예정</li>                    
-                        <li>결재 진행중</li>
-                        <li>결재 완료</li>
-                        <li>결재 반려</li>
-                        <li>결재 참조</li>
+                <div className="apvApvtitle">결재함</div>
+                <div className="apvTopMenu">
+                    <ul className="apvTopMenuUl">
+                        <li onClick={() => handleMenuItemClick('결재예정')}
+                            className={selectedStatus === '결재예정' ? 'clicked' : ''}
+                        >결재 예정</li>
+                        <li onClick={() => handleMenuItemClick('결재진행중')}
+                            className={selectedStatus === '결재진행중' ? 'clicked' : ''}
+                        >결재 진행중</li>
+                        <li onClick={() => handleMenuItemClick('결재완료')}
+                            className={selectedStatus === '결재완료' ? 'clicked' : ''}
+                        >결재 완료</li>
+                        <li onClick={() => handleMenuItemClick('결재반려')}
+                            className={selectedStatus === '결재반려' ? 'clicked' : ''}
+                        >결재 반려</li>
+                        <li onClick={() => handleMenuItemClick('결재참조')}
+                            className={selectedStatus === '결재참조' ? 'clicked' : ''}
+                        >결재 참조</li>
                     </ul>
                 </div>
                 <div>
-                    <table className="apv-boxresult-table">
-                        <tr>
-                            <th className="column1">문서번호</th>
-                            <th className="column2">제목</th>
-                            <th className="column3">문서분류</th>
-                            <th className="column4">작성일자</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
+                    <table className="apvBoxresultTable">
+                        <tbody>
+                            <tr>
+                                <th className='column1'>문서번호</th>
+                                <th className='column2'>문서제목</th>
+                                <th className='column3'>분류</th>
+                                <th className='column4'>작성일자</th>
+                            </tr>
+                            {results && results
+                                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                .map((result) => (
+                                    <tr key={result.apvNo}>
+                                        <td>{result.apvNo}</td>
+                                        <td>{result.title}</td>
+                                        <td>{result.category}</td>
+                                        <td>{result.writeDate}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
                     </table>
                     <div className="paging">
                         <span>1</span>

@@ -1,26 +1,27 @@
 
-.apv-title{
+.apvApvtitle{
     display: flex;
     margin: 10px 10px 30px 30px;
     font-size: 40px;
 }
 
-.apv-topmenu{
+.apvTopMenu{
     display: flex;
     width: 1520px;
     height: 50px;
     padding: 10px 12px;
+    margin-left: 20px;
     justify-content: center;
     align-items: center;
 
 }
 
-.apv-topmenu-ul{
+.apvTopMenuUl{
     display: flex;
     text-align: center; 
 }
 
-.apv-topmenu-ul li{
+.apvTopMenuUl li{
     display: flex;
     width: 304px;
     height: 80px;
@@ -34,19 +35,25 @@
     align-items: center;
 }
 
-.apv-topmenu-ul li:hover{
+.apvTopMenuUl li:hover{
+    background: #FFC338;
+    color: #000;
+    font-weight: 600;
+}
+
+.apvTopMenuUl li.clicked {
     background: #FFC338;
     color: #000;
     font-weight: 600;
 }
 
 /* 수신함 */
-.apv-topmenu-r-ul{
+.apvTopmenuUl2{
     display: flex;
     text-align: center; 
 }
 
-.apv-topmenu-r-ul li{
+.apvTopmenuUl2 li{
     display: flex;
     width: 380px;
     height: 80px;
@@ -60,59 +67,65 @@
     align-items: center;
 }
 
-.apv-topmenu-r-ul li:hover{
+.apvTopmenuUl2 li:hover{
+    background: #FFC338;
+    color: #000;
+    font-weight: 600;
+}
+
+.apvTopmenuUl2 li.clicked {
     background: #FFC338;
     color: #000;
     font-weight: 600;
 }
 
 /* 결재함 결과 테이블 */
-.apv-boxresult-table{
+.apvBoxresultTable{
     border-collapse: collapse;
     margin: 30px ;
     width: 1520px;
-    height: 820px;
+    max-height: 820px;
     border: #7B7B7B solid 1px;
     text-align: center;
     font-size: 24px;
 }
 
-.apv-boxresult-table th{
-    height: 40px;
+.apvBoxresultTable th{
+    height: 50px;
     background-color: #EEE;
     border: #7B7B7B solid 1px;
 }
 
-.apv-boxresult-table th.column1{
+.apvBoxresultTable th.column1{
     width: 300px;
 } 
-.apv-boxresult-table th.column2{
+.apvBoxresultTable th.column2{
     width: 620px;
 }
-.apv-boxresult-table th.column3{
+.apvBoxresultTable th.column3{
     width: 300px; 
 }
-.apv-boxresult-table th.column4{
+.apvBoxresultTable th.column4{
     width: 300px;
 }
-.apv-boxresult-table th.column11{
+.apvBoxresultTable th.column11{
     width: 280px;
 }
-.apv-boxresult-table th.column12{
+.apvBoxresultTable th.column12{
     width: 480px;
 }
-.apv-boxresult-table th.column13{
+.apvBoxresultTable th.column13{
     width: 200px;
 }
-.apv-boxresult-table th.column14{
+.apvBoxresultTable th.column14{
     width: 280px;
 }
-.apv-boxresult-table th.column15{
+.apvBoxresultTable th.column15{
     width: 280px;
 }
 
-.apv-boxresult-table td{
-    height: 25px;
+.apvBoxresultTable td{
+    /* height: 25px; */
     flex-direction: column;
     justify-content: center;
     border: #7B7B7B solid 1px;

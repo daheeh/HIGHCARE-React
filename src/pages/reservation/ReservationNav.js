@@ -17,6 +17,7 @@ function ReservationNav(){
 				<div class="apv_navibox_maintitle">나의 신청현황</div>
 				<div class="apv_navibox_emp"></div>
 				<div class="apv_navibox_maintitle">신청현황</div>
+				
 			</div>
 		</div>
 	</div>
