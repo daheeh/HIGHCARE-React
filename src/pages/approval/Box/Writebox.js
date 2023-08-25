@@ -10,9 +10,9 @@ function WriteBox() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
 
-    const members = useSelector(state => state.members);
-    const empNo = members?.empNo;
-    console.log("empNo : ", empNo);
+    const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
     
     const dispatch = useDispatch();
 
