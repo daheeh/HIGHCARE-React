@@ -1,5 +1,5 @@
 import {
-    GET_APROVAL_STATUS,
+    GET_APROVAL_WRITEBOX,
 
     POST_APPROVAL_EXP1,
     POST_APPROVAL_EXP2,
@@ -7,10 +7,11 @@ import {
     POST_APPROVAL_HRM1
 } from '../modules/ApprovalModule';
 
+
+
 export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
-
     const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
     
     return async (dispatch, getState) => {
@@ -19,19 +20,21 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
         const result = await fetch(requestURL, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "*/*"
-            }
+                "Accept": "*/*",
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
         })
         .then(response => response.json());
 
         console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
-        dispatch({ type: GET_APROVAL_STATUS,  payload: result.data });
+        dispatch({ type: GET_APROVAL_WRITEBOX,  payload: result.data });
     } catch (error) {
         console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
     }
-        
+    
     };    
 };
 

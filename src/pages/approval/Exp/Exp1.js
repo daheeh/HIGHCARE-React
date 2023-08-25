@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitline'; 
@@ -15,6 +16,7 @@ function Exp1() {
 
 	const [formCount, setFormCount] = useState(1);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	
     const exp1 = useSelector(state => state.approvalReducer);
 
@@ -49,8 +51,19 @@ function Exp1() {
     }, [formData.apvExpForms]);
 
     const handleSubmission = () => {
-        dispatch(callApvExp1API({ formData }));
-    };
+
+		try {
+			dispatch(callApvExp1API({ formData }));
+	
+			window.alert("결재 등록 성공");
+	
+			navigate('/approval');
+		} catch (error) {
+			window.alert("결재 등록 중 오류가 발생했습니다.");
+		}
+	};
+        
+
 
 	console.log('formData.apvExpForms : ', formData.apvExpForms);
 
