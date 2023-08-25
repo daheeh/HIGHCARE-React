@@ -1,5 +1,28 @@
 import BoardStyle from './Bullentin.module.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+// import {
+//     callBoardDetailAPI
+// } from '../../apis/BulletinAPICall'
+
 function Thread(){
+    const bulletinCode = useParams().bulletinCode;
+    const dispatch =useDispatch();
+    // const board = useSelector(state => state.boardtest);
+    // const boardDetail = board.data;
+
+    // useEffect(
+    //     ()=>{
+    //         dispatch(callBoardDetailAPI({
+    //             bulletinCode: bulletinCode
+    //         }));
+    //     }
+    //     ,[]
+    // );
+
+    console.log('bulletinCode', bulletinCode);
     return (
         <div className={BoardStyle.content_main}>
             <h3> 안녕하세요</h3>

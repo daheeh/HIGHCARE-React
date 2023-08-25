@@ -156,7 +156,7 @@ function App() {
             {/* <Route index element={<Bulletin />} /> */}
             
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
-            <Route path="thread" element={<Thread />} />
+            <Route path="thread/:bulletinCode" element={<Thread />} />
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 

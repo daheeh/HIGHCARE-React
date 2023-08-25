@@ -14,15 +14,16 @@ function BulletinBoard(){
     const [currentPage, setCurrentPage] = useState(1);
     const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
+     const boardList = boards.data;
+    const pageInfo = boards.pageInfo;
 
-    // const pageInfo = boards.pageInfo;
 
-    // const pageNumber = [];
-    // if(pageInfo) {
-    //     for(let i = 1; i<= pageInfo.pageEnd; i++){
-    //         pageNumber.push(i);
-    //     }
-    // }
+    const pageNumber = [];
+    if(pageInfo) {
+        for(let i = 1; i<= pageInfo.pageEnd; i++){
+            pageNumber.push(i);
+        }
+    }
 
     useEffect(
         () =>{
@@ -38,7 +39,12 @@ function BulletinBoard(){
         );
     console.log('categoryCode',categoryCode);
    const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
-    return (
+ 
+   const onClickTableTr = (bulletinCode) => {
+    navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
+}
+
+   return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
         <div className={BoardStyle.wrap}>
@@ -56,20 +62,22 @@ function BulletinBoard(){
                     <th className={BoardStyle.title_head}>제목</th>
                     <th>이름</th>
                     <th>조회수</th>
-                    <th>댓글수</th>
                     <th className={BoardStyle.date_head}>작성일</th>
                 </tr>
             </thead>
             <tbody>
     
-                {Array.isArray(boards)&& boards.map(
+                {Array.isArray(boardList)&& boardList.map(
                     (board) => (
-                <tr>
+                <tr
+                        key={board.bulletinCode}
+                        onClick={ () => onClickTableTr(board.bulletinCode) }
+                >
                     <td className={BoardStyle.no}>{board.bulletinCode}</td>
                     <td className={BoardStyle.title}>{board.title}</td>
-                    <td className={BoardStyle.name}>1</td>
+                    <td className={BoardStyle.name}>{board.bulletinEmployee.empName}</td>
                     <td className={BoardStyle.view}>{board.views}</td>
-                    <td className={BoardStyle.comment_cnt}>1</td>
+                  
                     <td className={BoardStyle.date}>{board.modifiedDate}</td>
                 </tr>)
                 )}
@@ -78,7 +86,7 @@ function BulletinBoard(){
             <div className={BoardStyle.write_bulletin}>
             글쓰기
         </div>
-        {/* <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
             { Array.isArray(boards) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
@@ -105,7 +113,7 @@ function BulletinBoard(){
                 &gt;
             </button>
             }
-        </div> */}
+        </div>
 
     </div>
     )
