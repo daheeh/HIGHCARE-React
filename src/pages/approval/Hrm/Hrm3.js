@@ -6,7 +6,7 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitline';
 import './ApprovalHrm.css';
 import '../Approval.css';
-import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';
+import { callApvHrm3API } from '../../../apis/ApprovalAPICalls';
 
 function Hrm3() {
 	// state.members.empNo > state.auths.empNo 변경하기
@@ -29,14 +29,12 @@ function Hrm3() {
 		isUrgency: 'F',
 		category: '인사',
 		empNo: members.empNo,
-		apvVacations: [{
-			startDate: '',
-			endDate: '',
+		apvIssuances: [{
 			type: '',
-			comment: '',
-			amount: 0,
-			offType1: '',
-			offType2: '',
+			subType: '',
+			submission: '',
+			uses: '',
+			requests: '',
 		}],
 	});
 
@@ -44,35 +42,33 @@ function Hrm3() {
 		const { value } = e.target;
 		setFormData((prevFormData) => ({
 			...prevFormData,
-			apvVacations: [{
-				...prevFormData.apvVacations[0],
+			apvIssuances: [{
+				...prevFormData.apvIssuances[0],
 				type: value,
 			}],
 		}));
 	};
 
+	const onchangeHandler = (e) => {
+		const { name, value } = e.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			apvIssuances: [{
+				...prevFormData.apvIssuances[0],
+				[name]: value,
+			}]
+		}));
 
+		console.log('formData : ', formData);
+	}
 
 
 	const handleSubmission = async () => {
-		const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
-		const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
-
-		const formDataWithTimestamps = {
-			...formData,
-			apvVacations: [
-				{
-					...formData.apvVacations[0],
-					startDate: convertedStartDate,
-					endDate: convertedEndDate,
-				}
-			]
-		};
 
 		try {
-			// await dispatch(callApvHrm1API({ formData }));
+			await dispatch(callApvHrm3API({ formData }));
 
-			window.alert("결재 등록 성공");
+			await window.alert("결재 등록 성공");
 
 			navigate('/approval');
 		} catch (error) {
@@ -98,12 +94,12 @@ function Hrm3() {
 	console.log('formData : ', formData);
 
 
-    return (
+	return (
 		<section>
 			<ApvMenu />
 			<div>
 				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
-					<div className="containerApv">
+				<div className="containerApv">
 					<div className="apvApvTitle">서류발급신청서</div>
 					<ApvSummitLine />
 					<div className="apvContent">
@@ -116,32 +112,40 @@ function Hrm3() {
 								<option value="기타">기타</option>
 							</select>
 							<div className="column2">
-								<input className="input1" placeholder="기타서류명 입력"/>
+								<input className="input1" placeholder="기타서류명 입력"
+									name='subType' value={formData.apvIssuances[0].subType}
+									onChange={onchangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">제출처</div>
 							<div className="column2">
-								<input className="input1" placeholder="제출처 입력"/>
+								<input className="input1" placeholder="제출처 입력"
+										name='submission' value={formData.apvIssuances[0].submission}
+										onChange={onchangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">용도</div>
 							<div className="column2">
-								<input className="input1" placeholder="용도 입력"/>
+								<input className="input1" placeholder="용도 입력"
+										name='uses' value={formData.apvIssuances[0].uses}
+										onChange={onchangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">요청사항</div>
 							<div className="column2">
-								<input className="input1" placeholder="요청사항 입력"/>
+								<input className="input1" placeholder="요청사항 입력"
+										name='requests' value={formData.apvIssuances[0].requests}
+										onChange={onchangeHandler} />
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>									
-		</section>
-    );
+			</div>
+		</section >
+	);
 }
 
 export default Hrm3;

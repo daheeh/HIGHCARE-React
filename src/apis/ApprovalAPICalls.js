@@ -8,6 +8,7 @@ import {
     POST_APPROVAL_EXP2,
 
     POST_APPROVAL_HRM1,
+    POST_APPROVAL_HRM3,
 
 
     POST_APPROVAL_BIZ1,
@@ -174,6 +175,43 @@ export const callApvHrm1API = ({formData}) => {
         
     };    
 };
+
+
+export const callApvHrm3API = ({formData}) => {
+
+    console.log('[ApprovalAPICalls] callApvHrm3API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/hrm3`;
+    
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvHrm3API formData : ', formData);
+        try{
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json());
+
+        console.log('[ApprovalAPICalls] callApvHrm3API RESULT : ', result.data);
+
+        dispatch({ type: POST_APPROVAL_HRM3,  payload: result.data });
+    } catch (error) {
+        console.error('[ApprovalAPICalls] Error in callApvHrm3API: ', error);
+        throw error;
+    }
+        
+    };    
+};
+
+
+
 
 
 export const callApvBiz1API = ({formData}) => {
