@@ -155,14 +155,18 @@ const handleSubmission = async () => {
     };
 
     try {
-        await dispatch(callApvHrm1API({ formData }));
+		const response = await dispatch(callApvHrm1API({ formData }));
 
-        window.alert("결재 등록 성공");
-
-        navigate('/approval');
-    } catch (error) {
-        window.alert("결재 등록 중 오류가 발생했습니다.");
-    }
+		if (response.status === 200) {
+			window.alert("결재 등록 성공");
+			navigate('/approval');
+		} else {
+			window.alert("결재 등록 중 오류가 발생했습니다.");
+		}
+	} catch (error) {
+		console.error("API error:", error);
+		window.alert("API 요청 중 오류가 발생했습니다.");
+	}
 };
 
 

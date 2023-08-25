@@ -49,7 +49,7 @@ function Hrm3() {
 		}));
 	};
 
-	const onchangeHandler = (e) => {
+	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevFormData) => ({
 			...prevFormData,
@@ -64,15 +64,18 @@ function Hrm3() {
 
 
 	const handleSubmission = async () => {
-
 		try {
-			await dispatch(callApvHrm3API({ formData }));
+			const response = await dispatch(callApvHrm3API({ formData }));
 
-			await window.alert("결재 등록 성공");
-
-			navigate('/approval');
+			if (response.status === 200) {
+				window.alert("결재 등록 성공");
+				navigate('/approval');
+			} else {
+				window.alert("결재 등록 중 오류가 발생했습니다.");
+			}
 		} catch (error) {
-			window.alert("결재 등록 중 오류가 발생했습니다.");
+			console.error("API error:", error);
+			window.alert("API 요청 중 오류가 발생했습니다.");
 		}
 	};
 
@@ -114,7 +117,7 @@ function Hrm3() {
 							<div className="column2">
 								<input className="input1" placeholder="기타서류명 입력"
 									name='subType' value={formData.apvIssuances[0].subType}
-									onChange={onchangeHandler} />
+									onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
@@ -122,7 +125,7 @@ function Hrm3() {
 							<div className="column2">
 								<input className="input1" placeholder="제출처 입력"
 										name='submission' value={formData.apvIssuances[0].submission}
-										onChange={onchangeHandler} />
+										onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
@@ -130,7 +133,7 @@ function Hrm3() {
 							<div className="column2">
 								<input className="input1" placeholder="용도 입력"
 										name='uses' value={formData.apvIssuances[0].uses}
-										onChange={onchangeHandler} />
+										onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
@@ -138,7 +141,7 @@ function Hrm3() {
 							<div className="column2">
 								<input className="input1" placeholder="요청사항 입력"
 										name='requests' value={formData.apvIssuances[0].requests}
-										onChange={onchangeHandler} />
+										onChange={onChangeHandler} />
 							</div>
 						</div>
 					</div>
