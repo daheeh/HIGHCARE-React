@@ -11,7 +11,8 @@ import { callApvExp6API } from '../../../apis/ApprovalAPICalls';
 function Exp6() {
 
 
-	const empNo = useSelector(state => state.authes.empNo);
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
 	const [formCount, setFormCount] = useState(1);
@@ -92,9 +93,9 @@ function Exp6() {
 			apvFamilyEvents: [{
 				...prevFormData.apvFamilyEvents[0],
 				payment: checked
-          ? prevFormData.apvFamilyEvents[0].payment - 150000
-          : prevFormData.apvFamilyEvents[0].payment,
-        isSendingWreath: checked ? "T" : "F",
+					? prevFormData.apvFamilyEvents[0].payment - 150000
+					: prevFormData.apvFamilyEvents[0].payment,
+				isSendingWreath: checked ? "T" : "F",
 			}]
 		}));
 	};
@@ -112,18 +113,23 @@ function Exp6() {
 		console.log('formData : ', formData);
 	}
 	const handleSubmission = async () => {
-		try {
-			const response = await dispatch(callApvExp6API({ formData }));
+		if (empNo !== undefined) {
+			try {
+				const response = await dispatch(callApvExp6API({ formData }));
 
-			if (response.status === 200) {
-				window.alert("결재 등록 성공");
-				navigate('/approval');
-			} else {
-				window.alert("결재 등록 중 오류가 발생했습니다.");
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
 			}
-		} catch (error) {
-			console.error("API error:", error);
-			window.alert("API 요청 중 오류가 발생했습니다.");
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
 		}
 	};
 
