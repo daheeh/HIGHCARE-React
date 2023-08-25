@@ -4,6 +4,12 @@ import {
 
     GET_APROVAL_WRITEBOX,
 
+    
+    POST_APPROVAL_BIZ1,
+    POST_APPROVAL_BIZ2,
+
+
+
     POST_APPROVAL_EXP1,
     POST_APPROVAL_EXP2,
     POST_APPROVAL_EXP6,
@@ -12,7 +18,6 @@ import {
     POST_APPROVAL_HRM3,
 
 
-    POST_APPROVAL_BIZ1,
 
 
 } from '../modules/ApprovalModule';
@@ -111,6 +116,41 @@ export const callApvBiz1API = ({ formData }) => {
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            throw error;
+        }
+
+    };
+};
+
+
+export const callApvBiz2API = ({ formData }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz2API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/biz2`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz2API formData : ', formData);
+        try {
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] callApvBiz2API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz2API: ', error);
             throw error;
         }
 

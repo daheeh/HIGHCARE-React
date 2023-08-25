@@ -10,6 +10,10 @@ export const GET_APROVAL_MAIN_TODAY1 = 'approval/GET_APROVAL_MAIN_TODAY1';
 
 export const GET_APROVAL_WRITEBOX = 'approval/GET_APROVAL_WRITEBOX';
 
+export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
+export const POST_APPROVAL_BIZ2 = 'approval/POST_APPROVAL_BIZ2';
+
+
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
 export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
 export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
@@ -17,13 +21,15 @@ export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
 export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
 export const POST_APPROVAL_HRM3 = 'approval/POST_APPROVAL_HRM3';
 
-export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
 
 const actions = createActions({
 
     [GET_APROVAL_MAIN_TODAY1]: () => {},
 
     [GET_APROVAL_WRITEBOX]: () => {},
+
+    [POST_APPROVAL_BIZ1]: () => {},
+    [POST_APPROVAL_BIZ2]: () => {},
     
     [POST_APPROVAL_EXP1]: () => {},
     [POST_APPROVAL_EXP2]: () => {},
@@ -32,7 +38,6 @@ const actions = createActions({
     [POST_APPROVAL_HRM1]: () => {},
     [POST_APPROVAL_HRM3]: () => {},
     
-    [POST_APPROVAL_BIZ1]: () => {},
 })
 
 const approvalReducer = handleActions(
@@ -45,6 +50,16 @@ const approvalReducer = handleActions(
         [GET_APROVAL_WRITEBOX]: (state, {payload}) => {
             return payload;
         },
+        
+
+        [POST_APPROVAL_BIZ1]: (state, {payload}) => {
+            return payload;
+        },
+
+        [POST_APPROVAL_BIZ2]: (state, {payload}) => {
+            return payload;
+        },
+
 
 
         [POST_APPROVAL_EXP1]: (state, {payload}) => {
@@ -66,10 +81,6 @@ const approvalReducer = handleActions(
             return payload;
         },
 
-
-        [POST_APPROVAL_BIZ1]: (state, {payload}) => {
-            return payload;
-        }
     },
     initialState
 );

@@ -48,7 +48,7 @@ function Biz1() {
         }));
     };
 
-    const onchangeHandler = (e) => {
+    const onChangeHandler = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -90,20 +90,20 @@ function Biz1() {
                             <div className="column2">
                                 <input className="input2" placeholder="제목 입력"
                                     name='title' value={formData.title}
-                                    onChange={onchangeHandler} />
+                                    onChange={onChangeHandler} />
                             </div>
                         </div>
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
                             <textarea placeholder="내용 작성" rows="9" name='contents1'
                                 value={formData.contents1}
-                                onChange={onchangeHandler} />
+                                onChange={onChangeHandler} />
                         </div>
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
                             <textarea placeholder="내용 작성" rows="9" name='contents2'
                                 value={formData.contents2}
-                                onChange={onchangeHandler} /></div>
+                                onChange={onChangeHandler} /></div>
                     </div>
                 </div>
             </div>
