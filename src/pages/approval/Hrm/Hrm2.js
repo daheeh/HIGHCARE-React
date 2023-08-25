@@ -9,9 +9,9 @@ import '../Approval.css';
 import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';
 
 function Hrm2() {
-	// state.members.empNo > state.auths.empNo 변경하기
-	const members = useSelector(state => state.members);
-	const empNo = members.empNo;
+
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
 	const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function Hrm2() {
 		apvStatus: '결재진행중',
 		isUrgency: 'F',
 		category: '인사',
-		empNo: members.empNo,
+		empNo: empNo,
 		apvVacations: [{
 			startDate: '',
 			endDate: '',
@@ -163,35 +163,6 @@ function Hrm2() {
 		}));
 	};
 
-	const handleSubmission = async () => {
-		const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
-		const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
-
-		const formDataWithTimestamps = {
-			...formData,
-			apvVacations: [
-				{
-					...formData.apvVacations[0],
-					startDate: convertedStartDate,
-					endDate: convertedEndDate,
-				}
-			]
-		};
-
-		try {
-			const response = await dispatch(callApvHrm1API({ formData }));
-
-			if (response.status === 200) {
-				window.alert("결재 등록 성공");
-				navigate('/approval');
-			} else {
-				window.alert("결재 등록 중 오류가 발생했습니다.");
-			}
-		} catch (error) {
-			console.error("API error:", error);
-			window.alert("API 요청 중 오류가 발생했습니다.");
-		}
-	};
 
 	const updateIsUrgency = (newIsUrgency) => {
 		setFormData(prevFormData => ({
@@ -211,6 +182,39 @@ function Hrm2() {
 	console.log('formData : ', formData);
 
 
+	const handleSubmission = async () => {
+		const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
+		const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
+
+		const formDataWithTimestamps = {
+			...formData,
+			apvVacations: [
+				{
+					...formData.apvVacations[0],
+					startDate: convertedStartDate,
+					endDate: convertedEndDate,
+				}
+			]
+		};
+		if (empNo !== undefined) {
+			try {
+				const response = await dispatch(callApvHrm1API({ formData }));
+
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
 
 
 
@@ -269,11 +273,10 @@ function Hrm2() {
 						<div className="apvContentDetail">-사유-</div>
 						<div className="apvContentDetailComent">
 							<textarea placeholder="사유 작성" rows="20"
-							value={formData.apvVacations[0].comment}
-							onChange={onCommentChangeHandler}
-							onBlur={onCommentChangeHandler}></textarea>
+								value={formData.apvVacations[0].comment}
+								onChange={onCommentChangeHandler}
+								onBlur={onCommentChangeHandler}></textarea>
 						</div>
-
 					</div>
 				</div>
 			</div>
