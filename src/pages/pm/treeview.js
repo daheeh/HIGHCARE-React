@@ -84,9 +84,9 @@ const initialData = [
       "id": 12,
       "parent": 11,
       "droppable": true,
-      "text": "김나경사원",
+      "text": "김나경부장",
       "deptNmae": "시스템운영팀",
-      "jobNmae": "사원",
+      "jobName": "부장",
       "name": "김나경",
       "empNo": 555555
     },
@@ -161,6 +161,35 @@ const initialData = [
       "parent": 9,
       "droppable": true,
       "text": "전아림 사원"
+    },    {
+      "id": 26,
+      "parent": 11,
+      "droppable": true,
+      "text": "봄 팀장",
+      "deptNmae": "시스템운영팀",
+      "jobName": "팀장",
+      "name": "봄",
+      "empNo": 1111
+    },
+    {
+      "id": 27,
+      "parent": 11,
+      "droppable": true,
+      "text": "가을 대리",
+      "deptNmae": "시스템운영팀",
+      "jobName": "대리",
+      "name": "가을",
+      "empNo": 3333
+    },
+    {
+      "id": 28,
+      "parent": 11,
+      "droppable": true,
+      "text": "겨울 사원",
+      "deptNmae": "시스템운영팀",
+      "jobName": "사원",
+      "name": "겨울",
+      "empNo": 4444
     },
   
 ]
@@ -170,18 +199,21 @@ function TreeView() {
   const [selectedNode, setSelectedNode] = useState(null);
 
   const [empNo, setEmpNo] = useState(0);
+  const [jobName, setjobName] = useState(0);
 
   const dispatch = useDispatch();
 
   useEffect(()=> {
     console.log("empNo : ", empNo);
+    console.log("JobName : ", jobName);
   }, [selectedNode])
 
 
   const handleNodeClick = (node) => {
     // await console.log("node : ", node);
     setSelectedNode(node);
-    setEmpNo(node.empNo);
+    setEmpNo(node.id);
+    setjobName(node.jobName);
     // await setInfo({
       // empNo: node.empNo,
       // deptName: node.deptName,
@@ -193,7 +225,7 @@ function TreeView() {
   };
 
   const employeeSelect = () => {
-    dispatch({ type: GET_MEMBER, payload: empNo});  // treeview getmember 리듀서
+    dispatch({ type: GET_MEMBER, payload: empNo,jobName});  // treeview getmember 리듀서
 
   }
 
