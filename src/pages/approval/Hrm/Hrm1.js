@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitline';
@@ -13,6 +14,9 @@ function Hrm1() {
 	// console.log("empNo : ", empNo);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+
 
 	const hrm1 = useSelector(state => state.approvalReducer);
 
@@ -136,7 +140,7 @@ const onChangeHandler = (e) => {
 	}
 };
 
-const handleSubmission = () => {
+const handleSubmission = async () => {
     const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
     const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
 
@@ -151,8 +155,18 @@ const handleSubmission = () => {
         ]
     };
 
-	dispatch(callApvHrm1API({ formData }));
+    try {
+        await dispatch(callApvHrm1API({ formData }));
+
+        window.alert("결재 등록 성공");
+
+        navigate('/approval');
+    } catch (error) {
+        window.alert("결재 등록 중 오류가 발생했습니다.");
+    }
 };
+
+
 
 const onCommentChangeHandler = (e) => {
 	const { value } = e.target;
