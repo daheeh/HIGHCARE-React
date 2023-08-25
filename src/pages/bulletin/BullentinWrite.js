@@ -13,7 +13,7 @@ function BullentinWrite(){
                 <span>제목</span>
                 <input type="text" style={{width: '70%'}}/>
             </div>
-            <EditorA/>
+            {/* <EditorA/> */}
             <div className={BoardStyle.permit}>
                 <span>댓글허용</span>
                 <input type="radio" name="write-comment" value="ok"/>예
