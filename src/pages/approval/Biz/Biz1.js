@@ -1,38 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitline'; 
+import ApvSummitLine from '../ApvSummitline';
 import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz1API } from '../../../apis/ApprovalAPICalls';
-import { async } from 'q';
 
 function Biz1() {
 
-    const empNo = useSelector(state => state.members.empNo);
+    const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const [formCount, setFormCount] = useState(1);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const biz1 = useSelector(state => state.approvalReducer);
 
-	console.log('biz1 first : ', biz1);
+    console.log('biz1 first : ', biz1);
 
     const [formData, setFormData] = useState({
 
-		title: '',
-		writeDate:'',
-		apvStatus:'결재예정',
-		isUrgency: 'F',
-		category: '업무',
-		empNo: empNo,
-		contents1: '',
+        title: '',
+        writeDate: '',
+        apvStatus: '결재예정',
+        isUrgency: 'F',
+        category: '업무',
+        empNo: empNo,
+        contents1: '',
         contents2: '',
-	});	
+    });
 
     useEffect(() => {
         const currentDate = new Date();
@@ -56,21 +55,25 @@ function Biz1() {
             [name]: value,
         }));
 
-        console.log('formData : ',formData);
+        console.log('formData : ', formData);
     }
 
-    const handleSubmission = async() => {
+    const handleSubmission = async () => {
+        if (empNo !== undefined) {
+            try {
+                await dispatch(callApvBiz1API({ formData }));
 
-		try {
-			await dispatch(callApvBiz1API({ formData }));
-	
-			window.alert("결재 등록 성공");
-	
-			navigate('/approval');
-		} catch (error) {
-			window.alert("결재 등록 중 오류가 발생했습니다.");
-		}
-	};
+                window.alert("결재 등록 성공");
+
+                navigate('/approval');
+            } catch (error) {
+                window.alert("결재 등록 중 오류가 발생했습니다.");
+            }
+        } else {
+            window.alert("재로그인 요청");
+            navigate('/');
+        }
+    };
 
     return (
 
@@ -86,21 +89,21 @@ function Biz1() {
                             <div className="column1">제목</div>
                             <div className="column2">
                                 <input className="input2" placeholder="제목 입력"
-                                        name='title' value={formData.title}
-                                        onChange={onchangeHandler}/>
+                                    name='title' value={formData.title}
+                                    onChange={onchangeHandler} />
                             </div>
                         </div>
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
                             <textarea placeholder="내용 작성" rows="9" name='contents1'
-                                        value={formData.contents1}
-                                        onChange={onchangeHandler}/>
+                                value={formData.contents1}
+                                onChange={onchangeHandler} />
                         </div>
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
                             <textarea placeholder="내용 작성" rows="9" name='contents2'
-                                        value={formData.contents2}
-                                        onChange={onchangeHandler}/></div>
+                                value={formData.contents2}
+                                onChange={onchangeHandler} /></div>
                     </div>
                 </div>
             </div>

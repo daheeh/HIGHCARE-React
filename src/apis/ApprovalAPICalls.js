@@ -81,6 +81,44 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 };
 
 
+/* 전자결재 양식 - 업무 */
+
+export const callApvBiz1API = ({ formData }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz1API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/biz1`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
+        try {
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            throw error;
+        }
+
+    };
+};
+
+
+
 /* 전자결재 양식 - 지출 */
 export const callApvExp1API = ({ formData }) => {
     console.log('[ApprovalAPICalls] callApvExp1API Call');
@@ -258,39 +296,3 @@ export const callApvHrm3API = ({ formData }) => {
 };
 
 
-
-/* 전자결재 양식 - 업무 */
-
-export const callApvBiz1API = ({ formData }) => {
-
-    console.log('[ApprovalAPICalls] callApvBiz1API Call');
-
-    const requestURL = `http://localhost:8080/api/approval/insert/biz1`;
-
-    return async (dispatch, getState) => {
-
-        console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
-        try {
-            const result = await fetch(requestURL, {
-                method: "POST",
-                headers: {
-                    "Accept": "*/*",
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify(formData),
-            })
-                .then(response => response.json());
-
-
-            console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result.data);
-
-            dispatch({ type: POST_APPROVAL_BIZ1, payload: result.data });
-        } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
-            throw error;
-        }
-
-    };
-};
