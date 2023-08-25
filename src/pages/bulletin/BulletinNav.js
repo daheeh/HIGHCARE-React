@@ -51,9 +51,9 @@ return (
 						작성하기
 						</NavLink>
 					</div>
-					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/4">인기 게시판</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/2">인기 게시판</NavLink></div>
 					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/1">전체 게시판</NavLink></div>
-					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/2">공지 사항</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/4">공지 사항</NavLink></div>
 					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/3">자유 게시판</NavLink></div>
 				</div>
 			</div>

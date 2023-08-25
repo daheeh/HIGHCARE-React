@@ -15,6 +15,15 @@ function BulletinBoard(){
     const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
 
+    // const pageInfo = boards.pageInfo;
+
+    // const pageNumber = [];
+    // if(pageInfo) {
+    //     for(let i = 1; i<= pageInfo.pageEnd; i++){
+    //         pageNumber.push(i);
+    //     }
+    // }
+
     useEffect(
         () =>{
             setStart((currentPage - 1) * 5);
@@ -28,7 +37,7 @@ function BulletinBoard(){
         ,[categoryCode,currentPage]
         );
     console.log('categoryCode',categoryCode);
-   const title = categoryCode==1?'전체게시판':(categoryCode==2?'공지사항':(categoryCode==3?'자유게시판':'인기게시판'));
+   const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
     return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
@@ -69,6 +78,35 @@ function BulletinBoard(){
             <div className={BoardStyle.write_bulletin}>
             글쓰기
         </div>
+        {/* <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+            { Array.isArray(boards) &&
+            <button 
+                onClick={() => setCurrentPage(currentPage - 1)} 
+                disabled={currentPage === 1}
+       
+            >
+                &lt;
+            </button>
+            }
+            {pageNumber.map((num) => (
+            <li key={num} onClick={() => setCurrentPage(num)}>
+                <button
+                    style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                >
+                    {num}
+                </button>
+            </li>
+            ))}
+            { Array.isArray(boards) &&
+            <button 
+                onClick={() => setCurrentPage(currentPage + 1)} 
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+            >
+                &gt;
+            </button>
+            }
+        </div> */}
+
     </div>
     )
 }
