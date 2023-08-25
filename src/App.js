@@ -38,6 +38,7 @@ import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
+import SecondTree from "./pages/pm/secondTree";
 // import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
 // import Customerlog from "./pages/mypage/customerlog";
@@ -68,12 +69,16 @@ import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
+
+import Profile from "./pages/mypage/profile";
+
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
+
 
 
 
@@ -85,6 +90,15 @@ function App() {
     <BrowserRouter>
 
       <Routes>
+
+      <Route path="login">
+            <Route index element={<Login />} />
+            <Route path="find/step1" element={<Step1 />} />
+            <Route path="find/step2" element={<Step2 />} />
+            <Route path="find/reset" element={<Step2pass />} />
+            <Route path="member/request" element={<MemberRequest />} />
+          </Route>
+          
         <Route path="/" element={<Layout />}>
           <Route index element={<MainLayOut />} />
           <Route path="approval">
@@ -116,13 +130,7 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          <Route path="login">
-            <Route index element={<Login />} />
-            <Route path="find/step1" element={<Step1 />} />
-            <Route path="find/step2" element={<Step2 />} />
-            <Route path="find/reset" element={<Step2pass />} />
-            <Route path="member/request" element={<MemberRequest />} />
-          </Route>
+          
 
           <Route path="modifyinfo" element={<ModifyInfo />} />
 
@@ -146,12 +154,14 @@ function App() {
           <Route path="/pm/pm-resist" element={<PmMemberResist />} />
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
+          <Route path="/pm/secondTree" element={<SecondTree />} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
-            <Route index element={<Bulletin />} />
-            <Route path="board" element={<BulletinBoard />} />
+            {/* <Route index element={<Bulletin />} /> */}
+            
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
             <Route path="thread" element={<Thread />} />
-            <Route path="bullentinWrite" element={<BullentinWrite />} />
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
 
@@ -166,6 +176,7 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+          <Route path="/mypage/profile" element={<Profile />}/>
 
 
           <Route path="/chatting" element={<ModalMain />} />
@@ -183,4 +194,3 @@ function App() {
 }
 
 export default App;
-

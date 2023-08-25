@@ -19,7 +19,7 @@ export const errorService = (error, errorInfo) => {
 
 export const ErrorComponent = ({ error, resetErrorBoundary }) => {
 
-  const islogin = useSelector(state => state.members.status);
+  const islogin = useSelector(state => state.auths.status);
   const navigate = useNavigate();
 
   return (

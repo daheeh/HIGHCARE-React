@@ -1,13 +1,13 @@
-import './Bullentin.css'
+import BoardStyle from '../bulletin/Bullentin.module.css';
 
 function MyReservationStatus(){
     return (
- <div className="content-bullentin-main">
-            <h1 className="content-title">나의 신청현황</h1>
-            <div className="wrap">
-                <div className="search">
-                    <input type="text" className="searchTerm" placeholder="제목 입력하세요."/>
-                    <button type="submit" className="searchButton">
+ <div className={BoardStyle.content_bullentin_main}>
+            <h1 className={BoardStyle.content_title}>나의 신청현황</h1>
+            <div className={BoardStyle.wrap}>
+                <div className={BoardStyle.search}>
+                    <input type="text" className={BoardStyle.searchTerm} placeholder="제목 입력하세요."/>
+                    <button type="submit" className={BoardStyle.searchButton}>
                         <i className="fa fa-search"></i>
                     </button>
                 </div>

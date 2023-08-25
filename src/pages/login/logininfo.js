@@ -11,7 +11,7 @@ function Logininfo() {
 
 
     // selector state를 통해 리듀서에 접근 
-    const loginMember = useSelector(state => state.members);
+    const loginMember = useSelector(state => state.authes);
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const [form, setForm] = useState({
@@ -41,7 +41,7 @@ function Logininfo() {
 
 
     return (
-        <div>
+        <div  style={{marginTop:100}}>
             <div className="login-container">
                 <div className="input-group">
                     <div className="id-group">
