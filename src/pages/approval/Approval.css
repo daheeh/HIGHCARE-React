@@ -235,8 +235,8 @@ section {
 .apvMainMy > div {
     flex-direction: column;
     display: flex;
-    width: 330px;
-    height: 70px;
+    width: 300px;
+    height: 30px;
     padding: 10px 12px;
     justify-content: center;
     align-items: center;
@@ -247,7 +247,7 @@ section {
     
 }
 
-.apvMainMy div > div:last-child {
+.apvMainMy > div:last-child {
     border-bottom: 1px solid #7B7B7B;    
 }
 

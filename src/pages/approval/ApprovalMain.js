@@ -6,13 +6,12 @@ import HrmList from './Hrm/HrmList';
 import ExpList from './Exp/ExpList';
 import BizList from './Biz/BizList';
 import './Approval.css';
-// import { callApvWriteBoxAPI } from '../../../apis/ApprovalAPICalls';
 
 function ApvMain() {
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
-    console.log("empNo : ", empNo);
+    console.log("ApvMain empNo : ", empNo);
 
     const dispatch = useDispatch();
     const writeMain = useSelector(state => state.approval);
@@ -36,7 +35,6 @@ function ApvMain() {
 					},
 				});
             
-                console.log('response.data : ', response.data);
                 const responseData = await response.json(); 
                 setWriteCounts(responseData.data);
 
@@ -88,7 +86,7 @@ function ApvMain() {
                 </div>
                 <div className="apvMainList">
                     <div className="apvMainListMy">
-                        <div className="apvMainListLTitle">마이 결재</div>
+                        <div className="apvMainListLTitle">최근 결재 양식</div>
 
                         <ApvMyList />
 
