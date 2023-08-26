@@ -10,14 +10,16 @@ function WriteBox() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
 
-    const members = useSelector(state => state.members);
-    const empNo = members?.empNo;
-    console.log("empNo : ", empNo);
+    const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
     
     const dispatch = useDispatch();
 
 	const results = useSelector(state => state.approval);
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
+
+    const totalPages = Math.ceil(results.length / itemsPerPage);
 
     useEffect(() => {
         dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중'}));
@@ -28,6 +30,11 @@ function WriteBox() {
         dispatch(callApvWriteBoxAPI({ empNo, apvStatus }));
         setSelectedStatus(apvStatus);
     };
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
 
     return (
 
@@ -77,13 +84,25 @@ function WriteBox() {
                             }
                         </tbody>
                     </table>
-                    <div className="paging">
+                    {/* <div className="paging">
                         <span>1</span>
                         <span>2</span>
                         <span>3</span>
                         <span>4</span>
                         <span>5</span>
-                    </div>
+                    </div> */}
+                    <div className="paging">
+    {Array.from({ length: totalPages }, (_, index) => (
+        <span
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+        >
+            {index + 1}
+        </span>
+    ))}
+</div>
+
                 </div>
             </div>
         </section>
