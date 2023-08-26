@@ -185,6 +185,7 @@
 .apvContentTitleExp1-3 > div{
     display: flex;
     border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
     height: 60px;
     flex-direction: column;
     justify-content: center;
