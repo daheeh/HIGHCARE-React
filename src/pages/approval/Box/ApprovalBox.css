@@ -80,10 +80,17 @@
 }
 
 /* 결재함 결과 테이블 */
+.apvTableContainer {
+    position: relative;
+    width: 1520px;
+    height: 820px;
+    margin: 30px;
+}
+
 .apvBoxresultTable{
     border-collapse: collapse;
-    margin: 30px ;
-    width: 1520px;
+    /* margin: 30px ; */
+    width: 100%;
     max-height: 820px;
     border: #7B7B7B solid 1px;
     text-align: center;
@@ -134,7 +141,10 @@
 /* 페이징 */
 .paging{
     display: flex;
-    position: relative;
+    position: fixed;
+    bottom: 320px;
+    left: 50%;
+    transform: translateX(-50%);
     justify-content: center;
     align-items: center;
 }
@@ -157,7 +167,10 @@
     color: #000;
     background: #FFC338;
 }
-
+.paging > .pagingBtn.active {
+    color: #000;
+    background: #FFC338; 
+}
 
 footer{
     margin: 50px;
