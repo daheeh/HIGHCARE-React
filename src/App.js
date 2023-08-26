@@ -74,6 +74,7 @@ import Profile from "./pages/mypage/profile";
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { ErrorBoundary } from "react-error-boundary";
+import Myinfo from "./pages/login/Myinfo";
 
 
 
@@ -128,7 +129,7 @@ function App() {
 
           
 
-          <Route path="modifyinfo" element={<ModifyInfo />} />
+          <Route path="myinfo" element={<Myinfo />} />
 
 
           <Route path="/admin">
