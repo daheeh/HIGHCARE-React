@@ -49,81 +49,50 @@ function Biz3() {
 		}));
 	}, []);
 
-	useEffect(() => {
-		if (
-			formData.apvBusinessTrips[0].startDate &&
-			formData.apvBusinessTrips[0].endDate &&
-			formData.apvBusinessTrips[0].startTime &&
-			formData.apvBusinessTrips[0].endTime
-		) {
-
-			let startDate = new Date(formData.apvBusinessTrips[0].startDate);
-			let endDate = new Date(formData.apvBusinessTrips[0].endDate);
-			let startTime = formData.apvBusinessTrips[0].startTime;
-			let endTime = formData.apvBusinessTrips[0].endTime;
-
-
-			const startDateTime = new Date(
-				`${formData.apvBusinessTrips[0].startDate} ${startTime}`
-			);
-			const endDateTime = new Date(
-				`${formData.apvBusinessTrips[0].endDate} ${endTime}`
-			);
-
-			if (endDateTime < startDateTime) {
-				alert("종료일자 및 시간은 시작일자 및 시간보다 빠를 수 없습니다.");
-				endDate = startDate;
-				endTime = startTime;
-				setFormData((prevFormData) => ({
-					...prevFormData,
-					apvBusinessTrips: [
-						{
-							...prevFormData.apvBusinessTrips[0],
-							endDate: startDate.toISOString().split("T")[0],
-							endTime: startTime,
-						},
-					],
-				}));
-			}
-		}
-	}, [
-		formData.apvBusinessTrips[0].startDate,
-		formData.apvBusinessTrips[0].endDate,
-		formData.apvBusinessTrips[0].startTime,
-		formData.apvBusinessTrips[0].endTime,
-	]);
-
 	const calculateTravelDuration = () => {
-		if (
-			formData.apvBusinessTrips[0].startDate &&
-			formData.apvBusinessTrips[0].endDate &&
-			formData.apvBusinessTrips[0].startTime &&
-			formData.apvBusinessTrips[0].endTime
-		) {
-			const startDate = new Date(
-				`${formData.apvBusinessTrips[0].startDate} ${formData.apvBusinessTrips[0].startTime}`
-			);
-			const endDate = new Date(
-				`${formData.apvBusinessTrips[0].endDate} ${formData.apvBusinessTrips[0].endTime}`
-			);
+		const startDate = new Date(
+			`${formData.apvBusinessTrips[0].startDate} ${formData.apvBusinessTrips[0].startTime}`
+		);
+		const endDate = new Date(
+			`${formData.apvBusinessTrips[0].endDate} ${formData.apvBusinessTrips[0].endTime}`
+		);
 
-			const timeDiffMillis = endDate - startDate;
+		const startTime = formData.apvBusinessTrips[0].startTime;
+		const endTime = formData.apvBusinessTrips[0].endTime;
 
-			if (timeDiffMillis >= 86400000) {
-				const days = Math.floor(timeDiffMillis / 86400000);
-				return `${days}박 ${days + 1}일`;
-			} else {
-				const hours = Math.floor(timeDiffMillis / 3600000);
-				const minutes = Math.floor((timeDiffMillis % 3600000) / 60000);
-				return `${hours}시간 ${minutes}분`;
-			}
+		const timeDiffMillis = endDate - startDate;
+
+		if (timeDiffMillis < 0) {
+			alert("종료일자 및 시간은 시작일자 및 시간보다 빠를 수 없습니다.");
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvBusinessTrips: [
+					{
+						...prevFormData.apvBusinessTrips[0],
+						endDate: prevFormData.apvBusinessTrips[0].startDate,
+						endTime: prevFormData.apvBusinessTrips[0].startTime,
+					},
+				],
+			}));
+			return "";
 		}
-		return '';
+
+		if (timeDiffMillis >= 86400000) {
+			const days = Math.floor(timeDiffMillis / 86400000);
+			return `${days} 박 ${days + 1} 일`;
+		} else {
+			const hours = Math.floor(timeDiffMillis / 3600000);
+			const minutes = Math.floor((timeDiffMillis % 3600000) / 60000);
+			return `${hours} 시간 ${minutes} 분`;
+		}
 	};
+
+
+
 
 	function generateTimeOptions() {
 		const options = [];
-		const interval = 10; // 10-minute interval
+		const interval = 10;
 		for (let minutes = 0; minutes < 1440; minutes += interval) {
 			const hours = Math.floor(minutes / 60).toString().padStart(2, '0');
 			const mins = (minutes % 60).toString().padStart(2, '0');
@@ -219,7 +188,7 @@ function Biz3() {
 									value={formData.apvBusinessTrips[0].startDate} onChange={onChangeHandler} />
 							</div>
 							<div className="column2">
-							<select className="input1" name="endstartTimeTime"
+								<select className="input1" name="endstartTimeTime"
 									value={formData.apvBusinessTrips[0].endTistartTimeme} onChange={onChangeHandler}>
 									{generateTimeOptions()}
 								</select>
