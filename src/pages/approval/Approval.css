@@ -102,6 +102,7 @@ section {
 }
 .apvNaviBoxUl{
     padding: 0;
+    margin-top: 20px;
 }
 .apvNaviBoxUl>li{
     display: flex;
@@ -231,11 +232,11 @@ section {
     display:inline-flex;
 }
 
-.apvMainListMyList>div {
+.apvMainMy > div {
     flex-direction: column;
     display: flex;
-    width: 300px;
-    height: 50px;
+    width: 330px;
+    height: 70px;
     padding: 10px 12px;
     justify-content: center;
     align-items: center;
@@ -243,10 +244,35 @@ section {
     border: 1px solid #7B7B7B;    
     border-bottom: none;    
     list-style-type:none;
+    
 }
-.apvMainListMyList > div:last-child {
+
+.apvMainMy div > div:last-child {
     border-bottom: 1px solid #7B7B7B;    
 }
+
+
+.droppedItem {
+    width: 300px;
+    height: 50px;
+    padding: 10px 12px;
+    border: 1px solid #7B7B7B;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* .apvMainListMyList {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #7B7B7B;
+} */
+
 
 .apvMainListRTitle{
     display: flex;
