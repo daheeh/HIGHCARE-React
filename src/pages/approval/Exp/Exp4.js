@@ -6,7 +6,7 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitline';
 import './ApprovalExp.css';
 import '../Approval.css';
-import { callApvExp1API } from '../../../apis/ApprovalAPICalls';
+import { callApvExp4API } from '../../../apis/ApprovalAPICalls';
 
 function Exp4() {
 
@@ -254,7 +254,7 @@ function Exp4() {
 	const handleSubmission = async () => {
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvExp1API({ formData }));
+				const response = await dispatch(callApvExp4API({ formData }));
 
 				if (response.status === 200) {
 					window.alert("결재 등록 성공");

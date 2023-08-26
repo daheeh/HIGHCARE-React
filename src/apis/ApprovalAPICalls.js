@@ -381,6 +381,39 @@ export const callApvExp6API = ({ formData }) => {
 };
 
 
+/* 전자결재 - 지출 : exp7 법인카드사용보고서 */
+export const callApvExp7API = ({ formData }) => {
+    console.log('[ApprovalAPICalls] callApvExp6API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/exp7`;
+
+    return async (dispatch, getState) => {
+        console.log('[ApprovalAPICalls] callApvExp7API formData : ', formData);
+        try {
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvExp7API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_EXP6, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvExp7API: ', error);
+            throw error;
+        }
+
+    };
+};
+
 
 
 

@@ -20,6 +20,7 @@ export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
 export const GET_APPROVAL_EXP4 = 'approval/GET_APPROVAL_EXP4';
 export const POST_APPROVAL_EXP4 = 'approval/POST_APPROVAL_EXP4';
 export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
+export const POST_APPROVAL_EXP7 = 'approval/POST_APPROVAL_EXP7';
 
 export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
 export const POST_APPROVAL_HRM3 = 'approval/POST_APPROVAL_HRM3';
@@ -45,6 +46,7 @@ const actions = createActions({
     [GET_APPROVAL_EXP4]: (previousValues) => ({ previousValues }),
     [POST_APPROVAL_EXP4]: () => { },
     [POST_APPROVAL_EXP6]: () => { },
+    [POST_APPROVAL_EXP7]: () => { },
 
     [POST_APPROVAL_HRM1]: () => { },
     [POST_APPROVAL_HRM3]: () => { },
@@ -82,20 +84,22 @@ const approvalReducer = handleActions(
         [POST_APPROVAL_EXP2]: (state, { payload }) => {
             return payload;
         },
-        [POST_APPROVAL_EXP4]: (state, { payload }) => {
-            return payload;
-        },
-
         [GET_APPROVAL_EXP4]: (state, { payload }) => ({
             ...state,
             previousValues: payload,
         }),
 
-        [POST_APPROVAL_EXP6]: (state, { payload }) => {
+        [POST_APPROVAL_EXP4]: (state, { payload }) => {
             return {
                 ...state,
                 payload,
             };
+        },
+        [POST_APPROVAL_EXP6]: (state, { payload }) => {
+            return payload;
+        },
+        [POST_APPROVAL_EXP7]: (state, { payload }) => {
+            return payload;
         },
 
 
