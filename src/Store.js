@@ -14,7 +14,7 @@ import mypageReducer from './modules/MypageModule';
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
-  ? JSON.parse(localStorage.getItem('reduxState'))
+  ? (localStorage.getItem('reduxState'))
   : {};
 
 const store = configureStore({
@@ -26,7 +26,7 @@ const store = configureStore({
         authes: authReducer,
         treeview: TreeReduccer,
         mypage: mypageReducer
-        // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
+        // 마이페이지리듀서에서 마이페이지로 간다 는 뜻, 선생님 파일에선 콤바인
 
 
     },

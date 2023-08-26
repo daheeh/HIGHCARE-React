@@ -24,7 +24,7 @@ function Logininfo() {
             
             navigate("/", { replace: true });  // 메인 페이지로 돌아가기
         }
-    }, loginMember);
+    }, [loginMember]);
 
     const onChangeHandler = e => {
         setForm({
@@ -35,7 +35,7 @@ function Logininfo() {
 
     const onClickLoginHandler = () => {
 
-    dispatch(callLoginAPI({ form }));
+    dispatch(callLoginAPI(form));
 
     }
 

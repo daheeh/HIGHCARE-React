@@ -1,3 +1,4 @@
+import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
 import { Step1, Step2, Step2pass } from "./pages/login/findaccount"
@@ -25,7 +26,7 @@ import Hrm5 from './pages/approval/Hrm/Hrm5';
 import Hrm6 from './pages/approval/Hrm/Hrm6';
 import Hrm7 from './pages/approval/Hrm/Hrm7';
 import Login from './pages/login/Login';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/ApprovalMain";
 import PmTest from "./pages/pm/pm-test";
 import PmMenu from "./pages/pm/search";
@@ -50,7 +51,6 @@ import ModalMain from "./modal/modalMain";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
-import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
 
@@ -73,11 +73,7 @@ import Profile from "./pages/mypage/profile";
 
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
-import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
-import PrivateRoute from "./errors/PrivateRoute";
-import LoginVerify from "./utils/LoginVerify";
-import Layout from "./layouts/Layout";
 
 
 
