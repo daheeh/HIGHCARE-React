@@ -21,24 +21,22 @@ function BizList() {
         'approval/biz3': '출장신청서',
         'approval/biz4': '공문',
         'approval/biz5': 'custom',
-
     };
-
-
 
     const dragStart = (e, position) => {
         dragItem.current = position;
         e.target.style.backgroundColor = '#FFC338';
+        e.target.querySelector('.childDiv').style.backgroundColor = '#FFC338'; 
+
     }
 
     const dragEnter = (e, position) => {
         dragOverItem.current = position;
-
-
     }
 
     const drop = (e) => {
         e.target.style.backgroundColor = '#f4f4f4';
+        e.target.querySelector('.childDiv').style.backgroundColor = '#f4f4f4'; 
         const newList = [...list];
         const dragItemValue = newList[dragItem.current];
         newList.splice(dragItem.current, 1);
@@ -52,24 +50,22 @@ function BizList() {
     return (
         <div className="apvMainListRList">
             <div className="listTitle">업무</div>
-            
+
             {list.map((item, idx) => (
-                <div>
+                <div className='dragList'
+                    draggable
+                    onDragStart={(e) => dragStart(e, idx)}
+                    onDragEnter={(e) => dragEnter(e, idx)}
+                    onDragEnd={drop}
+                    onDragOver={(e) => e.preventDefault()}>
                     <Link to={`/${item}`} key={idx}>
-                        <div
-                            draggable
-                            onDragStart={(e) => dragStart(e, idx)}
-                            onDragEnter={(e) => dragEnter(e, idx)}
-                            onDragEnd={drop}
-                            onDragOver={(e) => e.preventDefault()}
-                        >
+                        <div className='childDiv'>
                             {linkTextMapping[item]}
                         </div>
                     </Link>
                 </div>
             ))}
         </div>
-
     );
 }
 
