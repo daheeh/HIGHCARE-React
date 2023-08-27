@@ -1,32 +1,73 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 
 function BizList() {
 
-    const handleDragStart = (e, link) => {
-        e.dataTransfer.setData('link', link);
+
+    const dragItem = useRef();
+    const dragOverItem = useRef();
+    const [list, setList] = useState([
+        'approval/biz1',
+        'approval/biz2',
+        'approval/biz3',
+        'approval/biz4',
+        'approval/biz5',
+    ]);
+
+    const linkTextMapping = {
+        'approval/biz1': '기안서',
+        'approval/biz2': '회의록',
+        'approval/biz3': '출장신청서',
+        'approval/biz4': '공문',
+        'approval/biz5': 'custom',
+
     };
+
+
+
+    const dragStart = (e, position) => {
+        dragItem.current = position;
+        e.target.style.backgroundColor = '#FFC338';
+    }
+
+    const dragEnter = (e, position) => {
+        dragOverItem.current = position;
+
+
+    }
+
+    const drop = (e) => {
+        e.target.style.backgroundColor = '#f4f4f4';
+        const newList = [...list];
+        const dragItemValue = newList[dragItem.current];
+        newList.splice(dragItem.current, 1);
+        newList.splice(dragOverItem.current, 0, dragItemValue);
+        dragItem.current = null;
+        dragOverItem.current = null;
+        setList(newList);
+    };
+
     
     return (
         <div className="apvMainListRList">
             <div className="listTitle">업무</div>
             
-            {/* <div draggable="true" data-link="Biz1"
-                onDragStart={(e) => handleDragStart(e, "Biz1")}>
-                기안서
-            </div>
-            <div draggable="true" data-link="Biz2">회의록</div>
-            <div draggable="true" data-link="Biz3">출장신청서</div>
-            <div draggable="true" data-link="Biz4">공문</div>
-            <div draggable="true" data-link="Biz5">custom</div> */}
-
-
-            <div><Link to="Biz1">기안서</Link></div> 
-            <div><Link to="Biz2">회의록</Link></div> 
-            <div><Link to="Biz3">출장신청서</Link></div> 
-            <div><Link to="Biz4">공문</Link></div> 
-            <div><Link to="Biz5">custom</Link></div> 
+            {list.map((item, idx) => (
+                <div>
+                    <Link to={`/${item}`} key={idx}>
+                        <div
+                            draggable
+                            onDragStart={(e) => dragStart(e, idx)}
+                            onDragEnter={(e) => dragEnter(e, idx)}
+                            onDragEnd={drop}
+                            onDragOver={(e) => e.preventDefault()}
+                        >
+                            {linkTextMapping[item]}
+                        </div>
+                    </Link>
+                </div>
+            ))}
         </div>
 
     );

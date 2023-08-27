@@ -3,30 +3,29 @@ import { Link } from 'react-router-dom';
 
 function HrmList() {
 
-
     const dragItem = useRef();
     const dragOverItem = useRef();
     const [list, setList] = useState([
-        'hrm1',
-        'hrm2',
-        'hrm3',
-        'hrm4',
-        'hrm5',
-        'hrm6',
-        'hrm7',
+        'approval/hrm1',
+        'approval/hrm2',
+        'approval/hrm3',
+        'approval/hrm4',
+        'approval/hrm5',
+        'approval/hrm6',
+        'approval/hrm7',
     ]);
 
     const linkTextMapping = {
-        hrm1: '연차신청서',
-        hrm2: '기타휴가신청서',
-        hrm3: '서류발급신청서',
-        hrm4: '시말서xx',
-        hrm5: '연장근무신청서',
-        hrm6: '사직서xx',
-        hrm7: '기안서',
+        'approval/hrm1': '연차신청서',
+        'approval/hrm2': '기타휴가신청서',
+        'approval/hrm3': '서류발급신청서',
+        'approval/hrm4': '시말서xx',
+        'approval/hrm5': '연장근무신청서',
+        'approval/hrm6': '사직서xx',
+        'approval/hrm7': '기안서',
 
     };
-    
+
 
 
     const dragStart = (e, position) => {
@@ -36,10 +35,10 @@ function HrmList() {
 
     const dragEnter = (e, position) => {
         dragOverItem.current = position;
-        
-        
+
+
     }
-        
+
     const drop = (e) => {
         e.target.style.backgroundColor = '#f4f4f4';
         const newList = [...list];
@@ -56,19 +55,19 @@ function HrmList() {
         <div className="apvMainListRList">
             <div className="listTitle">인사</div>
 
-            { list.map((item, idx) => (
+            {list.map((item, idx) => (
                 <div>
-                <Link to={`/${item}`} key={idx}>
-                    <div
-                        draggable
-                        onDragStart={(e) => dragStart(e, idx)}
-                        onDragEnter={(e) => dragEnter(e, idx)}
-                        onDragEnd={drop}
-                        onDragOver={(e) => e.preventDefault()}
-                    >
-                        {linkTextMapping[item]}
-                    </div>
-                </Link>
+                    <Link to={`/${item}`} key={idx}>
+                        <div
+                            draggable
+                            onDragStart={(e) => dragStart(e, idx)}
+                            onDragEnter={(e) => dragEnter(e, idx)}
+                            onDragEnd={drop}
+                            onDragOver={(e) => e.preventDefault()}
+                        >
+                            {linkTextMapping[item]}
+                        </div>
+                    </Link>
                 </div>
             ))}
         </div>

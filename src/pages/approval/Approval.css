@@ -522,10 +522,6 @@ textarea {
     height: 30px;
 }
 
-.dragged-item {
-    background: #FFC338;
-}
-
 footer{
     margin: 50px;
     font-size: 16px;
