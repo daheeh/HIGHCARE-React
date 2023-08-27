@@ -1,5 +1,6 @@
 import BoardStyle from './Bullentin.module.css';
 import EditorA from './editor/EditorA';
+import Editor from './editor/Editor';
 function BullentinWrite(){
     return (
         <div className={BoardStyle.bullentin_main}>
@@ -13,7 +14,8 @@ function BullentinWrite(){
                 <span>제목</span>
                 <input type="text" style={{width: '70%'}}/>
             </div>
-            <EditorA/>
+            {/* <EditorA/> */}
+            <Editor/>
             <div className={BoardStyle.permit}>
                 <span>댓글허용</span>
                 <input type="radio" name="write-comment" value="ok"/>예
