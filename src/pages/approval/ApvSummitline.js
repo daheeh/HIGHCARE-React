@@ -1,28 +1,24 @@
 import React from 'react';
 
-function ApvSummitLine() {
+function ApvSummitLine({ selectedEmployees = [], authes }) {
+	const currentDate = new Date();
+	const currentDateString = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
 	return (
 		<div className="apvApvLine">
 			<div className="apvApvLineBox">
-				<div className="row1">기안</div>
-				<div className="row2">서명란</div>
-				<div className="row3">결재일자</div>
+				<div className="row1">기안자</div>
+				<div className="row2">{authes.name}</div>
+				<div className="row3">{authes.dept} {authes.job}</div>
+				<div className="row4">{currentDateString}</div>
 			</div>
-			<div className="apvApvLineBox">
-				<div className="row4">팀장</div>
-				<div className="row5">서명란</div>
-				<div className="row6">결재일자</div>
-			</div>
-			<div className="apvApvLineBox">
-				<div className="row7">본부장</div>
-				<div className="row8">서명란</div>
-				<div className="row9">결재일자</div>
-			</div>
-			<div className="apvApvLineBox">
-				<div className="row10">대표이사</div>
-				<div className="row11">서명란</div>
-				<div className="row12">결재일자</div>
-			</div>
+			{selectedEmployees.map((employee, index) => (
+				<div className="apvApvLineBox" key={index}>
+					<div className="row1">{index + 1}</div>
+					<div className="row2">{employee.name}</div>
+					<div className="row3">{employee.dept} {employee.job}</div>
+					<div className="row4"></div>
+				</div>
+			))}
 		</div>
 	);
 }

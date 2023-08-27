@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitline';
+import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz1API } from '../../../apis/ApprovalAPICalls';
@@ -12,6 +12,9 @@ function Biz1() {
 
     const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
+	const empName = authes.name;
+	const empJob = authes.job;
+	const empDept = authes.dept;
 	console.log("empNo : ", empNo);
 
     const dispatch = useDispatch();
@@ -48,6 +51,15 @@ function Biz1() {
         }));
     };
 
+    const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+    const handleEmployeeSelect = (selectedEmployee) => {
+        setSelectedEmployees((prevSelectedEmployees) => [
+            ...prevSelectedEmployees,
+            selectedEmployee,
+        ]);
+    };
+
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -80,10 +92,12 @@ function Biz1() {
         <section>
             <ApvMenu />
             <div>
-                <ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+                <ApvSummitBar
+                    onsubmit={handleSubmission}
+                    updateIsUrgency={updateIsUrgency} />
                 <div className="containerApv">
                     <div className="apvApvTitle">기안서</div>
-                    <ApvSummitLine />
+                    <ApvSummitLine selectedEmployees={selectedEmployees} authes={authes}/>
                     <div className="apvContent">
                         <div className="apvContentTitle">
                             <div className="column1">제목</div>

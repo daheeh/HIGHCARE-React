@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitline';
+import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
 import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';

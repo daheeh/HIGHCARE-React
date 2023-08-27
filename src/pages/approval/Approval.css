@@ -362,7 +362,6 @@ section {
     padding: 0px 12px;
     font-size: 16px;
     border-radius: 6px;
-    border: 0.5px solid #7B7B7B;
 }
 
 .apvTopBar>div>button.summit {
@@ -446,6 +445,15 @@ section {
 .apvApvLineBox .row3 {
     display: flex;
     height: 30px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #7B7B7B;
+    border-bottom: none;
+}
+.apvApvLineBox .row4 {
+    display: flex;
+    height: 30px;
     background: #EEEEEE;
     text-align: center;
     flex-direction: column;
@@ -453,7 +461,7 @@ section {
     border: 1px solid #7B7B7B;
 }
 
-.apvApvLineBox .row4,
+.apvApvLineBox .row5,
 .row7,
 .row10 {
     display: flex;
@@ -492,6 +500,39 @@ section {
     border-right: 1px solid #7B7B7B;
     border-bottom: 1px solid #7B7B7B;
 }
+
+/* 결재라인 트리뷰 */
+.apvLineTreeContainer{
+    display: flex;
+}
+
+.apvLineTree1{
+    display: flex;
+    
+}
+
+.apvLineTreeBox{
+    display: flex;
+    border: 1px solid #7B7B7B;
+    border-radius: 6px;
+}
+
+.apvLineTreeSelected{
+    border: 1px solid #7B7B7B;
+    border-radius: 6px;
+}
+
+.apvLineTreeContainer >button{
+    position:relative;
+    width: auto;
+    height: 10px;
+    min-height: 40px;
+    margin: 0px 20px 0px 0px;
+    padding: 0px 12px;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
 
 .apvContent {
     width: 1500px;

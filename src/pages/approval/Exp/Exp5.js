@@ -1,7 +1,7 @@
 import React from 'react';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitline'; 
+import ApvSummitLine from '../ApvSummitLine'; 
 import './ApprovalExp.css';
 import '../Approval.css';
 
