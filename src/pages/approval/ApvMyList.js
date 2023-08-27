@@ -65,7 +65,7 @@ function ApvMyList() {
     return (
 
         <div className="apvMainMy">
-            {formData.slice(0, 10).map((item) => (
+            {formData !== null && formData.slice(0, 10).map((item) => (
                 <div key={item.apvNo}>{item.title}</div>
             ))}
 

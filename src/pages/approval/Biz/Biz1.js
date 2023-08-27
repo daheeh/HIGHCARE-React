@@ -12,9 +12,6 @@ function Biz1() {
 
     const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
-	const empName = authes.name;
-	const empJob = authes.job;
-	const empDept = authes.dept;
 	console.log("empNo : ", empNo);
 
     const dispatch = useDispatch();
@@ -52,6 +49,10 @@ function Biz1() {
     };
 
     const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+    useEffect(() => {
+        console.log('Biz1 - selectedEmployees : ', selectedEmployees);
+    }, [setSelectedEmployees]);
 
     const handleEmployeeSelect = (selectedEmployee) => {
         setSelectedEmployees((prevSelectedEmployees) => [
@@ -92,12 +93,13 @@ function Biz1() {
         <section>
             <ApvMenu />
             <div>
-                <ApvSummitBar
-                    onsubmit={handleSubmission}
-                    updateIsUrgency={updateIsUrgency} />
+                <ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees}/>
                 <div className="containerApv">
                     <div className="apvApvTitle">기안서</div>
-                    <ApvSummitLine selectedEmployees={selectedEmployees} authes={authes}/>
+                    <ApvSummitLine
+                        selectedEmployees={selectedEmployees}
+                        authes={authes}
+                    />
                     <div className="apvContent">
                         <div className="apvContentTitle">
                             <div className="column1">제목</div>

@@ -1,60 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import TreeView from "../pm/treeview";
 
-function ApvLineTree({ onSelect }) {
+function ApvLineTree({ onSelect, selectedEmployees }) {
     const treeview = useSelector((state) => state.treeview);
-    const empNo = treeview;
 
-    console.log('treeview : ', empNo);
+    const [empNoArray, setEmpNoArray] = useState([]);
+    const [selectedLine, setSelectedLine] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(null); // To track the clicked item
 
-    const [selectedLine, setSelectedLine] = useState([{
-        degree: '',
-        empNo: '',
-    }]);
 
-    const handleEmployeeSelect = (selectedEmployee) => {
-        const updatedEmployee = {
-            ...selectedEmployee,
-            empNo: empNo,
-            degree: selectedLine.length + 1,
-        };
+    useEffect(() => {
+        if (treeview !== null && treeview !== undefined) {
+            if (!empNoArray.includes(treeview) && selectedLine.length < 3) {
+                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, treeview]);
 
-        setSelectedLine((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            updatedEmployee,
-        ]);
-
-        console.log('Selected Employees:');
-        selectedLine.forEach((employee, index) => {
-            console.log(`{degree ${index + 1}, empNo ${employee.empNo}}`);
-        });
-    };
+                setSelectedLine((prevSelectedEmployees) => [
+                    ...prevSelectedEmployees,
+                    {
+                        degree: prevSelectedEmployees.length,
+                        empNo: treeview,
+                    },
+                ]);
+            }
+        }
+    }, [treeview, empNoArray, selectedLine]);
 
     const handleMoveUp = (index) => {
-        // ... (same as your existing code)
-    };
+        if (index > 0) {
+            setSelectedLine((prevSelectedEmployees) => {
+                const updatedSelectedEmployees = [...prevSelectedEmployees];
+                const temp = updatedSelectedEmployees[index];
+                updatedSelectedEmployees[index] = updatedSelectedEmployees[index - 1];
+                updatedSelectedEmployees[index - 1] = temp;
 
-    const handleMoveDown = (index) => {
-        // ... (same as your existing code)
+                updatedSelectedEmployees[index].degree = index + 1;
+                updatedSelectedEmployees[index - 1].degree = index;
+
+                return updatedSelectedEmployees;
+            });
+        }
     };
 
     const handleCompleteSelection = () => {
         onSelect(selectedLine);
+        console.log('ApvLineTree - selectedLine : ', selectedLine);
+        
     };
+
+    const handleEmployeeSelect = (selectedEmployee, index) => {
+        if (!empNoArray.includes(selectedEmployee.empNo) && selectedLine.length < 3) {
+            setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, selectedEmployee.empNo]);
+
+            setSelectedLine((prevSelectedEmployees) => {
+                const updatedSelectedEmployees = [...prevSelectedEmployees];
+                updatedSelectedEmployees[index] = {
+                    degree: index,
+                    empNo: selectedEmployee.empNo,
+                };
+                return updatedSelectedEmployees;
+            });
+        }
+    };
+
+    const dragItem = useRef();
+    const dragOverItem = useRef();
+
+    const dragStart = (e, index) => {
+        dragItem.current = index;
+        e.target.style.backgroundColor = '#FFC338';
+        setActiveIndex(null); // Reset the clicked item index when dragging starts
+    };
+
+    const dragEnter = (e, index) => {
+        dragOverItem.current = index;
+    };
+
+    const dragEnd = (e) => {
+        e.target.style.backgroundColor = ''; // Reset the background color
+    };
+
+    const drop = (e) => {
+        e.preventDefault(); // Prevent default drop behavior
+        const updatedSelectedLine = [...selectedLine];
+        const dragItemValue = updatedSelectedLine[dragItem.current];
+        updatedSelectedLine.splice(dragItem.current, 1);
+        updatedSelectedLine.splice(dragOverItem.current, 0, dragItemValue);
+        dragItem.current = null;
+        dragOverItem.current = null;
+        setSelectedLine(updatedSelectedLine);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault(); // Prevent default drag over behavior
+    };
+
+    useEffect(() => {
+        setSelectedLine([]);
+    }, []);
+
 
     return (
         <div className="apvLineTreeContainer">
             <div className="apvLineTree1">
-                <TreeView onSelect={handleEmployeeSelect} />
+                <TreeView onSelect={(selectedEmployee) => handleEmployeeSelect(selectedEmployee)} />
             </div>
             <div className="apvLineTreeBox">
-                결재라인
+                <div className="apvLineTreeBoxTitle">결재라인</div>
                 {selectedLine.map((employee, index) => (
-                    <div className="apvLineTreeSelected" key={index}>
-                        <span>{`결재라인 ${employee.degree}: ${employee.empNo}`}</span>
-                        <button onClick={() => handleMoveUp(index)}>▲</button>
-                        <button onClick={() => handleMoveDown(index)}>▼</button>
+                    <div
+                        className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
+                        key={index}
+                        onClick={() => setActiveIndex(index)}
+                        draggable
+                        onDragStart={(e) => dragStart(e, index)}
+                        onDragEnter={(e) => dragEnter(e, index)}
+                        onDragEnd={dragEnd}
+                        onDragOver={handleDragOver}
+                        onDrop={drop}
+                    >
+                        <div className="apvLineTreeSelected1">{`결재라인 ${employee.degree}`}</div>
+                        <div className="apvLineTreeSelected2">{`${employee.empNo}`}</div>
                     </div>
                 ))}
             </div>

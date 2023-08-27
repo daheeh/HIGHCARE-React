@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function ApvSummitLine({ selectedEmployees = [], authes }) {
 	const currentDate = new Date();
 	const currentDateString = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+	
+	useEffect(() => {
+        console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
+    }, [selectedEmployees]);
+
+    useEffect(() => {
+        console.log('ApvSummitLine - authes : ', authes);
+    }, [authes]);
+
+	
 	return (
 		<div className="apvApvLine">
 			<div className="apvApvLineBox">
@@ -14,7 +24,8 @@ function ApvSummitLine({ selectedEmployees = [], authes }) {
 			{selectedEmployees.map((employee, index) => (
 				<div className="apvApvLineBox" key={index}>
 					<div className="row1">{index + 1}</div>
-					<div className="row2">{employee.name}</div>
+					{/* <div className="row2">{employee.name}</div> */}
+					<div className="row2">{employee.empNo}</div>
 					<div className="row3">{employee.dept} {employee.job}</div>
 					<div className="row4"></div>
 				</div>
