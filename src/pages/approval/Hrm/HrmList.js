@@ -37,8 +37,8 @@ function HrmList() {
     }
 
     const drop = (e) => {
-        e.target.style.backgroundColor = '#f4f4f4';
-        e.target.querySelector('.childDiv').style.backgroundColor = '#f4f4f4'; 
+        e.target.style.backgroundColor = '';
+        e.target.querySelector('.childDiv').style.backgroundColor = ''; 
         const newList = [...list];
         const dragItemValue = newList[dragItem.current];
         newList.splice(dragItem.current, 1);
@@ -54,7 +54,7 @@ function HrmList() {
             <div className="listTitle">인사</div>
 
             {list.map((item, idx) => (
-                <div className='dragList'
+                <div className='dragList' key={idx}
                     draggable
                     onDragStart={(e) => dragStart(e, idx)}
                     onDragEnter={(e) => dragEnter(e, idx)}
