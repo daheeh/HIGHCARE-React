@@ -6,7 +6,104 @@ import { GET_MEMBER, GET_TREEVIEW_MEMBER } from "../../modules/TreeModule";
 import { useDispatch } from "react-redux";
 import memberSlice, { memberset, selectAction } from "../../modules/memberSlice";
 
-const initialData = [
+const initialData = [  
+      // {
+//   "id": 0,
+//   "parent": null,
+//   "droppable": true,
+//   "text": "하이케어",
+//   "jobName": "대리",
+//   "name": "0"
+// },
+// {
+//   "id": 1,
+//   "parent": 0,
+//   "droppable": true,
+//   "text": "경영 지원 본부",
+//   "jobName": null,
+//   "name": null
+// },
+// {
+//   "id": 2,
+//   "parent": 0,
+//   "droppable": true,
+//   "text": "재경 본부",
+//   "jobName": null,
+//   "name": null
+// },
+// {
+//   "id": 3,
+//   "parent": 0,
+//   "droppable": true,
+//   "text": "보험 본부",
+//   "jobName": null,
+//   "name": null
+// },
+// {
+//   "id": 4,
+//   "parent": 0,
+//   "droppable": true,
+//   "text": "정보 시스템 본부",
+//   "jobName": "팀장",
+//   "name": "조혜란"
+// },
+// {
+//   "id": 5,
+//   "parent": 1,
+//   "droppable": true,
+//   "text": "기획팀",
+//   "jobName": "팀장",
+//   "name": "봄"
+// },
+// {
+//   "id": 6,
+//   "parent": 1,
+//   "droppable": true,
+//   "text": "인사총무팀",
+//   "jobName": "대리",
+//   "name": "여름"
+// },
+// {
+//   "id": 7,
+//   "parent": 3,
+//   "droppable": true,
+//   "text": "보험 1팀",
+//   "jobName": "부장",
+//   "name": "가을"
+// },
+// {
+//   "id": 8,
+//   "parent": 3,
+//   "droppable": true,
+//   "text": "보험 2팀",
+//   "jobName": "대리",
+//   "name": "겨울"
+// },
+// {
+//   "id": 9,
+//   "parent": 3,
+//   "droppable": true,
+//   "text": "보험 영업팀",
+//   "jobName": "사원",
+//   "name": "전아림"
+// },
+// {
+//   "id": 10,
+//   "parent": 2,
+//   "droppable": true,
+//   "text": "재무 회계팀",
+//   "jobName": "사원",
+//   "name": "테스트"
+// },
+// {
+//   "id": 7,
+//   "parent": 4,
+//   "droppable": true,
+//   "text": "김나경",
+//   "jobName": "사원",
+//   "name": "김나경"
+// }
+
   {
       "id": 0,
       "parent": null,
@@ -85,7 +182,7 @@ const initialData = [
       "parent": 11,
       "droppable": true,
       "text": "김나경부장",
-      "deptNmae": "시스템운영팀",
+      "deptName": "시스템운영팀",
       "jobName": "부장",
       "name": "김나경",
       "empNo": 555555
@@ -166,7 +263,7 @@ const initialData = [
       "parent": 11,
       "droppable": true,
       "text": "봄 팀장",
-      "deptNmae": "시스템운영팀",
+      "deptName": "시스템운영팀",
       "jobName": "팀장",
       "name": "봄",
       "empNo": 1111
@@ -176,7 +273,7 @@ const initialData = [
       "parent": 11,
       "droppable": true,
       "text": "가을 대리",
-      "deptNmae": "시스템운영팀",
+      "deptName": "시스템운영팀",
       "jobName": "대리",
       "name": "가을",
       "empNo": 3333
@@ -186,7 +283,7 @@ const initialData = [
       "parent": 11,
       "droppable": true,
       "text": "겨울 사원",
-      "deptNmae": "시스템운영팀",
+      "deptName": "시스템운영팀",
       "jobName": "사원",
       "name": "겨울",
       "empNo": 4444
@@ -197,35 +294,32 @@ const initialData = [
 
 function TreeView() {
   const [selectedNode, setSelectedNode] = useState(null);
-
   const [empNo, setEmpNo] = useState(0);
-  const [jobName, setjobName] = useState(0);
-
+  const [jobName, setJobName] = useState("");
+  const [deptName, setDeptName] = useState("");
+  
+  const [info, setInfo] = useState(0);
   const dispatch = useDispatch();
-
-  useEffect(()=> {
-    console.log("empNo : ", empNo);
-    console.log("JobName : ", jobName);
-  }, [selectedNode])
 
 
   const handleNodeClick = (node) => {
-    // await console.log("node : ", node);
     setSelectedNode(node);
     setEmpNo(node.id);
-    setjobName(node.jobName);
-    // await setInfo({
-      // empNo: node.empNo,
-      // deptName: node.deptName,
-      // jobName: node.jobName,
-      // name: node.name
-      // empNo: node.id,
-    // })
-    // dispatch 
+    setJobName(node.jobName);
+    setDeptName(node.deptName);
+    
+
+    const info = {
+      empNo: node.id,
+      deptName: node.deptName,
+      jobName: node.jobName,
+      name: node.name,
+    };
+    setInfo(info);
   };
 
   const employeeSelect = () => {
-    dispatch({ type: GET_MEMBER, payload: empNo,jobName});  // treeview getmember 리듀서
+    dispatch({ type: GET_MEMBER, payload: info});
 
   }
 
@@ -243,7 +337,7 @@ function TreeView() {
               width: node.droppable ? "200px" : "140px",
               cursor: "pointer",
             }}
-            onClick={() => handleNodeClick(node)} // 클릭 이벤트 핸들러 추가
+            onClick={() => handleNodeClick(node)} 
           >
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? "[▼]" : "[▶]"}</span>
