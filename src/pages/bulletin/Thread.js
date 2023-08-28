@@ -26,6 +26,7 @@ function Thread(){
     return (
         <>
         {  boardDetail.bulletinEmployee &&
+        
         <div className={BoardStyle.content_main}>
             <h3>{boardDetail.title} </h3>
             <div className={BoardStyle.content_info}>
@@ -33,14 +34,26 @@ function Thread(){
                 <span>{boardDetail.modifiedDate}</span>
                 조회수<span>{boardDetail.views}</span>
             </div>
-            <div className={BoardStyle.content_main_main}>
-                {boardDetail.content}
+            <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html: boardDetail.content}}>
+                {/* {boardDetail.content} */}
+                
             </div>
+            {
+                boardDetail.allowComments == 'N' && 
+                <div className={BoardStyle.comment_content}>
+                <div className={BoardStyle.comment_count}>
+                    댓글이 허용되지 않은 게시물입니다.
+                </div>
+                </div>
+
+            }
+            {
+                boardDetail.allowComments == 'Y' && 
         <div className={BoardStyle.comment_content}>
                 <div className={BoardStyle.comment_count}>
                     댓글 1개
                 </div>
-            <div className={BoardStyle.comment}>
+            <div className={BoardStyle.comment} >
                 <span>허유일</span>
                 <span>2023-08-12</span>
                 <span>댓글</span>
@@ -62,6 +75,7 @@ function Thread(){
                 <div>등록</div>
             </div>
             </div> 
+            }
         </div>
 }
         </>

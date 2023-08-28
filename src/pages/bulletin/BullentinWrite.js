@@ -1,26 +1,32 @@
 import BoardStyle from './Bullentin.module.css';
 import Editor from './editor/Editor';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'; 
 import { useSelector, useDispatch} from 'react-redux';
 import {
-    callBulletinNavAPI,
     callRegisterAPI
 } from '../../apis/BulletinAPICall';
+
+
 function BullentinWrite(){
-    const bulletins = useSelector(state => state.boardtest);
+    const board = useSelector(state => state.boardtest);
     const dispatch = useDispatch();
-	useEffect(
-		() =>{
-			dispatch(callBulletinNavAPI());
-		}
-		,[]
-	);
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         categoryCode: 1,
         content: '',
         title: '',
         allowComments: ''
     });
+    useEffect(() =>{
+        if(board.status == 201){
+            navigate("/bulletin/board/1",{replace: true})
+        }
+    },
+    [board]);
+
+
     const [value, setValue] = useState('');
     const getValue = (x) =>{
         setValue(x)
@@ -40,6 +46,10 @@ function BullentinWrite(){
         dispatch(callRegisterAPI({
             form:form
         }));
+
+    }
+    const onClickBackHandler = () => {
+        navigate("/bulletin/board/1",{replace: true})
     }
 
     function changeFn(){
@@ -56,11 +66,9 @@ function BullentinWrite(){
                     게시판 선택
                 </span>
                 <select id='categoryCode' name='categoryCode' onChange={changeFn}>
-                {Array.isArray(bulletins) && bulletins.map(
-                    (bulletin) => (
-                        <option key={bulletin.categoryCode} value={bulletin.categoryCode}>{bulletin.nameBoard}</option>   
-                    )
-                )}
+                        <option value={3}>자유게시판</option>   
+                        <option value={4}>공지사항</option>   
+             
                 </select>
        
             </div>
@@ -77,7 +85,7 @@ function BullentinWrite(){
             </div>
             <div className={BoardStyle.registration}>
                 <button onClick={onClickWrite}>등록</button>
-                <button>취소</button>
+                <button onClick={onClickBackHandler}>취소</button>
             </div>
         </div>
     )
