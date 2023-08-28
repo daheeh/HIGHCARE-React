@@ -46,7 +46,6 @@ import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 
-import ModalMain from "./modal/modalMain";
 import ModalMain from "./pages/chatting/modalMain";
 import ChattingMain from "./pages/chatting/ChattingMain";
 import ChattingRoomList from "./pages/chatting/ChattingRoomList";
