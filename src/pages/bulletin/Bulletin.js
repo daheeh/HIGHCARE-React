@@ -12,6 +12,8 @@ function Bulletin(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const boards = useSelector(state => state.boardtest);
+    const boardList = boards.data;
+    const pageInfo = boards.pageInfo;
     const params = useParams();
     console.log('boards', boards);
 
@@ -28,8 +30,7 @@ function Bulletin(){
                 currentPage: currentPage
             }));
             // dispatch(callBulletinAPI());
-            
-        }
+        },[currentPage, categoryCode]
     
         );
 
@@ -58,7 +59,7 @@ function Bulletin(){
             </thead>
             <tbody>
     
-                {Array.isArray(boards)&& boards.map(
+                {Array.isArray(boardList)&& boardList.map(
                     (board) => (
                 <tr>
                     <td className={BoardStyle.no}>{board.bulletinCode}</td>
