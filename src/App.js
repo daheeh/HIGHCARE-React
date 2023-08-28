@@ -46,8 +46,10 @@ import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 
-
 import ModalMain from "./modal/modalMain";
+import ModalMain from "./pages/chatting/modalMain";
+import ChattingMain from "./pages/chatting/ChattingMain";
+import ChattingRoomList from "./pages/chatting/ChattingRoomList";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
@@ -106,12 +108,14 @@ function App() {
             <Route path="receivebox" element={<ReceiveBox />} />
             <Route path="writebox" element={<WriteBox />} />
 
+
             <Route path="biz1" element={<Biz1 />} />
             <Route path="biz2" element={<Biz2 />} />
             <Route path="biz3" element={<Biz3 />} />
             <Route path="biz4" element={<Biz4 />} />
             <Route path="biz5" element={<Biz5 />} />
             <Route path="bizOffcial" element={<Biz4Offcial />} />
+
 
             <Route path="exp1" element={<Exp1 />} />
             <Route path="exp2" element={<Exp2 />} />
@@ -130,8 +134,7 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          
-
+        
           <Route path="modifyinfo" element={<ModifyInfo />} />
 
 
@@ -179,7 +182,9 @@ function App() {
           <Route path="/mypage/profile" element={<Profile />}/>
 
 
-          <Route path="/chatting" element={<ModalMain />} />
+          <Route path="/chatting" element={<ModalMain/>} />
+                <Route path="/chatting-main" element={<ChattingMain />} />
+                <Route path="/chattingroom-list" element={<ChattingRoomList/>} />
         </Route>
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
