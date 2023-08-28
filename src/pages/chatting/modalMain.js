@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from './modal';
+import Modal from './ChattingMain';
 import './modalMain.css';
 
 const { useState } = React;
