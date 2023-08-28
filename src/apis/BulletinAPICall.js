@@ -5,6 +5,7 @@ import {
     ,GET_BOARDS
     ,GET_BOARDD
     ,POST_BOARD
+    ,POST_REGISTER
 } from '../modules/BoardModule';
 
 export const callBulletinAPI = ({categoryCode, currentPage}) => {
@@ -87,4 +88,30 @@ export const callBoardNameAddAPI = ({form}) => {
 
     dispatch({type: POST_BOARD, payload: result});
    };
+}
+
+export const callRegisterAPI = ({form}) => {
+    const requestURL = `http://localhost:8080/bulletin/insertBoard`;
+    console.log("form : " , form)
+    return async (dispatch, getState) => {
+
+        const result = await fetch(requestURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            },
+            body: JSON.stringify({
+                categoryCode: form.categoryCode,
+                content: form.content,
+                title: form.title,
+                allowComments: form.allowComments
+            })
+        })
+        .then(response => response.json());
+
+        if(result.status === 201){
+            dispatch({ type: POST_REGISTER, payload: result});
+        }
+    }
 }
