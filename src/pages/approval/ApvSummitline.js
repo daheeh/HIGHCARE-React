@@ -17,16 +17,18 @@ function ApvSummitLine({ selectedEmployees = [], authes }) {
 		<div className="apvApvLine">
 			<div className="apvApvLineBox">
 				<div className="row1">기안자</div>
-				<div className="row2">{authes.name}</div>
-				<div className="row3">{authes.dept} {authes.job}</div>
+				<div className="row2">{authes?.name}</div>
+				<div className="row3">{authes?.dept} {authes?.job}</div>
+				{/* <div className="row2">{authes.name}</div>
+				<div className="row3">{authes.dept} {authes.job}</div> */}
 				<div className="row4">{currentDateString}</div>
 			</div>
-			{selectedEmployees.map((employee, index) => (
+			{selectedEmployees.map((emp, index) => (
 				<div className="apvApvLineBox" key={index}>
 					<div className="row1">{index + 1}</div>
 					{/* <div className="row2">{employee.name}</div> */}
-					<div className="row2">{employee.empNo}</div>
-					<div className="row3">{employee.dept} {employee.job}</div>
+					<div className="row2">{emp.employee.empNo}</div>
+					<div className="row3">{emp.employee.dept} {emp.employee.job}</div>
 					<div className="row4"></div>
 				</div>
 			))}

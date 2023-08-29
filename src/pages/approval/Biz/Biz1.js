@@ -57,7 +57,10 @@ function Biz1() {
     const handleEmployeeSelect = (selectedEmployee) => {
         setSelectedEmployees((prevSelectedEmployees) => [
             ...prevSelectedEmployees,
-            selectedEmployee,
+            {
+            ...selectedEmployee,
+            isApproval: 'N',
+            }
         ]);
     };
 
@@ -68,25 +71,37 @@ function Biz1() {
             [name]: value,
         }));
 
-        console.log('formData : ', formData);
+        console.log('Biz formData : ', formData);
     }
 
     const handleSubmission = async () => {
         if (empNo !== undefined) {
-            try {
-                await dispatch(callApvBiz1API({ formData }));
+			try {
+                // const selectedEmployeeData = selectedEmployees.map(employee => ({
+                //     id: employee.id,
+                //     name: employee.name, 
+                // }));
 
-                window.alert("결재 등록 성공");
+				const response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
 
-                navigate('/approval');
-            } catch (error) {
-                window.alert("결재 등록 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
-        }
-    };
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
+
+	console.log('formData : ', formData);
+
 
     return (
 

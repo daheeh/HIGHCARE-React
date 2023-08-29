@@ -45,6 +45,7 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -77,6 +78,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -89,7 +91,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 /* 전자결재 양식 - 업무 */
 
 /* 전자결재 - 업무 : biz1 기안서 */
-export const callApvBiz1API = ({ formData }) => {
+export const callApvBiz1API = ({ formData, selectedEmployees }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz1API Call');
 
@@ -98,6 +100,8 @@ export const callApvBiz1API = ({ formData }) => {
     return async (dispatch, getState) => {
 
         console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz1API selectedEmployees : ', selectedEmployees);
+
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -107,7 +111,7 @@ export const callApvBiz1API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })
                 .then(response => response.json());
 
@@ -115,6 +119,7 @@ export const callApvBiz1API = ({ formData }) => {
             console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
             throw error;
@@ -150,6 +155,7 @@ export const callApvBiz2API = ({ formData }) => {
             console.log('[ApprovalAPICalls] callApvBiz2API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz2API: ', error);
             throw error;
