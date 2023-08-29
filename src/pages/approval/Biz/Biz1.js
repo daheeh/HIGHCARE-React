@@ -59,7 +59,7 @@ function Biz1() {
             ...prevSelectedEmployees,
             {
             ...selectedEmployee,
-            isApproval: 'N',
+            isApproval: 'F',
             }
         ]);
     };
@@ -71,9 +71,8 @@ function Biz1() {
             [name]: value,
         }));
 
-        console.log('Biz formData : ', formData);
     }
-
+    
     const handleSubmission = async () => {
         if (empNo !== undefined) {
 			try {
@@ -95,11 +94,13 @@ function Biz1() {
 				window.alert("API 요청 중 오류가 발생했습니다.");
 			}
 		} else {
-			window.alert("재로그인 요청");
+            window.alert("재로그인 요청");
 			navigate('/');
 		}
 	};
-
+    
+    console.log('Biz formData : ', formData);
+    
     return (
 
         <section>
