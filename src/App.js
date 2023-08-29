@@ -38,12 +38,13 @@ import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
-// import Businesscardregist from "./pages/mypage/businesscardregist";
+
 import Mypage from "./pages/mypage/mypage";
-// import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
+import MypageAnnual from "./pages/mypage/annual";
+
 
 
 import ModalMain from "./modal/modalMain";
@@ -174,6 +175,8 @@ function App() {
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
           <Route path="/mypage/profile" element={<Profile />}/>
+          <Route path="/mypage/annual" element={<MypageAnnual />}/>
+
 
 
           <Route path="/chatting" element={<ModalMain />} />

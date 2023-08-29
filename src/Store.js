@@ -35,4 +35,4 @@ store.subscribe(() => {
     localStorage.setItem('reduxState', JSON.stringify(store.getState())); 
   });
 
-export default store;
+export default store; 
