@@ -55,6 +55,7 @@ import BulletinBoard from "./pages/bulletin/BulletinBoard";
 import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
+import BullentinMod from "./pages/bulletin/BullentinMod";
 
 
 import ReservationMain from "./pages/reservation/ReservationMain";
@@ -163,6 +164,7 @@ function App() {
             
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
             <Route path="thread/:bulletinCode" element={<Thread />} />
+            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 

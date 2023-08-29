@@ -9,15 +9,18 @@ import {
 
 
 function BullentinWrite(){
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
     const board = useSelector(state => state.boardtest);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        categoryCode: 1,
+        categoryCode: 3,
         content: '',
         title: '',
-        allowComments: ''
+        allowComments: '',
+        empNo: empNo
     });
     useEffect(() =>{
         if(board.status == 201){
@@ -58,6 +61,7 @@ function BullentinWrite(){
            ...form, 
            categoryCode :(categoryCodea.options[categoryCodea.selectedIndex].value)
         })
+        console.log('함수 categorycode : ' , form.categoryCode);
 	};
     return (
         <div className={BoardStyle.bullentin_main}>
