@@ -6,12 +6,9 @@ export const GET_MEMBER = 'treeview/GET_MEMBER';
 
 export const GET_TREEVIEW_ONE = 'treeview/GET_TREEVIEW_ONE';
 
-export const GET_TREEVIEW_TWO = 'treeview/GET_TREEVIEW_TWO';
-
 const actions = createActions({
     [GET_MEMBER]: () => {},
-    [GET_TREEVIEW_ONE]:() => {},
-    [GET_TREEVIEW_TWO]:() => {}
+    [GET_TREEVIEW_ONE]:() => {}
     
 });
 
@@ -21,9 +18,6 @@ const TreeReduccer = handleActions(
             return payload;
         },
         [GET_TREEVIEW_ONE]: (state, {payload}) => {
-            return payload;
-        },
-        [GET_TREEVIEW_TWO]: (state, {payload}) => {
             return payload;
         }
     },

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Tree, getBackendOptions, MultiBackend } from "@minoru/react-dnd-treeview";
 import { DndProvider } from "react-dnd";
 import './pm-member.css'
-import { GET_TREEVIEW_ONE } from "../../modules/TreeModule";
 import { useDispatch, useSelector } from "react-redux";
 import { callTreeviewOneAPI } from '../../apis/PmAPICalls';
 
