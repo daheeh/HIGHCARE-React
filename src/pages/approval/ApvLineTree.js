@@ -12,13 +12,14 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
     useEffect(() => {
         if (treeview !== null && treeview !== undefined) {
+            console.log('treeview : ' , treeview);
             if (!empNoArray.includes(treeview) && selectedLine.length < 3) {
                 setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, treeview]);
 
                 setSelectedLine((prevSelectedEmployees) => [
                     ...prevSelectedEmployees,
                     {
-                        degree: prevSelectedEmployees.length,
+                        degree: prevSelectedEmployees.length + 1,
                         employee: treeview,
                     },
                 ]);
@@ -27,6 +28,13 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
         console.log('ApvLineTree - selectedLine : ', selectedLine);
     }, [treeview, empNoArray, selectedLine]);
 
+    const handleDoubleClick = (index) => {
+        setSelectedLine((prevSelectedEmployees) => {
+            const updatedSelectedEmployees = [...prevSelectedEmployees];
+            updatedSelectedEmployees.splice(index, 1);
+            return updatedSelectedEmployees;
+        });
+    };
 
     const handleMoveUp = (index) => {
         if (index > 0) {
@@ -113,7 +121,12 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
-                        onClick={() => setActiveIndex(index)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleMoveUp(index)
+                            setActiveIndex(index)
+                        }}
+                        onDoubleClick={() => handleDoubleClick(index)}
                         draggable
                         onDragStart={(e) => dragStart(e, index)}
                         onDragEnter={(e) => dragEnter(e, index)}
