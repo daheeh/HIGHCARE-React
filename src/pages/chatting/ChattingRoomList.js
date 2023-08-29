@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Draggable from 'react-draggable';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import ChattingHeader from "../../component/ChattingHeader";
-import ChattingFooter from "../../component/ChattingFooter";
-import ChattingMainCSS from "../chatting/ChattingMain.module.css"
-import "../chatting/ChattingRoomList.css";
+import ChattingRoomListCSS from "../chatting/ChattingRoomList.module.css";
+// import ChattingMainCSS from "../chatting/ChattingMain.module.css";
 import axios from 'axios'; 
 
 
@@ -26,27 +23,23 @@ function ChattingRoomList({ onClose }) {
 
     return (
         <>
-            <Draggable 
-                handle={`.${ChattingMainCSS.chattingHeader}`}
-                bounds="body"
-            >
-            <div className={ChattingMainCSS.chattingMain}>
-                <ChattingHeader onClose={onClose} /> 
-                    <div className="chattingRoomListMain">
-                        <div className="chattingRoomLists" id="chattingList1">
-                            <div className="profile-icon">
-                                <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/>
-                            </div>
-                            <div className="chattingRoomInfo">
-                                {chatrooms.map(chatroom => (
-                                    <div key={chatroom.roomId}>{chatroom.name}</div>
-                                ))}
+            {/* <div className={ChattingMainCSS.chattingMain}> */}
+                <div className={ChattingRoomListCSS.chattingRoomListMain}>
+                    <div className={ChattingRoomListCSS.chattingRoomLists} id="chattingList1">
+                        <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}>
+                            <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/>
+                        </div>
+                        <div className={ChattingRoomListCSS.chattingRoomInfo}>
+                            <div className={ChattingRoomListCSS.roomInfoText}>
+                             {/* {chatrooms.map(chatroom => (
+                                <div key={chatroom.roomId}>{chatroom.name}</div>
+                            ))} */}
+                                <p> 영업 1팀</p>
                             </div>
                         </div>
                     </div>
-                <ChattingFooter/>
-            </div>
-            </Draggable>
+                </div>
+            {/* </div> */}
         </>
     );
     
