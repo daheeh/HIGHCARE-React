@@ -19,7 +19,7 @@ function WriteBox() {
     const results = useSelector(state => state.approval);
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
 
-    const totalPages = Math.ceil(results.length / itemsPerPage);
+    const totalPages = Math.ceil((results && results.length) / itemsPerPage);
 
     useEffect(() => {
         dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중' }));

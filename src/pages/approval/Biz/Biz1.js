@@ -25,7 +25,7 @@ function Biz1() {
 
         title: '',
         writeDate: '',
-        apvStatus: '결재예정',
+        apvStatus: '결재진행중',
         isUrgency: 'F',
         category: '업무',
         empNo: empNo,
@@ -99,9 +99,6 @@ function Biz1() {
 			navigate('/');
 		}
 	};
-
-	console.log('formData : ', formData);
-
 
     return (
 

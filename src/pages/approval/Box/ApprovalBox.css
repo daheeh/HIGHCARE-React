@@ -141,10 +141,10 @@
 /* 페이징 */
 .paging{
     display: flex;
-    position: fixed;
+    /* position: fixed; */
     bottom: 320px;
     left: 50%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     justify-content: center;
     align-items: center;
 }
