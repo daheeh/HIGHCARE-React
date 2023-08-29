@@ -127,7 +127,7 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          
+          <Route path="/modifyinfo" element={<ModifyInfo/>}/>
 
           <Route path="myinfo" element={<Myinfo />} />
 

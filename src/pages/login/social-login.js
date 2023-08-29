@@ -1,25 +1,119 @@
+import { useDispatch } from 'react-redux';
+import { decodeJwt } from '../../utils/decodeJwt';
 import './social-login.css'
+import { useEffect } from 'react';
+import { gapi } from 'gapi-script';
+import { OauthLoginAPI } from '../../apis/OAuthApiCalls';
+import GoogleLogin, { GoogleLogout } from 'react-google-login';
+import { logoutAction } from "../../modules/authSlice";
+import { callLogoutAPI } from '../../apis/AuthAPICalls';
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@material-ui/core';
 
-function SocialLogin(){
 
+function SocialLogin() {
+
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        function start() {
+            gapi.client.init({
+                clientId: process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID,
+                scope: 'email',
+            });
+        }
+
+        gapi.load('client:auth2', start);
+    }, []);
+
+
+    // **you can access the token like this**
+    // const accessToken = gapi.auth.getToken().access_token;
+    // console.log(accessToken);
+
+    const dispatch = useDispatch();
+
+    const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub;
+
+    const data = {
+        providerId: '',
+        provider: '',
+        email: '',
+        name: '',
+
+        id: id,
+    }
+
+    const onSuccess = async response => {
+        console.log('SUCCESS 응답', response);
+        console.log('provider name : ', response.tokenObj.idpId);
+        console.log('구글아이디 : ', response.googleId);
+        console.log('구글이메일 : ', response.profileObj.email);
+        console.log('구글닉네임 : ', response.profileObj.name);
+        console.log('원래회원 id : ', data.id);
+
+        data.provider = response.tokenObj.idpId;
+        data.providerId = response.googleId;
+        data.email = response.profileObj.email;
+        data.name = response.profileObj.name;
+
+
+
+        await dispatch(OauthLoginAPI(data));
+
+
+    };
+    const onFailure = response => {
+        console.log('FAILED', response);
+    };
+    const onLogoutSuccess = async () => {
+        console.log('SUCESS LOG OUT');
+        await dispatch(callLogoutAPI())
+        await navigate("/");
+    };
+
+    
     return (
 
-    <div className='social'>간편 로그인
+        <div className='social'>간편 로그인
 
-        <div className="social-group">
-            
-            <input type="checkbox" hidden id="google"/>
-            <div htmlFor="google" id="googlelabel">
-            </div>
-            <input type="checkbox" hidden id="kakao"/>
-            <div htmlFor="kakao" id="kakaolabel">
-            </div>
-            <input type="checkbox" hidden id="naver"/>
-            <div htmlFor="naver" id="naverlabel">
+            <div className="social-group">
+
+                <input type="checkbox" hidden id="google" >
+
+                </input>
+
+                    <div htmlFor="google" id="googlelabel">
+                <GoogleContainer>
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+                            onSuccess={this.onSuccess}
+                            onFailure={this.onFailure}
+                            buttonText="구글연동하기"
+                            style={{ display: 'none' }}
+
+                        />
+                        <GoogleLogout
+                            clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+                            onLogoutSuccess={onLogoutSuccess}
+                        />
+                </GoogleContainer>
+                    </div>
+                <input type="checkbox" hidden id="kakao" />
+                <div htmlFor="kakao" id="kakaolabel">
+                </div>
+                <input type="checkbox" hidden id="naver" />
+                <div htmlFor="naver" id="naverlabel">
+                </div>
             </div>
         </div>
-    </div>
-    )    
+    )
 }
+export const GoogleContainer = styled.div`
+        width : 200px;
+        height: 30px;
+        flex-flow: column wrap;
+    `
 
 export default SocialLogin;

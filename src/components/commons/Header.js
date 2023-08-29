@@ -103,7 +103,7 @@ function Header() {
         return (
             <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
                 <div style={{ fontWeight: 'bold', color: 'gray' }}>{loginInfo.dept} {loginInfo.name} {loginInfo.job}님 반갑습니다.</div>
-                <Link to="/myinfo">
+                <Link to="/modifyinfo">
                     <button>
                         내정보수정
                     </button>

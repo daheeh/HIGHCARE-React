@@ -3,12 +3,20 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './Store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { ErrorBoundary } from './errors/ErrorBoundary';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
+    
     <Provider store={store}>
+        <ErrorBoundary>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}>
         <App />
+        </GoogleOAuthProvider>
+    </ErrorBoundary>
     </Provider>
 );
 

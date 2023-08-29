@@ -155,6 +155,8 @@ psd
 thumb
 sketch
 
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -162,6 +164,8 @@ sketch
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+
+.env
 
 # Local History for Visual Studio Code
 .history/

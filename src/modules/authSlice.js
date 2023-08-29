@@ -21,7 +21,8 @@ const authSlice = createSlice({
         loginAction: (state, {payload}) => {       // state는 잡아놓은 초기값의 value를 가져오는 역할 
                                                 // actions안에 payload, type 원하는 곳에 넘겨주는 역할 
             console.log("login : ", payload);
-            // state.id = payload.id;
+            
+            state.id = payload.id;
             state.name = payload.data.memberName; 
             state.empNo = payload.data.empNo;
             state.accessExp = payload.data.accessTokenExpiresIn;
