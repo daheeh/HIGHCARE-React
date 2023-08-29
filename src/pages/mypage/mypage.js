@@ -12,6 +12,7 @@ function Mypage() {
                 <Link to="/mypage/mytemplate/customlog">상담일지</Link>
                 <Link to="/mypage/mytemplate/worklog">업무일지</Link>
                 <Link to="/mypage/profile">프로필</Link>
+                <Link to="/mypage/annual">연차</Link>
             </nav>
 
         </div>

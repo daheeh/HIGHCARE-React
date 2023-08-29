@@ -51,15 +51,14 @@ function Businesscardregist() {
                 </div>
         <div className="bscd-form">
             <div className="content">
-                {/* <form name="registbusinesscard" action="/JOIN_MEMBER/html/main.html" method="POST"> */}
                     <h3>이름</h3>
-                    <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
+                    <input type="text" name="business_name" id="businessname" className="text-field" placeholder="이름"
                         maxLength="20"/>
                     <h3>전화번호</h3>
-                    <input type="password" name="user_pw" id="user_pw" className="text-field" placeholder="비밀번호"
+                    <input type="text" name="business_telephone" id="businesstelephone" className="text-field" placeholder="전화번호"
                         maxLength="20"/>
                     <h3>회사</h3>
-                    <input type="text" name="user_name" id="user_name" className="text-field" placeholder="이름"
+                    <input type="text" name="company_name" id="companyname" className="text-field" placeholder="이름"
                         maxLength="20"/>
             </div>
             <h3>이메일</h3>
@@ -82,9 +81,9 @@ function Businesscardregist() {
             <h3>주소</h3>
             <div className="address-form">
                 <input type="text" name="wPostCode" className="text-field-address" placeholder="우편번호"/>
-                <input type="button" className="addressbutton" onclick="DaumPostcode()" value="우편번호 찾기"/><br />
+                <input type="button" className="addressbutton"value="우편번호 찾기"/><br />
                 <input type="text" name="wRoadAddress" className="text-field" placeholder="도로명주소"/>
-                <h3></h3>
+                <h3></h3> 
                 <input type="text" name="wJibunAddress" className="text-field" placeholder="지번주소"/>
                 <br /><span id="guide"></span>
                 <br /><br /><input type="text" className="text-field" placeholder="나머지 주소" />
@@ -93,7 +92,7 @@ function Businesscardregist() {
             <input type="tel" id="user_ph" className="text-field" maxLength="16" placeholder="전화번호"/>
             <h3>메모</h3>
             <textarea name='self' id='user_self' cols="40" rows="7"></textarea>
-            <input type="button" className="submit-btn" id="btnjoin" onclick="joinform_check();" value="등록"/>
+            <input type="button" className="submit-btn" id="btnjoin" value="등록"/>
             <input type="reset" className="reset-btn" id="btnreset" value="취소"/>
             {/* </form> */}
         </div>
