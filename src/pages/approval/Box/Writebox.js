@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ApvMenu from '../AprovalNav';
 import './ApprovalBox.css';
@@ -10,23 +10,35 @@ function WriteBox() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
 
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+
     const dispatch = useDispatch();
-    const results = useSelector(state => state.approval); // 상태값에 대한 리듀서를 등록
+
+    const results = useSelector(state => state.approval);
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
 
-    console.log(results);
+    const totalPages = Math.ceil((results && results.length) / itemsPerPage);
+
     useEffect(() => {
-        dispatch(callApvWriteBoxAPI({ empNo: 999999, apvStatus: '결재진행중'}));
+        dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중' }));
+        console.log('results : ', results);
     }, []);
 
     const handleMenuItemClick = (apvStatus) => {
-        dispatch(callApvWriteBoxAPI({ empNo: 999999, apvStatus }));
+        dispatch(callApvWriteBoxAPI({ empNo, apvStatus }));
         setSelectedStatus(apvStatus);
     };
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+
     return (
 
-        
+
         <section>
             <ApvMenu />
             <div>
@@ -50,7 +62,7 @@ function WriteBox() {
                         >결재 참조</li>
                     </ul>
                 </div>
-                <div>
+                <div className='apvTableContainer'>
                     <table className="apvBoxresultTable">
                         <tbody>
                             <tr>
@@ -72,16 +84,23 @@ function WriteBox() {
                             }
                         </tbody>
                     </table>
-                    <div className="paging">
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>5</span>
-                    </div>
                 </div>
+
+                <div className="paging">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <span
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`pagingBtn ${currentPage === index + 1 ? 'active' : ''}`}
+        >
+                            {index + 1}
+                        </span>
+                    ))}
+                </div>
+
+
             </div>
-        </section>
+        </section >
     );
 }
 

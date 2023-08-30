@@ -1,73 +1,73 @@
-.content-bullentin-main{
+.content_bullentin_main{
     
     width:100vw;
     font-size: 20px;
 }
-.main-catagory{
+.main_catagory{
   padding-left: 35px;
   margin-top: 80px;
   font-size: 20px;
 }
-.main-catagory span{
+.main_catagory span{
   background-color: ;
   color: ;
 }
-.comment-count{
+.comment_count{
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
-.comment-content{
+.comment_content{
   font-size: 16px;
 }
 .comment{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.content-main{
+.content_main{
   margin-top: 70px;
   padding-left: 50px;
   padding-right: 200px;
   width: 100vw;
 }
-.content-main h3{
+.content_main h3{
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
 }
-.content-main-main{
+.content_main_main{
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   min-height: 500px;
 }
-.content-info{
+.content_info{
   font-size: 16px;
   margin-bottom: 20px;
 }
-.content-info span{
+.content_info span{
   margin-right: 10px;
 }
-.comment-detail{
+.comment_detail{
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.write-bulletin{
+.write_bulletin{
   text-align: end;
   margin-right: 40px;
   margin-top: 20px;
   font-size: 20px;
 }
-.bullentin-category span{
+.bullentin_category span{
   margin-right: 20px;
 }
-.write-title {
+.write_title {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.write-title span{
+.write_title span{
   margin-right: 20px;
 }
-.content-title{
+.content_title{
     padding-left: 20px;
     padding-bottom: 10px;
     margin-top: 70px;
@@ -98,11 +98,11 @@ td{
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.title-head{
+.title_head{
     width: 50%;  
 }
 
-.date-head{
+.date_head{
     width: 10%;
 }
 
@@ -140,6 +140,11 @@ td{
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-image: url("/public/images/search.png");
+    background-size: cover;
+    /* background-position: center; */
   }
   
  .wrap{
@@ -150,7 +155,7 @@ td{
     margin-bottom: 20px;
   }
 
-  .bullentin-main{
+  .bullentin_main{
     padding-left: 10px;
   }
 
@@ -172,15 +177,15 @@ td{
     padding-top: 25px;
     margin-bottom: 0px;
   }
-  .step-1-content,.step-2-content,#step-3-content{
+  .step_1_content,.step_2_content,#step-3-content,.abcdefg{
     min-height: 400px;
     min-width: 300xpx;
     border: 1px solid #000;
   }
-  .step-3{
+  .step_3{
     min-width: 400px;
   }
-  .step-3 h3{
+  .step_3 h3{
     min-width: 400px;
   }
 li{
@@ -191,46 +196,46 @@ li{
 ul{
   padding: 0;
 }
-#step-3-content div{
+#step-3-content div,.abcdefg div{
   text-align: left;
   margin-left: 20px;
   margin-top: 10px;
 }
-#step-3-content img{
+#step-3-content img,.abcdefg img{
   margin-top: 20px;
 }
 
-.add-content{
+.add_content{
   margin-left: 20px;
 }
-.add-content div{
+.add_content div{
   margin-bottom: 10px;
 }
-.add-content div span{
+.add_content div span{
   display:inline-block;
   width: 200px;
   font-size: 16px;
 }
-.add-content span{
+.add_content span{
   font-size: 16px;
 }
-.button-list{
+.button_list{
   float:right;
   margin-right: 50px;
 }
 
-.apply-content{
+.apply_content{
   display: flex;
   margin-bottom: 10px;
   
 }
-.applay-main{
+.applay_main{
   margin-left: 20px;
 }
-.applay-main img{
+.applay_main img{
   margin-right: 50px;
 }
-.applay-main div div{
+.applay_main div div{
   margin-bottom: 10px;
 }
 

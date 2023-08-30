@@ -12,10 +12,10 @@ const LoginVerify = (token, refreshExp) => {
     const dispatch = useDispatch();
     // const tokenresult = useSelector(state.)
 
-    console.log("토큰 시간 : ", token.exp);
-    console.log("토큰 시간 *1000 : ", token.exp*1000);
-    console.log("refresh exp : ", refreshExp);
-    console.log("현재 시간 : ", Date.now());
+    // console.log("토큰 시간 : ", token.exp);
+    // console.log("토큰 시간 *1000 : ", token.exp*1000);
+    // console.log("refresh exp : ", refreshExp);
+    // console.log("현재 시간 : ", Date.now());
 
 
     if (!token) {

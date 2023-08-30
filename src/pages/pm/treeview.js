@@ -1,27 +1,60 @@
-import { useState } from "react";
-import {
-  Tree,
-  getBackendOptions,
-  MultiBackend,
-} from "@minoru/react-dnd-treeview";
+import React, { useEffect, useState } from "react";
+import { Tree, getBackendOptions, MultiBackend } from "@minoru/react-dnd-treeview";
 import { DndProvider } from "react-dnd";
-import initialData from "./highcare-TreeView.json";
+import './pm-member.css'
+import { useDispatch, useSelector } from "react-redux";
+import { callTreeviewOneAPI } from '../../apis/PmAPICalls';
 
-function TreeView() { 
-  const [treeData, setTreeData] = useState(initialData); 
- 
-  const handleDrop = () => undefined;
+function TreeView({setEmpInfo}) {
+
+  const dispatch = useDispatch();
+  const result = useSelector(state => state.treeview);
+
+  const [selectedNode, setSelectedNode] = useState({
+    empNo: '',
+    empName: '',
+    jobName: '',
+    deptName: ''
+  });
   
-  return (
+  console.log('-----------------------------------> ', result);
+  useEffect(() => {
+      dispatch(callTreeviewOneAPI());
+ 
+  },[]);
 
-    <DndProvider backend={MultiBackend} options={getBackendOptions()}> 
+  const handleNodeClick = (node) => {
+
+    setSelectedNode({
+      ...selectedNode,
+      empNo: node.id,
+      empName: node.name,
+      jobName: node.jobName,
+      deptName: node.deptName
+    })
+  };
+
+  const employeeSelect = () => {
+      // 사용할 때 필요한 정보를 알아서 찾아가세요(일단어떻게 쓸지몰라서 콘솔에 찍는걸로만해놓음)
+      setEmpInfo(selectedNode);
+      console.log(selectedNode);
+  }
+
+  return (
+    <DndProvider backend={MultiBackend} options={getBackendOptions()}>
       <Tree
-        tree={treeData}
+        tree={result}
         rootId={0}
-        onDrop={handleDrop} 
-        canDrop={() => undefined}
         render={(node, { depth, isOpen, onToggle }) => (
-          <div style={{ marginLeft: depth * 10 }}>
+          <div
+            className={`customNode ${node.droppable ? "parent" : "subNode"}`}
+            style={{
+              marginLeft: `${depth * 20}px`,
+              width: node.droppable ? "200px" : "140px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleNodeClick(node)} 
+          >
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? "[▼]" : "[▶]"}</span>
             )}
@@ -29,93 +62,18 @@ function TreeView() {
           </div>
         )}
       />
+      
+      {selectedNode && (
+        <div className="selectedNodeInfo">
+          <h2>선택한 노드 정보</h2>
+          <pre>{JSON.stringify(selectedNode, null, 2)}</pre>
+          <button onClick={employeeSelect}> 사원 선택</button>
+        </div>
+      )}
+      
     </DndProvider>
   );
-
-
 }
 
-
-export default TreeView; 
-
-
-//------------------------------------------------------------------------- 걍 네모박스만 만든버전전
-// import React, { useState } from "react";
-// import { Tree, getBackendOptions, MultiBackend } from "@minoru/react-dnd-treeview";
-// import { DndProvider } from "react-dnd";
-// import initialData from "./highcare-TreeView.json";
-// import './pm-member.css'
-
-// function TreeView() {
-//   const [treeData, setTreeData] = useState(initialData);
-
-//   const handleDrop = () => undefined;
-
-//   return (
-//     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-//       <Tree
-//         tree={treeData}
-//         rootId={0}
-//         onDrop={handleDrop}
-//         canDrop={() => undefined}
-//         render={(node, { depth, isOpen, onToggle }) => (
-//           <div className={`tree-node ${node.droppable ? "droppable" : ""}`} style={{ marginLeft: depth * 20 }}>
-//             <div className={`node-box ${node.parent === 0 ? "parent-box" : "child-box"}`}>
-//               <span className={`toggle-icon ${isOpen ? "open-icon" : "closed-icon"}`} onClick={onToggle}>
-//                 {node.droppable ? (isOpen ? "▼" : "▶") : ""}
-//               </span>
-//               {node.text}
-//             </div>
-//           </div>
-//         )}
-//       />
-//     </DndProvider>
-//   );
-// }
-
-// export default TreeView;
-
-//-------------------------------------------------------이건 가운데정렬된 트리뷰^^
-// import React, { useState } from "react";
-// import { Tree, getBackendOptions, MultiBackend } from "@minoru/react-dnd-treeview";
-// import { DndProvider } from "react-dnd";
-// import initialData from "./highcare-TreeView.json";
-// import './pm-member.css'
-
-// function TreeView() {
-//   const [treeData, setTreeData] = useState(initialData);
-
-//   const handleDrop = () => undefined;
-
-//   return (
-//     <div className="tree-container">
-//       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-//         <Tree
-//           tree={treeData}
-//           rootId={0}
-//           onDrop={handleDrop}
-//           canDrop={() => undefined}
-//           render={(node, { depth, isOpen, onToggle }) => (
-//             <div className="tree-node">
-//               <div className={`node-box ${node.parent === 0 ? "parent-box" : "child-box"}`} style={{ marginLeft: depth * 20 }}>
-//                 {node.droppable && (
-//                   <span className={`toggle-icon ${isOpen ? "open-icon" : "closed-icon"}`} onClick={onToggle} />
-//                 )}
-//                 {node.text}
-//               </div>
-//             </div>
-//           )}
-//         />
-//       </DndProvider>
-//     </div>
-//   );
-// }
-
-// export default TreeView;
-
-
-
-
-
-
+export default TreeView;
 

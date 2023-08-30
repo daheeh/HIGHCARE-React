@@ -15,6 +15,8 @@ function PmTest(){
             <Link to="/pm/pm-resist">사원등록하기</Link><br></br>
             <Link to="/pm/work">근태 관리</Link><br></br>
             <Link to="/pm/treeview">조직도</Link>
+            <Link to="/pm/secondTree">조직도2</Link>
+            
             </nav>
         </div>
     )

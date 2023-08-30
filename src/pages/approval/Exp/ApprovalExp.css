@@ -181,17 +181,39 @@
     text-align: center;
     justify-content: space-around;
     border-top: 1px solid #7B7B7B;
-
 }
 .apvContentTitleExp1-3 > div{
     display: flex;
     border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
     height: 60px;
     flex-direction: column;
     justify-content: center;
 }
 .apvContentTitleExp1-3 > div:nth-child(2n) {
     border-right: none;
+}
+.apvContentTitleExp1-4{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: 375px 1125px;
+    grid-auto-rows: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    border-top: 1px solid #7B7B7B;
+}
+
+.apvContentTitleExp1-4 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+.apvContentTitleExp1-4 > div:nth-child(2n){
+    border-right: none;
+    text-align: left;
 }
 
 .apvContentDetail2{
@@ -207,11 +229,8 @@
     font-weight: 600;
 }
 
-.apvContentDetail3{
-    border-top: 3px solid #7B7B7B;
-}
 
-.apv-content-title-exp6{
+.apvContentTitleExp6{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: repeat(4, 375px);
@@ -220,7 +239,7 @@
     justify-content: space-around;
 }
 
-.apv-content-title-exp6 > div{
+.apvContentTitleExp6 > div{
     display: flex;
     border-right: 1px solid #7B7B7B;
     height: 60px;
@@ -228,11 +247,11 @@
     justify-content: center;
 }
 
-.apv-content-title-exp6 .column1, .column3{
+.apvContentTitleExp6 .column1, .column3{
     background: #EEE;
 }
-.apv-content-title-exp6 > div  th:nth-child(4n){
-    border: none;
+.apvContentTitleExp6 .column4{
+    border-right: none;
 }
 
 .apvContentDetail3{

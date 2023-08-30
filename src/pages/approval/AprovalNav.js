@@ -2,13 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function ApvMenu() {
+	
 	return (
 		<section>
 			<div className="leftMenu">
 				<div className="leftMenu2">
-					{/* <div className="mainLogo">
-						<img src="/public/images/HIGH CARE.png" alt="High Care Logo" />
-					</div> */}
 					<div className="apvMainTitle">
 						<Link to="/approval">전자결재</Link>
 					</div>

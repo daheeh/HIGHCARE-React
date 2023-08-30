@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { selectMember } from "../apis/MemberAPICalls";
 
 const initialState = {
-  data: "",
+  data: {},
 }
 
 
@@ -10,6 +10,9 @@ const memberSlice = createSlice({
   name: 'members',  // 리듀서 이름 
   initialState,
   reducers: {
+    selectAction : (state, {payload}) => {
+      return payload;
+},
   },
   extraReducers: (builder) => {
     builder
@@ -19,8 +22,7 @@ const memberSlice = createSlice({
       .addCase(selectMember.fulfilled, (state, {payload}) => {
         // 비동기 작업 성공하면 업데이트됨 
         console.log("fulfilled...!!");
-        state.data = payload; 
-        console.log("state.data : " , state.data);       
+        state.data = payload.data; 
 
       })
       .addCase(selectMember.rejected, (state, action) => {
@@ -34,6 +36,6 @@ const memberSlice = createSlice({
 
 
 // 액션 생성자 내보내기 
-export const { memberset, request } = memberSlice.actions;
+export const { selectAction } = memberSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

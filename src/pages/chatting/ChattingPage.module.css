@@ -1,0 +1,115 @@
+
+.chattingPageMain {
+    width: 390px;
+    height: 510px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+    background-color: #edf2ff;
+    z-index: 9999;
+}
+
+.chattingPageHeader {
+    width: 390px;
+    height: 50px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #edf2ff;
+}
+
+
+.chattingMainContents {
+    width: 390px;
+    height: 438px;
+}
+
+.chattingFooter {
+    /* position: absolute; */
+    left: 0px;
+    bottom: 0px;
+    height: 40px;
+    width: 390px;
+    /* margin-top: 370px; */
+    background-color: #CBDDFF;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.chattingCloseButton {
+    text-align: right;
+    color: rgb(56, 55, 55);
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 5px;
+    float: right;
+    cursor: pointer;
+    background-color: #edf2ff;
+    border: none;
+}
+
+.chattingScreen {
+    width: 390px;
+    height: 340px;
+    background-color: #edf2ff;
+    max-height: 340px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 넘치면 스크롤 생성 */
+}
+
+.chattingSendZone {
+    width: 390px;
+    height: 120px;
+    background-color: white;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.chatNameInput {
+    width: 130px;
+    height: 20px;
+}
+
+
+.chatInputAndButton {
+    width: 380px;
+    height: 90px;
+    display: flex;
+    text-align: center;
+}
+
+.sendChatMsg {
+    width: 320px;
+    height: 70px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: none;
+    resize: none;
+    background-color: #F3F3F3;
+    border: 0.5px solid #D9D9D9;
+    font-size: 14px
+}
+
+.chattingSendButton {
+    cursor: pointer;
+    width: 60px;
+    height: 72px;
+    background-color: #10479A;
+    margin-top: 10px;   
+    color: white;
+    border: 0.5px solid #D9D9D9;
+    border-left: none;
+}
+
+
+
+
+/* input안에 x없애기 */
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
+}
+
+
+
+
+

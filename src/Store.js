@@ -8,12 +8,18 @@ import authReducer from './modules/authSlice'
 import { configureStore } from '@reduxjs/toolkit';
 import approvalReducer from './modules/ApprovalModule';
 import boardReducer from './modules/BoardModule';
+
+import TreeReduccer from './modules/TreeModule';
+
 import mypageReducer from './modules/MypageModule';
+import secondReduccer from './modules/SecondTreeModule';
+
 
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
+  // ? (localStorage.getItem('reduxState'))
   : {};
 
 const store = configureStore({
@@ -23,8 +29,11 @@ const store = configureStore({
         boardtest : boardReducer,
         admins: adminReducer,
         authes: authReducer,
-        mypage: mypageReducer
+        treeview: TreeReduccer,
+        mypage: mypageReducer,
+        second: secondReduccer
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
+
 
     },
     preloadedState: persistedState, // Set initial state from localStorage
@@ -35,4 +44,4 @@ store.subscribe(() => {
     localStorage.setItem('reduxState', JSON.stringify(store.getState())); 
   });
 
-export default store; 
+export default store;

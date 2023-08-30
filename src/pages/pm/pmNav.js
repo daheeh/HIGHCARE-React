@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function PmNav() {
 	return (
-		<section>
+		<section style={{width:'auto'}}> 
 			<div className="leftMenu">
 				<div className="leftMenu2">
 					<div className="mainLogo">

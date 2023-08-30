@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitline'; 
+import ApvSummitLine from '../ApvSummitLine'; 
 import './ApprovalExp.css';
 import '../Approval.css';
 import { callApvExp2API } from '../../../apis/ApprovalAPICalls';
@@ -10,8 +11,14 @@ import { callApvExp2API } from '../../../apis/ApprovalAPICalls';
 
 function Exp2() {
 
+	
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
+
 	const [formCount, setFormCount] = useState(1);
     const dispatch = useDispatch();
+	const navigate = useNavigate();
     const exp2 = useSelector(state => state.approvalReducer);
 
 	console.log('exp2 first : ', exp2);
@@ -23,7 +30,7 @@ function Exp2() {
 		apvStatus:'결재예정',
 		isUrgency: 'F',
 		category: '지출',
-		empNo: 999999,
+		empNo: empNo,
 		apvExpForms:[{
 			requestDate : '',
 			payee: '',
@@ -39,14 +46,12 @@ function Exp2() {
 
 	const [amounts, setAmounts] = useState([0]);
 
+
     useEffect(() => {
         const newAmounts = formData.apvExpForms.map(form => parseFloat(form.amount || 0));
         setAmounts(newAmounts);
     }, [formData.apvExpForms]);
 
-    const handleSubmission = () => {
-        dispatch(callApvExp2API({ formData }));
-    };
 
 	console.log('formData.apvExpForms : ', formData.apvExpForms);
 
@@ -64,6 +69,19 @@ function Exp2() {
 			updatedFormData.apvExpForms[index][field] = value;
 			setFormData(updatedFormData);
 		} else if (nameParts[0] === 'sharedProperties') {
+
+			if (name === 'sharedProperties.requestDate') {
+				const currentDate = new Date().toISOString().split('T')[0];
+            if (value < currentDate) {
+                window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
+                setSharedProperties(prevSharedProps => ({
+                    ...prevSharedProps,
+                    requestDate: currentDate
+                }));
+                return;
+				}
+			}
+			
 			const field = nameParts[1];
 			const updatedSharedProperties = {
 				...sharedProperties,
@@ -197,6 +215,30 @@ function Exp2() {
     };
 
 	
+	
+    const handleSubmission = async () => {
+		if (empNo !== undefined) {
+			try {
+				const response = await dispatch(callApvExp2API({ formData }));
+
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
+
+	console.log('formData : ', formData);
+
     return (
 		<section>
 			<ApvMenu />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from './modal';
+import Modal from './ChattingMain';
 import './modalMain.css';
 
 const { useState } = React;
@@ -9,10 +9,12 @@ function ModalMain() {
 
     const openModal = () => {
         setModal(true);
+        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setModal(false);
+        document.body.style.overflow = 'auto';
     };
 
     return (

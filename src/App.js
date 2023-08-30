@@ -38,22 +38,25 @@ import PmMemberAnnual from "./pages/pm/member-annual";
 import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
-
+import SecondTree from "./pages/pm/secondTree";
+// import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
+// import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
-import MypageAnnual from "./pages/mypage/annual";
 
-
-
-import ModalMain from "./modal/modalMain";
+import ModalMain from "./pages/chatting/modalMain";
+import ChattingMain from "./pages/chatting/ChattingMain"
+import ChattingRoomList from "./pages/chatting/ChattingRoomList";
+import ChattingPage from "./pages/chatting/ChattingPage";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
 import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
+import BullentinMod from "./pages/bulletin/BullentinMod";
 
 
 import ReservationMain from "./pages/reservation/ReservationMain";
@@ -70,8 +73,8 @@ import MemberList from "./pages/admin/member/MemberList";
 import MemberLog from "./pages/admin/member/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
 
-
 import Profile from "./pages/mypage/profile";
+
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { useSelector } from "react-redux";
@@ -106,12 +109,14 @@ function App() {
             <Route path="receivebox" element={<ReceiveBox />} />
             <Route path="writebox" element={<WriteBox />} />
 
+
             <Route path="biz1" element={<Biz1 />} />
             <Route path="biz2" element={<Biz2 />} />
             <Route path="biz3" element={<Biz3 />} />
             <Route path="biz4" element={<Biz4 />} />
             <Route path="biz5" element={<Biz5 />} />
             <Route path="bizOffcial" element={<Biz4Offcial />} />
+
 
             <Route path="exp1" element={<Exp1 />} />
             <Route path="exp2" element={<Exp2 />} />
@@ -130,8 +135,7 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-          
-
+        
           <Route path="modifyinfo" element={<ModifyInfo />} />
 
 
@@ -154,12 +158,19 @@ function App() {
           <Route path="/pm/pm-resist" element={<PmMemberResist />} />
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
+          <Route path="/pm/secondTree" element={<SecondTree />} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
-            <Route index element={<Bulletin />} />
-            <Route path="board" element={<BulletinBoard />} />
+            {/* <Route index element={<Bulletin />} /> */}
+            
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
+
             <Route path="thread" element={<Thread />} />
-            <Route path="bullentinWrite" element={<BullentinWrite />} />
+
+            <Route path="thread/:bulletinCode" element={<Thread />} />
+            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
+
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
 
@@ -175,11 +186,10 @@ function App() {
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
           <Route path="/mypage/profile" element={<Profile />}/>
-          <Route path="/mypage/annual" element={<MypageAnnual />}/>
 
 
+          <Route path="/socket/chatting" element={<ChattingPage />} />
 
-          <Route path="/chatting" element={<ModalMain />} />
         </Route>
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
@@ -194,4 +204,3 @@ function App() {
 }
 
 export default App;
-
