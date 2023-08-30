@@ -65,7 +65,7 @@ function Biz2() {
             ...prevSelectedEmployees,
             {
             ...selectedEmployee,
-            isApproval: 'N',
+            isApproval: 'F',
             }
         ]);
     };
@@ -81,9 +81,8 @@ function Biz2() {
 			}]
 		}));
 
-        console.log('Biz formData : ', formData);
 	}
-
+	
 	const handleSubmission = async () => {
 		if (empNo !== undefined) {
 			try {
@@ -109,6 +108,7 @@ function Biz2() {
 		}
 	};
 	
+	console.log('Biz formData : ', formData);
 
 	return (
 
