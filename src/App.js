@@ -26,7 +26,7 @@ import Hrm5 from './pages/approval/Hrm/Hrm5';
 import Hrm6 from './pages/approval/Hrm/Hrm6';
 import Hrm7 from './pages/approval/Hrm/Hrm7';
 import Login from './pages/login/Login';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/ApprovalMain";
 import PmTest from "./pages/pm/pm-test";
 import PmMenu from "./pages/pm/search";
@@ -53,7 +53,6 @@ import ChattingPage from "./pages/chatting/ChattingPage";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
-import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
 import BullentinMod from "./pages/bulletin/BullentinMod";
@@ -77,11 +76,11 @@ import Profile from "./pages/mypage/profile";
 
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
-import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
 import MypageAnnual from "./pages/mypage/annual";
+import Myinfo from "./pages/login/Myinfo";
 
 
 
@@ -136,9 +135,9 @@ function App() {
             <Route path="hrm7" element={<Hrm7 />} />
           </Route>
 
-        
-          <Route path="modifyinfo" element={<ModifyInfo />} />
 
+          <Route path="/modifyinfo" element={<ModifyInfo/>}/>
+          <Route path="myinfo" element={<Myinfo />} />
 
           <Route path="/admin">
             <Route index element={<AdminPage />} />
