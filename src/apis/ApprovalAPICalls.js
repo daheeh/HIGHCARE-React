@@ -151,12 +151,9 @@ export const callApvBiz2API = ({ formData, selectedEmployees }) => {
 
             console.log('[ApprovalAPICalls] callApvBiz2API RESULT : ', result);
 
-<<<<<<< HEAD
-            dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
-=======
             dispatch({ type: POST_APPROVAL_BIZ2, payload: result });
             return result;
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
+
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz2API: ', error);
             throw error;

@@ -1,15 +1,14 @@
 
+
 import {
     GET_BOARD
     ,GET_BOARDS
+    ,GET_BOARDD
     ,POST_BOARD
-<<<<<<< HEAD
-=======
     ,POST_REGISTER
     ,POST_REGISTERS
     ,PUT_BOARD
     ,PUT_BOARDS
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
 } from '../modules/BoardModule';
 
 export const callBulletinAPI = ({categoryCode, currentPage}) => {
@@ -31,6 +30,26 @@ export const callBulletinAPI = ({categoryCode, currentPage}) => {
         dispatch({ type: GET_BOARD,  payload: result.data});
     }
    };
+
+}
+
+export const callBoardDetailAPI = ({bulletinCode})=>{
+    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+        dispatch({ type: GET_BOARDD,  payload: result });
+        }
+    };
+
 
 }
 
@@ -72,8 +91,6 @@ export const callBoardNameAddAPI = ({form}) => {
 
     dispatch({type: POST_BOARD, payload: result});
    };
-<<<<<<< HEAD
-=======
 }
 
 export const callRegisterAPI = ({form}) => {
@@ -173,5 +190,4 @@ export const callDeleteAPI = ({form}) =>{
     }
 
 
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
 }

@@ -1,7 +1,4 @@
 import BoardStyle from './Bullentin.module.css';
-<<<<<<< HEAD
-function Thread(){
-=======
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -55,42 +52,22 @@ function Thread(){
     const onClickUpdate = () =>{
         navigate(`/bulletin/mod/${bulletinCode}`,{ replace: false });
     }
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
     return (
+        <>
+        {  boardDetail.bulletinEmployee &&
+        
         <div className={BoardStyle.content_main}>
-<<<<<<< HEAD
-            <h3> 안녕하세요</h3>
-=======
             <h3>{boardDetail.title} </h3>
             <div onClick={onClickUpdate}>수정</div>
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
             <div className={BoardStyle.content_info}>
-                <span>허유일</span>
-                <span>2023-08-12</span>
-                조회수<span>1050</span>
+                <span>{boardDetail.bulletinEmployee.empName}</span>
+                <span>{boardDetail.modifiedDate}</span>
+                조회수<span>{boardDetail.views}</span>
             </div>
-            <div className={BoardStyle.content_main_main}>
-                내용
+            <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html: boardDetail.content}}>
+                {/* {boardDetail.content} */}
+                
             </div>
-<<<<<<< HEAD
-        <div className={BoardStyle.comment_content}>
-                <div className={BoardStyle.comment_count}>
-                    댓글 1개
-                </div>
-            <div className={BoardStyle.comment}>
-                <span>허유일</span>
-                <span>2023-08-12</span>
-                <span>댓글</span>
-                <div className={BoardStyle.comment_detail}>
-                    잘보고 갑니다
-                    <div style={{display: 'none'}}>
-                        <div className={BoardStyle.comment_comment}>
-                            잘보고 갑니다
-                        </div>
-                        <div className={BoardStyle.reply_add} style={{display: 'flex'}}>
-                            <input type="text"/>
-                            <div>등록</div>
-=======
             {
                 boardDetail.allowComments == 'N' && 
                 <div className={BoardStyle.comment_content}>
@@ -133,7 +110,6 @@ function Thread(){
                                 <input type="text"/>
                                 <div>등록</div>
                             </div>
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
                         </div>
                     </div>
                         </div> */}
@@ -141,18 +117,11 @@ function Thread(){
                     <input type="text" onChange={changeContent} name='content'/>
                     <div onClick={onClickComment}>등록</div>
                 </div>
-<<<<<<< HEAD
-            </div>
-            <div style={{display: 'flex'}}>
-                <input type="text"/>
-                <div>등록</div>
-            </div>
-=======
             </div> 
             }
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
         </div>
-    </div>
+}
+        </>
     )
 }
 

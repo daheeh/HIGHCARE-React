@@ -164,12 +164,12 @@ function App() {
             {/* <Route index element={<Bulletin />} /> */}
             
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
-<<<<<<< HEAD
+
             <Route path="thread" element={<Thread />} />
-=======
+
             <Route path="thread/:bulletinCode" element={<Thread />} />
             <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
+
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 

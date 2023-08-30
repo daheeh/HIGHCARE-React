@@ -19,21 +19,15 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                 setSelectedLine((prevSelectedEmployees) => [
                     ...prevSelectedEmployees,
                     {
-<<<<<<< HEAD
-                        degree: prevSelectedEmployees.length,
-                        empNo: treeview,
-=======
                         degree: prevSelectedEmployees.length + 1,
                         employee: treeview,
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
                     },
                 ]);
             }
         }
+        console.log('ApvLineTree - selectedLine : ', selectedLine);
     }, [treeview, empNoArray, selectedLine]);
 
-<<<<<<< HEAD
-=======
     const handleDoubleClick = (index) => {
         setSelectedLine((prevSelectedEmployees) => {
             const updatedSelectedEmployees = [...prevSelectedEmployees];
@@ -42,7 +36,6 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
         });
     };
 
->>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
     const handleMoveUp = (index) => {
         if (index > 0) {
             setSelectedLine((prevSelectedEmployees) => {
@@ -73,7 +66,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                 const updatedSelectedEmployees = [...prevSelectedEmployees];
                 updatedSelectedEmployees[index] = {
                     degree: index,
-                    empNo: selectedEmployee.empNo,
+                    employee: selectedEmployee.empNo,
                 };
                 return updatedSelectedEmployees;
             });
@@ -124,7 +117,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
             </div>
             <div className="apvLineTreeBox">
                 <div className="apvLineTreeBoxTitle">결재라인</div>
-                {selectedLine.map((employee, index) => (
+                {selectedLine.map((emp, index) => (
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
@@ -141,8 +134,8 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                         onDragOver={handleDragOver}
                         onDrop={drop}
                     >
-                        <div className="apvLineTreeSelected1">{`결재라인 ${employee.degree}`}</div>
-                        <div className="apvLineTreeSelected2">{`${employee.empNo}`}</div>
+                        <div className="apvLineTreeSelected1">{`결재라인 ${emp.degree}`}</div>
+                        <div className="apvLineTreeSelected2">{`${emp.employee.empNo}`}</div>
                     </div>
                 ))}
             </div>
