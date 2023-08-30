@@ -19,14 +19,12 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     ...prevSelectedEmployees,
                     {
                         degree: prevSelectedEmployees.length,
-                        employee: treeview,
+                        empNo: treeview,
                     },
                 ]);
             }
         }
-        console.log('ApvLineTree - selectedLine : ', selectedLine);
     }, [treeview, empNoArray, selectedLine]);
-
 
     const handleMoveUp = (index) => {
         if (index > 0) {
@@ -58,7 +56,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                 const updatedSelectedEmployees = [...prevSelectedEmployees];
                 updatedSelectedEmployees[index] = {
                     degree: index,
-                    employee: selectedEmployee.empNo,
+                    empNo: selectedEmployee.empNo,
                 };
                 return updatedSelectedEmployees;
             });
@@ -109,7 +107,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
             </div>
             <div className="apvLineTreeBox">
                 <div className="apvLineTreeBoxTitle">결재라인</div>
-                {selectedLine.map((emp, index) => (
+                {selectedLine.map((employee, index) => (
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
@@ -121,8 +119,8 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                         onDragOver={handleDragOver}
                         onDrop={drop}
                     >
-                        <div className="apvLineTreeSelected1">{`결재라인 ${emp.degree}`}</div>
-                        <div className="apvLineTreeSelected2">{`${emp.employee.empNo}`}</div>
+                        <div className="apvLineTreeSelected1">{`결재라인 ${employee.degree}`}</div>
+                        <div className="apvLineTreeSelected2">{`${employee.empNo}`}</div>
                     </div>
                 ))}
             </div>

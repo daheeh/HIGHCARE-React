@@ -1,59 +1,21 @@
 import BoardStyle from './Bullentin.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-
-import {
-    callBoardDetailAPI
-} from '../../apis/BulletinAPICall'
-
 function Thread(){
-    const bulletinCode = useParams().bulletinCode;
-    const dispatch =useDispatch();
-    const board = useSelector(state => state.boardtest);
-    const boardDetail = board.data;
-
-    useEffect(
-        ()=>{
-            dispatch(callBoardDetailAPI({
-                bulletinCode: bulletinCode
-            }));
-        }
-        ,[]
-    );
-    console.log('boardDetail', boardDetail);
-    console.log('bulletinCode', bulletinCode);
     return (
-        <>
-        {  boardDetail.bulletinEmployee &&
-        
         <div className={BoardStyle.content_main}>
-            <h3>{boardDetail.title} </h3>
+            <h3> 안녕하세요</h3>
             <div className={BoardStyle.content_info}>
-                <span>{boardDetail.bulletinEmployee.empName}</span>
-                <span>{boardDetail.modifiedDate}</span>
-                조회수<span>{boardDetail.views}</span>
+                <span>허유일</span>
+                <span>2023-08-12</span>
+                조회수<span>1050</span>
             </div>
-            <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html: boardDetail.content}}>
-                {/* {boardDetail.content} */}
-                
+            <div className={BoardStyle.content_main_main}>
+                내용
             </div>
-            {
-                boardDetail.allowComments == 'N' && 
-                <div className={BoardStyle.comment_content}>
-                <div className={BoardStyle.comment_count}>
-                    댓글이 허용되지 않은 게시물입니다.
-                </div>
-                </div>
-
-            }
-            {
-                boardDetail.allowComments == 'Y' && 
         <div className={BoardStyle.comment_content}>
                 <div className={BoardStyle.comment_count}>
                     댓글 1개
                 </div>
-            <div className={BoardStyle.comment} >
+            <div className={BoardStyle.comment}>
                 <span>허유일</span>
                 <span>2023-08-12</span>
                 <span>댓글</span>
@@ -74,11 +36,8 @@ function Thread(){
                 <input type="text"/>
                 <div>등록</div>
             </div>
-            </div> 
-            }
         </div>
-}
-        </>
+    </div>
     )
 }
 
