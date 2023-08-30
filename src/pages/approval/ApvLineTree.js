@@ -12,20 +12,37 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
     useEffect(() => {
         if (treeview !== null && treeview !== undefined) {
+            console.log('treeview : ' , treeview);
             if (!empNoArray.includes(treeview) && selectedLine.length < 3) {
                 setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, treeview]);
 
                 setSelectedLine((prevSelectedEmployees) => [
                     ...prevSelectedEmployees,
                     {
+<<<<<<< HEAD
                         degree: prevSelectedEmployees.length,
                         empNo: treeview,
+=======
+                        degree: prevSelectedEmployees.length + 1,
+                        employee: treeview,
+>>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
                     },
                 ]);
             }
         }
     }, [treeview, empNoArray, selectedLine]);
 
+<<<<<<< HEAD
+=======
+    const handleDoubleClick = (index) => {
+        setSelectedLine((prevSelectedEmployees) => {
+            const updatedSelectedEmployees = [...prevSelectedEmployees];
+            updatedSelectedEmployees.splice(index, 1);
+            return updatedSelectedEmployees;
+        });
+    };
+
+>>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
     const handleMoveUp = (index) => {
         if (index > 0) {
             setSelectedLine((prevSelectedEmployees) => {
@@ -111,7 +128,12 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
-                        onClick={() => setActiveIndex(index)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleMoveUp(index)
+                            setActiveIndex(index)
+                        }}
+                        onDoubleClick={() => handleDoubleClick(index)}
                         draggable
                         onDragStart={(e) => dragStart(e, index)}
                         onDragEnter={(e) => dragEnter(e, index)}

@@ -25,7 +25,7 @@ function Biz2() {
 
 		title: '회의록',
 		writeDate: '',
-		apvStatus: '결재예정',
+		apvStatus: '결재진행중',
 		isUrgency: 'F',
 		category: '업무',
 		empNo: empNo,
@@ -54,6 +54,22 @@ function Biz2() {
 		}));
 	};
 
+	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+    useEffect(() => {
+        console.log('Biz2 - selectedEmployees : ', selectedEmployees);
+    }, [setSelectedEmployees]);
+
+    const handleEmployeeSelect = (selectedEmployee) => {
+        setSelectedEmployees((prevSelectedEmployees) => [
+            ...prevSelectedEmployees,
+            {
+            ...selectedEmployee,
+            isApproval: 'N',
+            }
+        ]);
+    };
+
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevFormData) => ({
@@ -65,35 +81,47 @@ function Biz2() {
 			}]
 		}));
 
-		console.log('formData : ', formData);
+        console.log('Biz formData : ', formData);
 	}
 
 	const handleSubmission = async () => {
 		if (empNo !== undefined) {
 			try {
-				await dispatch(callApvBiz2API({ formData }));
-
-				window.alert("결재 등록 성공");
-
-				navigate('/approval');
+				const response = await dispatch(callApvBiz2API({ formData, selectedEmployees }));
+	
+				if (response.status === 200) {
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
 			} catch (error) {
-				window.alert("결재 등록 중 오류가 발생했습니다.");
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
 			}
 		} else {
 			window.alert("재로그인 요청");
 			navigate('/');
 		}
 	};
+	
 
 	return (
 
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
-				<div className="containerApv">
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees}/>
+                <div className="containerApv">
 					<div className="apvApvTitle">회의록</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+                        selectedEmployees={selectedEmployees}
+                        authes={authes}
+                    />
 					<div className="apvContent">
 						<div className="apvContentBiz2">
 							<div className="column1">제목</div>
@@ -130,7 +158,7 @@ function Biz2() {
 						<div className="apvContentBiz2Last">
 							<div className="column1">회의내용</div>
 							<div><textarea placeholder="회의 내용 작성" rows="30" name='contents1'
-								value={formData.contents1}
+								value={formData.apvMeetingLogs[0].contents1}
 								onChange={onChangeHandler} />
 							</div>
 						</div>

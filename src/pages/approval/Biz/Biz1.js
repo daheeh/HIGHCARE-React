@@ -25,7 +25,7 @@ function Biz1() {
 
         title: '',
         writeDate: '',
-        apvStatus: '결재예정',
+        apvStatus: '결재진행중',
         isUrgency: 'F',
         category: '업무',
         empNo: empNo,
@@ -76,6 +76,7 @@ function Biz1() {
             try {
                 await dispatch(callApvBiz1API({ formData }));
 
+<<<<<<< HEAD
                 window.alert("결재 등록 성공");
 
                 navigate('/approval');
@@ -87,6 +88,25 @@ function Biz1() {
             navigate('/');
         }
     };
+=======
+				const response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
+
+				if (response.status === 200) {
+					window.alert("결재 등록 성공");
+					navigate('/approval');
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
+>>>>>>> cbf19ef5f44a6282cd8ec2213664d24d83426bae
 
     return (
 
