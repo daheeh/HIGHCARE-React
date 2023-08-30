@@ -107,9 +107,13 @@ input::-webkit-search-results-decoration{
 }
 
 
-.treeviewImg {
-
-    width: 390px;
-    height: 345px;
-    background-image: url("/public/images/treeview_sample.PNG");
+/* 길이 넘어가면 스크롤 생성 */
+.chattingTreeView {
+    width: 360px;
+    height: 325px;
+    background-color: #edf2ff;
+    max-height: 340px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 넘치면 스크롤 생성 */
+    padding-top: 20px;
+    padding-left: 30px;
 }
