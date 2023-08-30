@@ -26,8 +26,8 @@ function ApvSummitLine({ selectedEmployees = [], authes }) {
 			{selectedEmployees.map((emp, index) => (
 				<div className="apvApvLineBox" key={index}>
 					<div className="row1">{index + 1}</div>
-					{/* <div className="row2">{employee.name}</div> */}
-					<div className="row2">{emp.employee.empNo}</div>
+					<div className="row2">{emp.employee.name}</div>
+					{/* <div className="row2">{emp.employee.empNo}</div> */}
 					<div className="row3">{emp.employee.dept} {emp.employee.job}</div>
 					<div className="row4"></div>
 				</div>

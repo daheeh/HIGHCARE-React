@@ -8,25 +8,25 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const [empNoArray, setEmpNoArray] = useState([]);
     const [selectedLine, setSelectedLine] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null); // To track the clicked item
-
+    const [empInfo, setEmpInfo] = useState([]);
 
     useEffect(() => {
-        if (treeview !== null && treeview !== undefined) {
-            console.log('treeview : ' , treeview);
-            if (!empNoArray.includes(treeview) && selectedLine.length < 3) {
-                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, treeview]);
+        if (empInfo !== null && empInfo !== undefined) {
+            console.log('treempInfoeview : ' , empInfo);
+            if (!empNoArray.includes(empInfo) && selectedLine.length < 3) {
+                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, empInfo]);
 
                 setSelectedLine((prevSelectedEmployees) => [
                     ...prevSelectedEmployees,
                     {
                         degree: prevSelectedEmployees.length + 1,
-                        employee: treeview,
+                        employee: empInfo,
                     },
                 ]);
             }
         }
         console.log('ApvLineTree - selectedLine : ', selectedLine);
-    }, [treeview, empNoArray, selectedLine]);
+    }, [treeview, empNoArray, selectedLine, empInfo]);
 
     const handleDoubleClick = (index) => {
         setSelectedLine((prevSelectedEmployees) => {
@@ -67,7 +67,9 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                 updatedSelectedEmployees[index] = {
                     degree: index,
                     employee: selectedEmployee.empNo,
+                    empInfo: selectedEmployee,
                 };
+                console.log('empNoArray' , empNoArray);
                 return updatedSelectedEmployees;
             });
         }
@@ -109,11 +111,11 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
         setSelectedLine([]);
     }, []);
 
-
+console.log('empInfo', empInfo);
     return (
         <div className="apvLineTreeContainer">
             <div className="apvLineTree1">
-                <TreeView onSelect={(selectedEmployee) => handleEmployeeSelect(selectedEmployee)} />
+                <TreeView setEmpInfo={setEmpInfo} onSelect={(selectedEmployees) => handleEmployeeSelect(selectedEmployees)} />
             </div>
             <div className="apvLineTreeBox">
                 <div className="apvLineTreeBoxTitle">결재라인</div>
