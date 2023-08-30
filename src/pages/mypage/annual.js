@@ -49,13 +49,76 @@ function MypageAnnual() {
                 </div>
                     <table className="pm-ma-table">
                     <tr>
-                        <th className="columnpm1">이름</th>
-                        <th className="columnpm2">부서명</th>
+                        <th className="columnpm1">시작일</th>
+                        <th className="columnpm2">종료일</th>
                         <th className="columnpm3">휴가 종류</th>
-                        <th className="columnpm4">사용 연차</th>
-                        <th className="columnpm5">사용 연차 </th>
+                        <th className="columnpm4">사유</th>
+                        {/* <th className="columnpm5">사용 연차 </th>
                         <th className="columnpm7">연차 사용 기간</th>
-                        <th className="columnpm7">비고</th>
+                        <th className="columnpm7">비고</th> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {/* <td></td>
+                        <td></td>
+                        <td></td> */}
+                    </tr>
+                    {/* <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -74,70 +137,7 @@ function MypageAnnual() {
                         <td></td>
                         <td></td>
                         <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    </tr> */}
 
                 </table>
                 <div className="paging">

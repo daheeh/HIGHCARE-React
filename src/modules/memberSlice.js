@@ -22,6 +22,7 @@ const memberSlice = createSlice({
       .addCase(selectMember.fulfilled, (state, {payload}) => {
         // 비동기 작업 성공하면 업데이트됨 
         console.log("fulfilled...!!");
+        alert(payload.data.message)
         state.data = payload.data; 
 
       })

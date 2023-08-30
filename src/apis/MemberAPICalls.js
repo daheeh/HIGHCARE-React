@@ -22,7 +22,7 @@ export const selectMember = createAsyncThunk(
 
 export const requestMember = createAsyncThunk(
   'request/members',
-  async (form,) => {   // post요청은 url, data(body), header순 
+  async (form,) => {   // post요청은 url, data, header순 
     try {
       const response = await axios.post(`http://localhost:8080/api/admin/memberjoin`, form,
         {
@@ -41,6 +41,10 @@ export const requestMember = createAsyncThunk(
   }
 );
 
+
+export const authServiceAPI = axios.create({
+  baseURL: `http://localhost:8080/api/oauth/jwt/google`
+})
 
 
 

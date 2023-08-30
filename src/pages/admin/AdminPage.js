@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { decodeJwt } from '../../utils/decodeJwt';
-import LoginVerify from '../../utils/LoginVerify';
 
 function AdminPage() {
 
