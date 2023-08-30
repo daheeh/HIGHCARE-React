@@ -1,0 +1,32 @@
+.chattingRoomListMain {
+    width: 390px;
+    height: 390px;
+}
+
+.chattingRoomLists {
+    width: 390px;
+    height: 90px;
+    border-bottom: 0.5px solid lightgrey;
+    display: flex;
+}
+
+.profileIcon {
+    width: 87px;
+    height: 87px;
+    float: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.chattingRoomInfo {
+    display: flex;
+    height: 85px;
+    padding-top: 3px;
+    padding-left: 15px;
+    font-size: small;
+    text-align: center;
+}
+
+.roomInfoText {
+    padding-left: 10px;
+}

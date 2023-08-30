@@ -1,0 +1,277 @@
+
+
+.apvContentTitleExp1{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    /* grid-auto-rows: 60px; */
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    border-bottom: 1px solid #7B7B7B;
+}
+.apvContentTitleExp1 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+.apvContentTitleExp1 .column1, .column3{
+    background: #EEE; 
+}
+
+.apvContentTitleExp1 > div:nth-child(4n) {
+    border-right: none;
+}
+
+.apvContentDetail{
+    grid-column: 1 / span 8;
+    display: flex;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #EEE;
+    /* border-top: 1px solid #7B7B7B; */
+}
+
+.apvContentDetailExp1Title{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    border-top: 1px solid #7B7B7B;
+    height: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+.apvContentDetailExp1Title > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    background: #EEE; 
+}
+.apvContentDetailExp1Title > div:nth-child(4n) {
+    border-right: none;
+}
+.apvContentDetailExp1Content{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    grid-auto-rows: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+.apvContentDetailExp1List{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    height: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+.apvContentDetailExp1List > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.apvContentDetailExp1List > div:nth-child(4n) {
+    border-right: none;
+}
+
+.apvContentDetailExp1Contentt > div:last-child {
+    border-bottom: none;
+}
+
+
+.apvContentDetailExp1Total{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(2, 750px);
+    height: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    background: #EEE; 
+    border-top: 1px solid #7B7B7B;
+    /* border-bottom: 1px solid #7B7B7B; */
+}
+
+.apvContentDetailExp1Total > div {
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 600;
+}
+.apvContentDetailExp1Total > div:nth-child(2n) {
+    border-right: none;
+}
+
+
+.apvContentDetailExp1Total2{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(2, 750px);
+    height: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    background: #EEE; 
+    border-top: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+}
+
+.apvContentDetailExp1Total2 > div {
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 600;
+}
+.apvContentDetailExp1Total2 > div:nth-child(2n) {
+    border-right: none;
+}
+
+.apvContentTitleExp1-2{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    /* grid-auto-rows: 60px; */
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+.apvContentTitleExp1-2 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-top: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+.apvContentTitleExp1-2 .column41, .column43, .column45{
+    background: #EEE; 
+}
+
+.apvContentTitleExp1-2 > div:nth-child(4n) {
+    border-right: none;
+}
+.apvContentTitleExp1-3{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: 375px 1125px;
+    /* grid-auto-rows: 60px; */
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    border-top: 1px solid #7B7B7B;
+}
+.apvContentTitleExp1-3 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    border-bottom: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+.apvContentTitleExp1-3 > div:nth-child(2n) {
+    border-right: none;
+}
+.apvContentTitleExp1-4{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: 375px 1125px;
+    grid-auto-rows: 60px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    border-top: 1px solid #7B7B7B;
+}
+
+.apvContentTitleExp1-4 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+.apvContentTitleExp1-4 > div:nth-child(2n){
+    border-right: none;
+    text-align: left;
+}
+
+.apvContentDetail2{
+    grid-column: 1 / span 8;
+    display: flex;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-top: 3px solid #7B7B7B;
+    background: #EEE;
+    font-weight: 600;
+}
+
+
+.apvContentTitleExp6{
+    grid-column: 1 / span 8;
+    display: grid;
+    grid-template-columns: repeat(4, 375px);
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.apvContentTitleExp6 > div{
+    display: flex;
+    border-right: 1px solid #7B7B7B;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.apvContentTitleExp6 .column1, .column3{
+    background: #EEE;
+}
+.apvContentTitleExp6 .column4{
+    border-right: none;
+}
+
+.apvContentDetail3{
+    grid-column: 1 / span 8;
+    display: flex;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #EEE;
+    border-top: 3px solid #7B7B7B;
+}
+
+/* 업무 결재 */
+
+footer{
+    margin: 50px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    }

@@ -1,0 +1,99 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap'); */
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.title div {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.crudBtn {
+    display: flex;
+    font-size: 16px;    
+    width: 300px;
+    height: 60px;
+}
+
+.crudBtn button {
+    font-size: 16px !important;
+    width: 80px ;
+    height: 30px;
+}
+
+.excelBtn  {
+    height: 60px;
+}
+
+
+.excelBtn button {
+    font-size: 16px !important;
+    width: 120px ;
+    height: 30px;
+}
+
+
+.category {
+    display: flex;
+    font-size: 14px;
+    width: 1200px;
+    height: 40px;
+    margin-left: 20px;
+    text-align: center;
+    border-top: 1px lightgray solid;
+
+    
+}
+
+
+.category div { 
+    width: 180px;    
+    align-self: center;
+
+    
+    
+}
+
+.category select { 
+    
+    width: 80px;
+    text-align: center;
+}
+
+.paging {
+    justify-content: center;
+}
+
+.paging button  {
+    background: none;
+    width: 30px;
+    height: 30px;
+    margin: 20px 0px;
+}
+
+.leftbtn {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/public/images/arrow-l.png");
+}
+
+.centerbtn {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.rightbtn {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("/public/images/arrow-r.png");
+}
+
+

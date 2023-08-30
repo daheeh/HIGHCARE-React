@@ -1,0 +1,89 @@
+[
+    {
+        "id": 0,
+        "parent": null,
+        "droppable": true,
+        "text": "하이케어"
+      },
+      {
+        "id": 1,
+        "parent": 0,
+        "droppable": true,
+        "text": "경영 지원 본부"
+      },
+      {
+        "id": 2,
+        "parent": 0,
+        "droppable": true,
+        "text": "재경 본부"
+      },
+      {
+        "id": 3,
+        "parent": 0,
+        "droppable": true,
+        "text": "보험 본부"
+      },
+      {
+        "id": 4,
+        "parent": 0,
+        "droppable": true,
+        "text": "정보 시스템 본부"
+      },
+      {
+        "id": 5,
+        "parent": 1,
+        "droppable": true,
+        "text": "기획팀"
+      },
+      {
+        "id": 6,
+        "parent": 1,
+        "droppable": true,
+        "text": "인사총무팀"
+      },
+      {
+        "id": 7,
+        "parent": 3,
+        "droppable": true,
+        "text": "보험 1팀"
+      },
+      {
+        "id": 8,
+        "parent": 3,
+        "droppable": true,
+        "text": "보험 2팀"
+      },
+      {
+        "id": 9,
+        "parent": 3,
+        "droppable": true,
+        "text": "보험 영업팀"
+      },
+      {
+        "id": 10,
+        "parent": 2,
+        "droppable": true,
+        "text": "재무 회계팀"
+      },
+      {
+        "id": 11,
+        "parent": 4,
+        "droppable": true,
+        "text": "시스템 운영팀"
+      },
+      
+      {
+        "id": 12,
+        "parent": 11,
+        "droppable": true,
+        "text": "시스템 운영팀1-1"
+      },
+      
+      {
+        "id": 13,
+        "parent": 12,
+        "droppable": true,
+        "text": "시스템 운영팀"
+      }
+    
+]
