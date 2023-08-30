@@ -3,6 +3,8 @@ import {
     GET_APROVAL_MAIN_TODAY1,
 
     GET_APROVAL_WRITEBOX,
+    GET_APROVAL_WRITEBOX2,
+    GET_APROVAL_RECEIVEBOX,
 
     
     POST_APPROVAL_BIZ1,
@@ -46,6 +48,7 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -78,6 +81,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -85,6 +89,71 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
     };
 };
+
+// export const callApvWriteBox2API = ({ empNo, apvStatus }) => {
+
+//     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
+//     const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}&isUrgency=${isUrgency}`;
+
+//     return async (dispatch, getState) => {
+
+//         try {
+//             const result = await fetch(requestURL, {
+//                 method: "GET",
+//                 headers: {
+//                     "Accept": "*/*",
+//                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+//                     // 'Content-Type': 'application/json',
+//                     "Access-Control-Allow-Origin": "*",
+//                 },
+//             })
+//                 .then(response => response.json());
+
+//             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
+
+//             dispatch({ type: GET_APROVAL_WRITEBOX2, payload: result.data });
+// return result;
+//         } catch (error) {
+//             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
+//             throw error;
+//         }
+
+//     };
+// };
+
+
+export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
+
+    console.log('[ApprovalAPICalls] callApvReceiveBoxAPI Call');
+    const requestURL = `http://localhost:8080/api/approval/receive?empNo=${empNo}&apvStatus=${apvStatus}`;
+
+    return async (dispatch, getState) => {
+
+        try {
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    // 'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+                .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvReceiveBoxAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_APROVAL_RECEIVEBOX, payload: result.data });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvReceiveBoxAPI: ', error);
+            throw error;
+        }
+
+    };
+};
+
+
 
 
 /* 전자결재 양식 - 업무 */
@@ -116,6 +185,7 @@ export const callApvBiz1API = ({ formData }) => {
             console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
             throw error;

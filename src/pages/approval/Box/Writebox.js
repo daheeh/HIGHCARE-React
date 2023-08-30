@@ -12,7 +12,7 @@ function WriteBox() {
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
-    console.log("empNo : ", empNo);
+    console.log("WriteBox empNo : ", empNo);
 
     const dispatch = useDispatch();
 
@@ -23,13 +23,21 @@ function WriteBox() {
 
     useEffect(() => {
         dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중' }));
-        console.log('results : ', results);
+        console.log('WriteBox results : ', results);
     }, []);
 
     const handleMenuItemClick = (apvStatus) => {
-        dispatch(callApvWriteBoxAPI({ empNo, apvStatus }));
         setSelectedStatus(apvStatus);
-    };
+    }
+
+
+    useEffect(() => {
+        if (selectedStatus === '긴급') {
+            dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중' }));
+        } else {
+            dispatch(callApvWriteBoxAPI({ empNo, apvStatus: selectedStatus }));
+        }
+    }, [selectedStatus]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -37,8 +45,6 @@ function WriteBox() {
 
 
     return (
-
-
         <section>
             <ApvMenu />
             <div>
@@ -57,9 +63,9 @@ function WriteBox() {
                         <li onClick={() => handleMenuItemClick('결재반려')}
                             className={selectedStatus === '결재반려' ? 'clicked' : ''}
                         >결재 반려</li>
-                        <li onClick={() => handleMenuItemClick('결재참조')}
-                            className={selectedStatus === '결재참조' ? 'clicked' : ''}
-                        >결재 참조</li>
+                        <li onClick={() => handleMenuItemClick('긴급')}
+                            className={selectedStatus === '긴급' ? 'clicked' : ''}
+                        >긴급</li>
                     </ul>
                 </div>
                 <div className='apvTableContainer'>
@@ -72,6 +78,7 @@ function WriteBox() {
                                 <th className='column4'>작성일자</th>
                             </tr>
                             {results && results
+                                .filter(result => selectedStatus === '긴급' ? result.isUrgency === 'T' : true)
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((result) => (
                                     <tr key={result.apvNo}>
@@ -92,7 +99,7 @@ function WriteBox() {
                             key={index + 1}
                             onClick={() => handlePageChange(index + 1)}
                             className={`pagingBtn ${currentPage === index + 1 ? 'active' : ''}`}
-        >
+                        >
                             {index + 1}
                         </span>
                     ))}

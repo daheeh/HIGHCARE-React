@@ -36,39 +36,38 @@ function ApvMyList() {
     }]);
 
     useEffect(() => {
-        async function fetchCounts() {
-            try {
-                const response = await fetch(`http://localhost:8080/api/approval/apvList?empNo=${empNo}`, {
-                    method: "GET",
-                    headers: {
-                        "Accept": "*/*",
-                        "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                        'Content-Type': 'application/json',
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                });
+        // async function fetchCounts() {
+        //     try {
+        //         const response = await fetch(`http://localhost:8080/api/approval/apvList?empNo=${empNo}`, {
+        //             method: "GET",
+        //             headers: {
+        //                 "Accept": "*/*",
+        //                 "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+        //                 'Content-Type': 'application/json',
+        //                 "Access-Control-Allow-Origin": "*",
+        //             },
+        //         });
 
-                const responseData = await response.json();
+        //         const responseData = await response.json();
 
-                setFormDate(responseData.data);
+        //         setFormDate(responseData.data);
 
 
 
-            } catch (error) {
-                console.error('Error fetching counts:', error);
-            }
-        }
+        //     } catch (error) {
+        //         console.error('Error fetching counts:', error);
+        //     }
+        // }
 
-        fetchCounts();
+        // fetchCounts();
     }, [empNo]);
 
     return (
 
         <div className="apvMainMy">
-            {/* {formData !== null && formData.slice(0, 10).map((item) => ( */}
-            {(item) => (
+            {formData !== null && formData.slice(0, 10).map((item) => (
                 <div key={item.apvNo}>{item.title}</div>
-            )}
+            ))}
 
         </div>
 

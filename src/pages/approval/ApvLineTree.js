@@ -7,26 +7,35 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
     const [empNoArray, setEmpNoArray] = useState([]);
     const [selectedLine, setSelectedLine] = useState([]);
-    const [activeIndex, setActiveIndex] = useState(null); // To track the clicked item
+    const [activeIndex, setActiveIndex] = useState(null);
     const [empInfo, setEmpInfo] = useState([]);
+
+    const authes = useSelector(state => state.authes);
+    console.log("authes.empNo : ", authes.empNo);
 
     useEffect(() => {
         if (empInfo !== null && empInfo !== undefined) {
-            console.log('treempInfoeview : ' , empInfo);
-            if (!empNoArray.includes(empInfo) && selectedLine.length < 3) {
-                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, empInfo]);
+            console.log('tree empInfo view : ', empInfo);
+            const empNo = empInfo.empNo; // Assuming empInfo has an empNo property
 
-                setSelectedLine((prevSelectedEmployees) => [
-                    ...prevSelectedEmployees,
-                    {
-                        degree: prevSelectedEmployees.length + 1,
-                        employee: empInfo,
-                    },
-                ]);
-            }
+            if (empNo !== authes.empNo) {
+                if (!empNoArray.includes(empNo) && selectedLine.length < 3) {
+                    setEmpNoArray(prevEmpNoArray => [...prevEmpNoArray, empNo]);
+
+                    setSelectedLine(prevSelectedEmployees => [
+                        ...prevSelectedEmployees,
+                        {
+                            degree: prevSelectedEmployees.length + 1,
+                            employee: empInfo,
+                        },
+                    ]);
+                }
+            } 
         }
         console.log('ApvLineTree - selectedLine : ', selectedLine);
-    }, [treeview, empNoArray, selectedLine, empInfo]);
+    }, [treeview, empNoArray, selectedLine, empInfo, authes]);
+
+
 
     const handleDoubleClick = (index) => {
         setSelectedLine((prevSelectedEmployees) => {
@@ -55,21 +64,31 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const handleCompleteSelection = () => {
         onSelect(selectedLine);
         console.log('ApvLineTree - selectedLine : ', selectedLine);
-        
+
     };
 
     const handleEmployeeSelect = (selectedEmployee, index) => {
-        if (!empNoArray.includes(selectedEmployee.empNo) && selectedLine.length < 3) {
-            setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, selectedEmployee.empNo]);
+        console.log('selectedEmployee.empNo : ', selectedEmployee.empNo);
+        const empNoExists = selectedLine.some(emp => emp.employee.empNo === selectedEmployee.empNo);
 
-            setSelectedLine((prevSelectedEmployees) => {
+        if (selectedEmployee.empNo === authes.empNo) {
+            return;
+        }
+
+        if (!empNoExists && selectedLine.length < 3) {
+            setEmpNoArray(prevEmpNoArray => [...prevEmpNoArray, selectedEmployee.empNo]);
+
+            setSelectedLine(prevSelectedEmployees => {
                 const updatedSelectedEmployees = [...prevSelectedEmployees];
-                updatedSelectedEmployees[index] = {
-                    degree: index,
-                    employee: selectedEmployee.empNo,
-                    empInfo: selectedEmployee,
-                };
-                console.log('empNoArray' , empNoArray);
+                const existingIndex = updatedSelectedEmployees.findIndex(emp => emp.employee.empNo === selectedEmployee.empNo);
+
+                if (existingIndex === -1) {
+                    updatedSelectedEmployees[index] = {
+                        degree: index,
+                        employee: selectedEmployee,
+                    };
+                }
+
                 return updatedSelectedEmployees;
             });
         }
@@ -111,7 +130,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
         setSelectedLine([]);
     }, []);
 
-console.log('empInfo', empInfo);
+    console.log('empInfo', empInfo);
     return (
         <div className="apvLineTreeContainer">
             <div className="apvLineTree1">
