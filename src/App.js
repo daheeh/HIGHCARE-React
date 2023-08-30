@@ -39,23 +39,24 @@ import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
 import SecondTree from "./pages/pm/secondTree";
-
+// import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
+// import Customerlog from "./pages/mypage/customerlog";
 import Worklog from "./pages/mypage/Worklog";
 import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
-import MypageAnnual from "./pages/mypage/annual";
-
 
 import ModalMain from "./pages/chatting/modalMain";
-import ChattingMain from "./pages/chatting/ChattingMain";
+import ChattingMain from "./pages/chatting/ChattingMain"
 import ChattingRoomList from "./pages/chatting/ChattingRoomList";
+import ChattingPage from "./pages/chatting/ChattingPage";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
 import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
+import BullentinMod from "./pages/bulletin/BullentinMod";
 
 
 import ReservationMain from "./pages/reservation/ReservationMain";
@@ -163,7 +164,12 @@ function App() {
             {/* <Route index element={<Bulletin />} /> */}
             
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
+
+            <Route path="thread" element={<Thread />} />
+
             <Route path="thread/:bulletinCode" element={<Thread />} />
+            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
+
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
@@ -180,13 +186,10 @@ function App() {
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
           <Route path="/mypage/profile" element={<Profile />}/>
-          <Route path="/mypage/annual" element={<MypageAnnual />}/>
 
 
+          <Route path="/socket/chatting" element={<ChattingPage />} />
 
-          <Route path="/chatting" element={<ModalMain/>} />
-                <Route path="/chatting-main" element={<ChattingMain />} />
-                <Route path="/chattingroom-list" element={<ChattingRoomList/>} />
         </Route>
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 

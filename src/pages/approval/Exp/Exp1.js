@@ -74,13 +74,13 @@ function Exp1() {
 
 			if (name === 'sharedProperties.requestDate') {
 				const currentDate = new Date().toISOString().split('T')[0];
-            if (value < currentDate) {
-                window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
-                setSharedProperties(prevSharedProps => ({
-                    ...prevSharedProps,
-                    requestDate: currentDate
-                }));
-                return;
+				if (value < currentDate) {
+					window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
+					setSharedProperties(prevSharedProps => ({
+						...prevSharedProps,
+						requestDate: currentDate
+					}));
+					return;
 				}
 			}
 
@@ -98,8 +98,8 @@ function Exp1() {
 					...updatedSharedProperties
 				}))
 			}));
-		}  else {
-			
+		} else {
+
 
 			setFormData(prevFormData => ({
 				...prevFormData,
@@ -111,13 +111,6 @@ function Exp1() {
 
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
-	const updateIsUrgency = (newIsUrgency) => {
-		setFormData(prevFormData => ({
-			...prevFormData,
-			isUrgency: newIsUrgency
-		}));
-	};
-
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -125,6 +118,29 @@ function Exp1() {
 			writeDate: currentDate
 		}));
 	}, []);
+
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
+
+	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+	useEffect(() => {
+		console.log('Biz2 - selectedEmployees : ', selectedEmployees);
+	}, [setSelectedEmployees]);
+
+	const handleEmployeeSelect = (selectedEmployee) => {
+		setSelectedEmployees((prevSelectedEmployees) => [
+			...prevSelectedEmployees,
+			{
+				...selectedEmployee,
+				isApproval: 'F',
+			}
+		]);
+	};
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -218,11 +234,15 @@ function Exp1() {
 	const handleSubmission = async () => {
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvExp1API({ formData }));
+				const response = await dispatch(callApvExp1API({ formData, selectedEmployees }));
 
 				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
 				} else {
 					window.alert("결재 등록 중 오류가 발생했습니다.");
 				}
@@ -236,7 +256,7 @@ function Exp1() {
 		}
 	};
 
-	console.log('formData : ', formData);
+	console.log('Exp formData : ', formData);
 
 
 	return (
@@ -244,10 +264,13 @@ function Exp1() {
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">지출결의서(단건)</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 							<div className="column1">지급요청일자</div>

@@ -1,11 +1,8 @@
 // import React, { useState } from 'react';
-// import ReactQuill, { Quill } from 'react-quill';
+// import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
-// import ImageResize from 'quill-image-resize';
 
-// Quill.register('modules/ImageResize', ImageResize);
-
-// function EditorA (){
+// function EditorA() {
 //   const [value, setValue] = useState('');
 //   const modules = {
 //     toolbar: {
@@ -19,13 +16,8 @@
 //           ['image', 'video'],
 //           ['clean']  
 //         ],
-//     },
-//     ImageResize: {
-//         parchment: Quill.import('parchment')
 //     }
 // }
-
-
 //   return <ReactQuill theme="snow" value={value} onChange={setValue} 
 //         modules={modules}
 //   />;

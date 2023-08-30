@@ -9,10 +9,12 @@ function ModalMain() {
 
     const openModal = () => {
         setModal(true);
+        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setModal(false);
+        document.body.style.overflow = 'auto';
     };
 
     return (

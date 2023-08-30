@@ -8,25 +8,33 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const [empNoArray, setEmpNoArray] = useState([]);
     const [selectedLine, setSelectedLine] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null); // To track the clicked item
-
+    const [empInfo, setEmpInfo] = useState([]);
 
     useEffect(() => {
-        if (treeview !== null && treeview !== undefined) {
-            if (!empNoArray.includes(treeview) && selectedLine.length < 3) {
-                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, treeview]);
+        if (empInfo !== null && empInfo !== undefined) {
+            console.log('treempInfoeview : ' , empInfo);
+            if (!empNoArray.includes(empInfo) && selectedLine.length < 3) {
+                setEmpNoArray((prevEmpNoArray) => [...prevEmpNoArray, empInfo]);
 
                 setSelectedLine((prevSelectedEmployees) => [
                     ...prevSelectedEmployees,
                     {
-                        degree: prevSelectedEmployees.length,
-                        employee: treeview,
+                        degree: prevSelectedEmployees.length + 1,
+                        employee: empInfo,
                     },
                 ]);
             }
         }
         console.log('ApvLineTree - selectedLine : ', selectedLine);
-    }, [treeview, empNoArray, selectedLine]);
+    }, [treeview, empNoArray, selectedLine, empInfo]);
 
+    const handleDoubleClick = (index) => {
+        setSelectedLine((prevSelectedEmployees) => {
+            const updatedSelectedEmployees = [...prevSelectedEmployees];
+            updatedSelectedEmployees.splice(index, 1);
+            return updatedSelectedEmployees;
+        });
+    };
 
     const handleMoveUp = (index) => {
         if (index > 0) {
@@ -59,7 +67,9 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                 updatedSelectedEmployees[index] = {
                     degree: index,
                     employee: selectedEmployee.empNo,
+                    empInfo: selectedEmployee,
                 };
+                console.log('empNoArray' , empNoArray);
                 return updatedSelectedEmployees;
             });
         }
@@ -101,11 +111,11 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
         setSelectedLine([]);
     }, []);
 
-
+console.log('empInfo', empInfo);
     return (
         <div className="apvLineTreeContainer">
             <div className="apvLineTree1">
-                <TreeView onSelect={(selectedEmployee) => handleEmployeeSelect(selectedEmployee)} />
+                <TreeView setEmpInfo={setEmpInfo} onSelect={(selectedEmployees) => handleEmployeeSelect(selectedEmployees)} />
             </div>
             <div className="apvLineTreeBox">
                 <div className="apvLineTreeBoxTitle">결재라인</div>
@@ -113,7 +123,12 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
-                        onClick={() => setActiveIndex(index)}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleMoveUp(index)
+                            setActiveIndex(index)
+                        }}
+                        onDoubleClick={() => handleDoubleClick(index)}
                         draggable
                         onDragStart={(e) => dragStart(e, index)}
                         onDragEnter={(e) => dragEnter(e, index)}

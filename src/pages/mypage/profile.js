@@ -1,142 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./profile.css";
-import { useEffect, useState, useRef } from "react";
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import "./mymain.css";
-
-import { callMypageProfileSelectAPI } from '../../apis/MypageApiCalls';
-import { callProfileInsertAPI } from '../../apis/MypageApiCalls'
-
+// import { callMypageProfileAPI } from '../../../apis/MypageApiCalls';
+import { callMypageProfileAPI } from '../../apis/MypageApiCalls';
 // 
 
 function Profile() {
 
     const dispatch = useDispatch();
 
-    const [image, setImage] = useState(null);   // 값 변경이 있으니까 이것을 APICall로 넘겨주기 때문에 ApiCalls로 값을 넘겨준다 한다.
-    const [imageUrl, setImageUrl] = useState(`{http://localhost:8080/images/basic.jpg}`);
-    // const [modifyMode, setModifyMode] = useState(false);
-
-    const imageInput = useRef();
-
     const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
-
-    // 배열아이디에서 추출
-    const startIndex = employee.role.indexOf("id="); // "id=" 다음 문자의 인덱스 가져오기
-
-    let empid = "";
-
-    if (startIndex !== -1) {
-        const endIndex = employee.role.indexOf(")", startIndex); // ")" 문자의 인덱스 가져오기
-        if (endIndex !== -1) {
-            empid = employee.role.substring(startIndex + 3, endIndex);
-        }
-    }
-
-    console.log("empid:", empid);
-
-    // console.log("아이디전체",employee.role);
-    // console.log("아이디",employee.role.split("id=")[1].split(")]")[0]); // 아이디 가져오기
-
-    console.log('profile firslt :');
-
-    // mypage에 담긴 값 가져오기
-    const mypage = useSelector(state => state.mypage);
-    console.log("mypage", mypage);
-
-    const myInfo = mypage?.data?.myEmployee;
-
-    const myProfileFile = mypage?.data?.myProfileFile;
-
-    console.log("myInfo", myInfo);
-    console.log("업데이트 사진", myProfileFile.chName);
-    console.log("기본이미지유알엘", imageUrl);
+    // const token = decodeJwt(window.localStorage.getItem("accessToken"));  
+    console.log('profile firslt :', );
 
 
-
-    // employee empNo로 조횐
     useEffect(
         () => {
-            dispatch(callMypageProfileSelectAPI(employee.empNo));       // 나중에 mypage에서 불러오는걸로 바꿔보기
-            /// empNo로 불러오기
+            dispatch(callMypageProfileAPI(employee.empNo));
+            // empNo로 넘겨야되나? 아니면 employee로 넘겨야되나?
         }
-        , []);
+        ,[]
+    )
 
-    //이미지
-    useEffect(
-        () => {
-            if (image) {
-                const fileReader = new FileReader();
-
-                fileReader.onload = (e) => {
-                    const { result } = e.target;
-                    if (result) {
-                        setImageUrl(result);
-                    }
-
-                }
-                fileReader.readAsDataURL(image);
-            }
-        },
-        [image]);
-
-
-
-
-    // 이미지 바뀌면 로드
-    const onChangeImageUpload = (e) => {
-
-        const image = e.target.files[0];
-
-        if (image) {
-            setImageUrl(image);
-            console.log('Img URL:', image);
-        }
-    };
-
-    // 이미지클릭
-    const onClickImageUpload = (e) => {
-        imageInput.current.click();
-
-
-        // const formData = new FormData();
-
-        // if (image) {
-        //     formData.append("profileImage", image);
-
-        //     console.log('profileRegist !!!IMG!!!! formDATA : ', formData.get("profileImageUrl"));
-
-        //     dispatch(callProfileInsertAPI({
-        //         form: formData
-        //     }));
-        // }
-
-    };
-
-    // 사진 등록
-    const onClickRegistHandler = () => {
-
-        const formData = new FormData();
-        formData.append("code", mypage?.data.code);
-
-
-        console.log("formData", formData);
-        console.log("image", image);
-
-        if (image) {
-            formData.append("profileImage", image);
-        }
-
-        console.log('!!!!!ImageRegistration RegistrationHandler', formData.get("profileImage"));
-
-        dispatch(callProfileInsertAPI({
-            form: formData
-        }));
-
-
-    };
-
-
+    
     return (
         <>
             <section>
@@ -160,7 +48,7 @@ function Profile() {
                             </ul>
                             <div className="apv-navibox-emp"></div>
                             <div className="apv-navibox-maintitle">
-                                <a href="#">나의근태조회</a>
+                                <a href="">나의근태조회</a>
                             </div>
                             <div className="apv-navibox-emp"></div>
                             <div className="apv-navibox-maintitle">
@@ -183,68 +71,64 @@ function Profile() {
                 <div className="profile-form">
                     <div className="double">
                         <div className="content">
-
                             <h3>프로필사진</h3>
-                            <div className="profileRegistration"
-                            >
-                                {imageUrl && <img
-                                    className=""
-                                    src={myProfileFile.chName !== undefined ? `http://localhost:8080/images/${myProfileFile.chName}` : imageUrl}
-                                    alt="preview"
-                                    style={{ width: 180, height: 120 }}
-                                />}
-                                <input
-                                    style={{ display: 'none' }}
-                                    type="file"
-                                    name='profileImage'
-                                    accept='image/jpg,image/png,image/jpeg,image/gif'
-                                    onChange={onChangeImageUpload}
-                                    ref={imageInput}
-                                />
-                                <button style={{ fontSize: 16, width: 120, height: 30 }}
-                                    onClick={onClickImageUpload}
-                                >이미지업로드
-                                </button>
-                                <button style={{ fontSize: 16, width: 120, height: 30 }}
-                                    onClick={onClickRegistHandler}
-                                >사진등록
-
-                                </button>
-                            </div>
-
                             {/* <!--  프로필사진을 클릭하면 수정 가능 --> */}
-                            <div >
-                            </div>
+                            <textarea name='self' id='user_self' cols="40" rows="7" ></textarea>
                             <h3>이름</h3>
                             <input type="text" name="user_name" id="user_name" className="text-field"
-                                readOnly maxlength="20" value={myInfo?.name} />
+                                readOnly maxlength="20" />
+                            <h3>사번</h3>
+                            <input type="password" name="user_pw" id="user_pw" className="text-field"
+                                readOnly maxlength="20" />
                             <h3>직급</h3>
                             <input type="text" name="user_name" id="user_name" className="text-field"
-                                readOnly maxlength="20" value={myInfo?.job.name} />
+                                readOnly maxlength="20" />
                             <h3>전화번호</h3>
-                            <input type="tel" id="user_ph" className="text-field" maxlength="16" readOnly value={myInfo?.phone} />
+                            <input type="tel" id="user_ph" className="text-field" maxlength="16" readOnly />
+
                         </div>
 
 
                         <div className="content2">
                             <h3>아이디</h3>
                             <input type="text" name="user_name" id="user_name" className="text-field"
-                                maxlength="20" readOnly value={empid} />
+                                maxlength="20" readOnly />
                             <h3>부서</h3>
-                            <input type="text" name="user_pw" id="user_pw" className="text-field" readOnly
-                                maxlength="20" value={myInfo?.dep.name} />
+                            <input type="password" name="user_pw" id="user_pw" className="text-field" readOnly
+                                maxlength="20" />
                             <h3>부서번호</h3>
                             <input type="text" name="user_name" id="user_name" className="text-field"
-                                maxlength="20" readOnly value={myInfo?.tel} />
+                                maxlength="20" readOnly />
                             <h3>이메일</h3>
                             <div className="email-form">
-                                <input type="text" name="user_name" id="user_name" className="text-field" value={myInfo?.email} maxlength="20" readOnly />
+                                <input type="text" id="email_id" name="email_id" className="form_w200" value="" title="이메일 아이디"
+                                    maxlength="18" readOnly/><span>@</span>
+                                <input type="text" id="email_domain" name="email_domain" className="form_w200" value=""
+                                    title="도메인" maxlength="18" readOnly />
+                                <select className="sel" id="email_sel" title="이메일 도메인 주소 선택"  >
+                                    <option hidden>-선택-</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="hanmail.net">hanmail.net</option>
+                                    <option value="hotmail.com">hotmail.com</option>
+                                    <option value="korea.com">korea.com</option>
+                                    <option value="nate.com">nate.com</option>
+                                    <option value="yahoo.com">yahoo.com</option>
+                                </select>
                             </div>
                             <h3>주소</h3>
+                            {/* <h3>주소 <input type="button" className="submit-btn" id="btnjoin" value="수정"/></h3> */}
                             <div className="address-form">
-                                <input type="text" name="user_name" id="user_name" className="text-field" value={myInfo?.address} maxlength="20" readOnly />
-                                {/* <input type="button" className="addressbutton" value="우편번호 찾기" readOnly /> */}
+                                <input type="text" name="wPostCode" className="text-field-address" readOnly/>
+                                <input type="button" className="addressbutton" value="우편번호 찾기" readOnly/>
                                 <br /><br />
+                                <input type="text" name="wRoadAddress" className="text-field" readOnly/>
+
+                                <br /><br />
+                                <input type="text" name="wJibunAddress" className="text-field" readOnly/>
+                                <br /><span id="guide"></span>
+                                <br />
+                                <input type="text" className="text-field" readOnly/>
                             </div>
                         </div>
                     </div>
@@ -254,8 +138,5 @@ function Profile() {
         </>
     )
 }
-
-
-// }
 
 export default Profile;

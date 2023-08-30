@@ -7,13 +7,19 @@ export const POST_BOARD = 'board/POST_BOARD';
 export const GET_BOARDS = 'board/GET_BOARDS';
 export const GET_BOARDD = 'board/GET_BOARDD';
 export const POST_REGISTER = 'board/POST_REGISTER';
+export const POST_REGISTERS = 'board/POST_REGISTERS';
+export const PUT_BOARD = 'board/PUT_BOARD';
+export const PUT_BOARDS = 'board/PUT_BOARDS';
 
 const actions = createActions({
     [GET_BOARD]: () => {},
     [POST_BOARD]: () => {},
     [GET_BOARDS]: () => {},
     [GET_BOARDD]: () => {},
-    [POST_REGISTER]: () => {}
+    [POST_REGISTER]: () => {},
+    [POST_REGISTERS]: () => {},
+    [PUT_BOARD]: () => {},
+    [PUT_BOARDS]: () => {}
 });
 
 const boardReducer = handleActions(
@@ -31,6 +37,15 @@ const boardReducer = handleActions(
             return payload;
         },
         [POST_REGISTER]: (state, {payload})=>{
+            return payload;
+        },
+        [POST_REGISTERS]: (state, {payload})=>{
+            return payload;
+        },
+        [PUT_BOARD]: (state, {payload})=>{
+            return payload;
+        },
+        [PUT_BOARDS]:(state, {payload}) =>{
             return payload;
         }
     },
