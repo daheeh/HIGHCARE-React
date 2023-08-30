@@ -144,6 +144,11 @@ td{
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-image: url("/public/images/search.png");
+    background-size: cover;
+    /* background-position: center; */
   }
   
  .wrap{

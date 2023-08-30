@@ -24,7 +24,7 @@ function BulletinBoard(){
             pageNumber.push(i);
         }
     }
-
+    
     useEffect(
         () =>{
             setStart((currentPage - 1) * 5);
@@ -37,12 +37,12 @@ function BulletinBoard(){
         }
         ,[categoryCode,currentPage]
         );
-    console.log('categoryCode',categoryCode);
-   const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
- 
-   const onClickTableTr = (bulletinCode) => {
-    navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
-}
+        console.log('categoryCode',categoryCode);
+        const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
+        
+        const onClickTableTr = (bulletinCode) => {
+            navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
+        }
 
    return (
         <div className={BoardStyle.content_bullentin_main}>
@@ -83,9 +83,9 @@ function BulletinBoard(){
                 )}
             </tbody>
         </table>
-            <div className={BoardStyle.write_bulletin}>
+            {/* <div className={BoardStyle.write_bulletin}>
             글쓰기
-        </div>
+        </div> */}
         <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
             { Array.isArray(boards) &&
             <button 
@@ -105,7 +105,7 @@ function BulletinBoard(){
                 </button>
             </li>
             ))}
-            { Array.isArray(boards) &&
+            { Array.isArray(boards) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
