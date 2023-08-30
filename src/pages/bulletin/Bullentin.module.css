@@ -38,11 +38,7 @@
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   min-height: 500px;
-  width: 80vw;
 }
-/* .content_main_main img{
-  width: 50vw;
-} */
 .content_info{
   font-size: 16px;
   margin-bottom: 20px;
@@ -144,6 +140,11 @@ td{
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-image: url("/public/images/search.png");
+    background-size: cover;
+    /* background-position: center; */
   }
   
  .wrap{

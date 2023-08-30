@@ -6,15 +6,28 @@ import { faUser, faEnvelope, faComment } from '@fortawesome/free-solid-svg-icons
 import Draggable from 'react-draggable';
 import ChattingFooter from '../../component/ChattingFooter';
 import ChattingRoomList from './ChattingRoomList';
+import ChattingPage from './ChattingPage';
+import { Link } from 'react-router-dom';
 
 
     function ChattingMain({ onClose }) {
 
         const [activeTab, setActiveTab] = useState('user'); // 기본 탭 설정
+        const [isChattingPageOpen, setIsChattingPageOpen] = useState(false);
+
 
         const handleTabChange = (tab) => {
             setActiveTab(tab);
         };
+
+        // // 채팅창 열고 닫기 이벤트
+        // const chattingPageOpen = () => {
+        //     setIsChattingPageOpen(true);
+        // };
+    
+        // const chattingPageClose = () => {
+        //     setIsChattingPageOpen(false);
+        // };
 
         return (
             <>
@@ -45,10 +58,16 @@ import ChattingRoomList from './ChattingRoomList';
                             />
 
                             {/* 쪽지 */}
-                                <FontAwesomeIcon icon={faEnvelope} style={{ color: 'white', fontSize: '24px', cursor: 'pointer'}}/>
+                            <Link to="/socket/chatting">
+                                <FontAwesomeIcon 
+                                    icon={faEnvelope} 
+                                    style={{ color: 'white', fontSize: '24px', cursor: 'pointer'}}
+                                    // onClick={chattingPageOpen}    
+                                />
+                            </Link>
                         </div>
                     </div> 
-
+                    
  
                     {/* 이 메인컨텐츠 부분을 조건부 렌더링으로 아이콘 누를때마다 바꿔주기 */}
                     <div className={ChattingMainCSS.mainContents}>
@@ -71,6 +90,10 @@ import ChattingRoomList from './ChattingRoomList';
                     </div>
                 </div>
                 </Draggable>
+
+                {/* {isChattingPageOpen && (
+                <ChattingPage onClose={chattingPageClose} />
+                )} */}
             </>
         );
     }

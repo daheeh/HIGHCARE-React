@@ -87,9 +87,6 @@ function Biz3() {
 		}
 	};
 
-
-
-
 	function generateTimeOptions() {
 		const options = [];
 		const interval = 10;
@@ -102,6 +99,38 @@ function Biz3() {
 		return options;
 	}
 
+
+	useEffect(() => {
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+		}));
+	}, []);
+
+
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
+
+	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+	useEffect(() => {
+		console.log('Biz3 - selectedEmployees : ', selectedEmployees);
+	}, [setSelectedEmployees]);
+
+	const handleEmployeeSelect = (selectedEmployee) => {
+		setSelectedEmployees((prevSelectedEmployees) => [
+			...prevSelectedEmployees,
+			{
+				...selectedEmployee,
+				isApproval: 'N',
+			}
+		]);
+	};
 
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
@@ -122,33 +151,25 @@ function Biz3() {
 			}));
 		}
 
-		console.log('formData : ', formData);
+		console.log('Biz formData : ', formData);
 	}
 
 
-	const updateIsUrgency = (newIsUrgency) => {
-		setFormData(prevFormData => ({
-			...prevFormData,
-			isUrgency: newIsUrgency
-		}));
-	};
 
-	useEffect(() => {
-		const currentDate = new Date();
-		setFormData(prevFormData => ({
-			...prevFormData,
-			writeDate: currentDate,
-		}));
-	}, []);
 
 	const handleSubmission = async () => {
 
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvBiz3API({ formData }));
+				const response = await dispatch(callApvBiz3API({ formData, selectedEmployees }));
+
 				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
 				} else {
 					window.alert("결재 등록 중 오류가 발생했습니다.");
 				}
@@ -163,15 +184,19 @@ function Biz3() {
 	};
 
 
+
 	return (
 
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">출장신청서</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+					/>
 					<div className="apvContent">
 						<div className="apvContentTitle">
 							<div className="column1">출장목적</div>

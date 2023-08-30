@@ -33,28 +33,29 @@ function Header() {
 
     // const isLogin = window.localStorage.getItem('accessToken');
 
-    // 토큰만료 검증 
-    const token = decodeJwt(window.localStorage.getItem("accessToken"));   
-    if(token != null ){
-        if(!LoginVerify(token, loginInfo.refreshExp)){
-            // alert('로그인을 먼저해주세요');
-            navigate("/login", { replace: true });
-        }
-    } 
+    // // 토큰만료 검증 
+    // const token = decodeJwt(window.localStorage.getItem("accessToken"));   
+    // if(token != null ){
+    //     if(!LoginVerify(token, loginInfo.refreshExp)){
+    //         // alert('로그인을 먼저해주세요');
+    //         navigate("/login", { replace: true });
+    //     }
+    // } 
 
-    const onChangeHandler = e => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        });
-    };
 
-    const onClickLoginHandler = () => {
-        dispatch(callLoginAPI({ form }));
-        console.log("callapi 반환");
-        console.log(loginInfo);
-        console.log(loginInfo.status);
-    }
+    // const onChangeHandler = e => {
+    //     setForm({
+    //         ...form,
+    //         [e.target.name]: e.target.value
+    //     });
+    // };
+
+    // const onClickLoginHandler = () => {
+    //     dispatch(callLoginAPI({ form }));
+    //     console.log("callapi 반환");
+    //     console.log(loginInfo);
+    //     console.log(loginInfo.status);
+    // }
 
     const onClickLogoutHandler = () => {
         dispatch(callLogoutAPI());

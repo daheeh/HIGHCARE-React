@@ -1,6 +1,6 @@
 import { loginAction, logoutAction } from "../modules/authSlice";
-
-export const callLoginAPI = ({ form }) => {
+// 수정 테스트-----
+export const callLoginAPI = ( form ) => {
 
     const requestURL = `http://localhost:8080/api/auth/login`;
 
@@ -26,11 +26,15 @@ export const callLoginAPI = ({ form }) => {
             console.log("result.data : ", result.data);
             window.localStorage.setItem('accessToken', result.data.accessToken);
 
+            
         } catch (e) {
             console.error("로그인 문제발생", e.message);
             localStorage.setItem('reduxState', '');
 
         }
+        // const navigate = useNavigate();
+        // await navigate("/login", { replace: true });
+
 
     }
 }
@@ -46,10 +50,10 @@ export const callLogoutAPI = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            // 로그아웃시 로컬에 있는 리덕스, 토큰 싹 날리기 
+            // 로그아웃시 로컬에 있는 리덕스, 토큰 초기화하기 
             localStorage.setItem('reduxState', '');
             localStorage.removeItem('accessToken');
-            document.cookie = 'RefreshToken' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=C.kr;path=/;';
+            document.cookie = 'RefreshToken' || '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=C.kr;path=/;';
         }
     }
 
@@ -75,7 +79,7 @@ export const jwtReissueAPI = (id) => {
         })
             .then(response => response.json())
 
-        if (result.status == 401) {
+        if (result.status === 401) {
             alert(result.message);
             // navigator("/", { replace: true } );
         } else {
@@ -90,7 +94,7 @@ export const jwtReissueAPI = (id) => {
 
 export const modifyMemberAPI = () => {
 
-    const requestURL = `http://localhost:8080/api/admin/modifymember`;
+    // const requestURL = `http://localhost:8080/api/admin/modifymember`;
 
     return async (dispatch, getState) => {
         console.log("수정할 회원의 정보를 가져옵니다.");
@@ -98,3 +102,4 @@ export const modifyMemberAPI = () => {
     }
 
 }
+

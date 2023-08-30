@@ -20,17 +20,17 @@ export const callMypageProfileSelectAPI = (empNo) => {
                     "Content-Type": "application/json",
 
                 },
+                // body: JSON.stringify(),
 
             })
             .then(response => response.json());
 
-            console.log('[callMypageProfileSelectAPI Result]: ', result);
+            console.log('[MypageApiCalls] MypageApiCalls Result : ', result);
 
-            // dispatch({ type: POST_MYPAGE_PROFILE, payload: result });
             dispatch({ type: GET_MYPAGE_SELECT, payload: result });
 
         } catch(error) {
-            console.error('[callMypageProfileSelectAPI] Error in callMypageProfileSelectAPI : ', error)
+            console.error('[MypageApiCalls] Error in MypageApiCalls : ', error)
         }
     }
 };
@@ -39,22 +39,16 @@ export const callProfileInsertAPI = ({form}) => {
 
     console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form);
 
-    // const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/mypage/insert`;
-     const requestURL = `http://localhost:8080/api/mypage/update`;
-    // const requestURL = `http://:8080/api/mypage/insert`;
+    const requestURL = `http://localhost:8080/api/mypage/update`;
+   
      
 
     return async (dispatch, getState) => {
 
         try{
-    
-            // const formData = new FormData();
-            // formData.append("prifileImage", form.image);
-            console.log(form);
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-  
                     "Accept": "*/*",
                     "Access-Control-Allow-Origin": "*"
                 },

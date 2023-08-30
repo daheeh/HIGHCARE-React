@@ -7,6 +7,7 @@ import {
     
     POST_APPROVAL_BIZ1,
     POST_APPROVAL_BIZ2,
+    POST_APPROVAL_BIZ3,
 
     POST_APPROVAL_EXP1,
     POST_APPROVAL_EXP2,
@@ -45,7 +46,6 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
-            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -78,7 +78,6 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
-            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -91,7 +90,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 /* 전자결재 양식 - 업무 */
 
 /* 전자결재 - 업무 : biz1 기안서 */
-export const callApvBiz1API = ({ formData, selectedEmployees }) => {
+export const callApvBiz1API = ({ formData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz1API Call');
 
@@ -100,8 +99,6 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
     return async (dispatch, getState) => {
 
         console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
-        console.log('[ApprovalAPICalls] callApvBiz1API selectedEmployees : ', selectedEmployees);
-
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -111,7 +108,7 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify(formData),
             })
                 .then(response => response.json());
 
@@ -119,7 +116,6 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
             console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
-            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
             throw error;
@@ -153,21 +149,20 @@ export const callApvBiz2API = ({ formData, selectedEmployees }) => {
             })
                 .then(response => response.json());
 
-
             console.log('[ApprovalAPICalls] callApvBiz2API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ2, payload: result });
             return result;
+
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz2API: ', error);
             throw error;
         }
-
     };
 };
 
 /* 전자결재 - 업무 : biz3 출장신청서 */
-export const callApvBiz3API = ({ formData }) => {
+export const callApvBiz3API = ({ formData, selectedEmployees }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz3API Call');
 
@@ -176,6 +171,8 @@ export const callApvBiz3API = ({ formData }) => {
     return async (dispatch, getState) => {
 
         console.log('[ApprovalAPICalls] callApvBiz3API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz3API selectedEmployees : ', selectedEmployees);
+
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -185,20 +182,18 @@ export const callApvBiz3API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })
                 .then(response => response.json());
 
-
             console.log('[ApprovalAPICalls] callApvBiz3API RESULT : ', result);
 
-            dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            dispatch({ type: POST_APPROVAL_BIZ3, payload: result });
             return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz3API: ', error);
             throw error;
         }
-
     };
 };
 
@@ -207,12 +202,17 @@ export const callApvBiz3API = ({ formData }) => {
 /* 전자결재 양식 - 지출 */
 
 /* 전자결재 - 지출 : exp1 지출결의서 */
-export const callApvExp1API = ({ formData }) => {
+export const callApvExp1API =  ({ formData, selectedEmployees }) => {
+
     console.log('[ApprovalAPICalls] callApvExp1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp1`;
 
     return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvExp1API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvExp1API selectedEmployees : ', selectedEmployees);
+
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -222,7 +222,7 @@ export const callApvExp1API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })
                 .then(response => response.json());
 
@@ -236,6 +236,7 @@ export const callApvExp1API = ({ formData }) => {
         }
     };
 };
+
 
 
 /* 전자결재 - 지출 : exp2 지출결의서 */
