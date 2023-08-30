@@ -6,8 +6,8 @@ body {
   .profile-form {
     width: 900px;
     background-color: #10479A;
-    /* margin-left: auto; */
-    margin-left: 400px;
+    margin-left: auto;
+    /* margin-left: 400px; */
     margin-right: auto;
     margin-top: 100px;
     margin-bottom: 180px;

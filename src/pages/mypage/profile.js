@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./profile.css";
 import { useEffect, useState, useRef } from "react";
+import { decodeJwt } from "../../utils/decodeJwt";
 
 // import "./mymain.css";
 
@@ -22,18 +23,19 @@ function Profile() {
     const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
 
     // 배열아이디에서 추출
-    const startIndex = employee.role.indexOf("id="); // "id=" 다음 문자의 인덱스 가져오기
+    // const startIndex = employee.role.indexOf("id="); // "id=" 다음 문자의 인덱스 가져오기
 
-    let empid = "";
+    // let empid = "";
 
-    if (startIndex !== -1) {
-        const endIndex = employee.role.indexOf(")", startIndex); // ")" 문자의 인덱스 가져오기
-        if (endIndex !== -1) {
-            empid = employee.role.substring(startIndex + 3, endIndex);
-        }
-    }
-
-    console.log("empid:", empid);
+    // if (startIndex !== -1) {
+    //     const endIndex = employee.role.indexOf(")", startIndex); // ")" 문자의 인덱스 가져오기
+    //     if (endIndex !== -1) {
+    //         empid = employee.role.substring(startIndex + 3, endIndex);
+    //     }
+    // }
+    // console.log("empid:", empid);
+    const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
+    console.log("아이디",id);
 
     // console.log("아이디전체",employee.role);
     // console.log("아이디",employee.role.split("id=")[1].split(")]")[0]); // 아이디 가져오기
@@ -229,7 +231,7 @@ function Profile() {
                         <div className="content2">
                             <h3>아이디</h3>
                             <input type="text" name="user_name" id="user_name" className="text-field"
-                                maxlength="20" readOnly value={empid} />
+                                maxlength="20" readOnly value={id}/>
                             <h3>부서</h3>
                             <input type="text" name="user_pw" id="user_pw" className="text-field" readOnly
                                 maxlength="20" value={myInfo?.dep.name} />
