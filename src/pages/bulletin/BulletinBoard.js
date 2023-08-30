@@ -15,14 +15,16 @@ function BulletinBoard(){
     const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
 
-    // const pageInfo = boards.pageInfo;
+    const pageInfo = boards.pageInfo;
 
-    // const pageNumber = [];
-    // if(pageInfo) {
-    //     for(let i = 1; i<= pageInfo.pageEnd; i++){
-    //         pageNumber.push(i);
-    //     }
-    // }
+
+    const pageNumber = [];
+    if(pageInfo) {
+        for(let i = 1; i<= pageInfo.pageEnd; i++){
+            pageNumber.push(i);
+        }
+    }
+    
 
     useEffect(
         () =>{
@@ -36,9 +38,15 @@ function BulletinBoard(){
         }
         ,[categoryCode,currentPage]
         );
-    console.log('categoryCode',categoryCode);
-   const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
-    return (
+        console.log('categoryCode',categoryCode);
+        const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
+        
+        const onClickTableTr = (bulletinCode) => {
+            navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
+        }
+
+   return (
+
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
         <div className={BoardStyle.wrap}>
@@ -75,10 +83,15 @@ function BulletinBoard(){
                 )}
             </tbody>
         </table>
-            <div className={BoardStyle.write_bulletin}>
+            {/* <div className={BoardStyle.write_bulletin}>
             글쓰기
+
         </div>
         {/* <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+
+        </div> */}
+        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+
             { Array.isArray(boards) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
@@ -97,7 +110,7 @@ function BulletinBoard(){
                 </button>
             </li>
             ))}
-            { Array.isArray(boards) &&
+            { Array.isArray(boards) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}

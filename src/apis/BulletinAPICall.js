@@ -33,8 +33,8 @@ export const callBulletinAPI = ({categoryCode, currentPage}) => {
 
 }
 
-export const callBoardDetailAPI = ({bulletinCode})=>{
-    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
+export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
+    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -46,7 +46,7 @@ export const callBoardDetailAPI = ({bulletinCode})=>{
         })
         .then(response => response.json());
         if(result.status === 200){
-        dispatch({ type: GET_BOARDD,  payload: result });
+        dispatch({ type: GET_BOARDD,  payload: result.data});
         }
     };
 
