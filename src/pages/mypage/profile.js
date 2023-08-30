@@ -22,23 +22,9 @@ function Profile() {
 
     const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
 
-    // 배열아이디에서 추출
-    // const startIndex = employee.role.indexOf("id="); // "id=" 다음 문자의 인덱스 가져오기
-
-    // let empid = "";
-
-    // if (startIndex !== -1) {
-    //     const endIndex = employee.role.indexOf(")", startIndex); // ")" 문자의 인덱스 가져오기
-    //     if (endIndex !== -1) {
-    //         empid = employee.role.substring(startIndex + 3, endIndex);
-    //     }
-    // }
-    // console.log("empid:", empid);
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     console.log("아이디",id);
 
-    // console.log("아이디전체",employee.role);
-    // console.log("아이디",employee.role.split("id=")[1].split(")]")[0]); // 아이디 가져오기
 
     console.log('profile firslt :');
 
@@ -100,18 +86,6 @@ function Profile() {
     const onClickImageUpload = (e) => {
         imageInput.current.click();
 
-
-        // const formData = new FormData();
-
-        // if (image) {
-        //     formData.append("profileImage", image);
-
-        //     console.log('profileRegist !!!IMG!!!! formDATA : ', formData.get("profileImageUrl"));
-
-        //     dispatch(callProfileInsertAPI({
-        //         form: formData
-        //     }));
-        // }
 
     };
 
@@ -245,7 +219,6 @@ function Profile() {
                             <h3>주소</h3>
                             <div className="address-form">
                                 <input type="text" name="user_name" id="user_name" className="text-field" value={myInfo?.address} maxlength="20" readOnly />
-                                {/* <input type="button" className="addressbutton" value="우편번호 찾기" readOnly /> */}
                                 <br /><br />
                             </div>
                         </div>

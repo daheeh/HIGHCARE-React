@@ -81,6 +81,7 @@ import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
+import MypageAnnual from "./pages/mypage/annual";
 
 
 
@@ -186,6 +187,7 @@ function App() {
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
           <Route path="/mypage/profile" element={<Profile />}/>
+          <Route path="/mypage/annual" element={<MypageAnnual />}/>
 
 
           <Route path="/socket/chatting" element={<ChattingPage />} />

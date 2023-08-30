@@ -4,11 +4,12 @@ import {
     POST_MYPAGE_PROFILE,    // 프로필 
 } from '../modules/MypageModule';
 
-export const callMypageProfileAPI = (empNo) => {
+export const callMypageProfileSelectAPI = (empNo) => {
 
-    console.log('[MypageApiCalls] MypageApiCalls Call');
+    console.log('[callMypageProfileSelectAPI Call]');
 
     const requestURL = `http://localhost:8080/api/mypage/profile/${empNo}`;
+    console.log("리퀘스트유알엘",requestURL);
 
     return async (dispatch, getState) => {
         try{
@@ -26,7 +27,7 @@ export const callMypageProfileAPI = (empNo) => {
 
             console.log('[MypageApiCalls] MypageApiCalls Result : ', result);
 
-            dispatch({ type: POST_MYPAGE_PROFILE, payload: result });
+            dispatch({ type: GET_MYPAGE_SELECT, payload: result });
 
         } catch(error) {
             console.error('[MypageApiCalls] Error in MypageApiCalls : ', error)
@@ -34,28 +35,30 @@ export const callMypageProfileAPI = (empNo) => {
     }
 };
 
-export const callProfilesSelectAPI = (emp) => {
+export const callProfileInsertAPI = ({form}) => {
 
-    console.log('[callProfilesSelectAPI] callProfilesSelectAPI Call  {}', emp);
+    console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form);
 
-    const requestURL = `http://localhost:8080/api/mypage/profile/1`;
+    const requestURL = `http://localhost:8080/api/mypage/update`;
+   
      
 
     return async (dispatch, getState) => {
 
         try{
             const result = await fetch(requestURL, {
-                method:"GET",
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "*/*"
-                }
+                    "Accept": "*/*",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                body: form
             })
             .then(response => response.json());
 
-            console.log('[callProfilesSelectAPI] callProfilesSelectAPI Result : ', result);
+            console.log('[callProfileInsertAPI] callProfileInsertAPI Result : ', result);
 
-            dispatch({ type: GET_MYPAGE_SELECT, payload: result});
+            dispatch({ type: POST_MYPAGE_PROFILE, payload: result});
         }catch(error) {
             console.error('[callProfilesSelectAPI] Error in callProfilesSelectAPI', error);
         }
