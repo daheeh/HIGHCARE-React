@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import SocialLogin from "./social-login";
 import SocialOauth from "./components/LoginGoogle";
 
 const config = {
@@ -22,8 +21,6 @@ function Myinfo() {
     return (
         <>
             <div>
-                <h1>user : {user}</h1>
-                <button onClick={getUser}>유저정보 가져오기</button>
                 <SocialOauth/>                
             </div>
 

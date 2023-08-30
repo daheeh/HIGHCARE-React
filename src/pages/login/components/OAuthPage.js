@@ -42,7 +42,7 @@ function OAuthPage() {
     id:id,
   }
 
-  const onSuccess = async response => {
+  const onSuccess = async (response) => {
     console.log('SUCCESS 응답', response);
     console.log('provider name : ', response.tokenObj.idpId);
     console.log('구글아이디 : ', response.googleId);
@@ -58,18 +58,21 @@ function OAuthPage() {
     
 
     await dispatch(OauthLoginAPI(data));
+    await navigate("/");
 
 
   };
-  const onFailure = response => {
+  const onFailure = (response) => {
     console.log('FAILED', response);
   };
+
   const onLogoutSuccess = async () => {
     console.log('SUCESS LOG OUT');
     await dispatch(callLogoutAPI());
     await navigate("/");
 
 };
+
   return (
     <div>
       <GoogleLogin

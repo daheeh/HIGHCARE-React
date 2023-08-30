@@ -3,22 +3,24 @@ import { decodeJwt } from '../../utils/decodeJwt';
 import './social-login.css'
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import { OauthLoginAPI } from '../../apis/OAuthApiCalls';
-import GoogleLogin, { GoogleLogout } from 'react-google-login';
-import { logoutAction } from "../../modules/authSlice";
+import { OauthLoginAPI, kakaoAuth } from '../../apis/OAuthApiCalls';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { callLogoutAPI } from '../../apis/AuthAPICalls';
 import { useNavigate } from 'react-router-dom';
-import { styled } from '@material-ui/core';
 
+
+  
 
 function SocialLogin() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
         function start() {
             gapi.client.init({
+                apiKey: process.env.REACT_APP_GOOGLE_AUTH_SECRET_KEY,
                 clientId: process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID,
                 scope: 'email',
             });
@@ -32,7 +34,6 @@ function SocialLogin() {
     // const accessToken = gapi.auth.getToken().access_token;
     // console.log(accessToken);
 
-    const dispatch = useDispatch();
 
     const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub;
 
@@ -61,19 +62,53 @@ function SocialLogin() {
 
 
         await dispatch(OauthLoginAPI(data));
-
-
-    };
-    const onFailure = response => {
-        console.log('FAILED', response);
-    };
-    const onLogoutSuccess = async () => {
-        console.log('SUCESS LOG OUT');
-        await dispatch(callLogoutAPI())
         await navigate("/");
+    
+    
+      };
+      const onFailure = (response) => {
+        console.log('FAILED', response);
+      };
+    
+      const onLogoutSuccess = async () => {
+        console.log('SUCESS LOG OUT');
+        await dispatch(callLogoutAPI());
+        await navigate("/");
+    
     };
 
     
+
+    const renderGoogleCustomButton = ({ onClick, disabled }) => (
+        <button
+          onClick={() => {
+            onClick(); // 기본 로그아웃 클릭 동작 실행
+            onLogoutSuccess(); // 커스텀 로그아웃 클릭 처리 실행
+          }}
+          disabled={disabled}
+          style={{
+            background: `url('/images/google.png') center no-repeat`,
+            backgroundSize: 'contain',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            // padding: '8px 16px',
+            cursor: 'pointer',
+            width: '200px'
+          }}
+        >
+        </button>
+      );
+
+      const kakaoLogin = async ( ) => {
+
+        console.log('kakao 응답');
+        await dispatch(kakaoAuth());
+
+
+
+      }
+
     return (
 
         <div className='social'>간편 로그인
@@ -84,36 +119,34 @@ function SocialLogin() {
 
                 </input>
 
-                    <div htmlFor="google" id="googlelabel">
-                <GoogleContainer>
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
-                            onSuccess={this.onSuccess}
-                            onFailure={this.onFailure}
-                            buttonText="구글연동하기"
-                            style={{ display: 'none' }}
+                {/* <div htmlFor="google" id="googlelabel"> */}
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        buttonText="구글연동하기"
+                        render={renderGoogleCustomButton}
+                    />
+                    {/* <GoogleLogout
+                        clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+                        onLogoutSuccess={onLogoutSuccess}
 
-                        />
-                        <GoogleLogout
-                            clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
-                            onLogoutSuccess={onLogoutSuccess}
-                        />
-                </GoogleContainer>
-                    </div>
+                    /> */}
+                {/* </div> */}
+
                 <input type="checkbox" hidden id="kakao" />
-                <div htmlFor="kakao" id="kakaolabel">
-                </div>
+                <div htmlFor="kakao" id="kakaolabel" onClick={kakaoLogin}></div>
+                
+
+
                 <input type="checkbox" hidden id="naver" />
+
+
                 <div htmlFor="naver" id="naverlabel">
                 </div>
             </div>
         </div>
     )
 }
-export const GoogleContainer = styled.div`
-        width : 200px;
-        height: 30px;
-        flex-flow: column wrap;
-    `
 
 export default SocialLogin;
