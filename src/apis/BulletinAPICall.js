@@ -12,9 +12,9 @@ import {
     ,PUT_BOARDS
 } from '../modules/BoardModule';
 
-export const callBulletinAPI = ({categoryCode, currentPage,content}) => {
+export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 //    export const callBulletinAPI = () => {
-   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}`;
+   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}&empNo=${empNo}`;
 //    const requestURL = `http://localhost:8080/bulletin/board`;
 
    return async (dispatch, getState) => {

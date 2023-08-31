@@ -9,6 +9,8 @@ import {
 function BulletinBoard(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
     const boards = useSelector(state => state.boardtest);
     const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,13 +33,13 @@ function BulletinBoard(){
             dispatch(callBulletinAPI({
                 categoryCode: categoryCode,
                 currentPage: currentPage,
-                content: content
+                content: content,
+                empNo: empNo
             }));
         }
         ,[categoryCode,currentPage,content]
         );
-        console.log('categoryCode',categoryCode);
-    const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
+    const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':(categoryCode==4?'공지사항':'나의 글보기')));
     
     const onClickTableTr = (bulletinCode) => {
         navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });

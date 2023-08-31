@@ -18,7 +18,7 @@ function BullentinMod(){
     const boardDetail = board.data;
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const [value, setValue] = useState(boardDetail.content);
     const [form, setForm] = useState({
         content: boardDetail.content,
         title: boardDetail.title,
@@ -32,8 +32,9 @@ function BullentinMod(){
     },
     []);
     
+    console.log('value' ,boardDetail.content);
+    console.log('totle' , boardDetail.title);
     
-    const [value, setValue] = useState(boardDetail.content);
     const getValue = (x) =>{
         setValue(x)
         setForm({
@@ -75,8 +76,8 @@ function BullentinMod(){
                 <span>제목</span>
                 <input type="text" onChange={onChangeHandler} style={{width: '70%'}} name='title' defaultValue={boardDetail.title}/>
             </div>
-            {/* <EditorA/> */}
-            <Editor value={boardDetail.content} getValue={getValue}/>
+            
+            <Editor value={value} getValue={getValue}/>
             <div className={BoardStyle.registration}>
                  <button onClick={onClickUpdate}>수정</button>
                 <button onClick={onClickDelete}>삭제</button> 
