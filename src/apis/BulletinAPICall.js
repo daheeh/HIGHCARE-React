@@ -4,6 +4,7 @@ import {
     GET_BOARD
     ,GET_BOARDS
     ,GET_BOARDD
+    ,GET_THREAD
     ,POST_BOARD
     ,POST_REGISTER
     ,POST_REGISTERS
@@ -32,7 +33,22 @@ export const callBulletinAPI = ({categoryCode, currentPage,content}) => {
    };
 
 }
-
+export const callBoardDetailSAPI = ({bulletinCode})=>{
+    const requestURL = `http://localhost:8080/bulletin/thr?bulletinCode=${bulletinCode}`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+        dispatch({ type: GET_THREAD,  payload: result});
+        }
+    };
+}
 export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
     const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
 

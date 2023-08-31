@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import {
     callUpdateAPI,
-    callBoardDetailAPI,
+    callBoardDetailSAPI,
     callDeleteAPI
 } from '../../apis/BulletinAPICall';
 
@@ -26,7 +26,7 @@ function BullentinMod(){
         bulletinCode: bulletinCode
     });
     useEffect(() =>{
-        dispatch(callBoardDetailAPI({
+        dispatch(callBoardDetailSAPI({
             bulletinCode: bulletinCode
         }));
     },
@@ -76,7 +76,7 @@ function BullentinMod(){
                 <input type="text" onChange={onChangeHandler} style={{width: '70%'}} name='title' defaultValue={boardDetail.title}/>
             </div>
             {/* <EditorA/> */}
-            <Editor value={value} getValue={getValue}/>
+            <Editor value={boardDetail.content} getValue={getValue}/>
             <div className={BoardStyle.registration}>
                  <button onClick={onClickUpdate}>수정</button>
                 <button onClick={onClickDelete}>삭제</button> 
