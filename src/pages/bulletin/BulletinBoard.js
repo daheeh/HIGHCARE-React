@@ -16,7 +16,7 @@ function BulletinBoard(){
     const categoryCode = useParams().categoryCode;
      const boardList = boards.data;
     const pageInfo = boards.pageInfo;
-
+    const [content, setContent] = useState('');
 
     const pageNumber = [];
     if(pageInfo) {
@@ -30,12 +30,11 @@ function BulletinBoard(){
             setStart((currentPage - 1) * 5);
             dispatch(callBulletinAPI({
                 categoryCode: categoryCode,
-                currentPage: currentPage
+                currentPage: currentPage,
+                content: content
             }));
-            // dispatch(callBulletinAPI());
-            
         }
-        ,[categoryCode,currentPage]
+        ,[categoryCode,currentPage,content]
         );
         console.log('categoryCode',categoryCode);
     const title = categoryCode==1?'전체게시판':(categoryCode==2?'인기게시판':(categoryCode==3?'자유게시판':'공지사항'));
@@ -44,13 +43,22 @@ function BulletinBoard(){
         navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
     }
 
+    const handleOnKeyPress = e => {
+        if(e.key === 'Enter'){
+            setContent(e.target.value);
+        }
+    }
+
+    const buttonOnClick = () =>{
+        setContent(document.getElementById('inputValue').value);
+    }
    return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
         <div className={BoardStyle.wrap}>
             <div className={BoardStyle.search}>
-                <input type="text" className={BoardStyle.searchTerm} placeholder="제목 입력하세요."/>
-                <button type="submit" className={BoardStyle.searchButton}>
+                <input type="text" id='inputValue' className={BoardStyle.searchTerm} placeholder="제목 입력하세요."onKeyPress={handleOnKeyPress}  />
+                <button type="submit" className={BoardStyle.searchButton} onClick={buttonOnClick}>
                     <i></i>
                 </button>
             </div>
