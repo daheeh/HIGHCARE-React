@@ -11,13 +11,13 @@ Modal.setAppElement('#root');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    
+
     <Provider store={store}>
         <ErrorBoundary>
-        <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}>
-        <App />
-        </GoogleOAuthProvider >
-    </ErrorBoundary>
+            <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}>
+                <App />
+            </GoogleOAuthProvider >
+        </ErrorBoundary>
     </Provider>
 );
 

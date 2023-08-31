@@ -81,6 +81,7 @@ import PrivateRoute from "./errors/PrivateRoute";
 import LoginVerify from "./utils/LoginVerify";
 import MypageAnnual from "./pages/mypage/annual";
 import Myinfo from "./pages/login/Myinfo";
+import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 
 
 
@@ -104,6 +105,7 @@ function App() {
           
         <Route path="/" element={<Layout />}>
           <Route index element={<MainLayOut />} />
+          <Route path="/logout" element={<MainLayOut/>}/>
           <Route path="approval">
             <Route index element={<ApvMain />} />
             <Route path="receivebox" element={<ReceiveBox />} />
@@ -138,6 +140,7 @@ function App() {
 
           <Route path="/modifyinfo" element={<ModifyInfo/>}/>
           <Route path="myinfo" element={<Myinfo />} />
+          <Route path="/login/oauth/kakao" element={<CallbackKakao/>}/>
 
           <Route path="/admin">
             <Route index element={<AdminPage />} />
