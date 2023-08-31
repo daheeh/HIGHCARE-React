@@ -82,26 +82,25 @@ function Biz1() {
                 // }));
 
 				const response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
-
-				if (response && response.data) {
-                    if (response.data.status === 200) {
-                        window.alert("결재 등록 성공");
-                        navigate('/approval');
-                    } else {
-                        window.alert("결재 등록 중 오류가 발생했습니다.");
-                    }
-                } else {
-                    window.alert("API 요청 결과가 올바르지 않습니다.");
-                }
-            } catch (error) {
-                console.error("API error:", error);
-                window.alert("API 요청 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
-        }
-    };
+				if (response.status === 200) {
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
     
     console.log('Biz formData : ', formData);
     

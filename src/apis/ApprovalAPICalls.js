@@ -3,7 +3,6 @@ import {
     GET_APROVAL_MAIN_TODAY1,
 
     GET_APROVAL_WRITEBOX,
-    GET_APROVAL_WRITEBOX2,
     GET_APROVAL_RECEIVEBOX,
 
     
@@ -90,37 +89,6 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
     };
 };
 
-// export const callApvWriteBox2API = ({ empNo, apvStatus }) => {
-
-//     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
-//     const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}&isUrgency=${isUrgency}`;
-
-//     return async (dispatch, getState) => {
-
-//         try {
-//             const result = await fetch(requestURL, {
-//                 method: "GET",
-//                 headers: {
-//                     "Accept": "*/*",
-//                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-//                     // 'Content-Type': 'application/json',
-//                     "Access-Control-Allow-Origin": "*",
-//                 },
-//             })
-//                 .then(response => response.json());
-
-//             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
-
-//             dispatch({ type: GET_APROVAL_WRITEBOX2, payload: result.data });
-// return result;
-//         } catch (error) {
-//             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
-//             throw error;
-//         }
-
-//     };
-// };
-
 
 export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
 
@@ -159,7 +127,7 @@ export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
 /* 전자결재 양식 - 업무 */
 
 /* 전자결재 - 업무 : biz1 기안서 */
-export const callApvBiz1API = ({ formData }) => {
+export const callApvBiz1API = ({ formData, selectedEmployees }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz1API Call');
 
@@ -177,7 +145,7 @@ export const callApvBiz1API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })
                 .then(response => response.json());
 
