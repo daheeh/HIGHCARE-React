@@ -1,16 +1,24 @@
 import { gapi } from 'gapi-script';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
-import { OauthLoginAPI } from '../../../apis/OAuthApiCalls';
+import { OauthLoginAPI, kakaoAuth } from '../../../apis/OAuthApiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { decodeJwt } from '../../../utils/decodeJwt';
 import { callLogoutAPI } from '../../../apis/AuthAPICalls';
 import { useNavigate } from 'react-router-dom';
+import '../social-login.css'
 
 
-function OAuthPage() {  
+
+function OAuthPage() {
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub; 
+  // const [id, setId] = useState('');
+  //   setId(decodeJwt(window.localStorage.getItem("accessToken"))?.sub);
 
 
   useEffect(() => {
@@ -29,9 +37,6 @@ function OAuthPage() {
   // const accessToken = gapi.auth.getToken().access_token;
   // console.log(accessToken);
 
-  const dispatch = useDispatch(); 
-
-  const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
 
   const data = {
     providerId: '',
@@ -39,7 +44,7 @@ function OAuthPage() {
     email: '',
     name: '',
 
-    id:id,
+    id: id,
   }
 
   const onSuccess = async (response) => {
@@ -54,8 +59,8 @@ function OAuthPage() {
     data.providerId = response.googleId;
     data.email = response.profileObj.email;
     data.name = response.profileObj.name;
-    
-    
+
+
 
     await dispatch(OauthLoginAPI(data));
     await navigate("/");
@@ -71,7 +76,8 @@ function OAuthPage() {
     await dispatch(callLogoutAPI());
     await navigate("/");
 
-};
+  };
+
 
   return (
     <div>
@@ -85,7 +91,29 @@ function OAuthPage() {
         clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
         onLogoutSuccess={onLogoutSuccess}
       />
+
+      <div htmlFor="kakao" id=""
+        style={{ minHeight: '100px' }}>
+
+        <p>카카오 로그인 </p>
+        <button style={{ width: 100 }} id="kakaolabel"
+          onClick={ () => {
+            const kakaoUrl =`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&redirect_uri=http://localhost:3000/login/oauth/kakao&response_type=code&state=${id}`;
+            window.location.href = kakaoUrl;
+            
+          }} />
+        <p>카카오 로그아웃</p>
+        <button style={{ width: 100 }} id="kakaolabel"
+          onClick={ () => {
+            const kakaoUrl =`https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&logout_redirect_uri=http://localhost:3000/logout`;
+            window.location.href = kakaoUrl;
+            
+          }} />
+
+      </div>
+
     </div>
+
   );
 }
 
