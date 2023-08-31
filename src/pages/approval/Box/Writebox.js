@@ -21,15 +21,9 @@ function WriteBox() {
 
     const totalPages = Math.ceil((results && results.length) / itemsPerPage);
 
-    useEffect(() => {
-        dispatch(callApvWriteBoxAPI({ empNo, apvStatus: '결재진행중' }));
-        console.log('WriteBox results : ', results);
-    }, []);
-
     const handleMenuItemClick = (apvStatus) => {
         setSelectedStatus(apvStatus);
     }
-
 
     useEffect(() => {
         if (selectedStatus === '긴급') {
@@ -42,7 +36,6 @@ function WriteBox() {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
 
     return (
         <section>

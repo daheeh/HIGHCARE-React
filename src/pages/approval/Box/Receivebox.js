@@ -13,7 +13,7 @@ function ReceiveBox() {
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
-    console.log("empNo : ", empNo);
+    console.log("ReceiveBox empNo : ", empNo);
 
     const dispatch = useDispatch();
 
@@ -22,15 +22,17 @@ function ReceiveBox() {
 
     const totalPages = Math.ceil((results && results.length) / itemsPerPage);
 
-    useEffect(() => {
-        dispatch(callApvReceiveBoxAPI({ empNo, apvStatus: '결재진행중' }));
-        console.log('results : ', results);
-    }, []);
-
     const handleMenuItemClick = (apvStatus) => {
-        dispatch(callApvReceiveBoxAPI({ empNo, apvStatus }));
         setSelectedStatus(apvStatus);
-    };
+    }
+
+    useEffect(() => {
+        if (selectedStatus === '긴급') {
+            dispatch(callApvReceiveBoxAPI({ empNo, apvStatus: '결재진행중' }));
+        } else {
+            dispatch(callApvReceiveBoxAPI({ empNo, apvStatus: selectedStatus }));
+        }
+    }, [selectedStatus]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -71,12 +73,13 @@ function ReceiveBox() {
                                 <th className="column15">작성일자</th>
                             </tr>
                             {results && results
+                                .filter(result => selectedStatus === '긴급' ? result.isUrgency === 'T' : true)
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((result) => (
                                     <tr key={result.apvNo}>
                                         <td>{result.apvNo}</td>
                                         <td>{result.title}</td>
-                                        <td>{result.category}</td>
+                                        <td>{result.empNo}</td>
                                         <td>{result.category}</td>
                                         <td>{result.writeDate}</td>
                                     </tr>
