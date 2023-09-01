@@ -6,6 +6,7 @@ import { Step1, Step2, Step2pass } from "./pages/login/findaccount"
 import ReceiveBox from './pages/approval/Box/Receivebox';
 import WriteBox from './pages/approval/Box/Writebox';
 import Biz1 from './pages/approval/Biz/Biz1';
+import Biz1View from './pages/approval/Biz/Biz1View';
 import Biz2 from './pages/approval/Biz/Biz2';
 import Biz3 from './pages/approval/Biz/Biz3';
 import Biz4 from './pages/approval/Biz/Biz4';
@@ -113,6 +114,7 @@ function App() {
 
 
             <Route path="biz1" element={<Biz1 />} />
+            <Route path="biz1/:apvNo" element={<Biz1View />} />
             <Route path="biz2" element={<Biz2 />} />
             <Route path="biz3" element={<Biz3 />} />
             <Route path="biz4" element={<Biz4 />} />
@@ -135,6 +137,8 @@ function App() {
             <Route path="hrm5" element={<Hrm5 />} />
             <Route path="hrm6" element={<Hrm6 />} />
             <Route path="hrm7" element={<Hrm7 />} />
+
+            
           </Route>
 
 

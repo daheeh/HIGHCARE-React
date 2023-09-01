@@ -129,7 +129,7 @@ function Exp1() {
 	const [selectedEmployees, setSelectedEmployees] = useState([]);
 
 	useEffect(() => {
-		console.log('Biz2 - selectedEmployees : ', selectedEmployees);
+		console.log('Exp1 - selectedEmployees : ', selectedEmployees);
 	}, [setSelectedEmployees]);
 
 	const handleEmployeeSelect = (selectedEmployee) => {

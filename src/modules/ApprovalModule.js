@@ -9,8 +9,10 @@ export const GET_APROVAL_MAIN_TODAY1 = 'approval/GET_APROVAL_MAIN_TODAY1';
 
 
 export const GET_APROVAL_WRITEBOX = 'approval/GET_APROVAL_WRITEBOX';
+export const GET_APROVAL_RECEIVEBOX = 'approval/GET_APROVAL_RECEIVEBOX';
 
 export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
+export const GET_APPROVAL_BIZ1 = 'approval/GET_APPROVAL_BIZ1';
 export const POST_APPROVAL_BIZ2 = 'approval/POST_APPROVAL_BIZ2';
 export const POST_APPROVAL_BIZ3 = 'approval/POST_APPROVAL_BIZ3';
 
@@ -36,8 +38,10 @@ const actions = createActions({
     [GET_APROVAL_MAIN_TODAY1]: () => { },
 
     [GET_APROVAL_WRITEBOX]: () => { },
+    [GET_APROVAL_RECEIVEBOX]: () => { },
 
     [POST_APPROVAL_BIZ1]: () => { },
+    [GET_APPROVAL_BIZ1]: () => { },
     [POST_APPROVAL_BIZ2]: () => { },
     [POST_APPROVAL_BIZ3]: () => { },
 
@@ -58,14 +62,18 @@ const approvalReducer = handleActions(
         [GET_APROVAL_MAIN_TODAY1]: (state, { payload }) => {
             return payload;
         },
-
-
         [GET_APROVAL_WRITEBOX]: (state, { payload }) => {
+            return payload;
+        },
+        [GET_APROVAL_RECEIVEBOX]: (state, { payload }) => {
             return payload;
         },
 
 
         [POST_APPROVAL_BIZ1]: (state, { payload }) => {
+            return payload;
+        },
+        [GET_APPROVAL_BIZ1]: (state, { payload }) => {
             return payload;
         },
         [POST_APPROVAL_BIZ2]: (state, { payload }) => {

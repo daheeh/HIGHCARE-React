@@ -3,9 +3,11 @@ import {
     GET_APROVAL_MAIN_TODAY1,
 
     GET_APROVAL_WRITEBOX,
+    GET_APROVAL_RECEIVEBOX,
 
     
     POST_APPROVAL_BIZ1,
+    GET_APPROVAL_BIZ1,
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
 
@@ -46,6 +48,7 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -78,6 +81,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
@@ -87,10 +91,44 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 };
 
 
+export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
+
+    console.log('[ApprovalAPICalls] callApvReceiveBoxAPI Call');
+    const requestURL = `http://localhost:8080/api/approval/receive?empNo=${empNo}&apvStatus=${apvStatus}`;
+
+    return async (dispatch, getState) => {
+
+        try {
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    // 'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+                .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvReceiveBoxAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_APROVAL_RECEIVEBOX, payload: result.data });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvReceiveBoxAPI: ', error);
+            throw error;
+        }
+
+    };
+};
+
+
+
+
 /* 전자결재 양식 - 업무 */
 
 /* 전자결재 - 업무 : biz1 기안서 */
-export const callApvBiz1API = ({ formData }) => {
+export const callApvBiz1API = ({ formData, selectedEmployees }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz1API Call');
 
@@ -99,6 +137,8 @@ export const callApvBiz1API = ({ formData }) => {
     return async (dispatch, getState) => {
 
         console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz1API selectedEmployees : ', selectedEmployees);
+
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -108,7 +148,7 @@ export const callApvBiz1API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })
                 .then(response => response.json());
 
@@ -116,8 +156,42 @@ export const callApvBiz1API = ({ formData }) => {
             console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
+            return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            throw error;
+        }
+    };
+};
+
+export const callApvBiz1ViewAPI = ({ apvNo }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz1ViewAPI Call');
+
+    const requestURL = `http://localhost:8080/api/approval/search/biz1/${apvNo}`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz1ViewAPI apvNo : ', apvNo);
+        try {
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(),
+            })
+            .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvBiz1ViewAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_APPROVAL_BIZ1, payload: result.data });
+            return result.data;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz1ViewAPI: ', error);
             throw error;
         }
 
@@ -326,7 +400,6 @@ export const callApvExp4API = ({ empNo, formData }) => {
 
             console.log('[ApprovalAPICalls] callApvExp4API Required Data: ', requiredData);
 
-            // Now that you have the required data, use it in the POST request
             const postRequestURL = `http://localhost:8080/api/approval/insert/exp4`;
 
             const result = await fetch(postRequestURL, {
@@ -339,7 +412,7 @@ export const callApvExp4API = ({ empNo, formData }) => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    additionalData: requiredData // Use the fetched data in your POST request
+                    additionalData: requiredData
                 }),
             }).then(response => response.json());
 
