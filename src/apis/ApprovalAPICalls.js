@@ -7,6 +7,7 @@ import {
 
     
     POST_APPROVAL_BIZ1,
+    GET_APPROVAL_BIZ1,
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
 
@@ -136,6 +137,8 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
     return async (dispatch, getState) => {
 
         console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz1API selectedEmployees : ', selectedEmployees);
+
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -156,6 +159,39 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
             return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            throw error;
+        }
+    };
+};
+
+export const callApvBiz1ViewAPI = ({ apvNo }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz1ViewAPI Call');
+
+    const requestURL = `http://localhost:8080/api/approval/search/biz1/${apvNo}`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz1ViewAPI apvNo : ', apvNo);
+        try {
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(),
+            })
+            .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvBiz1ViewAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_APPROVAL_BIZ1, payload: result.data });
+            return result.data;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz1ViewAPI: ', error);
             throw error;
         }
 
@@ -364,7 +400,6 @@ export const callApvExp4API = ({ empNo, formData }) => {
 
             console.log('[ApprovalAPICalls] callApvExp4API Required Data: ', requiredData);
 
-            // Now that you have the required data, use it in the POST request
             const postRequestURL = `http://localhost:8080/api/approval/insert/exp4`;
 
             const result = await fetch(postRequestURL, {
@@ -377,7 +412,7 @@ export const callApvExp4API = ({ empNo, formData }) => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    additionalData: requiredData // Use the fetched data in your POST request
+                    additionalData: requiredData
                 }),
             }).then(response => response.json());
 

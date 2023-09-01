@@ -6,26 +6,48 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const treeview = useSelector((state) => state.treeview);
 
     const [empNoArray, setEmpNoArray] = useState([]);
-    const [selectedLine, setSelectedLine] = useState([]);
+
     const [activeIndex, setActiveIndex] = useState(null);
     const [empInfo, setEmpInfo] = useState([]);
 
     const authes = useSelector(state => state.authes);
     console.log("authes.empNo : ", authes.empNo);
 
+
+    const [selectedLine, setSelectedLine] = useState([]);
+
+    useEffect(() => {
+        if (selectedLine.length === 0) {
+            setSelectedLine([
+                {
+                    
+                    degree: 0,
+                    isApproval: 'T',
+                    employee: {
+                        empNo: authes.empNo,
+                        empName: authes.name,
+                        jobName: authes.job,
+                        deptName: authes.dept,
+                    },
+                }
+            ]);
+        }
+    }, [selectedLine, authes]);
+
+    
     useEffect(() => {
         if (empInfo !== null && empInfo !== undefined) {
             console.log('tree empInfo view : ', empInfo);
-            const empNo = empInfo.empNo; // Assuming empInfo has an empNo property
+            const empNo = empInfo.empNo;
 
             if (empNo !== authes.empNo) {
-                if (!empNoArray.includes(empNo) && selectedLine.length < 3) {
+                if (!empNoArray.includes(empNo) && selectedLine.length < 4) {
                     setEmpNoArray(prevEmpNoArray => [...prevEmpNoArray, empNo]);
 
                     setSelectedLine(prevSelectedEmployees => [
                         ...prevSelectedEmployees,
                         {
-                            degree: prevSelectedEmployees.length + 1,
+                            degree: prevSelectedEmployees.length,
                             employee: empInfo,
                         },
                     ]);
@@ -138,24 +160,24 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
             </div>
             <div className="apvLineTreeBox">
                 <div className="apvLineTreeBoxTitle">결재라인</div>
-                {selectedLine.map((emp, index) => (
+                {selectedLine.slice(1).map((emp, index) => (
                     <div
                         className={`apvLineTreeSelected ${activeIndex === index ? 'active' : ''}`}
                         key={index}
                         onClick={(e) => {
                             e.stopPropagation()
-                            handleMoveUp(index)
+                            handleMoveUp(index + 1)
                             setActiveIndex(index)
                         }}
-                        onDoubleClick={() => handleDoubleClick(index)}
+                        onDoubleClick={() => handleDoubleClick(index + 1)}
                         draggable
-                        onDragStart={(e) => dragStart(e, index)}
-                        onDragEnter={(e) => dragEnter(e, index)}
+                        onDragStart={(e) => dragStart(e, index + 1)}
+                        onDragEnter={(e) => dragEnter(e, index + 1)}
                         onDragEnd={dragEnd}
                         onDragOver={handleDragOver}
                         onDrop={drop}
                     >
-                        <div className="apvLineTreeSelected1">{`결재라인 ${emp.degree}`}</div>
+                        <div className="apvLineTreeSelected1">{`결재라인 ${index + 1}`}</div>
                         <div className="apvLineTreeSelected2">{`${emp.employee.empNo}`}</div>
                     </div>
                 ))}

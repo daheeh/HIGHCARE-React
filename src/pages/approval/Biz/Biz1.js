@@ -8,11 +8,12 @@ import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz1API } from '../../../apis/ApprovalAPICalls';
 
-function Biz1() {
+function Biz1({ mode }) {
 
     const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -76,11 +77,6 @@ function Biz1() {
     const handleSubmission = async () => {
         if (empNo !== undefined) {
 			try {
-                // const selectedEmployeeData = selectedEmployees.map(employee => ({
-                //     id: employee.id,
-                //     name: employee.name, 
-                // }));
-
 				const response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
 				if (response.status === 200) {
 					if (response.data === "기안 상신 실패") {
@@ -113,6 +109,7 @@ function Biz1() {
                 <div className="containerApv">
                     <div className="apvApvTitle">기안서</div>
                     <ApvSummitLine
+                        mode="create"
                         selectedEmployees={selectedEmployees}
                         authes={authes}
                     />
