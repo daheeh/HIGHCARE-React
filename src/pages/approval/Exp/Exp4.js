@@ -147,13 +147,6 @@ function Exp4() {
 
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
-	const updateIsUrgency = (newIsUrgency) => {
-		setFormData(prevFormData => ({
-			...prevFormData,
-			isUrgency: newIsUrgency
-		}));
-	};
-
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -161,6 +154,29 @@ function Exp4() {
 			writeDate: currentDate
 		}));
 	}, []);
+
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
+
+	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+	useEffect(() => {
+		console.log('Exp1 - selectedEmployees : ', selectedEmployees);
+	}, [setSelectedEmployees]);
+
+	const handleEmployeeSelect = (selectedEmployee) => {
+		setSelectedEmployees((prevSelectedEmployees) => [
+			...prevSelectedEmployees,
+			{
+				...selectedEmployee,
+				isApproval: 'F',
+			}
+		]);
+	};
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -282,10 +298,13 @@ function Exp4() {
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장신청서 번호</div>
