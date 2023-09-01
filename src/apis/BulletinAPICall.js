@@ -11,6 +11,7 @@ import {
     ,PUT_BOARD
     ,PUT_BOARDS
     ,PUT_COMMENT
+    ,PUT_COMMENTS
 } from '../modules/BoardModule';
 
 export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
@@ -225,5 +226,24 @@ export const callCommentDeleteAPI = ({commentCode}) =>{
             dispatch({type: PUT_COMMENT, payload: result});
         }
     }
-
+}
+export const callCommentUpdateAPI = ({commentCode,commentContent})=>{
+        const requestURL = `http://localhost:8080/bulletin/updateComment`;
+        return async (dispatch, getState) => {
+            const result = await fetch(requestURL,{
+                method: "PUT",
+                headers:{
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"  
+                },
+                body: JSON.stringify({
+                    commentCode: commentCode,
+                    commentContent: commentContent
+                })
+            })
+            .then(response => response.json());
+            if(result.statue === 201){
+                dispatch({type: PUT_COMMENTS, payload: result});
+            }
+        }
 }

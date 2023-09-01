@@ -2,11 +2,12 @@ import BoardStyle from './Bullentin.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-
+import './Comment.css';
 import {
     callBoardDetailAPI,
     callCommentAPI,
-    callCommentDeleteAPI
+    callCommentDeleteAPI,
+    callCommentUpdateAPI
 } from '../../apis/BulletinAPICall'
 
 function Thread(){
@@ -73,7 +74,27 @@ function Thread(){
             commentCode : commentCode
         }));
         setStart(start +1);
+    }
 
+    const onClickCommentUpdate = (commentCode) => {
+        var className = document.getElementById(`comment${commentCode}`).className;
+        if(className == 'comment_mod'){
+            let CommentValue = document.getElementById(`comment${commentCode}`).value;
+            dispatch(callCommentUpdateAPI({
+                commentCode : commentCode,
+                commentContent : CommentValue
+            }));
+
+            document.getElementById(`comment${commentCode}`).className = 'comment_detail';
+            document.getElementById(`comment${commentCode}`).readOnly = true;
+            document.getElementById(`update${commentCode}`).innerHTML = ' 수정';
+            setStart(start +1);
+        }else{
+            document.getElementById(`comment${commentCode}`).className = 'comment_mod';
+            document.getElementById(`comment${commentCode}`).readOnly = false;
+            document.getElementById(`update${commentCode}`).innerHTML = ' 등록';
+
+        }
     }
     return (
         <>
@@ -118,16 +139,15 @@ function Thread(){
                                         <div className={BoardStyle.comment} >
                                                 <span>{boards.bulletinEmployee.empName }</span>
                                         <span>{ boards.modifiedDate}</span>
-                                        <span> 수정</span>
+                                        <span onClick={() => onClickCommentUpdate(boards.commentCode)} id={`update${boards.commentCode}`}> 수정</span>
                                         <span key={boards.commentCode} onClick={() => onCLickDelete(boards.commentCode)}> 삭제</span>
                                         <br></br>
-                                            <textarea className={BoardStyle.comment_detail} readOnly value={boards.commentContent}>
+                                            <textarea className="comment_detail" readOnly defaultValue={boards.commentContent} id={`comment${boards.commentCode}`}>
                                                 {/* {boards.commentContent} */}
                                             </textarea>
                                             <br></br>
-                                            <textarea className={BoardStyle.comment_mod} defaultValue={boards.commentContent}>
-                                            {/* {boards.commentContent} */}
-                                            </textarea>
+                                            {/* <textarea className="comment_mod" defaultValue={boards.commentContent} >  
+                                            </textarea> */}
                                         </div>
 
                                     )
