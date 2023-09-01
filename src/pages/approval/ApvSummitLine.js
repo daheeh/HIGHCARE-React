@@ -23,6 +23,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
+		const apvNo = selectedEmployees.apvNo;
 		console.log('apvLineNo : ', apvLineNo);
 
 
@@ -36,7 +37,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 					'Content-Type': 'application/json',
 					'Access-Control-Allow-Origin': '*',
 				},
-				body: JSON.stringify({ isApproval: 'T' }),
+				body: JSON.stringify({ apvNo }),
 			});
 
 			if (response.status === 200) {
@@ -114,9 +115,13 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 											<button onClick={() => handleApprove(index)}>승인</button>
 										</>
 								) : (
-									null
+									<>
+										{emp.apvDate && <span>{emp.apvDate}</span>}
+									</>
 								)
-							) : null}
+							) : <>
+								{emp.apvDate && <span>{emp.apvDate}</span>}
+							</>}
 						</div>
 					</div>
 				))}
