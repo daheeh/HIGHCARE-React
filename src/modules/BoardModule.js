@@ -11,6 +11,7 @@ export const POST_REGISTERS = 'board/POST_REGISTERS';
 export const PUT_BOARD = 'board/PUT_BOARD';
 export const PUT_BOARDS = 'board/PUT_BOARDS';
 export const GET_THREAD = 'board/GET_THREAD';
+export const PUT_COMMENT = 'board/PUT_COMMENT';
 
 const actions = createActions({
     [GET_BOARD]: () => {},
@@ -21,7 +22,8 @@ const actions = createActions({
     [POST_REGISTERS]: () => {},
     [PUT_BOARD]: () => {},
     [PUT_BOARDS]: () => {},
-    [GET_THREAD]: () => {}
+    [GET_THREAD]: () => {},
+    [PUT_COMMENT]: () => {}
 });
 
 const boardReducer = handleActions(
@@ -51,6 +53,9 @@ const boardReducer = handleActions(
             return payload;
         },
         [GET_THREAD]:(state, {payload})=>{
+            return payload;
+        },
+        [PUT_COMMENT]:(state, {payload})=>{
             return payload;
         }
     },

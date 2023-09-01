@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 
 import {
     callBoardDetailAPI,
-    callCommentAPI
+    callCommentAPI,
+    callCommentDeleteAPI
 } from '../../apis/BulletinAPICall'
 
 function Thread(){
@@ -45,15 +46,15 @@ function Thread(){
                 bulletinCode: bulletinCode,
                 currentPage: currentPage
             }));
+            setStart(0);
         }
-        ,[currentPage,start]
+        ,[start]
     );
     const onClickComment = () =>{
         dispatch(callCommentAPI({
             form:form
         }));
-        setStart(start+1);
-
+        setStart(start +1);
     }
 
     const changeContent = (e) =>{
@@ -65,6 +66,14 @@ function Thread(){
 
     const onClickUpdate = () =>{
         navigate(`/bulletin/mod/${bulletinCode}`,{ replace: false });
+    }
+
+    const onCLickDelete = (commentCode) => {
+        dispatch(callCommentDeleteAPI({
+            commentCode : commentCode
+        }));
+        setStart(start +1);
+
     }
     return (
         <>
@@ -100,18 +109,25 @@ function Thread(){
                                     댓글{boardDetail.commentCnt}개
                                 </div>
                             <div style={{display: 'flex'}}>
-                                <input type="text" onChange={changeContent} name='content'/>
+                                <textarea onChange={changeContent} name='content'></textarea>
+                                {/* <input type="text" onChange={changeContent} name='content'/> */}
                                 <div onClick={onClickComment}>등록</div>
                             </div>
                                 {Array.isArray(boardList) && boardList.map(
                                     (boards) =>(
                                         <div className={BoardStyle.comment} >
-                                                <span>{boards.bulletinEmployee.empName}</span>
-                                        <span>{boards.modifiedDate}</span>
-                                        
-                                            <div className={BoardStyle.comment_detail}>
-                                                {boards.commentContent}
-                                            </div>
+                                                <span>{boards.bulletinEmployee.empName }</span>
+                                        <span>{ boards.modifiedDate}</span>
+                                        <span> 수정</span>
+                                        <span key={boards.commentCode} onClick={() => onCLickDelete(boards.commentCode)}> 삭제</span>
+                                        <br></br>
+                                            <textarea className={BoardStyle.comment_detail} readOnly value={boards.commentContent}>
+                                                {/* {boards.commentContent} */}
+                                            </textarea>
+                                            <br></br>
+                                            <textarea className={BoardStyle.comment_mod} defaultValue={boards.commentContent}>
+                                            {/* {boards.commentContent} */}
+                                            </textarea>
                                         </div>
 
                                     )

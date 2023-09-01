@@ -10,6 +10,7 @@ import {
     ,POST_REGISTERS
     ,PUT_BOARD
     ,PUT_BOARDS
+    ,PUT_COMMENT
 } from '../modules/BoardModule';
 
 export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
@@ -204,6 +205,25 @@ export const callDeleteAPI = ({form}) =>{
             dispatch({type: PUT_BOARDS, payload: result});
         }
     }
+}
+export const callCommentDeleteAPI = ({commentCode}) =>{
+    const requestURL = `http://localhost:8080/bulletin/deleteComment`;
 
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "PUT",
+            headers:{
+                "Content-Type": "application/json",
+                "Accept": "*/*"  
+            },
+            body: JSON.stringify({
+                commentCode: commentCode
+            })
+        })
+        .then(response => response.json());
+        if(result.statue === 201){
+            dispatch({type: PUT_COMMENT, payload: result});
+        }
+    }
 
 }
