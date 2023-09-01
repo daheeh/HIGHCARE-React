@@ -9,26 +9,19 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
-	}, [selectedEmployees]);
-
-	useEffect(() => {
 		console.log('ApvSummitLine - authes : ', authes);
-	}, [authes]);
-
-	useEffect(() => {
-
 		console.log('ApvSummitLine - data : ', data);
-	}, [data]);
-
+	}, [selectedEmployees, authes, data]);
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
-		const apvNo = selectedEmployees.apvNo;
+		const apvNo = selectedEmployees[index].apvNo;
 		console.log('apvLineNo : ', apvLineNo);
+		console.log('apvNo : ', apvNo);
 
 
 		try {
-			const requestURL = `http://localhost:8080/api/approval/put/line/${apvLineNo}`;
+			const requestURL = `http://localhost:8080/api/approval/put/line/${apvLineNo}?apvNo=${apvNo}`;
 			const response = await fetch(requestURL, {
 				method: 'PUT',
 				headers: {
@@ -80,12 +73,19 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 
 		return (
 			<div className="apvApvLine">
-				{selectedEmployees.map((emp, index) => (
-					<div className="apvApvLineBox" key={index}>
-						<div className="row1">{index === 0 ? '기안자' : index}</div>
+				<div className="apvApvLineBox">
+						<div className="row1">기안자</div>
+						<div className="row2">{authes.name}  {authes.job}</div>
+						<div className="row3">{authes.dept}</div>
+						<div className="row4">{currentDateString}</div>
+					</div>
+
+				{selectedEmployees.slice(1).map((emp, index) => (
+					<div className="apvApvLineBox" key={index +1 }>
+						<div className="row1">{index+1}</div>
 						<div className="row2">{emp.employee.empName} {emp.employee.jobName}</div>
 						<div className="row3">{emp.employee.deptName}</div>
-						<div className="row4">{index === 0 ? currentDateString : ''}</div>
+						<div className="row4"></div>
 					</div>
 				))}
 			</div>
