@@ -20,6 +20,7 @@ function PmWork() {
 	const empName = authes.name;
     const deptName = authes.dept;
     const jobName = authes.job;
+    
 
 	console.log("empNo : ", empNo);
 
@@ -27,7 +28,8 @@ function PmWork() {
     const navigate = useNavigate();
 
     const result = useSelector(state => state.treeview);
-    console.log("-------------------------->",result);
+    console.log("------------------------}}>",result);
+
     const [type, setType] = useState('');
     const [formData, setFormData] = useState({
 
@@ -47,8 +49,8 @@ function PmWork() {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
         dispatch(callManagementAPI());
         
-        if (result) {
-            console.log("result >>>>>: ", result);
+        if (result.data) {
+            console.log("result >>>>>: ", result.data);
             let statuss = type === 'start'? '출근' : '퇴근';
            
             setFormData(form => ({
@@ -76,15 +78,15 @@ function PmWork() {
         setType('start');
         if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callMgEndAPI({ formData }));
+				const response = await dispatch(callMgStartAPI({ formData }));
                 console.log("-----------------------------------response", response.status);
 				if (response.status === 200) {
-                    if(response.data === 'success'){
+                    if(response.data === 'stSuceess'){
 
                         window.alert("출근하였습니다");
                     
                     } else {
-                        window.alert("이미 등록했어 장난하니 정신차려 전아림 사원을 찾아가봐 ");
+                        window.alert("이미 출근이 완료되었습니다. ");
                         
                     }
                     window.location.reload();
@@ -104,10 +106,10 @@ function PmWork() {
         setType('end');
         if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callMgStartAPI({ formData }));
-                console.log("-----------------------------------response", response.status);
+				const response = await dispatch(callMgEndAPI({ formData }));
+                console.log("-----------------------------------response", response);
 				if (response.status === 200) {
-                    if(response.data === 'end'){
+                    if(response.data === 'success'){
 
                         window.alert("퇴근하였습니다");
                     
@@ -151,11 +153,11 @@ function PmWork() {
                         </div>
                         <div className="pm-workin-box2">
                             <h2>출근시간</h2>
-                            <h2>00:00:00</h2>
+                            {/* <h2>{ result.data.user.startTime  }</h2> */}
                         </div>
                         <div className="pm-workin-box-last">
                             <h2>퇴근시간</h2>
-                            <h2>00:00:00</h2>
+                            {/* <h2>{ result.data.user.endTime  }</h2> */}
                         </div>
                     </div>
                 <table className="pm-job-table">
@@ -172,10 +174,10 @@ function PmWork() {
                         <th className="columnpm0">근무시간</th>
                         <th className="columnpm0">총 근무시간</th>
                     </tr>
-                    {Array.isArray(result.data) && result.data
+                    {Array.isArray(result.data.manage) && result.data.manage
                         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((res) => (
-                            <tr key={res.manNo}>
+                            <tr key={res.manNo}>d
                                 <td>{res.manNo}</td>
                                 <td>{res.empName}</td>
                                 <td>{res.manDate}</td>
