@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { approvalReset } from "../../utils/ApprovalStateReset";
 import TreeView from "../pm/treeview";
 
 function ApvLineTree({ onSelect, selectedEmployees }) {
@@ -17,11 +18,16 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const [selectedLine, setSelectedLine] = useState([]);
     const currentDate = new Date();
 
+
+    useEffect(()=> {
+        approvalReset('approval');
+    },[])
+
     useEffect(() => {
         if (selectedLine.length === 0) {
             setSelectedLine([
                 {
-
+                    // apvLineNo:'',
                     degree: 0,
                     isApproval: 'T',
                     apvDate: currentDate,
@@ -48,6 +54,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     setSelectedLine(prevSelectedEmployees => [
                         ...prevSelectedEmployees,
                         {
+                            // apvLineNo:'',
                             degree: prevSelectedEmployees.length,
                             isApproval: 'F',
                             apvDate: " ",

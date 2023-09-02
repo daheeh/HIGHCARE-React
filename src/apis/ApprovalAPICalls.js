@@ -219,6 +219,7 @@ export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
+                    "X-HTTP-Method-Override": "PUT",
                 },
                 body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
             })

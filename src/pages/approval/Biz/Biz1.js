@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+// import { approvalReset } from "../../../utils/ApprovalStateReset";
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
@@ -9,6 +10,11 @@ import '../Approval.css';
 import { callApvBiz1API, callApvBiz1UpdateAPI } from '../../../apis/ApprovalAPICalls';
 
 function Biz1({ mode, data }) {
+
+    // useEffect(()=> {
+    //     approvalReset('approval');
+    // },[])
+
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
@@ -16,28 +22,38 @@ function Biz1({ mode, data }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const biz1 = useSelector(state => state.approval);
+    const approval = useSelector(state => state.approval);
+    const isEditMode = !!approval.apvLines;
+    console.log('isEditMode 1 : ', isEditMode);
 
-    console.log('biz1 first : ', biz1);
+
+    console.log('biz1 first : ', approval);
 
     const [formData, setFormData] = useState({
-        title: '',
+        apvNo: approval.apvNo?approval.apvNo:'',
+        title: approval.title?approval.title:'',
         writeDate: '',
         apvStatus: '결재진행중',
         isUrgency: 'F',
         category: '업무',
         empNo: empNo,
-        contents1: '',
-        contents2: '',
+        contents1: approval.contents1? approval.contents1 : '',
+        contents2: approval.contents2? approval.contents2 : '',
         empName: authes.name,
         deptName: authes.dept,
         jobName: authes.job,
+        apvLines: approval.apvLines?approval.apvLines: [],
     });
+
+
+    
+
 
     const location = useLocation();
     const initialData = location.state ? location.state.initialData : null;
 
     useEffect(() => {
+        console.log('isEditMode 2 : ', isEditMode);
         const currentDate = new Date();
         setFormData(prevFormData => ({
             ...prevFormData,
@@ -53,13 +69,31 @@ function Biz1({ mode, data }) {
         }));
     };
 
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
+    const [selectedEmployees, setSelectedEmployees] = useState([
+    ]);
 
     useEffect(() => {
         console.log('Biz1 - selectedEmployees : ', selectedEmployees);
+        console.log('isEditMode 3 : ', isEditMode);
     }, [setSelectedEmployees]);
 
+    useEffect(() => {
+        console.log('isEditMode 4 : ', isEditMode);
+        if (approval.apvLines) {
+            // If there are values in approval.apvLines, initialize selectedEmployees with them
+            setSelectedEmployees(approval.apvLines.map((line, index) => ({
+                ...line,
+                isApproval: 'F',
+                apvLineNo: line.apvLineNo, // Include other properties you need from line
+            })));
+        }
+    }, [approval]);
+
+
+
     const handleEmployeeSelect = (selectedEmployee) => {
+
+        console.log('isEditMode 5 : ', isEditMode);
         setSelectedEmployees((prevSelectedEmployees) => [
             ...prevSelectedEmployees,
             {
@@ -78,12 +112,14 @@ function Biz1({ mode, data }) {
     }
 
     const handleSubmission = async () => {
+
+        console.log('isEditMode 6 : ', isEditMode);
         if (empNo !== undefined) {
             try {
                 let response;
-                if (data) {
+                if ((isEditMode)) {
                     // If 'data' is provided, it's an update, call update API
-                    response = await dispatch(callApvBiz1UpdateAPI({ formData, selectedEmployees, apvNo: data.apvNo }));
+                    response = await dispatch(callApvBiz1UpdateAPI({ formData, selectedEmployees }));
                 } else {
                     // Otherwise, it's a creation, call create API
                     response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
@@ -121,6 +157,7 @@ function Biz1({ mode, data }) {
                         mode="create"
                         selectedEmployees={selectedEmployees}
                         authes={authes}
+                        approval={approval}
                     />
                     <div className="apvContent">
                         <div className="apvContentTitle">
@@ -130,7 +167,7 @@ function Biz1({ mode, data }) {
                                     className="input2"
                                     placeholder="제목 입력"
                                     name="title"
-                                    value={biz1.title}
+                                    value={formData.title}
                                     onChange={onChangeHandler}
                                 />
                             </div>
@@ -141,7 +178,7 @@ function Biz1({ mode, data }) {
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents1"
-                                value={biz1.contents1}
+                                value={formData.contents1}
                                 onChange={onChangeHandler}
                             />
                         </div>
@@ -151,7 +188,7 @@ function Biz1({ mode, data }) {
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents2"
-                                value={biz1.contents2}
+                                value={formData.contents2}
                                 onChange={onChangeHandler}
                             />
                         </div>

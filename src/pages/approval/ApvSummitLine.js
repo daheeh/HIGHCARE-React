@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
+function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 
 
 	const currentDate = new Date();
@@ -15,10 +15,10 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 		console.log('ApvSummitLine - authes : ', authes);
 		console.log('ApvSummitLine - data : ', data);
 		console.log('results : ', results);
-		console.log('results.title : ', results.title);
+		console.log('approval : ', approval);
 
 
-	}, [selectedEmployees, authes, data, results]);
+	}, [selectedEmployees, authes, data, results, approval]);
 
 
 
@@ -134,33 +134,53 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 
 	if (mode === 'create') {
 
-		const resultsExist = Object.keys(results).length > 0;
-
 		return (
-			<div className="apvApvLine">
-				<div className="apvApvLineBox">
-					<div className="row1">기안자</div>
-					<div className="row2">{authes.name}  {authes.job}</div>
-					<div className="row3">{authes.dept}</div>
-					<div className="row4">{currentDateString}</div>
-				</div>
+			(approval.apvLines) ?
+				<>
+					<div className="apvApvLine">
+						<div className="apvApvLineBox">
+							<div className="row1">기안자</div>
+							<div className="row2">{authes.name}  {authes.job}</div>
+							<div className="row3">{authes.dept}</div>
+							<div className="row4">{currentDateString}</div>
+						</div>
 
-				{selectedEmployees.slice(1).map((emp, index) => (
-					<div className="apvApvLineBox" key={index + 1}>
-						<div className="row1">{index + 1}</div>
-						{/* {resultsExist ? (
-							<>
-								{results.apvLines[index+2].employee.empName && <span>{results.title}</span>}
-							</>
-
-						)} */}
-						<div className="row2">{emp.employee.empName} {emp.jobName}</div>
-						<div className="row3">{emp.deptName}</div>
-						<div className="row4"></div>
+						{selectedEmployees.slice(1, 4).map((emp, index) => (
+							<div className="apvApvLineBox" key={index + 1}>
+								<div className="row1">{index + 1}</div>
+								<div className="row2">{approval.apvLines[index + 1].empName} {approval.apvLines[index + 1].jobName}</div>
+								<div className="row3">{approval.apvLines[index + 1].deptName}</div>
+								<div className="row4"></div>
+							</div>
+						))}
 					</div>
-				))}
-			</div>
+				</>
+				:
+				<>
+					<div className="apvApvLine">
+						<div className="apvApvLineBox">
+							<div className="row1">기안자</div>
+							<div className="row2">{authes.name}  {authes.job}</div>
+							<div className="row3">{authes.dept}</div>
+							<div className="row4">{currentDateString}</div>
+						</div>
+
+						{selectedEmployees.slice(1, 4).map((emp, index) => (
+							<div className="apvApvLineBox" key={index + 1}>
+								<div className="row1">{index + 1}</div>
+								<div className="row2">{emp.empName} {emp.jobName}</div>
+								<div className="row3">{emp.deptName}</div>
+								<div className="row4"></div>
+							</div>
+						))}
+					</div>
+
+				</>
+
+
+
 		);
+
 
 	} else if (mode === 'view') {
 
@@ -169,8 +189,8 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 				{selectedEmployees.map((emp, index) => (
 					<div className="apvApvLineBox" key={index}>
 						<div className="row1">{index === 0 ? '기안자' : index}</div>
-						<div className="row2">{emp.employee.empName} {emp.employee.job.name}</div>
-						<div className="row3">{emp.employee.deptName}</div>
+						<div className="row2">{emp.empName} {emp.jobName}</div>
+						<div className="row3">{emp.deptName}</div>
 						<div className="row4">
 							{index === 0 && authes.empNo === emp.empNo ? (
 								<button onClick={() => handleEdit(emp.apvNo)}>수정</button>
