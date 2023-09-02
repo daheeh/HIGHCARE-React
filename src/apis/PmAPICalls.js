@@ -1,13 +1,17 @@
 import {
     GET_MEMBER,
-    GET_TREEVIEW_ONE,
-    GET_MANAGEMENT,
-    POST_PM_MANAGEMENT,
-    POST_PM_END
+    GET_TREEVIEW_ONE
 } from '../modules/TreeModule';
 import {
     GET_TREEVIEW_TWO
 } from '../modules/SecondTreeModule';
+
+import {
+    GET_MANAGEMENT,
+    POST_PM_MANAGEMENT,
+    POST_PM_END
+} from '../modules/ManageMentModule';
+
 import { async } from '@dabeng/react-orgchart';
 
 export const callEmployeeAPI = ({ empNo= 1, pmStatus }) => {
@@ -123,7 +127,7 @@ export const callManagementAPI = () => {
         
                 console.log('[PmAPICalls] callManagementAPI RESULT :>>>>>>>>>>>>>>>> ', result);
         
-                dispatch({type:  GET_MANAGEMENT, payload: result});
+                dispatch({type: GET_MANAGEMENT, payload: result});
             } catch(error) {
                 console.error('[PmAPICalls] Error in callManagementAPI: ', error);
             }
