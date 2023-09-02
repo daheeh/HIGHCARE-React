@@ -32,7 +32,7 @@ function Biz1View() {
                 console.error('Error fetching data:', error);
             }
         };
-    
+
         fetchData();
     }, [apvNo, dispatch]);
 
@@ -47,22 +47,30 @@ function Biz1View() {
                         mode="view"
                         selectedEmployees={data?.apvLines || []}
                         authes={authes}
-                        data={data}
                     />
                     <div className="apvContent">
                         <div className="apvContentTitle">
                             <div className="column1">제목</div>
                             <div className="column2">
-                                <input className="input2" value={data?.title || ''} readOnly />
+                                <input
+                                    className="input2"
+                                    value={data?.title || ''}
+                                />
                             </div>
                         </div>
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
-                            <textarea rows="9" value={data?.contents1 || ''} readOnly />
+                            <textarea
+                                rows="9"
+                                value={data?.contents1 || ''}
+                            />
                         </div>
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
-                            <textarea rows="9" value={data?.contents2 || ''} readOnly />
+                            <textarea
+                                rows="9"
+                                value={data?.contents2 || ''}
+                            />
                         </div>
                     </div>
                 </div>

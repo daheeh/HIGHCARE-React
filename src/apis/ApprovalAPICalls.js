@@ -8,6 +8,8 @@ import {
     
     POST_APPROVAL_BIZ1,
     GET_APPROVAL_BIZ1,
+    PUT_APPROVAL_BIZ1,
+    
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
 
@@ -197,6 +199,45 @@ export const callApvBiz1ViewAPI = ({ apvNo }) => {
 
     };
 };
+
+export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz1API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/put/biz1`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI formData : ', formData);
+        console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI selectedEmployees : ', selectedEmployees);
+
+        try {
+            const result = await fetch(requestURL, {
+                method: "PUT",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI RESULT : ', result);
+
+            dispatch({ type: PUT_APPROVAL_BIZ1, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            throw error;
+        }
+    };
+};
+
+
+
 
 /* 전자결재 - 업무 : biz2 회의록 */
 export const callApvBiz2API = ({ formData, selectedEmployees }) => {

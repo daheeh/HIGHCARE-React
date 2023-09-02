@@ -1,17 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
+
+
 	const currentDate = new Date();
 	const currentDateString = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-
+	const results = useSelector(state => state.approval);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
 		console.log('ApvSummitLine - data : ', data);
-	}, [selectedEmployees, authes, data]);
+		console.log('results : ', results);
+		console.log('results.title : ', results.title);
+
+
+	}, [selectedEmployees, authes, data, results]);
+
+
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
@@ -87,27 +96,45 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 	};
 
 
-	// const handleEdit = (index) => {
-	// 	const updatedContent =
-	// 		updateContent(index, updatedContent);
-	// };
+	const [isEditMode, setIsEditMode] = useState(false);
 
-	// const handleApprove = (index) => {
-	// 	const updatedSelectedEmployees = [...selectedEmployees];
-	// 	updatedSelectedEmployees[index].isApproval = 'T';
 
-	// 	const currentDate = new Date();
-	// 	const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-	// 	updatedSelectedEmployees[index].apvDate = formattedDate;
+	const title = results.title;
 
-	// 	updateEmployeeInDatabase(updatedSelectedEmployees[index]);
 
-	// 	setSelectedEmployees(updatedSelectedEmployees);
-	// };
+	const handleEdit = (apvNo) => {
+		console.log('apvNo, :', apvNo);
 
+		setIsEditMode(true);
+
+
+		if (title) {
+			console.log('title:', title);
+
+			let action = '';
+			switch (title) {
+				case '지출결의서':
+					action = `/approval/exp1`;
+					break;
+				case '경조금신청서':
+					action = `/approval/exp3`;
+					break;
+				default:
+					action = `/approval/biz1`;
+					break;
+			}
+			console.log('Action:', action);
+			navigate(action, { state: { initialData: data } });
+		} else {
+			console.error(`No result found for apvNo: ${apvNo}`);
+		}
+
+	};
 
 
 	if (mode === 'create') {
+
+		const resultsExist = Object.keys(results).length > 0;
 
 		return (
 			<div className="apvApvLine">
@@ -121,6 +148,12 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 				{selectedEmployees.slice(1).map((emp, index) => (
 					<div className="apvApvLineBox" key={index + 1}>
 						<div className="row1">{index + 1}</div>
+						{/* {resultsExist ? (
+							<>
+								{results.apvLines[index+2].employee.empName && <span>{results.title}</span>}
+							</>
+
+						)} */}
 						<div className="row2">{emp.employee.empName} {emp.jobName}</div>
 						<div className="row3">{emp.deptName}</div>
 						<div className="row4"></div>
@@ -140,8 +173,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 						<div className="row3">{emp.employee.deptName}</div>
 						<div className="row4">
 							{index === 0 && authes.empNo === emp.empNo ? (
-								// <button onClick={() => handleEdit(index)}>수정</button>
-								<button>수정</button>
+								<button onClick={() => handleEdit(emp.apvNo)}>수정</button>
 							) : index !== 0 && authes.empNo === emp.empNo ? (
 								selectedEmployees[index - 1].isApproval === 'T' ? (
 									selectedEmployees[index].isApproval === 'T' ? (
@@ -159,7 +191,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data }) {
 									</>
 								)
 							) : <>
-								
+
 							</>}
 						</div>
 					</div>
