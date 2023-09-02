@@ -167,14 +167,14 @@ export const callMgStartAPI = ({ formData }) => {
     };
 };
 
-export const callMgEndAPI = () => {
+export const callMgEndAPI = ({ formData }) => {
     console.log('[PmAPICalls] callMgEndAPI Call');
     
     const requestURL = `http://localhost:8080/api/pm/management/update`;
     
     return async (dispatch, getState) => {
 
-        console.log('[PmAPICalls] callMgEndAPI formData : ', );
+        console.log('[PmAPICalls] callMgEndAPI formData : ',formData );
         try{
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -183,7 +183,7 @@ export const callMgEndAPI = () => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(),
+                body: JSON.stringify(formData),
             })
             // .then(response => {
             //     console.log('-----------------> \n', response);
