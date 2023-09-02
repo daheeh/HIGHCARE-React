@@ -32,6 +32,9 @@ function Biz1({ mode }) {
         empNo: empNo,
         contents1: '',
         contents2: '',
+        empName: authes.name,
+        deptName: authes.dept,
+        jobName: authes.job,
     });
 
     useEffect(() => {

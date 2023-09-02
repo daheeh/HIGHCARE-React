@@ -19,6 +19,7 @@ function ReceiveBox() {
     const dispatch = useDispatch();
 
     const results = useSelector(state => state.approval);
+    console.log('results : ', results);
 
     const [selectedStatus, setSelectedStatus] = useState('결재진행중');
 
@@ -117,7 +118,7 @@ function ReceiveBox() {
                                             style={{ cursor: 'pointer' }}
                                         >{result.apvNo}</td>
                                         <td>{result.title}</td>
-                                        <td>{result.employee.empName}</td>
+                                        <td>{result.empName}</td>
                                         <td>{result.category}</td>
                                         <td>{result.writeDate}</td>
                                     </tr>
