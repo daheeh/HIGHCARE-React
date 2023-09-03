@@ -10,9 +10,9 @@ export const  GET_MYPAGE_MANSELECT = 'mypage/GET_MYPAGE_MANSELECT';    // 근태
 
 const actions = createActions({
     [GET_MYPAGE_SELECT]: () => {},
-    // [POST_MYPAGE_PROFILE]: () => {},
-    // [ GET_MYPAGE_ANNSELECT]: () => {},
-    // [GET_MYPAGE_MANSELECT]: () => {},
+    [POST_MYPAGE_PROFILE]: () => {},
+    [ GET_MYPAGE_ANNSELECT]: () => {},
+    [GET_MYPAGE_MANSELECT]: () => {},
 })
 
 const mypageReducer = handleActions(

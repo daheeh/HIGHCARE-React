@@ -3,36 +3,40 @@ import './annual.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { callAnnSelectAPI } from '../../apis/MypageApiCalls';
-import { Navigate, useNavigate } from "react-router-dom";
+// import { Navigate, useNavigate } from "react-router-dom";
 
 function MypageAnnual() {
 
-    const navigate= useNavigate();
+    // const navigate= useNavigate();
     const dispatch = useDispatch();
 
     const mypageAnn = useSelector(state => state.authes);
     console.log("mypageAnn====", mypageAnn);    // authes의 로그인정보로 가지고옴***, 마이페이지의 값을 들고 오면 안됨
 
+        useEffect(() => {
+        dispatch(callAnnSelectAPI(empNo));
+        // console.log("ann test ------", ann);
+    }, 
+    []);
+
 
     // 로그인한 정보를 받아오기 위해 authes로 접근,  mypage에 담긴 값을 불러오려면 mypage에 담긴 값을 불러와야함
-    const ann = useSelector(state => state.mypage.myAnnual);
-    // const apvVa = ann[0].myApvVation; 
-    const empNo = mypageAnn.empNo;
+    const ann = useSelector(state => state.mypage);
+    // const apvVa = ann[0].myApvVation;
+    // const useAn = ann.empNo; 
+    const empNo = mypageAnn.useAn;
     // console.log("apvVa=====",apvVa);
 
 
     // 리듀서명을 코드 어디서 확인할지 알아보기
     console.log("in reducer/mypage/myAnnual  ====== ",ann);
     // console.log("myAnuual.addAn", ann[0]);  // 연차안에 있는 값 출력
+    console.log('연차개수',empNo);
     // console.log("empNo=====", empNo);
 
     // console.log("mypageAnn", mypageAnn);
 
-    // useEffect(() => {
-    //     dispatch(callAnnSelectAPI(empNo));
-    //     // console.log("ann test ------", ann);
-    // }, 
-    // []);
+
 
 
     return (

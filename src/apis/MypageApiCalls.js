@@ -29,7 +29,7 @@ export const callMypageProfileSelectAPI = (empNo) => {
 
             console.log('[MypageApiCalls] MypageApiCalls Result : ', result);
 
-            dispatch({ type: GET_MYPAGE_SELECT, payload: result.data });
+            dispatch({ type: GET_MYPAGE_SELECT, payload: result });
 
         } catch(error) {
             console.error('[MypageApiCalls] Error in MypageApiCalls : ', error)
@@ -72,7 +72,7 @@ export const callAnnSelectAPI = (empNo) => {
     console.log('[callAnnSelectAPI Call]');
 
     const requestURL = `http://localhost:8080/api/mypage/anselect/${empNo}`;
-    console.log("dus리퀘스트유알엘", requestURL);
+    console.log("RequestURL : ", requestURL);
 
     return async (dispatch, getState) => {
 

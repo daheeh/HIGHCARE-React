@@ -12,6 +12,60 @@ import { callProfileInsertAPI } from '../../apis/MypageApiCalls';
 function Profile() {
 
     const dispatch = useDispatch();
+    const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
+
+        // mypage에 담긴 값 가져오기
+        const mypage = useSelector(state => state.mypage);
+        console.log("mypage", mypage);
+
+     // employee empNo로 조회
+     useEffect(
+        () => {
+            dispatch(callMypageProfileSelectAPI(employee.empNo));       // 나중에 mypage에서 불러오는걸로 바꿔보기
+            /// empNo로 불러오기
+        }
+        , []); // 빈배열이면 랜더링 한번 되고 Apicalls를 준다.  
+
+        // useEffect(() => {
+        //     async function fetchData() {
+        //       // You can await here
+        //       const response = await MyAPI.getData(someId);
+        //       // ...
+        //     }
+        //     fetchData();
+        //   }, [someId]);    
+
+    // useEffect(() => {
+    //         async function fetchData() {
+    //           // You can await here
+    //           const response = await callMypageProfileSelectAPI.getData(employee.empNo);
+    //         //   await  dispatch({ type: GET_MYPAGE_SELECT, payload: result });
+    //         //   // ...
+    //         // return response;
+
+    //         }
+    //         fetchData();
+    //       }, []);    
+
+    //     useEffect(() => {
+    // async function fetchData() {
+    //     try {
+    //     // 함수 내에서 await를 사용하여 데이터를 가져옵니다.
+    //     const response = await callMypageProfileSelectAPI.getData(employee.empNo);
+        
+    //     // 데이터를 사용하는 코드를 이곳에 추가하세요.
+    //     // 예를 들어, 데이터를 Redux에 저장하거나 다른 작업을 수행할 수 있습니다.
+    //     } catch (error) {
+    //     // 오류 처리 코드를 추가할 수도 있습니다.
+    //     console.error(error);
+    //     }
+    // }
+    
+    // // fetchData 함수를 호출합니다.
+    // fetchData();
+    // }, []);
+
+   
 
     const [image, setImage] = useState(null);   // 값 변경이 있으니까 이것을 APICall로 넘겨주기 때문에 ApiCalls로 값을 넘겨준다 한다.
     const [imageUrl, setImageUrl] = useState(`{http://localhost:8080/images/basic.jpg}`);
@@ -19,7 +73,6 @@ function Profile() {
 
     const imageInput = useRef();
 
-    const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
 
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     console.log("아이디",id);
@@ -27,9 +80,7 @@ function Profile() {
 
     console.log('profile firslt :');
 
-    // mypage에 담긴 값 가져오기
-    const mypage = useSelector(state => state.mypage);
-    console.log("mypage", mypage);
+
 
     const myInfo = mypage?.data?.myEmployee;
 
@@ -41,14 +92,6 @@ function Profile() {
     console.log("기본이미지유알엘", imageUrl);
 
 
-
-    // employee empNo로 조횐
-    useEffect(
-        () => {
-            dispatch(callMypageProfileSelectAPI(employee.empNo));       // 나중에 mypage에서 불러오는걸로 바꿔보기
-            /// empNo로 불러오기
-        }
-        , []);
 
     //이미지
     useEffect(
