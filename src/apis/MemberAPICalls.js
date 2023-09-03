@@ -34,6 +34,11 @@ export const requestMember = createAsyncThunk(
         }
       );
       console.log(response.data);
+
+      if(typeof response.data === String) {
+        alert(response.data); 
+      }
+
       return response.data;
     } catch (error) {
       throw error.response.data;

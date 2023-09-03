@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { kakaoAuth } from "../apis/OAuthApiCalls";
 import { authCheckAPI, authCodeSendingAPI } from "../apis/AuthAPICalls";
+import { ReduxReset } from "../utils/ReduxReset";
 
+// 초기값 셋팅 
 const initialState = {
     id: '',
     password: '',
@@ -44,6 +46,10 @@ const authSlice = createSlice({
         },
         logoutAction: (state, { payload }) => {
             Object.assign(state, initialState);  // state 초기 initialState로 변경 
+            ReduxReset('authes');
+            localStorage.removeItem('accessToken');
+            document.cookie = 'RefreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=localhost; path=/;';
+
         },
         reissueAction: (state, { payload }) => {
             console.log("reissueAction : ", state, payload);

@@ -14,9 +14,9 @@ root.render(
 
     <Provider store={store}>
         <ErrorBoundary>
-            <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}>
+            {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}> */}
                 <App />
-            </GoogleOAuthProvider >
+            {/* </GoogleOAuthProvider > */}
         </ErrorBoundary>
     </Provider>
 );

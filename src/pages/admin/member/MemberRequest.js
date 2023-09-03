@@ -6,6 +6,8 @@ import { ReduxReset } from "../../../utils/ReduxReset";
 
 // 가입요청 페이지 
 function MemberRequest() {
+  // 리로드시 이전 사원조회 리덕스 날리기 
+  ReduxReset(`members`);
 
   // 매니저 권한만 접근 가능
   // 가입요청 - 사번, 이름, 이메일(비밀번호 부여) 
@@ -13,22 +15,11 @@ function MemberRequest() {
   // 지정된 메일로 임시비밀번호를 발송하고, 최초로그인시 비밀번호 변경창 띄움 
   // 사번조회 api 요청 후  받아온 직원 정보 뿌리고 지정이메일 작성하면 임시비밀번호 발송하기 
   // 임시회원으로 등록됨 
-
-
-
-
-  const [ empNo, setEmpNo]  = useState("");
-
+  const dispatch = useDispatch();
   const loadMember = useSelector(state => state.members);
-
-  useEffect(() => {
-   // 리로드시 이전 사원조회 리덕스 날리기 
-   ReduxReset(`members`);
-  },[])
-
- 
-
+  
   const { name, jobName, deptName, phone, email } = loadMember.data;
+  const [ empNo, setEmpNo]  = useState("");
   const [ form, setForm ] = useState({
     empNo:'',
     name:'',
@@ -38,7 +29,6 @@ function MemberRequest() {
     email:'',
   }); 
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
 
@@ -54,7 +44,6 @@ function MemberRequest() {
         email: email,
       }));
     }
-    console.log("form : ", form);
 
   }, [loadMember]);
   
@@ -63,9 +52,10 @@ function MemberRequest() {
     setEmpNo(e.target.value)
   } 
 
-  const memberSelectClick = () => {
+  const memberSelectClick = async () => {
     // requestMember(empNo, dispatch);
-    dispatch(selectMember(empNo))
+    await dispatch(selectMember(empNo));
+    
   }
   
   const requestClick = () => {
