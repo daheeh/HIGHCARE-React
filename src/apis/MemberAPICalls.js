@@ -42,9 +42,6 @@ export const requestMember = createAsyncThunk(
 );
 
 
-export const authServiceAPI = axios.create({
-  baseURL: `http://localhost:8080/api/oauth/jwt/google`
-})
 
 
 

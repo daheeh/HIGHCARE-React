@@ -54,27 +54,28 @@ function ApvSummitBar({ onsubmit, updateIsUrgency, setSelectedEmployees }) {
         setIsModalOpen(false);
     };
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [attachedFiles, setAttachedFiles] = useState([]);
+
+    // const [selectedFile, setSelectedFile] = useState(null);
+    // const [attachedFiles, setAttachedFiles] = useState([]);
 
     
 
-    const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
-    };
+    // const handleFileChange = (e) => {
+    //     setSelectedFile(e.target.files[0]);
+    // };
 
 
-    const handleFileUpload = () => {
-        if (selectedFile) {
-            // Perform file upload logic here
-            console.log('업로드할 파일:', selectedFile);
+    // const handleFileUpload = () => {
+    //     if (selectedFile) {
+    //         // Perform file upload logic here
+    //         console.log('업로드할 파일:', selectedFile);
     
-            // Update the attached files state
-            setAttachedFiles(prevFiles => [...prevFiles, selectedFile]);
+    //         // Update the attached files state
+    //         setAttachedFiles(prevFiles => [...prevFiles, selectedFile]);
             
-            setSelectedFile(null); // Reset the selected file
-        }
-    };
+    //         setSelectedFile(null); // Reset the selected file
+    //     }
+    // };
 
 
     return (
@@ -85,7 +86,7 @@ function ApvSummitBar({ onsubmit, updateIsUrgency, setSelectedEmployees }) {
                 
                     <button >
                         파일첨부
-                        <ApvFile onFileChange={handleFileChange} onFileUpload={handleFileUpload} />
+                        {/* <ApvFile onFileChange={handleFileChange} onFileUpload={handleFileUpload} /> */}
                     </button>
                 
                 

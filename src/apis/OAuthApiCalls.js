@@ -12,6 +12,7 @@ export const OauthLoginAPI = createAsyncThunk(
                     headers: {
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
+                        "Authorization": "Bearer " + window.localStorage.getItem("accessToken")
                     }
                 }
             );
@@ -56,3 +57,4 @@ export const kakaoAuth = createAsyncThunk(
         }
     }
 );
+

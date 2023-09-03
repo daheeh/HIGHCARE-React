@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { approvalReset } from "../../utils/ApprovalStateReset";
 import TreeView from "../pm/treeview";
 
 function ApvLineTree({ onSelect, selectedEmployees }) {
@@ -15,26 +16,32 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
 
     const [selectedLine, setSelectedLine] = useState([]);
+    const currentDate = new Date();
+
+
+    useEffect(()=> {
+        approvalReset('approval');
+    },[])
 
     useEffect(() => {
         if (selectedLine.length === 0) {
             setSelectedLine([
                 {
-                    
+                    // apvLineNo:'',
                     degree: 0,
                     isApproval: 'T',
-                    employee: {
-                        empNo: authes.empNo,
-                        empName: authes.name,
-                        jobName: authes.job,
-                        deptName: authes.dept,
-                    },
+                    apvDate: currentDate,
+                    empNo: authes.empNo,
+                    empName: authes.name,
+                    jobName: authes.job,
+                    deptName: authes.dept,
+
                 }
             ]);
         }
     }, [selectedLine, authes]);
 
-    
+
     useEffect(() => {
         if (empInfo !== null && empInfo !== undefined) {
             console.log('tree empInfo view : ', empInfo);
@@ -47,12 +54,18 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                     setSelectedLine(prevSelectedEmployees => [
                         ...prevSelectedEmployees,
                         {
+                            // apvLineNo:'',
                             degree: prevSelectedEmployees.length,
-                            employee: empInfo,
+                            isApproval: 'F',
+                            apvDate: " ",
+                            empNo: empNo,
+                            empName: empInfo.empName,
+                            jobName: empInfo.jobName,
+                            deptName: empInfo.deptName,
                         },
                     ]);
                 }
-            } 
+            }
         }
         console.log('ApvLineTree - selectedLine : ', selectedLine);
     }, [treeview, empNoArray, selectedLine, empInfo, authes]);
@@ -91,7 +104,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
     const handleEmployeeSelect = (selectedEmployee, index) => {
         console.log('selectedEmployee.empNo : ', selectedEmployee.empNo);
-        const empNoExists = selectedLine.some(emp => emp.employee.empNo === selectedEmployee.empNo);
+        const empNoExists = selectedLine.some(emp => emp.empNo === selectedEmployee.empNo);
 
         if (selectedEmployee.empNo === authes.empNo) {
             return;
@@ -102,12 +115,17 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
 
             setSelectedLine(prevSelectedEmployees => {
                 const updatedSelectedEmployees = [...prevSelectedEmployees];
-                const existingIndex = updatedSelectedEmployees.findIndex(emp => emp.employee.empNo === selectedEmployee.empNo);
+                const existingIndex = updatedSelectedEmployees.findIndex(emp => emp.empNo === selectedEmployee.empNo);
 
                 if (existingIndex === -1) {
                     updatedSelectedEmployees[index] = {
                         degree: index,
-                        employee: selectedEmployee,
+                        isApproval: 'F',
+                        apvDate: " ",
+                        empNo: empInfo.empInfo,
+                        empName: empInfo.empName,
+                        jobName: empInfo.jobName,
+                        deptName: empInfo.deptName,
                     };
                 }
 
@@ -178,7 +196,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                         onDrop={drop}
                     >
                         <div className="apvLineTreeSelected1">{`결재라인 ${index + 1}`}</div>
-                        <div className="apvLineTreeSelected2">{`${emp.employee.empNo}`}</div>
+                        <div className="apvLineTreeSelected2">{`${emp.empNo}`}</div>
                     </div>
                 ))}
             </div>
