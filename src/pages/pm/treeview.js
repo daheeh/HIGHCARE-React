@@ -64,7 +64,6 @@ function TreeView({setEmpInfo}) {
       />
       
       {selectedNode && (
-
         <div className="selectedNodeInfo">
           <h2>선택한 노드 정보</h2>
           <pre>{JSON.stringify(selectedNode, null, 2)}</pre>

@@ -49,8 +49,8 @@ function PmWork() {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
         dispatch(callManagementAPI());
         // 여기 result.data로 변경한것을 result로 다시변경
-        if (result.data) {
-            console.log("result >>>>>: ", result.data);
+        if (result) {
+            console.log("result >>>>>: ", result);
             let statuss = type === 'start'? '출근' : '퇴근';
            
             setFormData(form => ({
@@ -130,7 +130,7 @@ function PmWork() {
 		}
     };
 
-	return (
+	return (~~
 <section>
 <PmNav/>
 <div className="apv-navibox">
@@ -175,7 +175,7 @@ function PmWork() {
                         <th className="columnpm0">총 근무시간</th>
                     </tr>
                     {/* {Array.isArray(result.data.manage) && result.data.manage */}
-                    {Array.isArray(result.data.manage) && result.data.manage
+                    {Array.isArray(result) && result
                         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((res) => (
                             <tr key={res.manNo}>d
