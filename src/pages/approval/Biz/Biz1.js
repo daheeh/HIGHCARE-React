@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { approvalReset } from "../../../utils/ApprovalStateReset";
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
@@ -11,10 +10,6 @@ import { callApvBiz1API, callApvBiz1UpdateAPI } from '../../../apis/ApprovalAPIC
 
 function Biz1({ mode, data }) {
 
-    // useEffect(()=> {
-    //     approvalReset('approval');
-    // },[])
-
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
@@ -23,7 +18,7 @@ function Biz1({ mode, data }) {
     const navigate = useNavigate();
 
     const approval = useSelector(state => state.approval);
-    const isEditMode = approval.apvLines? true : false;
+    const isEditMode = approval.apvNo? true : false;
     console.log('isEditMode 1 : ', isEditMode);
 
 
