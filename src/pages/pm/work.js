@@ -27,7 +27,7 @@ function PmWork() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const result = useSelector(state => state.treeview);
+    const result = useSelector(state => state.manage);
     console.log("------------------------}}>",result);
 
     const [type, setType] = useState('');
@@ -48,7 +48,7 @@ function PmWork() {
     useEffect(() => {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
         dispatch(callManagementAPI());
-        
+        // 여기 result.data로 변경한것을 result로 다시변경
         if (result.data) {
             console.log("result >>>>>: ", result.data);
             let statuss = type === 'start'? '출근' : '퇴근';
@@ -174,6 +174,7 @@ function PmWork() {
                         <th className="columnpm0">근무시간</th>
                         <th className="columnpm0">총 근무시간</th>
                     </tr>
+                    {/* {Array.isArray(result.data.manage) && result.data.manage */}
                     {Array.isArray(result.data.manage) && result.data.manage
                         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((res) => (

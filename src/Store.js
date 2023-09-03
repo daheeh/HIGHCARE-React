@@ -10,6 +10,7 @@ import TreeReduccer from './modules/TreeModule';
 
 import mypageReducer from './modules/MypageModule';
 import secondReduccer from './modules/SecondTreeModule';
+import ManagementReduccer from './modules/ManageMentModule';
 
 
 
@@ -28,7 +29,8 @@ const store = configureStore({
         authes: authReducer,
         treeview: TreeReduccer,
         mypage: mypageReducer,
-        second: secondReduccer
+        second: secondReduccer,
+        manage: ManagementReduccer
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
 
     },
