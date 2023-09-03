@@ -6,6 +6,7 @@ import { Step1, Step2, Step2pass } from "./pages/login/findaccount"
 import ReceiveBox from './pages/approval/Box/Receivebox';
 import WriteBox from './pages/approval/Box/Writebox';
 import Biz1 from './pages/approval/Biz/Biz1';
+import Biz1View from './pages/approval/Biz/Biz1View';
 import Biz2 from './pages/approval/Biz/Biz2';
 import Biz3 from './pages/approval/Biz/Biz3';
 import Biz4 from './pages/approval/Biz/Biz4';
@@ -19,6 +20,7 @@ import Exp5 from './pages/approval/Exp/Exp5';
 import Exp6 from './pages/approval/Exp/Exp6';
 import Exp7 from './pages/approval/Exp/Exp7';
 import Hrm1 from './pages/approval/Hrm/Hrm1';
+import Hrm1View from './pages/approval/Hrm/Hrm1View';
 import Hrm2 from './pages/approval/Hrm/Hrm2';
 import Hrm3 from './pages/approval/Hrm/Hrm3';
 import Hrm4 from './pages/approval/Hrm/Hrm4';
@@ -26,7 +28,7 @@ import Hrm5 from './pages/approval/Hrm/Hrm5';
 import Hrm6 from './pages/approval/Hrm/Hrm6';
 import Hrm7 from './pages/approval/Hrm/Hrm7';
 import Login from './pages/login/Login';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/ApprovalMain";
 import PmTest from "./pages/pm/pm-test";
 import PmMenu from "./pages/pm/search";
@@ -53,7 +55,6 @@ import ChattingPage from "./pages/chatting/ChattingPage";
 
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
-import Bulletin from "./pages/bulletin/Bulletin";
 import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
 import BullentinMod from "./pages/bulletin/BullentinMod";
@@ -77,13 +78,19 @@ import Profile from "./pages/mypage/profile";
 
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
-import { useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
+<<<<<<< HEAD
 import LoginVerify from "./utils/LoginVerify";
 
 import MypageAnnual from "./pages/mypage/annual";
 import MyManegement from "./pages/mypage/mymanegement";
+=======
+import MypageAnnual from "./pages/mypage/annual";
+import Myinfo from "./pages/login/Myinfo";
+import { CallbackKakao } from "./pages/login/components/CallbackKakao";
+import TokenVerification from "./pages/admin/auth/TokenVerification";
+>>>>>>> 7e5d23292b6c1aa9540d6110625c18ae17c2c10a
 
 
 
@@ -97,23 +104,26 @@ function App() {
 
       <Routes>
 
-      <Route path="login">
+        <Route path="/" element={<Layout />}>
+
+          <Route index element={<MainLayOut />} />
+
+          <Route path="login">
             <Route index element={<Login />} />
             <Route path="find/step1" element={<Step1 />} />
             <Route path="find/step2" element={<Step2 />} />
             <Route path="find/reset" element={<Step2pass />} />
             <Route path="member/request" element={<MemberRequest />} />
           </Route>
-          
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainLayOut />} />
-          <Route path="approval">
-            <Route index element={<ApvMain />} />
-            <Route path="receivebox" element={<ReceiveBox />} />
-            <Route path="writebox" element={<WriteBox />} />
+          <Route path="/logout" element={<MainLayOut />} />
 
+            <Route path="approval">
+              <Route index element={<ApvMain />} />
+              <Route path="receivebox" element={<ReceiveBox />} />
+              <Route path="writebox" element={<WriteBox />} />
 
             <Route path="biz1" element={<Biz1 />} />
+            <Route path="biz1/:apvNo" element={<Biz1View />} />
             <Route path="biz2" element={<Biz2 />} />
             <Route path="biz3" element={<Biz3 />} />
             <Route path="biz4" element={<Biz4 />} />
@@ -130,17 +140,21 @@ function App() {
             <Route path="exp7" element={<Exp7 />} />
 
             <Route path="hrm1" element={<Hrm1 />} />
+            <Route path="hrm1/:apvNo" element={<Hrm1View />} />
             <Route path="hrm2" element={<Hrm2 />} />
             <Route path="hrm3" element={<Hrm3 />} />
             <Route path="hrm4" element={<Hrm4 />} />
             <Route path="hrm5" element={<Hrm5 />} />
             <Route path="hrm6" element={<Hrm6 />} />
             <Route path="hrm7" element={<Hrm7 />} />
+
           </Route>
 
-        
-          <Route path="modifyinfo" element={<ModifyInfo />} />
 
+
+          <Route path="/modifyinfo" element={<ModifyInfo />} />
+          <Route path="myinfo" element={<Myinfo />} />
+          <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
 
           <Route path="/admin">
             <Route index element={<AdminPage />} />
@@ -165,13 +179,13 @@ function App() {
 
           <Route path="/bulletin" element={<BulletinMain />}>
             {/* <Route index element={<Bulletin />} /> */}
-            
+
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
 
             <Route path="thread" element={<Thread />} />
 
             <Route path="thread/:bulletinCode" element={<Thread />} />
-            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
+            <Route path="mod/:bulletinCode" element={<BullentinMod />} />
 
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
@@ -188,9 +202,14 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+<<<<<<< HEAD
           <Route path="/mypage/profile" element={<Profile />}/>
           <Route path="/mypage/annual" element={<MypageAnnual />}/>
           <Route path="/mypage/mymanegement" element={<MyManegement />} />
+=======
+          <Route path="/mypage/profile" element={<Profile />} />
+          <Route path="/mypage/annual" element={<MypageAnnual />} />
+>>>>>>> 7e5d23292b6c1aa9540d6110625c18ae17c2c10a
 
 
           <Route path="/socket/chatting" element={<ChattingPage />} />
@@ -199,9 +218,10 @@ function App() {
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
       </Routes>
-        <ErrorBoundary
-          FallbackComponent={ErrorComponent}
-        ></ErrorBoundary>
+
+      <ErrorBoundary
+        FallbackComponent={ErrorComponent}
+      ></ErrorBoundary>
 
     </BrowserRouter >
 

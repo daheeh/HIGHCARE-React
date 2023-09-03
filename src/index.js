@@ -4,16 +4,21 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './Store';
 import Modal from 'react-modal';
+import { ErrorBoundary } from './errors/ErrorBoundary';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 Modal.setAppElement('#root');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    // <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    // </React.StrictMode>
+
+    <Provider store={store}>
+        <ErrorBoundary>
+            {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_KEY}> */}
+                <App />
+            {/* </GoogleOAuthProvider > */}
+        </ErrorBoundary>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,45 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
-import { callApvHrm1API } from '../../../apis/ApprovalAPICalls';
+import { callApvHrm1API, callApvHrm1UpdateAPI } from '../../../apis/ApprovalAPICalls';
 
-function Hrm1() {
-
+function Hrm1({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const hrm1 = useSelector(state => state.approvalReducer);
+	const approval = useSelector(state => state.approval);
 
-	console.log('hrm1 first : ', hrm1);
+	const isEditMode = approval.apvLines? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+
+
+	console.log('hrm1 first : ', approval);
 
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '연차신청서',
 		writeDate: '',
-		apvStatus: '결재진행중',
+		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '인사',
 		empNo: empNo,
+		empName: authes.name,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines?approval.apvLines: [],
 		apvVacations: [{
-			startDate: '',
-			endDate: '',
+			startDate: approval.startDate? approval.startDate : '',
+			endDate: approval.endDate? approval.endDate : '',
 			type: '연차',
-			comment: '',
-			amount: 0,
-			offType1: '',
-			offType2: '',
+			comment: approval.comment? approval.comment : '',
+			amount: approval.amount? approval.amount : 0,
+			offType1: approval.offType1? approval.offType1 : '',
+			offType2: approval.offType2? approval.offType2 : '',
 		}],
 	});
+
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
 
 	const onSelectDateHandler = (selectedDate, field) => {
 		setFormData((prevFormData) => ({
@@ -152,6 +162,15 @@ function Hrm1() {
 		}));
 	};
 
+	useEffect(() => {
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
+
 	const updateIsUrgency = (newIsUrgency) => {
 		setFormData(prevFormData => ({
 			...prevFormData,
@@ -159,48 +178,85 @@ function Hrm1() {
 		}));
 	};
 
-	useEffect(() => {
-		const currentDate = new Date();
-		setFormData(prevFormData => ({
-			...prevFormData,
-			writeDate: currentDate,
-		}));
-	}, []);
+	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+    useEffect(() => {
+        console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+    }, [setSelectedEmployees]);
+
+    useEffect(() => {
+        if (approval.apvLines) {
+            setSelectedEmployees(approval.apvLines.map((line, index) => ({
+                ...line,
+                isApproval: 'F',
+                apvLineNo: line.apvLineNo,
+            })));
+        }
+    }, [approval]);
+
+
+
+    const handleEmployeeSelect = (selectedEmployee) => {
+
+        setSelectedEmployees((prevSelectedEmployees) => [
+            ...prevSelectedEmployees,
+            {
+                ...selectedEmployee,
+                isApproval: 'F',
+            }
+        ]);
+    };
+
+
+
+
+	// const handleSubmission = async () => {
+
+	// 	const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
+	// 	const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
+
+	// 	const formDataWithTimestamps = {
+	// 		...formData,
+	// 		apvVacations: [
+	// 			{
+	// 				...formData.apvVacations[0],
+	// 				startDate: convertedStartDate,
+	// 				endDate: convertedEndDate,
+	// 			}
+	// 		]
+	// 	};
+
 
 	const handleSubmission = async () => {
 
-		const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
-		const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
+        if (empNo !== undefined) {
+            try {
+                let response;
+                if ((isEditMode)) {
+                    response = await dispatch(callApvHrm1UpdateAPI({ formData, selectedEmployees }));
+                } else {
+                    response = await dispatch(callApvHrm1API({ formData, selectedEmployees }));
+                }
+                if (response.status === 200) {
+                    if (response.data === "기안 상신 실패") {
+                        window.alert("결재 등록 실패");
+                    } else {
+                        window.alert("결재 등록 성공");
+                        navigate('/approval');
+                    }
+                } else {
+                    window.alert("결재 등록 중 오류가 발생했습니다.");
+                }
+            } catch (error) {
+                console.error("API error:", error);
+                window.alert("API 요청 중 오류가 발생했습니다.");
+            }
+        } else {
+            window.alert("재로그인 요청");
+            navigate('/');
+        }
+    };
 
-		const formDataWithTimestamps = {
-			...formData,
-			apvVacations: [
-				{
-					...formData.apvVacations[0],
-					startDate: convertedStartDate,
-					endDate: convertedEndDate,
-				}
-			]
-		};
-
-		if (empNo !== undefined) {
-			try {
-				const response = await dispatch(callApvHrm1API({ formData }));
-				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
-				} else {
-					window.alert("결재 등록 중 오류가 발생했습니다.");
-				}
-			} catch (error) {
-				console.error("API error:", error);
-				window.alert("API 요청 중 오류가 발생했습니다.");
-			}
-		} else {
-			window.alert("재로그인 요청");
-			navigate('/');
-		}
-	};
 
 
 	console.log('formData : ', formData);
@@ -208,10 +264,14 @@ function Hrm1() {
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">연차신청서</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+						mode="create"
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+					/>
 					<div className="apvContent">
 						<div className="apvContentHrm1">
 							<div className="column1">휴가 종류</div>

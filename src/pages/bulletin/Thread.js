@@ -2,10 +2,12 @@ import BoardStyle from './Bullentin.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-
+import './Comment.css';
 import {
     callBoardDetailAPI,
-    callCommentAPI
+    callCommentAPI,
+    callCommentDeleteAPI,
+    callCommentUpdateAPI
 } from '../../apis/BulletinAPICall'
 
 function Thread(){
@@ -45,15 +47,15 @@ function Thread(){
                 bulletinCode: bulletinCode,
                 currentPage: currentPage
             }));
+            setStart(0);
         }
-        ,[currentPage,start]
+        ,[start]
     );
     const onClickComment = () =>{
         dispatch(callCommentAPI({
             form:form
         }));
-        setStart(start+1);
-
+        setStart(start +1);
     }
 
     const changeContent = (e) =>{
@@ -65,6 +67,34 @@ function Thread(){
 
     const onClickUpdate = () =>{
         navigate(`/bulletin/mod/${bulletinCode}`,{ replace: false });
+    }
+
+    const onCLickDelete = (commentCode) => {
+        dispatch(callCommentDeleteAPI({
+            commentCode : commentCode
+        }));
+        setStart(start +1);
+    }
+
+    const onClickCommentUpdate = (commentCode) => {
+        var className = document.getElementById(`comment${commentCode}`).className;
+        if(className == 'comment_mod'){
+            let CommentValue = document.getElementById(`comment${commentCode}`).value;
+            dispatch(callCommentUpdateAPI({
+                commentCode : commentCode,
+                commentContent : CommentValue
+            }));
+
+            document.getElementById(`comment${commentCode}`).className = 'comment_detail';
+            document.getElementById(`comment${commentCode}`).readOnly = true;
+            document.getElementById(`update${commentCode}`).innerHTML = ' 수정';
+            setStart(start +1);
+        }else{
+            document.getElementById(`comment${commentCode}`).className = 'comment_mod';
+            document.getElementById(`comment${commentCode}`).readOnly = false;
+            document.getElementById(`update${commentCode}`).innerHTML = ' 등록';
+
+        }
     }
     return (
         <>
@@ -100,18 +130,24 @@ function Thread(){
                                     댓글{boardDetail.commentCnt}개
                                 </div>
                             <div style={{display: 'flex'}}>
-                                <input type="text" onChange={changeContent} name='content'/>
+                                <textarea onChange={changeContent} name='content'></textarea>
+                                {/* <input type="text" onChange={changeContent} name='content'/> */}
                                 <div onClick={onClickComment}>등록</div>
                             </div>
                                 {Array.isArray(boardList) && boardList.map(
                                     (boards) =>(
                                         <div className={BoardStyle.comment} >
-                                                <span>{boards.bulletinEmployee.empName}</span>
-                                        <span>{boards.modifiedDate}</span>
-                                        
-                                            <div className={BoardStyle.comment_detail}>
-                                                {boards.commentContent}
-                                            </div>
+                                                <span>{boards.bulletinEmployee.empName }</span>
+                                        <span>{ boards.modifiedDate}</span>
+                                        <span onClick={() => onClickCommentUpdate(boards.commentCode)} id={`update${boards.commentCode}`}> 수정</span>
+                                        <span key={boards.commentCode} onClick={() => onCLickDelete(boards.commentCode)}> 삭제</span>
+                                        <br></br>
+                                            <textarea className="comment_detail" readOnly defaultValue={boards.commentContent} id={`comment${boards.commentCode}`}>
+                                                {/* {boards.commentContent} */}
+                                            </textarea>
+                                            <br></br>
+                                            {/* <textarea className="comment_mod" defaultValue={boards.commentContent} >  
+                                            </textarea> */}
                                         </div>
 
                                     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ChattingMainCSS from './ChattingMain.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -6,14 +6,16 @@ import { faUser, faEnvelope, faComment } from '@fortawesome/free-solid-svg-icons
 import Draggable from 'react-draggable';
 import ChattingFooter from '../../component/ChattingFooter';
 import ChattingRoomList from './ChattingRoomList';
-import ChattingPage from './ChattingPage';
+// import ChattingPage from './ChattingPage';
 import { Link } from 'react-router-dom';
+import TreeView from '../pm/treeview';
 
 
     function ChattingMain({ onClose }) {
 
         const [activeTab, setActiveTab] = useState('user'); // 기본 탭 설정
-        const [isChattingPageOpen, setIsChattingPageOpen] = useState(false);
+        // const mainContentsRef = useRef();
+        // const [isChattingPageOpen, setIsChattingPageOpen] = useState(false);
 
 
         const handleTabChange = (tab) => {
@@ -28,6 +30,15 @@ import { Link } from 'react-router-dom';
         // const chattingPageClose = () => {
         //     setIsChattingPageOpen(false);
         // };
+
+        // useEffect(() => {
+        //     // activeTab이 변경될 때마다 mainContents의 스크롤을 최하단으로 이동
+        //     if (mainContentsRef.current) {
+        //         mainContentsRef.current.scrollTop = mainContentsRef.current.scrollHeight;
+        //     }
+        // }, [activeTab]);
+
+        
 
         return (
             <>
@@ -78,9 +89,12 @@ import { Link } from 'react-router-dom';
                                     <input type="search" className={ChattingMainCSS.searchBox} placeholder="이름, 부서명, 전화번호 검색"/>
                                 </div>
                             </div>
+
                         )}
                         {activeTab === 'user' && (
-                            <img className={ChattingMainCSS.treeviewImg} src='images/treeview_sample.PNG' alt='treeview'/>
+                            <div className={ChattingMainCSS.chattingTreeView}>
+                                <TreeView />
+                            </div>
                         )}
 
                         {activeTab === 'comment' && (

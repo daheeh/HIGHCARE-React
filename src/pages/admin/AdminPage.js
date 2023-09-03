@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { decodeJwt } from '../../utils/decodeJwt';
-import LoginVerify from '../../utils/LoginVerify';
+import { TokenVerification } from './auth/TokenVerification';
 
 function AdminPage() {
+	TokenVerification();
 
 
 
@@ -25,7 +25,7 @@ function AdminPage() {
 							<Link to="member"><li>회원목록</li></Link>
 							<Link to="member/auth"><li>권한설정</li></Link>
 							<Link to="member/log"><li>접속로그</li></Link>
-							<Link to=""><li>메뉴</li></Link>
+							<Link to="/login/member/request"><li>가입신청</li></Link>
 							<Link to=""><li>메뉴</li></Link>
 
 						</ul>

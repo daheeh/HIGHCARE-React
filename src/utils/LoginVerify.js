@@ -1,14 +1,12 @@
 import { decodeJwt } from '../utils/decodeJwt';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { callLoginAPI, jwtReissueAPI } from '../apis/AuthAPICalls';
+import { useDispatch } from 'react-redux';
+import { jwtReissueAPI } from '../apis/AuthAPICalls';
 import { logoutAction } from '../modules/authSlice';
 
 const LoginVerify = (token, refreshExp) => {
 
-    const navigate = useNavigate();
 
-    token = decodeJwt(window.localStorage.getItem("accessToken"));
+    // token = decodeJwt(window.localStorage.getItem("accessToken"));
     const dispatch = useDispatch();
     // const tokenresult = useSelector(state.)
 
@@ -23,7 +21,7 @@ const LoginVerify = (token, refreshExp) => {
         return false;
     }
 
-    if(refreshExp == 0){
+    if(refreshExp === 0){
 
         return false;
     }

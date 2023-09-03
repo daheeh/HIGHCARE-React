@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import ApvLineTree from './ApvLineTree';
-import ApvSummitLine from './ApvSummitLine';
+import ApvFile from './ApvFile';
 
 
 const modalStyles = {
@@ -54,12 +54,42 @@ function ApvSummitBar({ onsubmit, updateIsUrgency, setSelectedEmployees }) {
         setIsModalOpen(false);
     };
 
+
+    // const [selectedFile, setSelectedFile] = useState(null);
+    // const [attachedFiles, setAttachedFiles] = useState([]);
+
+    
+
+    // const handleFileChange = (e) => {
+    //     setSelectedFile(e.target.files[0]);
+    // };
+
+
+    // const handleFileUpload = () => {
+    //     if (selectedFile) {
+    //         // Perform file upload logic here
+    //         console.log('업로드할 파일:', selectedFile);
+    
+    //         // Update the attached files state
+    //         setAttachedFiles(prevFiles => [...prevFiles, selectedFile]);
+            
+    //         setSelectedFile(null); // Reset the selected file
+    //     }
+    // };
+
+
     return (
         <div className="apvTopBar">
             <div>
                 <button className="summit" onClick={handleClick}>제출</button>
                 <button className={isUrgency === 'T' ? 'emergencyActive' : ''} onClick={handleEmergencyClick}>긴급</button>
-                <button>파일첨부</button>
+                
+                    <button >
+                        파일첨부
+                        {/* <ApvFile onFileChange={handleFileChange} onFileUpload={handleFileUpload} /> */}
+                    </button>
+                
+                
                 <button onClick={handleModalOpen}>결재선</button>
                 {isModalOpen && <div className="modalOverlay" />}
                 <Modal
