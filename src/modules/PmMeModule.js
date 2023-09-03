@@ -2,17 +2,17 @@ import { createActions, handleActions} from 'redux-actions';
 
 const initialState = [];
 
-export const GET_TREEVIEW_ONE = 'treeview/GET_TREEVIEW_ONE';
+export const GET_MEMBER = 'pmreduccer/GET_MEMBER';
 
 const actions = createActions({
-    [GET_TREEVIEW_ONE]:() => {},
+    [GET_MEMBER]: () => {},
 
     
 });
 
-const TreeReduccer = handleActions(
+const PmReduccer = handleActions(
     {
-        [GET_TREEVIEW_ONE]: (state, {payload}) => {
+        [GET_MEMBER]: (state, {payload}) => {
             return payload;
         }
         
@@ -22,4 +22,5 @@ const TreeReduccer = handleActions(
 
 
 
-export default TreeReduccer;
+
+export default PmReduccer;

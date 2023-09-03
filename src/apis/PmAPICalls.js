@@ -1,11 +1,12 @@
 import {
-    GET_MEMBER,
     GET_TREEVIEW_ONE
 } from '../modules/TreeModule';
 import {
+    GET_MEMBER,
+} from '../modules/PmMeModule';
+import {
     GET_TREEVIEW_TWO
 } from '../modules/SecondTreeModule';
-
 import {
     GET_MANAGEMENT,
     POST_PM_MANAGEMENT,
