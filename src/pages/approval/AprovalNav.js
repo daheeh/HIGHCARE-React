@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function ApvMenu() {
-	
+
 	return (
 		<section>
 			<div className="leftMenu">

@@ -1,6 +1,4 @@
-// 로컬스토리지 리듀서 저장 및 특정 리덕스 제거 함수
-
-// members 리듀서 제거 
+// 특정 리듀서 제거 => 호출할때 ReduxReset("리듀서이름"); <- 리듀서이름 "문자열"로 호출하여 사용하면 됨
 export function ReduxReset(reduxName) {
 
     // 1. 로컬 스토리지에서 reduxState 데이터 가져오기
@@ -11,6 +9,6 @@ export function ReduxReset(reduxName) {
     const updatedStateWithout = { ...parsedStoredState };
     delete updatedStateWithout[reduxName];
 
-    // 3. 업데이트된 데이터 로컬 스토리지에 다시 저장
+    // 3. 특정 리듀서 제거된 데이터 로컬 스토리지에 다시 저장
     localStorage.setItem('reduxState', JSON.stringify(updatedStateWithout));
 }

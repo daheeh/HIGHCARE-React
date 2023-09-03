@@ -80,10 +80,10 @@ import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
-import LoginVerify from "./utils/LoginVerify";
 import MypageAnnual from "./pages/mypage/annual";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
+import TokenVerification from "./pages/admin/auth/TokenVerification";
 
 
 
@@ -97,22 +97,23 @@ function App() {
 
       <Routes>
 
-      <Route path="login">
+        <Route path="/" element={<Layout />}>
+
+          <Route index element={<MainLayOut />} />
+
+          <Route path="login">
             <Route index element={<Login />} />
             <Route path="find/step1" element={<Step1 />} />
             <Route path="find/step2" element={<Step2 />} />
             <Route path="find/reset" element={<Step2pass />} />
             <Route path="member/request" element={<MemberRequest />} />
           </Route>
-          
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainLayOut />} />
-          <Route path="/logout" element={<MainLayOut/>}/>
-          <Route path="approval">
-            <Route index element={<ApvMain />} />
-            <Route path="receivebox" element={<ReceiveBox />} />
-            <Route path="writebox" element={<WriteBox />} />
+          <Route path="/logout" element={<MainLayOut />} />
 
+            <Route path="approval">
+              <Route index element={<ApvMain />} />
+              <Route path="receivebox" element={<ReceiveBox />} />
+              <Route path="writebox" element={<WriteBox />} />
 
             <Route path="biz1" element={<Biz1 />} />
             <Route path="biz1/:apvNo" element={<Biz1View />} />
@@ -140,13 +141,13 @@ function App() {
             <Route path="hrm6" element={<Hrm6 />} />
             <Route path="hrm7" element={<Hrm7 />} />
 
-            
           </Route>
 
 
-          <Route path="/modifyinfo" element={<ModifyInfo/>}/>
+
+          <Route path="/modifyinfo" element={<ModifyInfo />} />
           <Route path="myinfo" element={<Myinfo />} />
-          <Route path="/login/oauth/kakao" element={<CallbackKakao/>}/>
+          <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
 
           <Route path="/admin">
             <Route index element={<AdminPage />} />
@@ -171,13 +172,13 @@ function App() {
 
           <Route path="/bulletin" element={<BulletinMain />}>
             {/* <Route index element={<Bulletin />} /> */}
-            
+
             <Route path="board/:categoryCode" element={<BulletinBoard />} />
 
             <Route path="thread" element={<Thread />} />
 
             <Route path="thread/:bulletinCode" element={<Thread />} />
-            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
+            <Route path="mod/:bulletinCode" element={<BullentinMod />} />
 
             <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
@@ -194,8 +195,8 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-          <Route path="/mypage/profile" element={<Profile />}/>
-          <Route path="/mypage/annual" element={<MypageAnnual />}/>
+          <Route path="/mypage/profile" element={<Profile />} />
+          <Route path="/mypage/annual" element={<MypageAnnual />} />
 
 
           <Route path="/socket/chatting" element={<ChattingPage />} />
@@ -204,9 +205,10 @@ function App() {
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
       </Routes>
-        <ErrorBoundary
-          FallbackComponent={ErrorComponent}
-        ></ErrorBoundary>
+
+      <ErrorBoundary
+        FallbackComponent={ErrorComponent}
+      ></ErrorBoundary>
 
     </BrowserRouter >
 
