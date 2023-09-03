@@ -5,11 +5,12 @@ import {
     GET_APROVAL_WRITEBOX,
     GET_APROVAL_RECEIVEBOX,
 
-    
+
     POST_APPROVAL_BIZ1,
     GET_APPROVAL_BIZ1,
     PUT_APPROVAL_BIZ1,
-    
+    DELETE_APPROVAL,
+
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
 
@@ -70,8 +71,8 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
 export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
-    console.log('[ApprovalAPICalls] empNo : ', empNo, );
-    
+    console.log('[ApprovalAPICalls] empNo : ', empNo,);
+
     const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
 
     return async (dispatch, getState) => {
@@ -140,14 +141,14 @@ export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
 /* 전자결재 - 업무 : biz1 기안서 */
 export const callApvBiz1API = ({ formData, selectedEmployees }) => {
 
-    console.log('[ApprovalAPICalls] callApvBiz1API Call');
+    console.log('[ApprovalAPICalls] biz1 callApvBiz1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/biz1`;
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] callApvBiz1API formData : ', formData);
-        console.log('[ApprovalAPICalls] callApvBiz1API selectedEmployees : ', selectedEmployees);
+        console.log('[ApprovalAPICalls] biz1 callApvBiz1API formData : ', formData);
+        console.log('[ApprovalAPICalls] biz1 callApvBiz1API selectedEmployees : ', selectedEmployees);
 
         try {
             const result = await fetch(requestURL, {
@@ -158,17 +159,17 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
 
-            console.log('[ApprovalAPICalls] callApvBiz1API RESULT : ', result);
+            console.log('[ApprovalAPICalls] biz1 callApvBiz1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
             return result;
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            console.error('[ApprovalAPICalls] biz1 Error in callApvBiz1API: ', error);
             throw error;
         }
     };
@@ -176,13 +177,13 @@ export const callApvBiz1API = ({ formData, selectedEmployees }) => {
 
 export const callApvBiz1ViewAPI = ({ apvNo }) => {
 
-    console.log('[ApprovalAPICalls] callApvBiz1ViewAPI Call');
+    console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI Call');
 
     const requestURL = `http://localhost:8080/api/approval/search/biz1/${apvNo}`;
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] callApvBiz1ViewAPI apvNo : ', apvNo);
+        console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI apvNo : ', apvNo);
         try {
             const result = await fetch(requestURL, {
                 method: "GET",
@@ -194,14 +195,14 @@ export const callApvBiz1ViewAPI = ({ apvNo }) => {
                 },
                 body: JSON.stringify(),
             })
-            .then(response => response.json());
+                .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvBiz1ViewAPI RESULT : ', result.data);
+            console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI RESULT : ', result.data);
 
             dispatch({ type: GET_APPROVAL_BIZ1, payload: result.data });
             return result.data;
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvBiz1ViewAPI: ', error);
+            console.error('[ApprovalAPICalls] biz1 Error in callApvBiz1ViewAPI: ', error);
             throw error;
         }
 
@@ -210,14 +211,14 @@ export const callApvBiz1ViewAPI = ({ apvNo }) => {
 
 export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
 
-    console.log('[ApprovalAPICalls] callApvBiz1API Call');
+    console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI Call');
 
     const requestURL = `http://localhost:8080/api/approval/put/biz1`;
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI formData : ', formData);
-        console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI selectedEmployees : ', selectedEmployees);
+        console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI formData : ', formData);
+        console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI selectedEmployees : ', selectedEmployees);
 
         try {
             const result = await fetch(requestURL, {
@@ -229,22 +230,57 @@ export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
                     "Access-Control-Allow-Origin": "*",
                     "X-HTTP-Method-Override": "PUT",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
 
-            console.log('[ApprovalAPICalls] callApvBiz1UpdateAPI RESULT : ', result);
+            console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI RESULT : ', result);
 
             dispatch({ type: PUT_APPROVAL_BIZ1, payload: result });
             return result;
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvBiz1API: ', error);
+            console.error('[ApprovalAPICalls] Error biz1 in callApvBiz1API: ', error);
             throw error;
         }
     };
 };
 
+export const callApvDeleteAPI = ({ apvNo }) => {
+
+    console.log('[ApprovalAPICalls] callApvDeleteAPI Call');
+
+    const requestURL = `http://localhost:8080/api/approval/delete/biz1`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] callApvDeleteAPI apvNo : ', apvNo);
+
+        try {
+            const result = await fetch(requestURL, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    "X-HTTP-Method-Override": "PUT",
+                },
+                body: JSON.stringify(),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] callApvDeleteAPI RESULT : ', result);
+
+            dispatch({ type: DELETE_APPROVAL, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] callApvDeleteAPI: ', error);
+            throw error;
+        }
+    };
+};
 
 
 
@@ -269,7 +305,7 @@ export const callApvBiz2API = ({ formData, selectedEmployees }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
@@ -306,7 +342,7 @@ export const callApvBiz3API = ({ formData, selectedEmployees }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
@@ -326,7 +362,7 @@ export const callApvBiz3API = ({ formData, selectedEmployees }) => {
 /* 전자결재 양식 - 지출 */
 
 /* 전자결재 - 지출 : exp1 지출결의서 */
-export const callApvExp1API =  ({ formData, selectedEmployees }) => {
+export const callApvExp1API = ({ formData, selectedEmployees }) => {
 
     console.log('[ApprovalAPICalls] callApvExp1API Call');
 
@@ -346,7 +382,7 @@ export const callApvExp1API =  ({ formData, selectedEmployees }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
@@ -607,7 +643,7 @@ export const callApvHrm1ViewAPI = ({ apvNo }) => {
                 },
                 body: JSON.stringify(),
             })
-            .then(response => response.json());
+                .then(response => response.json());
 
             console.log('[ApprovalAPICalls] hrm1 callApvHrm1ViewAPI RESULT : ', result.data);
 
@@ -642,7 +678,7 @@ export const callApvHrm1UpdateAPI = ({ formData, selectedEmployees }) => {
                     "Access-Control-Allow-Origin": "*",
                     "X-HTTP-Method-Override": "PUT",
                 },
-                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 

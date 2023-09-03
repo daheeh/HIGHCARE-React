@@ -23,7 +23,7 @@ function Biz1({ mode, data }) {
     const navigate = useNavigate();
 
     const approval = useSelector(state => state.approval);
-    const isEditMode = !!approval.apvLines;
+    const isEditMode = approval.apvLines? true : false;
     console.log('isEditMode 1 : ', isEditMode);
 
 
@@ -33,7 +33,7 @@ function Biz1({ mode, data }) {
         apvNo: approval.apvNo?approval.apvNo:'',
         title: approval.title?approval.title:'',
         writeDate: '',
-        apvStatus: '결재진행중',
+        apvStatus: '결재예정',
         isUrgency: 'F',
         category: '업무',
         empNo: empNo,

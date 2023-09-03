@@ -18,7 +18,7 @@ function Hrm1({ mode, data }) {
 
 	const approval = useSelector(state => state.approval);
 
-	const isEditMode = !!approval.apvLines;
+	const isEditMode = approval.apvLines? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
 
 
@@ -29,7 +29,7 @@ function Hrm1({ mode, data }) {
 		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '연차신청서',
 		writeDate: '',
-		apvStatus: '결재진행중',
+		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '인사',
 		empNo: empNo,

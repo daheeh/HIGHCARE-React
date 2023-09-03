@@ -11,6 +11,8 @@ export const GET_APROVAL_MAIN_TODAY1 = 'approval/GET_APROVAL_MAIN_TODAY1';
 export const GET_APROVAL_WRITEBOX = 'approval/GET_APROVAL_WRITEBOX';
 export const GET_APROVAL_RECEIVEBOX = 'approval/GET_APROVAL_RECEIVEBOX';
 
+export const DELETE_APPROVAL = 'approval/DELETE_APPROVAL';
+
 export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
 export const GET_APPROVAL_BIZ1 = 'approval/GET_APPROVAL_BIZ1';
 export const PUT_APPROVAL_BIZ1 = 'approval/PUT_APPROVAL_BIZ1';
@@ -47,6 +49,8 @@ const actions = createActions({
 
     [GET_APROVAL_WRITEBOX]: () => { },
     [GET_APROVAL_RECEIVEBOX]: () => { },
+    
+    [DELETE_APPROVAL]: () => { },
 
     [POST_APPROVAL_BIZ1]: () => { },
     [GET_APPROVAL_BIZ1]: () => { },
@@ -85,6 +89,9 @@ const approvalReducer = handleActions(
             return payload;
         },
 
+        [DELETE_APPROVAL]: (state, { payload }) => {
+            return payload;
+        },
 
         [POST_APPROVAL_BIZ1]: (state, { payload }) => {
             return payload;

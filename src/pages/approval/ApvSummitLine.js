@@ -95,6 +95,37 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 		}
 	};
 
+	const handleDelete = async (apvNo) => {
+		console.log('apvNo: ', apvNo);
+
+		try {
+			const requestURL = `http://localhost:8080/api/approval/delete/${apvNo}`;
+			const response = await fetch(requestURL, {
+				method: 'DELETE',
+				headers: {
+					'Accept': 'application/json',
+					'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify({ apvNo }),
+			});
+
+			if (response.status === 200) {
+				if (response.data === "실패") {
+					window.alert("결재 취소 실패");
+				} else {
+					window.alert("결재 취소 성공");
+					navigate('/approval');
+				}
+			} else {
+				window.alert("결재 취소 중 오류가 발생했습니다.");
+			}
+		} catch (error) {
+			console.error("API error:", error);
+			window.alert("API 요청 중 오류가 발생했습니다.");
+		}
+	};
 
 	const [isEditMode, setIsEditMode] = useState(false);
 
@@ -193,7 +224,10 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 						<div className="row3">{emp.deptName}</div>
 						<div className="row4">
 							{index === 0 && authes.empNo === emp.empNo ? (
-								<button onClick={() => handleEdit(emp.apvNo)}>수정</button>
+								<>
+									<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
+									<button className='apvBtn2'onClick={() => handleDelete(emp.apvNo)}>취소</button>
+								</>
 							) : index !== 0 && authes.empNo === emp.empNo ? (
 								selectedEmployees[index - 1].isApproval === 'T' ? (
 									selectedEmployees[index].isApproval === 'T' ? (
