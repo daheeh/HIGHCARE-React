@@ -1,15 +1,18 @@
 import { createActions, handleActions } from "redux-actions";
 
-const initialState = [];
+const initialState =[];
 
 export const GET_MYPAGE_SELECT = 'mypage/GET_MYPAGE_SELECT';      // 조회 
 export const POST_MYPAGE_PROFILE = 'mypage/POST_MYPAGE_PROFILE';   // 프로필
-
+export const  GET_MYPAGE_ANNSELECT = 'mypage/GET_MYPAGE_ANNSELECT';    // 연차조회
+export const  GET_MYPAGE_MANSELECT = 'mypage/GET_MYPAGE_MANSELECT';    // 근태조회
 
 
 const actions = createActions({
     [GET_MYPAGE_SELECT]: () => {},
-    [POST_MYPAGE_PROFILE]: () => {}
+    // [POST_MYPAGE_PROFILE]: () => {},
+    // [ GET_MYPAGE_ANNSELECT]: () => {},
+    // [GET_MYPAGE_MANSELECT]: () => {},
 })
 
 const mypageReducer = handleActions(
@@ -20,7 +23,15 @@ const mypageReducer = handleActions(
 
         [POST_MYPAGE_PROFILE]: (state, {payload}) => {
             return payload;
+        },
+
+        [ GET_MYPAGE_ANNSELECT]: (state, {payload}) => {
+            return payload;
+        },
+        [ GET_MYPAGE_MANSELECT]: (state, {payload}) => {
+            return payload;
         }
+
     },
     initialState
 );

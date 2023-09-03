@@ -13,6 +13,7 @@ function Mypage() {
                 <Link to="/mypage/mytemplate/worklog">업무일지</Link>
                 <Link to="/mypage/profile">프로필</Link>
                 <Link to="/mypage/annual">연차</Link>
+                <Link to="/mypage/mymanegement">근태관리</Link>
             </nav>
 
         </div>

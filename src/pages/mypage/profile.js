@@ -6,9 +6,8 @@ import { decodeJwt } from "../../utils/decodeJwt";
 // import "./mymain.css";
 
 import { callMypageProfileSelectAPI } from '../../apis/MypageApiCalls';
-import { callProfileInsertAPI } from '../../apis/MypageApiCalls'
+import { callProfileInsertAPI } from '../../apis/MypageApiCalls';
 
-// 
 
 function Profile() {
 
@@ -34,10 +33,11 @@ function Profile() {
 
     const myInfo = mypage?.data?.myEmployee;
 
-    const myProfileFile = mypage?.data?.myProfileFile;
+    // const myProfileFile = mypage?.data?.myProfileFile;
+    const picture = mypage?.data?.myProfileFile;
 
     console.log("myInfo", myInfo);
-    console.log("업데이트 사진", myProfileFile.chName);
+    console.log("업데이트 사진", picture.chName);
     console.log("기본이미지유알엘", imageUrl);
 
 
@@ -165,7 +165,7 @@ function Profile() {
                             >
                                 {imageUrl && <img
                                     className=""
-                                    src={myProfileFile.chName !== undefined ? `http://localhost:8080/images/${myProfileFile.chName}` : imageUrl}
+                                    src={picture.chName !== undefined ? `http://localhost:8080/images/${picture.chName}` : imageUrl}
                                     alt="preview"
                                     style={{ width: 180, height: 120 }}
                                 />}
