@@ -192,12 +192,8 @@ function Hrm1({ mode, data }) {
 
     const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
-
     useEffect(() => {
-        console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
-    }, [setSelectedEmployees]);
-
-    useEffect(() => {
+		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
 		if (approval.apvLines) {
 			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
 				...line,
