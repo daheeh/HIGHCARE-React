@@ -588,15 +588,16 @@ export const callApvExp7API = ({ formData }) => {
 /* 전자결재 양식 - 인사 */
 
 /* 전자결재 - 인사 : hrm1 연차신청서, hrm2 기타휴가신청서 */
-export const callApvHrm1API = ({ formData }) => {
+export const callApvHrm1API = ({ formData, selectedEmployees }) => {
 
-    console.log('[ApprovalAPICalls] callApvHrm1API Call');
+    console.log('[ApprovalAPICalls] hrm1 callApvHrm1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/hrm1`;
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] callApvHrm1API formData : ', formData);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API formData : ', formData);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API selectedEmployees : ', selectedEmployees);
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -606,17 +607,17 @@ export const callApvHrm1API = ({ formData }) => {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvHrm1API RESULT : ', result);
+            console.log('[ApprovalAPICalls] hrm1 callApvHrm1API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_HRM1, payload: result });
             return result;
 
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvHrm1API: ', error);
+            console.error('[ApprovalAPICalls] hrm1 Error in callApvHrm1API: ', error);
             throw error;
         }
 

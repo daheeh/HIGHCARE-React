@@ -10,16 +10,16 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 	const results = useSelector(state => state.approval);
 	const navigate = useNavigate();
 
+	
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
 		console.log('ApvSummitLine - data : ', data);
-		console.log('results : ', results);
+		console.log('results : ', results.data);
 		console.log('approval : ', approval);
 
 
 	}, [selectedEmployees, authes, data, results, approval]);
-
 
 
 	const handleApprove = async (index) => {

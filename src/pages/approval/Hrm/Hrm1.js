@@ -22,7 +22,7 @@ function Hrm1({ mode, data }) {
 	console.log('isEditMode 1 : ', isEditMode);
 
 
-	console.log('hrm1 first : ', approval);
+	console.log('hrm1 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
 
@@ -41,13 +41,14 @@ function Hrm1({ mode, data }) {
 			startDate: approval.startDate? approval.startDate : '',
 			endDate: approval.endDate? approval.endDate : '',
 			type: '연차',
-			comment: approval.comment? approval.comment : '',
-			amount: approval.amount? approval.amount : 0,
+			comment: approval.comment? approval.comment : '연차사용',
+			amount: approval.amount? approval.amount : 0.0,
 			offType1: approval.offType1? approval.offType1 : '',
 			offType2: approval.offType2? approval.offType2 : '',
 		}],
 	});
 
+	
 	const location = useLocation();
 	const initialData = location.state ? location.state.initialData : null;
 
@@ -177,22 +178,36 @@ function Hrm1({ mode, data }) {
 			isUrgency: newIsUrgency
 		}));
 	};
+	
 
-	const [selectedEmployees, setSelectedEmployees] = useState([]);
+	const initialSelectedEmployees = [{
+        degree: 0,
+        isApproval: 'T',
+        apvDate: new Date(),
+        empNo: authes.empNo,
+        empName: authes.name,
+        jobName: authes.job,
+        deptName: authes.dept,
+    }];
+
+    const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+
 
     useEffect(() => {
         console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
     }, [setSelectedEmployees]);
 
     useEffect(() => {
-        if (approval.apvLines) {
-            setSelectedEmployees(approval.apvLines.map((line, index) => ({
-                ...line,
-                isApproval: 'F',
-                apvLineNo: line.apvLineNo,
-            })));
-        }
-    }, [approval]);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+	
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
 
 
 
@@ -209,24 +224,6 @@ function Hrm1({ mode, data }) {
 
 
 
-
-	// const handleSubmission = async () => {
-
-	// 	const convertedStartDate = new Date(formData.apvVacations[0].startDate).getTime();
-	// 	const convertedEndDate = new Date(formData.apvVacations[0].endDate).getTime();
-
-	// 	const formDataWithTimestamps = {
-	// 		...formData,
-	// 		apvVacations: [
-	// 			{
-	// 				...formData.apvVacations[0],
-	// 				startDate: convertedStartDate,
-	// 				endDate: convertedEndDate,
-	// 			}
-	// 		]
-	// 	};
-
-
 	const handleSubmission = async () => {
 
         if (empNo !== undefined) {
@@ -235,6 +232,7 @@ function Hrm1({ mode, data }) {
                 if ((isEditMode)) {
                     response = await dispatch(callApvHrm1UpdateAPI({ formData, selectedEmployees }));
                 } else {
+				
                     response = await dispatch(callApvHrm1API({ formData, selectedEmployees }));
                 }
                 if (response.status === 200) {

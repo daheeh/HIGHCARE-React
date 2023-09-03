@@ -158,7 +158,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     };
 
     const handleDragOver = (e) => {
-        e.preventDefault(); // Prevent default drag over behavior
+        e.preventDefault();
     };
 
     useEffect(() => {
