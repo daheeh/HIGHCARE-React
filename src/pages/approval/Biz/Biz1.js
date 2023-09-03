@@ -45,10 +45,6 @@ function Biz1({ mode, data }) {
         apvLines: approval.apvLines?approval.apvLines: [],
     });
 
-
-    
-
-
     const location = useLocation();
     const initialData = location.state ? location.state.initialData : null;
 
@@ -74,17 +70,14 @@ function Biz1({ mode, data }) {
 
     useEffect(() => {
         console.log('Biz1 - selectedEmployees : ', selectedEmployees);
-        console.log('isEditMode 3 : ', isEditMode);
     }, [setSelectedEmployees]);
 
     useEffect(() => {
-        console.log('isEditMode 4 : ', isEditMode);
         if (approval.apvLines) {
-            // If there are values in approval.apvLines, initialize selectedEmployees with them
             setSelectedEmployees(approval.apvLines.map((line, index) => ({
                 ...line,
                 isApproval: 'F',
-                apvLineNo: line.apvLineNo, // Include other properties you need from line
+                apvLineNo: line.apvLineNo,
             })));
         }
     }, [approval]);
@@ -93,7 +86,6 @@ function Biz1({ mode, data }) {
 
     const handleEmployeeSelect = (selectedEmployee) => {
 
-        console.log('isEditMode 5 : ', isEditMode);
         setSelectedEmployees((prevSelectedEmployees) => [
             ...prevSelectedEmployees,
             {
@@ -113,15 +105,12 @@ function Biz1({ mode, data }) {
 
     const handleSubmission = async () => {
 
-        console.log('isEditMode 6 : ', isEditMode);
         if (empNo !== undefined) {
             try {
                 let response;
                 if ((isEditMode)) {
-                    // If 'data' is provided, it's an update, call update API
                     response = await dispatch(callApvBiz1UpdateAPI({ formData, selectedEmployees }));
                 } else {
-                    // Otherwise, it's a creation, call create API
                     response = await dispatch(callApvBiz1API({ formData, selectedEmployees }));
                 }
                 if (response.status === 200) {
