@@ -14,12 +14,18 @@ import {
     POST_APPROVAL_BIZ3,
 
     POST_APPROVAL_EXP1,
+    GET_APPROVAL_EXP1,
+    PUT_APPROVAL_EXP1,
+
     POST_APPROVAL_EXP2,
     GET_APPROVAL_EXP4,
     POST_APPROVAL_EXP4,
     POST_APPROVAL_EXP6,
 
     POST_APPROVAL_HRM1,
+    GET_APPROVAL_HRM1,
+    PUT_APPROVAL_HRM1,
+
     POST_APPROVAL_HRM3,
 
 
@@ -64,6 +70,8 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
 export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
+    console.log('[ApprovalAPICalls] empNo : ', empNo, );
+    
     const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
 
     return async (dispatch, getState) => {
@@ -578,6 +586,78 @@ export const callApvHrm1API = ({ formData }) => {
 
     };
 };
+
+export const callApvHrm1ViewAPI = ({ apvNo }) => {
+
+    console.log('[ApprovalAPICalls] hrm1 callApvHrm1ViewAPI Call');
+
+    const requestURL = `http://localhost:8080/api/approval/search/hrm1/${apvNo}`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1ViewAPI apvNo : ', apvNo);
+        try {
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(),
+            })
+            .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] hrm1 callApvHrm1ViewAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_APPROVAL_BIZ1, payload: result.data });
+            return result.data;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] hrm1 Error in callApvHrm1ViewAPI: ', error);
+            throw error;
+        }
+
+    };
+};
+
+export const callApvHrm1UpdateAPI = ({ formData, selectedEmployees }) => {
+
+    console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI Call');
+
+    const requestURL = `http://localhost:8080/api/approval/put/hrm1`;
+
+    return async (dispatch, getState) => {
+
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI formData : ', formData);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI selectedEmployees : ', selectedEmployees);
+
+        try {
+            const result = await fetch(requestURL, {
+                method: "PUT",
+                headers: {
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    "X-HTTP-Method-Override": "PUT",
+                },
+                body: JSON.stringify( {apvFormDTO:formData, apvLineDTOs:selectedEmployees}),
+            })
+                .then(response => response.json());
+
+
+            console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI RESULT : ', result);
+
+            dispatch({ type: PUT_APPROVAL_HRM1, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] hrm1 Error in callApvHrm1UpdateAPI: ', error);
+            throw error;
+        }
+    };
+};
+
 
 
 /* 전자결재 - 인사 : hrm3 서류발급신청서 */

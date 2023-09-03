@@ -135,7 +135,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 	if (mode === 'create') {
 
 		return (
-			(approval.apvLines) ?
+			(results.apvNo) ?
 				<>
 					<div className="apvApvLine">
 						<div className="apvApvLineBox">
@@ -148,8 +148,8 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 						{selectedEmployees.slice(1, 4).map((emp, index) => (
 							<div className="apvApvLineBox" key={index + 1}>
 								<div className="row1">{index + 1}</div>
-								<div className="row2">{approval.apvLines[index + 1].empName} {approval.apvLines[index + 1].jobName}</div>
-								<div className="row3">{approval.apvLines[index + 1].deptName}</div>
+								<div className="row2">{emp.empName} {emp.jobName}</div>
+								<div className="row3">{emp.deptName}</div>
 								<div className="row4"></div>
 							</div>
 						))}

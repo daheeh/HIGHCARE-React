@@ -20,6 +20,9 @@ export const POST_APPROVAL_BIZ3 = 'approval/POST_APPROVAL_BIZ3';
 
 
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
+export const GET_APPROVAL_EXP1 = 'approval/GET_APPROVAL_EXP1';
+export const PUT_APPROVAL_EXP1 = 'approval/PUT_APPROVAL_EXP1';
+
 export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
 export const GET_APPROVAL_EXP4 = 'approval/GET_APPROVAL_EXP4';
 export const POST_APPROVAL_EXP4 = 'approval/POST_APPROVAL_EXP4';
@@ -27,6 +30,9 @@ export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
 export const POST_APPROVAL_EXP7 = 'approval/POST_APPROVAL_EXP7';
 
 export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
+export const GET_APPROVAL_HRM1 = 'approval/GET_APPROVAL_HRM1';
+export const PUT_APPROVAL_HRM1 = 'approval/PUT_APPROVAL_HRM1';
+
 export const POST_APPROVAL_HRM3 = 'approval/POST_APPROVAL_HRM3';
 
 export const getPreviousValues = (previousValues) => ({
@@ -50,6 +56,9 @@ const actions = createActions({
     [POST_APPROVAL_BIZ3]: () => { },
 
     [POST_APPROVAL_EXP1]: () => { },
+    [GET_APPROVAL_EXP1]: () => { },
+    [PUT_APPROVAL_EXP1]: () => { },
+
     [POST_APPROVAL_EXP2]: () => { },
     [GET_APPROVAL_EXP4]: (previousValues) => ({ previousValues }),
     [POST_APPROVAL_EXP4]: () => { },
@@ -57,6 +66,9 @@ const actions = createActions({
     [POST_APPROVAL_EXP7]: () => { },
 
     [POST_APPROVAL_HRM1]: () => { },
+    [GET_APPROVAL_HRM1]: () => { },
+    [PUT_APPROVAL_HRM1]: () => { },
+
     [POST_APPROVAL_HRM3]: () => { },
 
 })
@@ -97,6 +109,14 @@ const approvalReducer = handleActions(
         [POST_APPROVAL_EXP1]: (state, { payload }) => {
             return payload;
         },
+        [GET_APPROVAL_EXP1]: (state, { payload }) => {
+            return payload;
+        },
+        [PUT_APPROVAL_EXP1]: (state, { payload }) => {
+            return payload;
+        },
+
+
         [POST_APPROVAL_EXP2]: (state, { payload }) => {
             return payload;
         },
@@ -123,6 +143,14 @@ const approvalReducer = handleActions(
         [POST_APPROVAL_HRM1]: (state, { payload }) => {
             return payload;
         },
+        [GET_APPROVAL_HRM1]: (state, { payload }) => {
+            return payload;
+        },
+        [PUT_APPROVAL_HRM1]: (state, { payload }) => {
+            return payload;
+        },
+
+
         [POST_APPROVAL_HRM3]: (state, { payload }) => {
             return payload;
         },
