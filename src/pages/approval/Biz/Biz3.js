@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
-import { callApvBiz3API } from '../../../apis/ApprovalAPICalls';
+import { callApvBiz3API, callApvBiz3UpdateAPI } from '../../../apis/ApprovalAPICalls';
 
 function Biz3() {
-
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
@@ -17,37 +16,41 @@ function Biz3() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const biz3 = useSelector(state => state.approvalReducer);
+	const approval = useSelector(state => state.approval);
 
-	console.log('biz3 first : ', biz3);
+	const isEditMode = approval.apvLines ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+
+
+	console.log('Biz3 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '출장신청서',
 		writeDate: '',
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '업무',
-		empNo: empNo,
 		contents1: '',
+		empNo: empNo,
+		empName: authes.name,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvBusinessTrips: [{
-			purpose: '',
-			startDate: '',
-			startTime: '',
-			endDate: '',
-			endTime: '',
-			location: '',
+			purpose: approval.purpose ? approval.purpose : '',
+			startDate: approval.startDate ? approval.startDate : '',
+			startTime: approval.startTime ? approval.startTime : '',
+			endDate: approval.endDate ? approval.endDate : '',
+			endTime: approval.endTime ? approval.endTime : '',
+			location: approval.location ? approval.location : '',
 		}]
 	});
 
 
-	useEffect(() => {
-		const currentDate = new Date();
-		setFormData(prevFormData => ({
-			...prevFormData,
-			writeDate: currentDate
-		}));
-	}, []);
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
 
 	const calculateTravelDuration = () => {
 		const startDate = new Date(
@@ -99,39 +102,6 @@ function Biz3() {
 		return options;
 	}
 
-
-	useEffect(() => {
-		const currentDate = new Date();
-		setFormData(prevFormData => ({
-			...prevFormData,
-			writeDate: currentDate,
-		}));
-	}, []);
-
-
-	const updateIsUrgency = (newIsUrgency) => {
-		setFormData(prevFormData => ({
-			...prevFormData,
-			isUrgency: newIsUrgency
-		}));
-	};
-
-	const [selectedEmployees, setSelectedEmployees] = useState([]);
-
-	useEffect(() => {
-		console.log('Biz3 - selectedEmployees : ', selectedEmployees);
-	}, [setSelectedEmployees]);
-
-	const handleEmployeeSelect = (selectedEmployee) => {
-		setSelectedEmployees((prevSelectedEmployees) => [
-			...prevSelectedEmployees,
-			{
-				...selectedEmployee,
-				isApproval: 'N',
-			}
-		]);
-	};
-
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		if (name === 'contents1') {
@@ -154,15 +124,59 @@ function Biz3() {
 		console.log('Biz formData : ', formData);
 	}
 
+	useEffect(() => {
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
 
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
+
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
+
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+
+	useEffect(() => {
+		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
 
 
 	const handleSubmission = async () => {
 
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvBiz3API({ formData, selectedEmployees }));
+				let response;
+				if ((isEditMode)) {
+					// response = await dispatch(callApvBiz3UpdateAPI({ formData, selectedEmployees }));
+				} else {
 
+					response = await dispatch(callApvBiz3API({ formData, selectedEmployees }));
+				}
 				if (response.status === 200) {
 					if (response.data === "기안 상신 실패") {
 						window.alert("결재 등록 실패");
@@ -183,7 +197,7 @@ function Biz3() {
 		}
 	};
 
-
+	console.log('formData : ', formData);
 
 	return (
 
@@ -194,8 +208,10 @@ function Biz3() {
 				<div className="containerApv">
 					<div className="apvApvTitle">출장신청서</div>
 					<ApvSummitLine
+						mode="create"
 						selectedEmployees={selectedEmployees}
 						authes={authes}
+						approval={approval}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitle">

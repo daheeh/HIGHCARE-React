@@ -86,19 +86,6 @@ function Biz1({ mode, data }) {
 		}
 	}, [approval, setSelectedEmployees]);
 
-
-
-    const handleEmployeeSelect = (selectedEmployee) => {
-
-        setSelectedEmployees((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            {
-                ...selectedEmployee,
-                isApproval: 'F',
-            }
-        ]);
-    };
-
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
