@@ -47,6 +47,7 @@ function Biz1View() {
                         mode="view"
                         selectedEmployees={data?.apvLines || []}
                         authes={authes}
+                        data={data}
                     />
                     <div className="apvContent">
                         <div className="apvContentTitle">

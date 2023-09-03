@@ -10,7 +10,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 	const results = useSelector(state => state.approval);
 	const navigate = useNavigate();
 
-	
+
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
@@ -225,8 +225,15 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 						<div className="row4">
 							{index === 0 && authes.empNo === emp.empNo ? (
 								<>
-									<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
-									<button className='apvBtn2'onClick={() => handleDelete(emp.apvNo)}>취소</button>
+									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ? (
+										<>
+											<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
+											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+										</>
+									) :
+										<>
+											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+										</>}
 								</>
 							) : index !== 0 && authes.empNo === emp.empNo ? (
 								selectedEmployees[index - 1].isApproval === 'T' ? (
@@ -234,11 +241,12 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 										<>
 											{emp.apvDate && <span>{emp.apvDate}</span>}
 										</>
-									) :
+									) : (
 										<>
 											<button className='apvBtn2' onClick={() => handleApprove(index)}>승인</button>
 											<button className='apvBtn2' onClick={() => handleReject(index)}>반려</button>
 										</>
+									)
 								) : (
 									<>
 										{emp.apvDate && <span>{emp.apvDate}</span>}
@@ -250,9 +258,9 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 						</div>
 					</div>
 				))}
-
 			</div>
 		);
+
 	};
 }
 export default ApvSummitLine;
