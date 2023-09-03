@@ -32,12 +32,6 @@ function OAuthPage() {
     gapi.load('client:auth2', start);
   }, []);
 
-
-  // **you can access the token like this**
-  // const accessToken = gapi.auth.getToken().access_token;
-  // console.log(accessToken);
-
-
   const data = {
     providerId: '',
     provider: '',

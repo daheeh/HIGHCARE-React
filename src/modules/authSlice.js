@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { kakaoAuth } from "../apis/OAuthApiCalls";
+import { authCheckAPI, authCodeSendingAPI } from "../apis/AuthAPICalls";
 
 const initialState = {
     id: '',
@@ -14,6 +15,11 @@ const initialState = {
     role: '',
     status: '',
     data: '',
+    isTempPwd: 'N',
+    requestCode: false,
+    requestMessage: '',
+    expireTime: 0,
+
 }
 
 const authSlice = createSlice({
@@ -33,19 +39,11 @@ const authSlice = createSlice({
             state.job = payload.data.jobName;
             state.isLogin = true;
             state.role = payload.data.role;
+            state.isTempPwd = payload.data.isTempPwd;
             state.status = payload.status;
         },
         logoutAction: (state, { payload }) => {
-            state.id = '';
-            state.password = '';
-            state.empNo = '';
-            state.accessExp = 0;
-            state.refreshExp = 0;
-            state.name = '';
-            state.dept = '';
-            state.job = '';
-            state.isLogin = false;
-            state.role = '';
+            Object.assign(state, initialState);  // state 초기 initialState로 변경 
         },
         reissueAction: (state, { payload }) => {
             console.log("reissueAction : ", state, payload);
@@ -53,7 +51,18 @@ const authSlice = createSlice({
             const { accessTokenExpiresIn } = payload.data;
             state.accessExp = accessTokenExpiresIn;
 
-        }
+        },
+        resetAuthesAction: (state, { payload }) => {
+            console.log('resetAuthesAction ');
+            Object.assign(state, initialState);
+        },
+        updateAuthExpireTime: (state, action) => {
+            state.expireTime = action.payload;
+        },
+        updateAuthRequestCode: (state, action) => {
+            state.requestCode = action.payload;
+        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -80,12 +89,26 @@ const authSlice = createSlice({
                 state.data = '';
                 console.log("rejected!!!!!!");
                 console.error(action.error);
-            });
+            })
+            .addCase(authCodeSendingAPI.fulfilled, (state, { payload }) => {
+
+                // state.data = payload;
+                state.requestCode = payload.code;
+                state.requestMessage = payload.message;
+                state.expireTime = payload.timeout;
+
+            })
+            .addCase(authCheckAPI.fulfilled, (state, { payload }) => {
+                console.log("payload!!!!!!",payload);
+                state.requestMessage = payload.requestMessage;
+                state.id = payload.findId
+            })
+           
     },
 });
 
 
 // 액션 생성자 내보내기 
-export const { loginAction, logoutAction, reissueAction } = authSlice.actions;
+export const { loginAction, logoutAction, reissueAction,resetAuthesAction, updateAuthRequestCode, updateAuthExpireTime } = authSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default authSlice.reducer; 
