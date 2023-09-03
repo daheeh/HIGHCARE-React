@@ -206,20 +206,6 @@ function Hrm1({ mode, data }) {
 	}, [approval, setSelectedEmployees]);
 
 
-
-    const handleEmployeeSelect = (selectedEmployee) => {
-
-        setSelectedEmployees((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            {
-                ...selectedEmployee,
-                isApproval: 'F',
-            }
-        ]);
-    };
-
-
-
 	const handleSubmission = async () => {
 
         if (empNo !== undefined) {
@@ -251,9 +237,8 @@ function Hrm1({ mode, data }) {
         }
     };
 
-
-
 	console.log('formData : ', formData);
+
 	return (
 		<section>
 			<ApvMenu />
@@ -265,6 +250,7 @@ function Hrm1({ mode, data }) {
 						mode="create"
 						selectedEmployees={selectedEmployees}
 						authes={authes}
+						approval={approval}
 					/>
 					<div className="apvContent">
 						<div className="apvContentHrm1">
