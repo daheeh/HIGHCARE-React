@@ -19,7 +19,7 @@ function AdminPage() {
 
         dispatch(allMemberListApi())
 
-    }, [])
+    })
 	return (
 
 		<section>

@@ -35,8 +35,8 @@ export const requestMember = createAsyncThunk(
       );
       console.log(response.data);
 
-      if(typeof response.data === String) {
-        alert(response.data); 
+      if (typeof response.data === String) {
+        alert(response.data);
       }
 
       return response.data;
@@ -47,9 +47,9 @@ export const requestMember = createAsyncThunk(
 );
 
 
-  
-  
-  
+
+
+
 export const allMemberListApi = createAsyncThunk(
   'all/members',
   async () => {
@@ -63,9 +63,9 @@ export const allMemberListApi = createAsyncThunk(
       );
       console.log(response.data);
 
-      return response.data.data; 
+      return response.data.data;
     } catch (error) {
-      throw error.response.data; 
+      throw error.response.data;
     }
   }
 )
@@ -73,15 +73,37 @@ export const allMemberListApi = createAsyncThunk(
 
 export const ModifyInfoAPI = createAsyncThunk(
   'modify/members',
-  async () => {
+  async (data) => {
     try {
+      const response = '';
+      console.log('data :', data);
+      if (data.method === 'put') {
+        response = await axios.put(`http://localhost:8080/api/admin/member`
+          , data
+          , {
+            headers: {
+              "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+              "Content-Type": "application/json", // JSON 형식으로 보냄
 
-      const reponse = await axios.put(`http://localhost:8080/api/admin/member`, {
-        
-      })
-      
+            }
+          }
+        )
+      } else if (data.method === 'delete') {
+        response = await axios.delete(`http://localhost:8080/api/admin/member/${data.id}`
+          , {
+            headers: {
+              "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+            }
+          }
+        )
+      }
+
+      console.log(response.data);
+      const result = response.data.data;
+      return result;
+
     } catch (error) {
-      
+      throw error.response.data;
     }
   }
 )
