@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ApvFile({ onFileUpload }) {
+export function ApvFile({ onFileUpload }) {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileChange = (e) => {
@@ -9,15 +9,16 @@ function ApvFile({ onFileUpload }) {
 
     const handleUpload = () => {
         if (selectedFile) {
+            // 선택한 파일을 부모 컴포넌트에 전달
             onFileUpload(selectedFile);
-            setSelectedFile(null); // Clear the selected file
+            setSelectedFile(null); // 선택한 파일 초기화
         }
     };
 
     return (
         <div>
-            <input type="file" onChange={handleFileChange} hidden/>
-            <button onClick={handleUpload} hidden></button>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload}>업로드</button>
         </div>
     );
 }

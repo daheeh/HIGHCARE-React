@@ -7,6 +7,8 @@ import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
 import { callApvHrm1API, callApvHrm1UpdateAPI } from '../../../apis/ApprovalAPICalls';
+import ApvFileList from '../ApvFileList';
+import { handleSubmission } from '../ApvSubmit';
 
 function Hrm1({ mode, data }) {
 	const authes = useSelector(state => state.authes);
@@ -18,7 +20,7 @@ function Hrm1({ mode, data }) {
 
 	const approval = useSelector(state => state.approval);
 
-	const isEditMode = approval.apvLines? true : false;
+	const isEditMode = approval.apvLines ? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
 
 
@@ -26,7 +28,7 @@ function Hrm1({ mode, data }) {
 
 	const [formData, setFormData] = useState({
 
-		apvNo: approval.apvNo?approval.apvNo:'',
+		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '연차신청서',
 		writeDate: '',
 		apvStatus: '결재예정',
@@ -36,19 +38,27 @@ function Hrm1({ mode, data }) {
 		empName: authes.name,
 		deptName: authes.dept,
 		jobName: authes.job,
-		apvLines: approval.apvLines?approval.apvLines: [],
+		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvVacations: [{
-			startDate: approval.startDate? approval.startDate : '',
-			endDate: approval.endDate? approval.endDate : '',
+			startDate: approval.startDate ? approval.startDate : '',
+			endDate: approval.endDate ? approval.endDate : '',
 			type: '연차',
-			comment: approval.comment? approval.comment : '연차사용',
-			amount: approval.amount? approval.amount : 0.0,
-			offType1: approval.offType1? approval.offType1 : '',
-			offType2: approval.offType2? approval.offType2 : '',
+			comment: approval.comment ? approval.comment : '연차사용',
+			amount: approval.amount ? approval.amount : 0.0,
+			offType1: approval.offType1 ? approval.offType1 : '',
+			offType2: approval.offType2 ? approval.offType2 : '',
 		}],
 	});
 
-	
+	const [fileList, setFileList] = useState([]);
+	const handleFileUpload = (file) => {
+		if (file) {
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
+
+
 	const location = useLocation();
 	const initialData = location.state ? location.state.initialData : null;
 
@@ -178,21 +188,21 @@ function Hrm1({ mode, data }) {
 			isUrgency: newIsUrgency
 		}));
 	};
-	
+
 
 	const initialSelectedEmployees = [{
-        degree: 0,
-        isApproval: 'T',
-        apvDate: new Date(),
-        empNo: authes.empNo,
-        empName: authes.name,
-        jobName: authes.job,
-        deptName: authes.dept,
-    }];
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
 
-    const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
-    useEffect(() => {
+	useEffect(() => {
 		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
 		if (approval.apvLines) {
 			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
@@ -200,42 +210,30 @@ function Hrm1({ mode, data }) {
 				isApproval: 'F',
 				apvLineNo: line.apvLineNo,
 			}));
-	
+
 			setSelectedEmployees(initialSelectedEmployees);
 		}
 	}, [approval, setSelectedEmployees]);
 
 
-	const handleSubmission = async () => {
 
-        if (empNo !== undefined) {
-            try {
-                let response;
-                if ((isEditMode)) {
-                    response = await dispatch(callApvHrm1UpdateAPI({ formData, selectedEmployees }));
-                } else {
-				
-                    response = await dispatch(callApvHrm1API({ formData, selectedEmployees }));
-                }
-                if (response.status === 200) {
-                    if (response.data === "기안 상신 실패") {
-                        window.alert("결재 등록 실패");
-                    } else {
-                        window.alert("결재 등록 성공");
-                        navigate('/approval');
-                    }
-                } else {
-                    window.alert("결재 등록 중 오류가 발생했습니다.");
-                }
-            } catch (error) {
-                console.error("API error:", error);
-                window.alert("API 요청 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
-        }
-    };
+	const APIPoint = isEditMode ? callApvHrm1UpdateAPI : callApvHrm1API;
+
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
+
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
+	};
 
 	console.log('formData : ', formData);
 
@@ -243,7 +241,11 @@ function Hrm1({ mode, data }) {
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">연차신청서</div>
 					<ApvSummitLine
@@ -301,6 +303,7 @@ function Hrm1({ mode, data }) {
 								onBlur={onCommentChangeHandler}></textarea>
 						</div>
 					</div>
+					<ApvFileList files={fileList} />
 				</div>
 			</div>
 		</section>
