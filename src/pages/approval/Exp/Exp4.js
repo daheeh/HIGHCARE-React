@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalExp.css';
 import '../Approval.css';
 import { callApvExp4API } from '../../../apis/ApprovalAPICalls';
+import { GET_APPROVAL_EXP4 } from '../../../modules/ApprovalModule';
 
-function Exp4() {
-
+function Exp4({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const [formCount, setFormCount] = useState(1);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const exp4 = useSelector(state => state.approval);
+	const approval = useSelector(state => state.approval);
 
-	console.log('exp4 first : ', exp4);
+	const isEditMode = approval.apvLines ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+	console.log('Exp4 first : ', approval.data);
 
-	const [request, setRequest] = useState([]);
+	const [resultData, setResultData] = useState([]);
+	const [selectedApvNo, setSelectedApvNo] = useState(null); // 선택한 apvNo를 상태로 관리
+	const [selectedInfo, setSelectedInfo] = useState(null); // 추가 정보를 상태로 관리
 
 	useEffect(() => {
 		const fetchRequest = async () => {
 			try {
+				const requestURL = `http://localhost:8080/api/approval/search/exp4/${empNo}`;
 
-				const title = '출장신청서';
-				const response = await fetch(`http://localhost:8080/api/approval/search/exp4?title='${title}'&empNo=${empNo}`, {
+				const result = await fetch(requestURL, {
 					method: "GET",
 					headers: {
 						"Accept": "*/*",
@@ -37,27 +40,55 @@ function Exp4() {
 						'Content-Type': 'application/json',
 						"Access-Control-Allow-Origin": "*",
 					},
-				});
+				}).then(response => response.json());
 
-				if (response.status === 200) {
-					const data = await response.json();
-					setRequest(data);
-					console.log('data : ',data);
-					return data;
+				console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI RESULT : ', result.data);
 
-				} else {
-					console.error('출장신청서 조회 실패');
-				}
+				dispatch({ type: GET_APPROVAL_EXP4, payload: result.data });
+				console.log('신청서 조회 결과: ', result.data);
+				setResultData(result.data);
 			} catch (error) {
-				console.error("Error fetching:", error);
+				console.error('[ApprovalAPICalls] biz1 Error in callApvBiz1ViewAPI: ', error);
+				throw error;
 			}
 		};
 
-		fetchRequest();
-	}, [empNo]);
+		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
+	}, [empNo, dispatch]);
+
+	// result.data에서 apvNo만 추출하여 배열로 만듭니다.
+	const apvNoOptions = resultData.map(item => ({
+		value: item.apvNo,
+		label: `${item.apvNo} - ${item.purpose}`
+	}));
+
+	// 사용자가 apvNo를 선택했을 때 실행될 함수
+	const handleApvNoSelect = (selectedValue) => {
+		setSelectedApvNo(selectedValue);
+
+		console.log('=== selectedValue: ', selectedValue);
+
+		const selectedData = resultData.find(item => item.apvNo.toString() === selectedValue.toString());
+		console.log('=== selectedData : ', selectedData);
+
+		if (selectedData) {
+			setSelectedInfo(selectedData);
+		}
+	};
+
+	useEffect(() => {
+		setFormData(prevFormData => ({
+		  ...prevFormData,
+		  refApvNo: selectedApvNo ? selectedApvNo : '',
+		}));
+	  }, [selectedApvNo]);
+
+	console.log('-----resultData : ', resultData);
+	console.log('-----apvNoOptions : ', apvNoOptions);
+	console.log('-----selectedInfo : ', selectedInfo);
 
 
-
+	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
 
 		title: '출장경비정산서',
@@ -66,19 +97,26 @@ function Exp4() {
 		isUrgency: 'F',
 		category: '지출',
 		empNo: empNo,
-		refApvNo: '',
+		empName: authes.name,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
+		refApvNo: selectedApvNo? selectedApvNo: '',
 		apvExpForms: [{
-			requestDate: '',
-			payee: '',
-			bank: '',
-			accountHolder: '',
-			accountNumber: '',
-			details: '',
-			account: '',
-			amount: '',
-			comment: '',
+			requestDate: approval.requestDate ? approval.requestDate : new Date(),
+			payee: approval.payee ? approval.payee : authes.name,
+			bank: approval.bank ? approval.bank : '',
+			accountHolder: approval.accountHolder ? approval.accountHolder : '',
+			accountNumber: approval.accountNumber ? approval.accountNumber : '',
+			details: approval.details ? approval.details : '',
+			account: approval.account ? approval.account : '',
+			amount: approval.amount ? approval.amount : 0,
+			comment: approval.comment ? approval.comment : '',
 		}]
 	});
+
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -90,11 +128,11 @@ function Exp4() {
 
 
 	const [sharedProperties, setSharedProperties] = useState({
-		requestDate: '',
-		payee: '',
-		bank: '',
-		accountHolder: '',
-		accountNumber: ''
+		requestDate: approval.requestDate ? approval.requestDate : new Date(),
+		payee: approval.payee ? approval.payee : authes.name,
+		bank: approval.bank ? approval.bank : '',
+		accountHolder: approval.accountHolder ? approval.accountHolder : '',
+		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
 	const onChangeHandler = (e, index) => {
@@ -107,18 +145,6 @@ function Exp4() {
 			updatedFormData.apvExpForms[index][field] = value;
 			setFormData(updatedFormData);
 		} else if (nameParts[0] === 'sharedProperties') {
-
-			if (name === 'sharedProperties.requestDate') {
-				const currentDate = new Date().toISOString().split('T')[0];
-				if (value < currentDate) {
-					window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
-					setSharedProperties(prevSharedProps => ({
-						...prevSharedProps,
-						requestDate: currentDate
-					}));
-					return;
-				}
-			}
 
 			const field = nameParts[1];
 			const updatedSharedProperties = {
@@ -151,9 +177,11 @@ function Exp4() {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
 			...prevFormData,
-			writeDate: currentDate
+			writeDate: currentDate,
+
+			...(initialData ? initialData : {}),
 		}));
-	}, []);
+	}, [initialData]);
 
 	const updateIsUrgency = (newIsUrgency) => {
 		setFormData(prevFormData => ({
@@ -162,21 +190,32 @@ function Exp4() {
 		}));
 	};
 
-	const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
+
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
 	useEffect(() => {
-		console.log('Exp1 - selectedEmployees : ', selectedEmployees);
-	}, [setSelectedEmployees]);
-
-	const handleEmployeeSelect = (selectedEmployee) => {
-		setSelectedEmployees((prevSelectedEmployees) => [
-			...prevSelectedEmployees,
-			{
-				...selectedEmployee,
+		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
 				isApproval: 'F',
-			}
-		]);
-	};
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
+
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -196,6 +235,7 @@ function Exp4() {
 		}));
 		setAmounts(prevAmounts => [...prevAmounts, 0]);
 	};
+
 
 
 	const handleRemoveForm = () => {
@@ -267,14 +307,25 @@ function Exp4() {
 		);
 	};
 
+
 	const handleSubmission = async () => {
+
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvExp4API({ formData }));
+				let response;
+				if ((isEditMode)) {
+					// response = await dispatch(callApvExp4UpdateAPI({ formData, selectedEmployees }));
+				} else {
 
+					response = await dispatch(callApvExp4API({ formData, selectedEmployees }));
+				}
 				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
 				} else {
 					window.alert("결재 등록 중 오류가 발생했습니다.");
 				}
@@ -290,39 +341,43 @@ function Exp4() {
 
 	console.log('formData : ', formData);
 
-
-
-
 	return (
 
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
 					<ApvSummitLine
+						mode="create"
 						selectedEmployees={selectedEmployees}
 						authes={authes}
+						approval={approval}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장신청서 번호</div>
 							<div className="column2">
-								<input className="input1" placeholder="출장신청서 번호" name='sharedProperties.payee'
-									value={sharedProperties.payee} onChange={onChangeHandler} />
+								<select onChange={(e) => handleApvNoSelect(e.target.value)}>
+									<option className="input1" value="">선택</option>
+									{apvNoOptions.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.label}
+										</option>
+									))}
+								</select>
 							</div>
 							<div className="column3">출장기간</div>
 							<div className="column4">
-								<input className="input1" placeholder="출장신청서 번호" name='sharedProperties.payee'
-									value={sharedProperties.payee} onChange={onChangeHandler} />
+								{selectedInfo ? `${selectedInfo.startDate}~${selectedInfo.endDate}` : ''}
 							</div>
 						</div>
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장지</div>
-							<div className="column2">부산 지점</div>
+							<div className="column2">{selectedInfo ? selectedInfo.location : ''}</div>
 							<div className="column3">출장인원</div>
-							<div className="column4">1인</div>
+							<div className="column4"></div>
 						</div>
 						<div className="apvContentDetail">내역</div>
 						<div className="apvContentDetailExp1Title">
