@@ -44,7 +44,7 @@ function WriteBox() {
 
 
     const handleDocumentClickInWriteBox = (apvNo) => {
-        handleDocumentClick(apvNo, results, navigate); // 함수 호출
+        handleDocumentClick(apvNo, results, navigate);
     };
 
 

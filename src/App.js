@@ -123,7 +123,6 @@ function App() {
             <Route path="biz5" element={<Biz5 />} />
             <Route path="bizOffcial" element={<Biz4Offcial />} />
 
-
             <Route path="exp1" element={<Exp1 />} />
             <Route path="exp2" element={<Exp2 />} />
             <Route path="exp3" element={<Exp3 />} />
@@ -135,6 +134,7 @@ function App() {
             <Route path="hrm1" element={<Hrm1 />} />
             <Route path="hrm1/:apvNo" element={<Hrm1View />} />
             <Route path="hrm2" element={<Hrm2 />} />
+            <Route path="hrm2/:apvNo" element={<Hrm1View />} />
             <Route path="hrm3" element={<Hrm3 />} />
             <Route path="hrm4" element={<Hrm4 />} />
             <Route path="hrm5" element={<Hrm5 />} />
