@@ -8,7 +8,6 @@ import './ApprovalHrm.css';
 import '../Approval.css';
 import { callApvHrm1API, callApvHrm1UpdateAPI } from '../../../apis/ApprovalAPICalls';
 
-
 function Hrm2({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
@@ -21,7 +20,6 @@ function Hrm2({ mode, data }) {
 
 	const isEditMode = approval.apvLines? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
-
 
 	console.log('hrm2 first : ', approval.data);
 
@@ -48,7 +46,6 @@ function Hrm2({ mode, data }) {
 			offType2: approval.offType2? approval.offType2 : '',
 		}],
 	});
-
 	
 	const location = useLocation();
 	const initialData = location.state ? location.state.initialData : null;
