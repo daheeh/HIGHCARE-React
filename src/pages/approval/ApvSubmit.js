@@ -1,34 +1,33 @@
 import { uploadFiles } from './ApvFileUpload';
 
+// 프론트엔드 코드
+
 export const handleSubmission = async (event, submissionData) => {
 
-    console.log('handleSubmission - submissionData', submissionData);
+    console.log("handleSubmission");
+    console.log("handleSubmission submissionData : ", submissionData);
 
     // event.preventDefault();
+
     const { formData, selectedEmployees, navigate, fileList, APIPoint, dispatch } = submissionData;
-
-    console.log('handleSubmission - submissionData', submissionData);
-    console.log('handleSubmission - selectedEmployees', selectedEmployees);
-    console.log('handleSubmission - formData', formData);
-
-
 
     if (formData.empNo) {
         try {
-            // 파일 업로드
-            if (fileList.length > 0) {
-                const fileUploadSuccess = await uploadFiles(fileList);
-
-                if (!fileUploadSuccess) {
-                    console.error("업로드 오류");
-                    window.alert("파일 업로드 오류");
-                    return; // 파일 업로드가 실패하면 제출을 진행x
-                }
-            }
-
-            // 제출 진행
+            
+            // formData 및 selectedEmployees를 단일 객체로 결합
             const attachedFiles = fileList;
-            const response = await dispatch(APIPoint({formData, selectedEmployees, attachedFiles}));
+            const requestData = {
+                formData,
+                selectedEmployees,
+                attachedFiles,
+            };
+
+            console.log("handleSubmission requestData : ", requestData);
+            console.log("handleSubmission attachedFiles : ", attachedFiles);
+
+            // 결합된 데이터를 API로 전송
+            const response = await dispatch(APIPoint({requestData}));
+
 
             if (response.status === 200) {
                 if (response.data === "기안 상신 실패") {
@@ -49,4 +48,5 @@ export const handleSubmission = async (event, submissionData) => {
         navigate('/approval');
     }
 };
+
 
