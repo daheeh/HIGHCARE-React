@@ -46,13 +46,31 @@ function MemberModify() {
         setRadioStatus(e.target.id); 
     }
 
+    const params = {
+        memberId: '',
+        accountStatus:''
+    };
+
     // 수정버튼 
     const modifyAccountStatus = () => {
+
+        const data = {
+            id: member.memberId,
+            status: radioStatus,
+            method: ''
+        }
+
+        console.log('status====> ', radioStatus);
+        if(radioStatus === 'isWithDraw') {
+            data.method = 'delete'
+        } else {
+            data.method = 'put'
+        }
 
         if(radioStatus) {
 
             ( async () => {
-                await dispatch(ModifyInfoAPI)
+                await dispatch(ModifyInfoAPI(data))
             })();
         }
 
@@ -121,7 +139,7 @@ function MemberModify() {
                     <input type="radio" name="accountStatus" id="isExpired" onChange={handleRadioChange}/>
 
                     {/* 계정 잠금N, 비활성화N, 만료N, 탈퇴Y, DRAW */}
-                    <label htmlFor="isWithDraw">탈퇴확정</label>
+                    <label htmlFor="isWithDraw" style={{color:'red'}}>탈퇴(확정)</label>
                     <input type="radio" name="accountStatus" id="isWithDraw" onChange={handleRadioChange}/>
                 </div>
 
