@@ -16,8 +16,6 @@ function Layout() {
             {/* 에러바운더리 추가하기 */}
                 {/* <MyErrorProneComponent /> */}
 
-
-
                 {/* 엑세스토큰 만료 에러  */}
 
                 <Header />

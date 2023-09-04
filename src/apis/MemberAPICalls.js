@@ -47,6 +47,47 @@ export const requestMember = createAsyncThunk(
 );
 
 
+  
+  
+  
+export const allMemberListApi = createAsyncThunk(
+  'all/members',
+  async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/admin/memberlist`,
+        {
+          headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+          }
+        }
+      );
+      console.log(response.data);
+
+      return response.data.data; 
+    } catch (error) {
+      throw error.response.data; 
+    }
+  }
+)
+
+
+export const ModifyInfoAPI = createAsyncThunk(
+  'modify/members',
+  async () => {
+    try {
+
+      const reponse = await axios.put(`http://localhost:8080/api/admin/member`, {
+        
+      })
+      
+    } catch (error) {
+      
+    }
+  }
+)
+
+
+
 
 
 

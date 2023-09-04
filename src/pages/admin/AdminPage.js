@@ -1,50 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import { TokenVerification } from './auth/TokenVerification';
+import { AuthVarification } from './auth/AuthVerification';
+import { AdminNav } from './AdminNav';
+import AdminPageStyle from './AdminPage.module.css'
+import { allMemberListApi } from '../../apis/MemberAPICalls';
+import { useDispatch } from 'react-redux';
 
 function AdminPage() {
+
+
 	TokenVerification();
+	AuthVarification();
 
+	const dispatch = useDispatch();
 
+    useEffect(() => {
 
-  return (
+        dispatch(allMemberListApi())
 
-      <section>
-			<div className="leftMenu">
-				<div className="leftMenu2">
+    }, [])
+	return (
 
-					<div className="mainTitle">
-						<Link to="/admin">운영관리</Link>
-					</div>
-					<div className="apvNaviBox">
-						<div className="apvNaviBoxEmp"></div>
-						<div className="apvNaviBoxMainTitle">
-							<Link to="member">회원관리</Link>
-						</div>
-						<ul className="apvNaviBoxUl">   
-							<Link to="member"><li>회원목록</li></Link>
-							<Link to="member/auth"><li>권한설정</li></Link>
-							<Link to="member/log"><li>접속로그</li></Link>
-							<Link to="/login/member/request"><li>가입신청</li></Link>
-							<Link to=""><li>메뉴</li></Link>
+		<section>
+			<AdminNav />
 
-						</ul>
-						<div className="apvNaviBoxEmp"></div>
-						<div className="apvNaviBoxEmp"></div>
-						<div className="apvNaviBoxMainTitle">시스템관리</div>
-						<ul className="apvNaviBoxUl">   
-              <li>시스템로그</li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li> 
-
-						</ul>
-					</div>
+			<div className={AdminPageStyle.container}>
+				<div className={AdminPageStyle.box}>
+					<h2>신규 회원가입 신청 현황</h2>
+					<p>//</p>
+					<a href="#">더 보기</a>
+				</div>
+				<div className={AdminPageStyle.box}>
+					<h2>admin main2</h2>
+					<p>manager</p>
+					<a href="#">더 보기</a>
 				</div>
 			</div>
+
+			<main>
+				<Outlet />
+
+			</main>
+
+
 		</section>
-    ); 
+	);
 }
 
 export default AdminPage;
