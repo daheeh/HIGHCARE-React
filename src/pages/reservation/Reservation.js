@@ -1,5 +1,27 @@
 import BoardStyle from '../bulletin/Bullentin.module.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+import {
+    callResAPI
+} from '../../apis/ResAPICall';
+
 function Reservation(){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    
+    const res = useSelector(state => state.resReducer);
+    const resCategory = res.data;
+
+
+    useEffect(
+        () =>{
+            dispatch(callResAPI());
+        },[]
+    );
     return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>시설예약</h1>
@@ -9,8 +31,13 @@ function Reservation(){
             <h3>시설선택</h3>
             <div className={BoardStyle.step_1_content}>   
                 <ul>
-                    <li>회의실</li>
-                    <li>강당</li>
+                    {Array.isArray(resCategory) && resCategory.map(
+                        (category) => (
+                            <li>{category.name}</li>
+                        )
+                    )}
+                    {/* <li>회의실</li>
+                    <li>강당</li> */}
                 </ul>
             </div>
         </div>

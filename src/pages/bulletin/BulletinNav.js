@@ -1,8 +1,5 @@
 import React from 'react';
 import BoardNavStyle from './BulletinNavStyle.module.css'; 
-import Bmodal from './bmodal/Bmodal';
-import { useSelector, useDispatch} from 'react-redux';
-import { useEffect, useState } from 'react'; 
 import { NavLink } from 'react-router-dom';
 // import {
 //     callBulletinNavAPI
