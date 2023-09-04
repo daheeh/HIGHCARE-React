@@ -548,17 +548,19 @@ export const callApvExp7API = ({ formData, selectedEmployees }) => {
 /* 전자결재 양식 - 인사 */
 
 /* 전자결재 - 인사 : hrm1 연차신청서, hrm2 기타휴가신청서 */
-export const callApvHrm1API = ({ formData, selectedEmployees, attachedFiles }) => {
+// export const callApvHrm1API = ({ formData, selectedEmployees, attachedFiles }) => {
+export const callApvHrm1API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] hrm1 callApvHrm1API Call');
+    console.log('ApprovalAPICalls requestData', requestData);
 
     const requestURL = `http://localhost:8080/api/approval/insert/hrm1`;
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API formData : ', formData);
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API selectedEmployees : ', selectedEmployees);
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API attachedFiles : ', attachedFiles);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API formData : ', requestData.formData);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API selectedEmployees : ', requestData.selectedEmployees);
+        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API attachedFiles : ', requestData.attachedFiles);
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
@@ -568,7 +570,7 @@ export const callApvHrm1API = ({ formData, selectedEmployees, attachedFiles }) =
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees, apvFiles: attachedFiles }),
+                body: JSON.stringify({ apvFormDTO: requestData.formData, apvLineDTOs: requestData.selectedEmployees, apvFileDTOs: requestData.attachedFiles }),
             })
                 .then(response => response.json());
 

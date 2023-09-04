@@ -39,6 +39,7 @@ function Hrm1({ mode, data }) {
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvVacations: [{
 			startDate: approval.startDate ? approval.startDate : '',
 			endDate: approval.endDate ? approval.endDate : '',
@@ -51,8 +52,17 @@ function Hrm1({ mode, data }) {
 	});
 
 	const [fileList, setFileList] = useState([]);
+
 	const handleFileUpload = (file) => {
 		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
+
+			// Update the fileList state for rendering in the component
 			setFileList([...fileList, file]);
 			console.log('ApvSummitBar에서 업로드한 파일:', file);
 		}
@@ -216,6 +226,13 @@ function Hrm1({ mode, data }) {
 	}, [approval, setSelectedEmployees]);
 
 
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	  };
+
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
 
 	const APIPoint = isEditMode ? callApvHrm1UpdateAPI : callApvHrm1API;
 
@@ -245,6 +262,8 @@ function Hrm1({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">연차신청서</div>
