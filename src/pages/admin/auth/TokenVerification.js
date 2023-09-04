@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { decodeJwt } from "../../../utils/decodeJwt";
 import { logoutAction } from "../../../modules/authSlice";
 import { jwtReissueAPI } from "../../../apis/AuthAPICalls";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 // 토큰만료 검증 
-export const TokenVerification = async () => {
+export const TokenVerification = () => {
 
     // console.log("token verification 작동 중");
     
@@ -16,22 +16,32 @@ export const TokenVerification = async () => {
     const authes = useSelector(state => state.authes);
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
 
-    if (token === null ) {
-        alert('로그인이 필요합니다.');
-        return window.location.href = "/login"
-    } else {
 
-        const verified = await LoginVerify(token, authes.refreshExp);
+    useEffect(()=> {
 
-        if (verified === 2) {
-            alert('유효시간이 초과되었습니다. 재로그인이 필요합니다.');
-            dispatch(logoutAction());
-            return window.location.href = "/login"
-        } else if(verified === 1) {
-            await dispatch(jwtReissueAPI(token.sub));
-            console.log("토큰 재발급");
-        } 
-    }
+        if (token === null) {
+            alert('로그인이 필요합니다.');
+            navigate("/login", { replace: true });
+        }  
+        else {
+    
+            const verified =  LoginVerify(token, authes.refreshExp);
+    
+            if (verified === 2) {
+                alert('유효시간이 초과되었습니다. 재로그인이 필요합니다.');
+                dispatch(logoutAction());
+                navigate("/login", { replace: true });
+            } else if(verified === 1) {
+                dispatch(jwtReissueAPI(token.sub));
+                console.log("토큰 재발급");
+            } 
+        }
+
+    },[])
+
+    
+    return <Outlet/>
+
 }
 
 const LoginVerify = (token, refreshExp) => {
@@ -60,4 +70,4 @@ const LoginVerify = (token, refreshExp) => {
 
     
 
-// export default TokenVerification;
+ export default TokenVerification;

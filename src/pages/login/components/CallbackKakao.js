@@ -22,14 +22,19 @@ export const CallbackKakao = () => {
     console.log("callback 페이지에서 넘겨줄 id : ", id);
 
     const props = {
-        code,id
+        code, id
     }
 
     useEffect( () => {
-        dispatch(kakaoAuth(props));
+
+        ( async ()=> {
+            await dispatch(kakaoAuth(props));
+        })();  // destroy 작업 
+        
         console.log("kakaoAUth dispatch callback");
-        navigate("/");
-    }, [])
+        navigate("/", { replace: true }); 
+        
+    }, [])  
 
     return (
 
