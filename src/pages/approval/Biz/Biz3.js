@@ -8,7 +8,7 @@ import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz3API, callApvBiz3UpdateAPI } from '../../../apis/ApprovalAPICalls';
 
-function Biz3() {
+function Biz3({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
