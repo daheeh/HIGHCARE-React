@@ -22,7 +22,7 @@ function Biz1({ mode, data }) {
     console.log('isEditMode 1 : ', isEditMode);
 
 
-    console.log('biz1 first : ', approval);
+    console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
         apvNo: approval.apvNo?approval.apvNo:'',
@@ -60,35 +60,31 @@ function Biz1({ mode, data }) {
         }));
     };
 
-    const [selectedEmployees, setSelectedEmployees] = useState([
-    ]);
+    
+	const initialSelectedEmployees = [{
+        degree: 0,
+        isApproval: 'T',
+        apvDate: new Date(),
+        empNo: authes.empNo,
+        empName: authes.name,
+        jobName: authes.job,
+        deptName: authes.dept,
+    }];
+
+    const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
     useEffect(() => {
-        console.log('Biz1 - selectedEmployees : ', selectedEmployees);
-    }, [setSelectedEmployees]);
-
-    useEffect(() => {
-        if (approval.apvLines) {
-            setSelectedEmployees(approval.apvLines.map((line, index) => ({
-                ...line,
-                isApproval: 'F',
-                apvLineNo: line.apvLineNo,
-            })));
-        }
-    }, [approval]);
-
-
-
-    const handleEmployeeSelect = (selectedEmployee) => {
-
-        setSelectedEmployees((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            {
-                ...selectedEmployee,
-                isApproval: 'F',
-            }
-        ]);
-    };
+		console.log('Biz1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+	
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;

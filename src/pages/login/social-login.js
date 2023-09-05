@@ -62,7 +62,7 @@ function SocialLogin() {
 
 
     await dispatch(OauthLoginAPI(data));
-    await navigate("/");
+    await navigate("/", { replace: true }); 
 
 
   };
@@ -73,7 +73,7 @@ function SocialLogin() {
   const onLogoutSuccess = async () => {
     console.log('SUCESS LOG OUT');
     await dispatch(callLogoutAPI());
-    await navigate("/");
+    await navigate("/", { replace: true }); 
 
   };
 

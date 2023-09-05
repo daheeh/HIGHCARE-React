@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
@@ -8,38 +8,46 @@ import './ApprovalExp.css';
 import '../Approval.css';
 import { callApvExp7API } from '../../../apis/ApprovalAPICalls';
 
-function Exp7() {
-
+function Exp7({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const [formCount, setFormCount] = useState(1);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const exp7 = useSelector(state => state.approvalReducer);
+	const approval = useSelector(state => state.approval);
 
-	console.log('exp7 first : ', exp7);
+	const isEditMode = approval.apvLines ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+	console.log('Exp7 first : ', approval.data);
 
+	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '법인카드사용보고서',
 		writeDate: '',
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
 		empNo: empNo,
+		empName: authes.name,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvCorpCards: [{
-			cardNo: '',
-			paymentMonth: '',
-			details: '',
-			account: '',
-			amount: '',
-			cardComment: '',
+			cardNo: approval.cardNo ? approval.cardNo : '',
+			paymentMonth: approval.details ? approval.details : '',
+			details: approval.details ? approval.details : '',
+			account: approval.account ? approval.account : '',
+			amount: approval.amount ? approval.amount : 0,
+			cardComment: approval.cardComment ? approval.cardComment : '',
 		}]
 	});
 
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
 	const [amounts, setAmounts] = useState([0]);
 
 	useEffect(() => {
@@ -50,8 +58,8 @@ function Exp7() {
 
 
 	const [sharedProperties, setSharedProperties] = useState({
-		cardNo: '',
-		paymentMonth: '',
+		amount: approval.amount ? approval.amount : 0,
+		paymentMonth: approval.details ? approval.details : '',
 	});
 
 	const onChangeHandler = (e, index) => {
@@ -104,6 +112,15 @@ function Exp7() {
 
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
+	useEffect(() => {
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
+
 	const updateIsUrgency = (newIsUrgency) => {
 		setFormData(prevFormData => ({
 			...prevFormData,
@@ -111,13 +128,32 @@ function Exp7() {
 		}));
 	};
 
+
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
+
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+
 	useEffect(() => {
-		const currentDate = new Date();
-		setFormData(prevFormData => ({
-			...prevFormData,
-			writeDate: currentDate
-		}));
-	}, []);
+		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
+
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -209,13 +245,23 @@ function Exp7() {
 	};
 
 	const handleSubmission = async () => {
+
 		if (empNo !== undefined) {
 			try {
-				const response = await dispatch(callApvExp7API({ formData }));
+				let response;
+				if ((isEditMode)) {
+					// response = await dispatch(callApvExp7UpdateAPI({ formData, selectedEmployees }));
+				} else {
 
+					response = await dispatch(callApvExp7API({ formData, selectedEmployees }));
+				}
 				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
 				} else {
 					window.alert("결재 등록 중 오류가 발생했습니다.");
 				}
@@ -236,10 +282,15 @@ function Exp7() {
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} />
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">법인카드사용보고서</div>
-					<ApvSummitLine />
+					<ApvSummitLine
+						mode="create"
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+						approval={approval}
+					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 							<div className="column1">카드번호</div>

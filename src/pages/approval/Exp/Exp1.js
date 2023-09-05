@@ -9,43 +9,48 @@ import '../Approval.css';
 import { callApvExp1API } from '../../../apis/ApprovalAPICalls';
 
 function Exp1({ mode, data }) {
-    const authes = useSelector(state => state.authes);
-    const empNo = authes.empNo;
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
 
 	const dispatch = useDispatch();
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const exp1 = useSelector(state => state.approval);
+	const approval = useSelector(state => state.approval);
 
-	console.log('exp1 first : ', exp1);
-	
+	const isEditMode = approval.apvLines ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+	console.log('exp1 first : ', approval.data);
+
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '지출결의서',
 		writeDate: '',
-		apvStatus: '결재진행중',
+		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
 		empNo: empNo,
 		empName: authes.name,
-        deptName: authes.dept,
-        jobName: authes.job,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvExpForms: [{
-			requestDate: '',
-			payee: '',
-			bank: '',
-			accountHolder: '',
-			accountNumber: '',
-			details: '',
-			account: '',
-			amount: '',
-			comment: '',
+			requestDate: approval.requestDate ? approval.requestDate : '',
+			payee: approval.payee ? approval.payee : '',
+			bank: approval.bank ? approval.bank : '',
+			accountHolder: approval.accountHolder ? approval.accountHolder : '',
+			accountNumber: approval.accountNumber ? approval.accountNumber : '',
+			details: approval.details ? approval.details : '',
+			account: approval.account ? approval.account : '',
+			amount: approval.amount ? approval.amount : 0,
+			comment: approval.comment ? approval.comment : '',
 		}]
 	});
 
 	const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
+	const initialData = location.state ? location.state.initialData : null;
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -56,11 +61,11 @@ function Exp1({ mode, data }) {
 
 
 	const [sharedProperties, setSharedProperties] = useState({
-		requestDate: '',
-		payee: '',
-		bank: '',
-		accountHolder: '',
-		accountNumber: ''
+		requestDate: approval.requestDate ? approval.requestDate : '',
+		payee: approval.payee ? approval.payee : '',
+		bank: approval.bank ? approval.bank : '',
+		accountHolder: approval.accountHolder ? approval.accountHolder : '',
+		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
 	const onChangeHandler = (e, index) => {
@@ -114,36 +119,47 @@ function Exp1({ mode, data }) {
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
 	useEffect(() => {
-        const currentDate = new Date();
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            writeDate: currentDate,
-            ...(initialData ? initialData : {}),
-        }));
-    }, [initialData]);
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
 
-    const updateIsUrgency = (newIsUrgency) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            isUrgency: newIsUrgency
-        }));
-    };
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
 
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
 
-    useEffect(() => {
-        console.log('Biz1 - selectedEmployees : ', selectedEmployees);
-    }, [setSelectedEmployees]);
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
 
-    const handleEmployeeSelect = (selectedEmployee) => {
-        setSelectedEmployees((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            {
-                ...selectedEmployee,
-                isApproval: 'F',
-            }
-        ]);
-    };
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+
+	useEffect(() => {
+		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
+
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -235,47 +251,51 @@ function Exp1({ mode, data }) {
 	};
 
 	const handleSubmission = async () => {
-        if (empNo !== undefined) {
-            try {
-                let response;
-                if (data) {
-                    // response = await dispatch(callApvBiz1UpdateAPI({ formData, selectedEmployees, apvNo: data.apvNo }));
-                } else {
-                    response = await dispatch(callApvExp1API({ formData, selectedEmployees }));
-                }
-                if (response.status === 200) {
-                    if (response.data === "기안 상신 실패") {
-                        window.alert("결재 등록 실패");
-                    } else {
-                        window.alert("결재 등록 성공");
-                        navigate('/approval');
-                    }
-                } else {
-                    window.alert("결재 등록 중 오류가 발생했습니다.");
-                }
-            } catch (error) {
-                console.error("API error:", error);
-                window.alert("API 요청 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
-        }
-    };
-	console.log('Exp formData : ', formData);
 
+		if (empNo !== undefined) {
+			try {
+				let response;
+				if ((isEditMode)) {
+					// response = await dispatch(callApvExp1UpdateAPI({ formData, selectedEmployees }));
+				} else {
+
+					response = await dispatch(callApvExp1API({ formData, selectedEmployees }));
+				}
+				if (response.status === 200) {
+					if (response.data === "기안 상신 실패") {
+						window.alert("결재 등록 실패");
+					} else {
+						window.alert("결재 등록 성공");
+						navigate('/approval');
+					}
+				} else {
+					window.alert("결재 등록 중 오류가 발생했습니다.");
+				}
+			} catch (error) {
+				console.error("API error:", error);
+				window.alert("API 요청 중 오류가 발생했습니다.");
+			}
+		} else {
+			window.alert("재로그인 요청");
+			navigate('/');
+		}
+	};
+
+	console.log('formData : ', formData);
 
 	return (
 
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
+				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
 				<div className="containerApv">
 					<div className="apvApvTitle">지출결의서(단건)</div>
 					<ApvSummitLine
+						mode="create"
 						selectedEmployees={selectedEmployees}
 						authes={authes}
+						approval={approval}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">

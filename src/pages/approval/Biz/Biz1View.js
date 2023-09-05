@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
-import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
-import { callApvBiz1ViewAPI } from '../../../apis/ApprovalAPICalls';
+import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 
 function Biz1View() {
 
@@ -25,7 +24,7 @@ function Biz1View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await dispatch(callApvBiz1ViewAPI({ apvNo }));
+                const data = await dispatch(callApvViewAPI({ apvNo }));
                 setData(data);
                 console.log('data : ', data);
             } catch (error) {
@@ -47,6 +46,7 @@ function Biz1View() {
                         mode="view"
                         selectedEmployees={data?.apvLines || []}
                         authes={authes}
+                        data={data}
                     />
                     <div className="apvContent">
                         <div className="apvContentTitle">

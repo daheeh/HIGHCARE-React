@@ -2,21 +2,25 @@ import AuthCategory from "./components/AuthCategory";
 import AuthSetting from "./components/AuthSetting";
 import AuthUser from "./components/AuthUser";
 import AuthSytle from "./AuthManager.module.css"
+import { AdminNav } from "../AdminNav";
 
-function AuthManager(){
+function AuthManager() {
 
-    return ( 
+    return (
+        <section>
+            <AdminNav />
 
-        <div className={AuthSytle.Auth}>
-            <div>
-                
-                <AuthCategory/>
+            <div style={{ marginTop: 20 }} className={AuthSytle.Auth}>
+                <div>
+
+                    <AuthCategory />
+                </div>
+                <div>
+                    <AuthUser />
+                    <AuthSetting />
+                </div>
             </div>
-            <div>
-                <AuthUser/>
-                <AuthSetting/>
-            </div>
-        </div>
+        </section>
     );
 
 }

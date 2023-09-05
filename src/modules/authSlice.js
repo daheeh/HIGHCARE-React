@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { kakaoAuth } from "../apis/OAuthApiCalls";
+import { OauthLoginAPI, kakaoAuth } from "../apis/OAuthApiCalls";
 import { authCheckAPI, authCodeSendingAPI } from "../apis/AuthAPICalls";
 import { ReduxReset } from "../utils/ReduxReset";
 
@@ -77,7 +77,22 @@ const authSlice = createSlice({
             })
             .addCase(kakaoAuth.fulfilled, (state, { payload }) => {
                 // 비동기 작업 성공하면 업데이트됨 
-                console.log("fulfilled...!!");
+                console.log("kakao success");
+                state.id = payload.id;
+                state.name = payload.data.memberName;
+                state.empNo = payload.data.empNo;
+                state.accessExp = payload.data.accessTokenExpiresIn;
+                state.refreshExp = payload.data.refreshTokenExpiresIn;
+                state.dept = payload.data.deptName;
+                state.job = payload.data.jobName;
+                state.isLogin = true;
+                state.role = payload.data.role;
+                state.status = payload.status;
+                state.data = payload.data;
+            })
+            .addCase(OauthLoginAPI.fulfilled, (state, { payload }) => {
+                // 비동기 작업 성공하면 업데이트됨 
+                console.log("google success");
                 state.id = payload.id;
                 state.name = payload.data.memberName;
                 state.empNo = payload.data.empNo;
