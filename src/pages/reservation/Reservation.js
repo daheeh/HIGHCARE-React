@@ -1,5 +1,59 @@
 import BoardStyle from '../bulletin/Bullentin.module.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+import {
+    callResAPI
+} from '../../apis/ResAPICall';
+
+import{
+    callResListAPI
+} from '../../apis/ResListAPICall';
+
+import{
+    callResContentAPI
+} from '../../apis/ResContentAPICall';
+
 function Reservation(){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    const res = useSelector(state => state.resReducer);
+    const resCategory = res.data;
+    const resList = useSelector(state => state.resListReducer);
+    const resLoc = resList.data;
+
+    const resContent = useSelector(state => state.resContentReducer);
+    const content = resContent.data;
+
+    useEffect(
+        () =>{
+            dispatch(callResAPI());
+        },[]
+    );
+
+    const onClickCategory = (categoryCode) =>{
+            dispatch(callResListAPI({
+                    categoryCode: categoryCode
+                }));
+                dispatch(callResContentAPI({
+                    resourceCode: 0
+                }));
+
+    }
+    const onClickArea = (resourceCode) =>{
+        dispatch(callResContentAPI({
+            resourceCode: resourceCode
+        }));
+        console.log('content : ', content);
+    }
+
+    const onCLickRes = (resourceCode)=>{
+        navigate(`/reservation/reserve`, {replace: false});
+    }
+
     return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>시설예약</h1>
@@ -9,8 +63,11 @@ function Reservation(){
             <h3>시설선택</h3>
             <div className={BoardStyle.step_1_content}>   
                 <ul>
-                    <li>회의실</li>
-                    <li>강당</li>
+                    {Array.isArray(resCategory) && resCategory.map(
+                        (category) => (
+                            <li onClick={() => onClickCategory(category.categoryCode)}>{category.name}</li>
+                        )
+                    )}
                 </ul>
             </div>
         </div>
@@ -18,19 +75,26 @@ function Reservation(){
             <h3>지역선택</h3>
             <div className={BoardStyle.step_2_content}>
                 <ul>
-                    <li>서울</li>
-                    <li>부산</li>
+                {Array.isArray(resLoc) && resLoc.map(
+                        (area) => (
+                            <li onClick={() => onClickArea(area.resourceCode)}>{area.area}</li>
+                        )
+                    )}
                 </ul>
             </div>
         </div>
         <div className={BoardStyle.step_3}>
             <h3 className="">정보확인</h3>
-            <div id="step-3-content" className={BoardStyle.abcdefg}> 
-                <div>시설명 : <span>3회의실</span></div>
-                <div>위치 : <span>3층</span></div>
-                <div>이용시간 : <span>09:00~17:00</span></div>
+            <div id="step-3-content" className={BoardStyle.abcdefg}>
+            {  content &&
+            <div> 
+                <div>시설명 : <span>{content.resourceName}</span></div>
+                <div>위치 : <span>{content.location}</span></div>
+                <div>이용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
                 <img src="../../img/dog.jpg" alt="" width="300px" height="200px"/>
-                <div style={{textAlign: 'center'}}>예약하기</div>
+                <div style={{textAlign: 'center'}} onClick={() => onCLickRes(content.resourceCode)}>예약하기</div>
+            </div>
+            }
             </div>
         </div>
     </div>

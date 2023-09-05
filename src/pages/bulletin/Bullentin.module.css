@@ -43,6 +43,11 @@
   font-size: 16px;
   margin-bottom: 20px;
 }
+.Image{
+  margin-top: 5px;
+  width: 80%;
+  height: 90%;    
+}
 .content_info span{
   margin-right: 10px;
 }
