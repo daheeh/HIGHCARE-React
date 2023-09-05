@@ -38,8 +38,9 @@ function Reservation(){
             dispatch(callResListAPI({
                     categoryCode: categoryCode
                 }));
-            console.log('res : ' , resCategory);
-            console.log('resLIst : ' , resLoc);
+                dispatch(callResContentAPI({
+                    resourceCode: 0
+                }));
 
     }
     const onClickArea = (resourceCode) =>{
@@ -47,6 +48,10 @@ function Reservation(){
             resourceCode: resourceCode
         }));
         console.log('content : ', content);
+    }
+
+    const onCLickRes = (resourceCode)=>{
+        navigate(`/reservation/reserve`, {replace: false});
     }
 
     return (
@@ -80,15 +85,17 @@ function Reservation(){
         </div>
         <div className={BoardStyle.step_3}>
             <h3 className="">정보확인</h3>
+            <div id="step-3-content" className={BoardStyle.abcdefg}>
             {  content &&
-            <div id="step-3-content" className={BoardStyle.abcdefg}> 
+            <div> 
                 <div>시설명 : <span>{content.resourceName}</span></div>
                 <div>위치 : <span>{content.location}</span></div>
                 <div>이용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
                 <img src="../../img/dog.jpg" alt="" width="300px" height="200px"/>
-                <div style={{textAlign: 'center'}}>예약하기</div>
-           </div>
+                <div style={{textAlign: 'center'}} onClick={() => onCLickRes(content.resourceCode)}>예약하기</div>
+            </div>
             }
+            </div>
         </div>
     </div>
 </div>

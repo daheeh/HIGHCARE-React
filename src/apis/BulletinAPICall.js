@@ -23,6 +23,7 @@ export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
     const result = await fetch(requestURL,{
         method: "GET",
         headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
             "Content-Type": "application/json",
             "Accept": "*/*"
         }
@@ -41,6 +42,7 @@ export const callBoardDetailSAPI = ({bulletinCode})=>{
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -58,6 +60,7 @@ export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -78,6 +81,7 @@ export const callBulletinNavAPI= ()=>{
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -97,6 +101,7 @@ export const callBoardNameAddAPI = ({form}) => {
     const result = await fetch(requestURL, {
         method: "POST",
         headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
             "Content-Type": "application/json",
             "Accept": "*/*" ,
             "Access-Control-Allow-Origin": "*" 
@@ -119,6 +124,7 @@ export const callRegisterAPI = ({form}) => {
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -146,6 +152,7 @@ export const callCommentAPI = ({form}) =>{
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -169,6 +176,7 @@ export const callUpdateAPI = ({form}) =>{
         const result = await  fetch(requestURL, {
             method: "PUT",
             headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -192,6 +200,7 @@ export const callDeleteAPI = ({form}) =>{
         const result = await  fetch(requestURL, {
             method: "PUT",
             headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -214,6 +223,7 @@ export const callCommentDeleteAPI = ({commentCode}) =>{
         const result = await fetch(requestURL,{
             method: "PUT",
             headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"  
             },
@@ -233,6 +243,7 @@ export const callCommentUpdateAPI = ({commentCode,commentContent})=>{
             const result = await fetch(requestURL,{
                 method: "PUT",
                 headers:{
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*"  
                 },

@@ -10,6 +10,7 @@ export const callResAPI = () => {
         const result = await fetch(requestURL, {
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -26,6 +27,7 @@ export const callResAddAPI = ({form})=>{
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*" ,
                 "Access-Control-Allow-Origin": "*" 
@@ -46,6 +48,7 @@ export const callResRegistAPI = ({form}) => {
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Accept": "*/*" ,
                 "Access-Control-Allow-Origin": "*" 
             },
