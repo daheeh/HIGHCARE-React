@@ -128,7 +128,7 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
     return (
         <div className="apvTopBar">
             <div>
-                <button className="summit" onClick={handleClick}>제출</button>
+                <button className="summit" onClick={handleClick} enctype="multipart/form-data">제출</button>
                 <button className={isUrgency === 'T' ? 'emergencyActive' : ''} onClick={handleEmergencyClick}>긴급</button>
                 <button onClick={handleFileModalOpen}>파일첨부</button>
                 {isFileModalOpen && (

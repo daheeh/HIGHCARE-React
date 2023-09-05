@@ -22,8 +22,6 @@ function Hrm1({ mode, data }) {
 
 	const isEditMode = approval.apvLines ? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
-
-
 	console.log('hrm1 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
@@ -51,22 +49,7 @@ function Hrm1({ mode, data }) {
 		}],
 	});
 
-	const [fileList, setFileList] = useState([]);
-
-	const handleFileUpload = (file) => {
-		if (file) {
-			// Create a copy of the current apvFiles array and add the new file to it
-			const updatedApvFiles = [...formData.apvFiles, file];
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvFiles: updatedApvFiles,
-			}));
-
-			// Update the fileList state for rendering in the component
-			setFileList([...fileList, file]);
-			console.log('ApvSummitBar에서 업로드한 파일:', file);
-		}
-	};
+	
 
 
 	const location = useLocation();
@@ -224,6 +207,24 @@ function Hrm1({ mode, data }) {
 			setSelectedEmployees(initialSelectedEmployees);
 		}
 	}, [approval, setSelectedEmployees]);
+	
+
+	const [fileList, setFileList] = useState([]);
+
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
+
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
 
 
 	const updateFileList = (newFileList) => {
