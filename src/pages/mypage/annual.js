@@ -9,29 +9,45 @@ function MypageAnnual() {
 
     // const navigate= useNavigate();
     const dispatch = useDispatch();
+ 
+    const mypageAnn = useSelector(state => state.authes) // authes
+   
+    // const empNo = add.useAn;
 
-    const mypageAnn = useSelector(state => state.authes);
-    console.log("mypageAnn====", mypageAnn);    // authes의 로그인정보로 가지고옴***, 마이페이지의 값을 들고 오면 안됨
 
-        useEffect(() => {
-        dispatch(callAnnSelectAPI(empNo));
-        // console.log("ann test ------", ann);
-    }, 
-    []);
+    // console.log("mypageAnn====", mypageAnn);    // authes의 로그인정보로 가지고옴***, 마이페이지의 값을 들고 오면 안됨
+
+    //     useEffect(() => {
+    //     dispatch(callAnnSelectAPI(mypageAnn.empNo));
+    //     // console.log("ann test ------", ann);
+    // }, 
+    // []);
+
+    // 방법
+    const annemp = mypageAnn.empNo; // authes안에 empNo
+        useEffect(
+        () => {
+            dispatch(callAnnSelectAPI(annemp));       // 나중에 mypage에서 불러오는걸로 바꿔보기
+            console.log("로그인회원정보 담음", annemp);
+          
+            /// empNo로 불러오기
+        }
+        , []);
 
 
     // 로그인한 정보를 받아오기 위해 authes로 접근,  mypage에 담긴 값을 불러오려면 mypage에 담긴 값을 불러와야함
     const ann = useSelector(state => state.mypage);
+
     // const apvVa = ann[0].myApvVation;
     // const useAn = ann.empNo; 
-    const empNo = mypageAnn.useAn;
+
     // console.log("apvVa=====",apvVa);
 
 
     // 리듀서명을 코드 어디서 확인할지 알아보기
     console.log("in reducer/mypage/myAnnual  ====== ",ann);
     // console.log("myAnuual.addAn", ann[0]);  // 연차안에 있는 값 출력
-    console.log('연차개수',empNo);
+    // console.log('연차개수',empNo);
     // console.log("empNo=====", empNo);
 
     // console.log("mypageAnn", mypageAnn);
@@ -89,8 +105,8 @@ function MypageAnnual() {
                     <div className='div3'></div>
                     <div className="pm-ma-box2">
                         <div className="pm-ma-font">총연차</div>
-                        {/* <div className="pm-ma-number" >{ ann[0].ban }</div> */}
-                        {/* <div className="pm-ma-number" >{ ann.ban }</div> */}
+                        <div className="pm-ma-number" >{ ann[0].ban }</div> 
+                        <div className="pm-ma-number" >{ ann.ban }</div>
                     </div>
                     <div className="pm-line"></div>
                     <div className="pm-ma-box">
@@ -100,8 +116,8 @@ function MypageAnnual() {
                     <div className="pm-line"></div>
                     <div className="pm-ma-box">
                         <div>잔여 연차</div>
-                        {/* <div className="pm-ma-number">{ ann[0].totalAn}</div> */}
-                        {/* <div className="pm-ma-number" >{ ann.ban }</div> */}
+                        <div className="pm-ma-number">{ ann[0].totalAn}</div> 
+                        <div className="pm-ma-number" >{ ann.ban }</div>
                         {/* 잔여연차는 최신으로 들어간 DB값을 불러와야 하는 로직 필요 */}
                     </div>
                     <div className="pm-line"></div>
@@ -143,12 +159,12 @@ function MypageAnnual() {
                         .map((item) => (
                             <tr className = "myanntrsize" key={ item?.annNo }>
                                 {/* pk 인덱스 */}
-                                <td>{item.myApvVation.sdate}</td>
+                                {/* <td>{item.myApvVation.sdate}</td>
                                 <td>{item.myApvVation.edate}</td>
-                                <td>{item.myApvVation.type}</td>
+                                <td>{item.myApvVation.type}</td> */}
                                 {/* <td>{}</td>
                                 <td>{}</td> */}
-                                <td>{item.myApvVation?.comment}</td>
+                                {/* <td>{item.myApvVation?.comment}</td> */}
                                 {/* <td>{}</td> */}
                             </tr>
                             

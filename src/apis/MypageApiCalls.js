@@ -18,11 +18,12 @@ export const callMypageProfileSelectAPI = (empNo) => {
             const result = await fetch(requestURL, {
                 method: "GET",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     "Content-Type": "application/json",
 
                 },
-                body: JSON.stringify(),
+                // body: JSON.stringify(),
 
             })
             .then(response => response.json());
@@ -39,11 +40,9 @@ export const callMypageProfileSelectAPI = (empNo) => {
 
 export const callProfileInsertAPI = ({form}) => {
 
-    console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form);
+    console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form.get('profileImage'));
 
     const requestURL = `http://localhost:8080/api/mypage/update`;
-   
-     
 
     return async (dispatch, getState) => {
 
@@ -51,6 +50,7 @@ export const callProfileInsertAPI = ({form}) => {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     "Access-Control-Allow-Origin": "*"
                 },
@@ -60,16 +60,16 @@ export const callProfileInsertAPI = ({form}) => {
 
             console.log('[callProfileInsertAPI] callProfileInsertAPI Result : ', result);
 
-            dispatch({ type: POST_MYPAGE_PROFILE, payload: result});
+            dispatch({ type: POST_MYPAGE_PROFILE, payload: result.data});
         }catch(error) {
             console.error('[callProfilesSelectAPI] Error in callProfilesSelectAPI', error);
         }
     };
 };
-
+// 특정 사원의 정보를 조회하고 검색하는 식별자
 export const callAnnSelectAPI = (empNo) => {
 
-    console.log('[callAnnSelectAPI Call]');
+    console.log('[callAnnSelectAPI Call]', empNo);
 
     const requestURL = `http://localhost:8080/api/mypage/anselect/${empNo}`;
     console.log("RequestURL : ", requestURL);
@@ -78,8 +78,10 @@ export const callAnnSelectAPI = (empNo) => {
 
         try{
             const result = await fetch(requestURL, {
+                
                 method: "GET",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*"
                 }
@@ -112,6 +114,7 @@ export const callManSlectAPI = (empNo) => {
             const result = await fetch(requestURL, {
                 method: "GET",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*"
                 }
@@ -121,14 +124,12 @@ export const callManSlectAPI = (empNo) => {
 
             console.log('[callManSlectAPI] callManSlectAPI Result : ', result);
 
-            dispatch({ type: GET_MYPAGE_MANSELECT, payload: result.data });
+            dispatch({ type: GET_MYPAGE_MANSELECT, payload: result });
 
         } catch(error) {
             console.log('[callManSlectAPI Call] Error in', error)
         }
         
-        
-
     }
 }
 

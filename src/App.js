@@ -80,17 +80,15 @@ import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
-<<<<<<< HEAD
+
 import LoginVerify from "./utils/LoginVerify";
 
 import MypageAnnual from "./pages/mypage/annual";
 import MyManegement from "./pages/mypage/mymanegement";
-=======
-import MypageAnnual from "./pages/mypage/annual";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 import TokenVerification from "./pages/admin/auth/TokenVerification";
->>>>>>> 7e5d23292b6c1aa9540d6110625c18ae17c2c10a
+
 
 
 
@@ -202,14 +200,12 @@ function App() {
           <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-<<<<<<< HEAD
+
           <Route path="/mypage/profile" element={<Profile />}/>
           <Route path="/mypage/annual" element={<MypageAnnual />}/>
           <Route path="/mypage/mymanegement" element={<MyManegement />} />
-=======
-          <Route path="/mypage/profile" element={<Profile />} />
-          <Route path="/mypage/annual" element={<MypageAnnual />} />
->>>>>>> 7e5d23292b6c1aa9540d6110625c18ae17c2c10a
+
+
 
 
           <Route path="/socket/chatting" element={<ChattingPage />} />
