@@ -34,6 +34,7 @@ export const POST_APPROVAL_HRM1 = 'approval/POST_APPROVAL_HRM1';
 export const PUT_APPROVAL_HRM1 = 'approval/PUT_APPROVAL_HRM1';
 
 export const POST_APPROVAL_HRM3 = 'approval/POST_APPROVAL_HRM3';
+export const RESET_APPROVAL = 'approval/RESET_APPROVAL';
 
 const actions = createActions({
 
@@ -64,6 +65,7 @@ const actions = createActions({
     [PUT_APPROVAL_HRM1]: () => { },
 
     [POST_APPROVAL_HRM3]: () => { },
+    [RESET_APPROVAL]: () => { },
 
 })
 
@@ -142,6 +144,10 @@ const approvalReducer = handleActions(
             return payload;
         },
 
+
+        [RESET_APPROVAL]:  (state, action ) => {
+                return initialState
+        }
     },
     initialState
 );

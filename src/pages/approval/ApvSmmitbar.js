@@ -4,7 +4,8 @@ import ApvLineTree from './ApvLineTree';
 import ApvFile from './ApvFile';
 import ApvFileList from './ApvFileList';
 import { uploadFiles } from './ApvFileUpload';
-import PdfDocument from './PDFView';
+import PdfDocument from './PdfDocument';
+import { pdf } from '@react-pdf/renderer';
 
 const modalStyles = {
     content: {
@@ -21,7 +22,7 @@ const modalStyles = {
 };
 
 
-function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, currentPage, generatePdfData }) {
+function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, currentPage, data }) {
     const [isUrgency, setIsUrgency] = useState('F');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFileModalOpen, setIsFileModalOpen] = useState(false);
@@ -122,17 +123,46 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
         onSubmit(dateToSend);
 
     };
-    const handleExportToPdf = async () => {
-        if (generatePdfData) {
-            const pdfBlob = generatePdfData(); // 수정: generatePdfData 함수를 호출하여 PDF Blob을 가져옴
-            const pdfDataUrl = URL.createObjectURL(pdfBlob);
 
-            // PDF를 새 창에서 열기
-            window.open(pdfDataUrl);
-        } else {
-            console.error('PDF 생성 콜백이 사용 가능하지 않습니다.');
-        }
+    const generatePdfData = () => {
+        return pdf(<PdfDocument data={data} currentPage={currentPage}/>).toBlob();
+      };
+    
+    
+
+      const handleExportToPdf = () => {
+        const pdfBlob = pdf(<PdfDocument data={data} currentPage={currentPage} />).toBlob();
+
+  // PDF Blob을 데이터 URL로 변환
+  const pdfDataUrl = URL.createObjectURL(pdfBlob);
+
+  // 새로운 탭에서 PDF 열기
+  window.open(pdfDataUrl);
+
+  // 새로운 탭이 열린 후 URL 객체 정리
+  URL.revokeObjectURL(pdfDataUrl);
     };
+
+    // const handleExportToPdf = () => {
+    //     if (generatePdfData) {
+    //       const pdfBlob = generatePdfData(); // Generate the PDF Blob using generatePdfData function
+    //       // Create a URL for the Blob
+    //       const pdfUrl = URL.createObjectURL(pdfBlob);
+          
+    //       // Create a downloadable link
+    //       const downloadLink = document.createElement('a');
+    //       downloadLink.href = pdfUrl;
+    //       downloadLink.download = 'document.pdf'; // Specify the desired file name
+    //       downloadLink.click();
+          
+    //       // Clean up the URL object after the download link is clicked
+    //       URL.revokeObjectURL(pdfUrl);
+    //     } else {
+    //       console.error('PDF 생성 콜백이 사용 가능하지 않습니다.');
+    //     }
+    //   };
+      
+      
 
 
     return (

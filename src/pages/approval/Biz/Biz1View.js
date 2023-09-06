@@ -7,6 +7,7 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
+import ApvFileList from '../ApvFileList';
 import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 
 // React PDF 스타일 정의
@@ -55,11 +56,11 @@ function Biz1View() {
     return pdfBlob;
   };
 
-  useEffect(() => {
-    // PDF 데이터를 생성하고 ApvSummitBar 컴포넌트에 전달
-    const pdfData = generatePdfData();
-    ApvSummitBar.onGeneratePdf(pdfData);
-  }, [data]);
+  // useEffect(() => {
+  //   // PDF 데이터를 생성하고 ApvSummitBar 컴포넌트에 전달
+  //   const pdfData = generatePdfData();
+  //   ApvSummitBar.onGeneratePdf(pdfData);
+  // }, [data]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +82,7 @@ function Biz1View() {
       <div>
         <ApvSummitBar
           data={data}
+          generatePdfData={generatePdfData}
           currentPage={<Biz1View />}
         />
         <div className="containerApv">
@@ -119,6 +121,7 @@ function Biz1View() {
               />
             </div>
           </div>
+          <ApvFileList files={data?.apvFiles || []} data={data} />
         </div>
       </div>
     </section>

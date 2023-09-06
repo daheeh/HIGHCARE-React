@@ -9,14 +9,17 @@ import '../Approval.css';
 import { callApvBiz1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
+import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 function Biz1({ mode, data }) {
+
+    const dispatch = useDispatch();
+    dispatch({ type: RESET_APPROVAL});
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const approval = useSelector(state => state.approval);
