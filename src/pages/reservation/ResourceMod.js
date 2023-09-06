@@ -24,8 +24,9 @@ function ResourceMod(){
     const imageInput = useRef();
     const navigate = useNavigate();
 
-    console.log('content : ' , content);
+    console.log('contentresourceCode : ' , content.resourceCode);
     const [form, setForm] = useState({
+        resourceCode: content.resourceCode,
         resourceName: content.resourceName,
         area: content.area,
         location: content.location,
@@ -92,7 +93,7 @@ function ResourceMod(){
 
     const onClickResourceModHandler = () => {
         const formData = new FormData();
-
+        formData.append("resourceCode", form.resourceCode);
         formData.append("resourceName", form.resourceName);
         formData.append("area", form.area);
         formData.append("location", form.location);
