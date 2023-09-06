@@ -7,9 +7,9 @@ import {
 
     GET_APPROVAL,
     DELETE_APPROVAL,
+    PUT_APPROVAL,
 
     POST_APPROVAL_BIZ1,
-    PUT_APPROVAL_BIZ1,
 
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
@@ -220,27 +220,23 @@ export const callApvBiz1API = ({ requestData }) => {
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
-formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
-// Convert selectedEmployees to an array if it's not already
-const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-    ? requestData.selectedEmployees
-    : [requestData.selectedEmployees];
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+        ? requestData.selectedEmployees
+        : [requestData.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
 
-// apvLineDTOsArray.forEach(emp => {
-//     formData.append('apvLineDTOs', new Blob([JSON.stringify(emp)], { type: 'application/json' }));
-// });
+    // apvLineDTOsArray.forEach(emp => {
+    //     formData.append('apvLineDTOs', new Blob([JSON.stringify(emp)], { type: 'application/json' }));
+    // });
 
-if (requestData.attachedFiles.length > 0) {
-    requestData.attachedFiles.forEach(file => {
-        formData.append('apvFileDTO', file);
-    });
-}
-
-
-
-
+    if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
 
     return async (dispatch, getState) => {
         try {
@@ -264,78 +260,55 @@ if (requestData.attachedFiles.length > 0) {
     };
 };
 
+export const callApvUpdateAPI = ({ requestData }) => {
 
+    console.log('[ApprovalAPICalls] biz1 callApvUpdateAPI Call');
 
+    const apvNo = requestData.formData.apvNo;
 
+    const requestURL = `http://localhost:8080/api/approval/put/${apvNo}`;
 
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+        ? requestData.selectedEmployees
+        : [requestData.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
 
+    // apvLineDTOsArray.forEach(emp => {
+    //     formData.append('apvLineDTOs', new Blob([JSON.stringify(emp)], { type: 'application/json' }));
+    // });
 
-
-//     return async (dispatch, getState) => {
-
-//         console.log('requestData', requestData);
-//         console.log('[ApprovalAPICalls] biz1 callApvHrm1API formData : ', requestData.formData);
-//         console.log('[ApprovalAPICalls] biz1 callApvHrm1API selectedEmployees : ', requestData.selectedEmployees);
-//         console.log('[ApprovalAPICalls] biz1 callApvHrm1API attachedFiles : ', requestData.attachedFiles);
-
-
-//         try {
-//             const result = await fetch(requestURL, {
-//                 method: "POST",
-//                 headers: {
-//                     "Accept": "*/*",
-//                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-//                     'Content-Type': 'application/json',
-//                     "Access-Control-Allow-Origin": "*",
-//                 },
-//                 body: JSON.stringify({ apvFormDTO: requestData.formData, apvLineDTOs: requestData.selectedEmployees, apvFileDTO: requestData.attachedFiles }),
-//             })
-//                 .then(response => response.json());
-
-//             console.log('[ApprovalAPICalls] biz1 callApvBiz1API RESULT : ', result);
-
-//             dispatch({ type: POST_APPROVAL_BIZ1, payload: result });
-//             return result;
-//         } catch (error) {
-//             console.error('[ApprovalAPICalls] biz1 Error in callApvBiz1API: ', error);
-//             throw error;
-//         }
-//     };
-// };
-
-export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
-
-    console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI Call');
-
-    const requestURL = `http://localhost:8080/api/approval/put/biz1`;
+    if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
 
     return async (dispatch, getState) => {
 
-        console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI formData : ', formData);
-        console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI selectedEmployees : ', selectedEmployees);
+        console.log('[ApprovalAPICalls] callApvUpdateAPI formData : ', requestData.formData);
+        console.log('[ApprovalAPICalls] callApvUpdateAPI selectedEmployees : ', requestData.selectedEmployees);
 
         try {
             const result = await fetch(requestURL, {
                 method: "PUT",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "X-HTTP-Method-Override": "PUT",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
+            console.log('[ApprovalAPICalls] callApvUpdateAPI RESULT : ', result);
 
-            console.log('[ApprovalAPICalls] biz1 callApvBiz1UpdateAPI RESULT : ', result);
-
-            dispatch({ type: PUT_APPROVAL_BIZ1, payload: result });
+            dispatch({ type: PUT_APPROVAL, payload: result });
             return result;
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error biz1 in callApvBiz1API: ', error);
+            console.error('[ApprovalAPICalls] Error in callApvUpdateAPI: ', error);
             throw error;
         }
     };
@@ -344,64 +317,83 @@ export const callApvBiz1UpdateAPI = ({ formData, selectedEmployees }) => {
 
 
 /* 전자결재 - 업무 : biz2 회의록 */
-export const callApvBiz2API = ({ formData, selectedEmployees }) => {
+export const callApvBiz2API = ({ requestData }) => {
 
-    console.log('[ApprovalAPICalls] callApvBiz2API Call');
+    console.log('[ApprovalAPICalls] biz2 callApvBiz2API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/biz2`;
 
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+        ? requestData.selectedEmployees
+        : [requestData.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-
-        console.log('[ApprovalAPICalls] callApvBiz2API formData : ', formData);
-        console.log('[ApprovalAPICalls] callApvBiz2API selectedEmployees : ', selectedEmployees);
-
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvBiz2API RESULT : ', result);
+
+            console.log('[ApprovalAPICalls] biz2 callApvBiz2API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ2, payload: result });
             return result;
 
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvBiz2API: ', error);
+            console.error('[ApprovalAPICalls] Error biz2 in callApvBiz2API: ', error);
             throw error;
         }
     };
 };
 
 /* 전자결재 - 업무 : biz3 출장신청서 */
-export const callApvBiz3API = ({ formData, selectedEmployees }) => {
+export const callApvBiz3API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz3API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/biz3`;
 
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-
-        console.log('[ApprovalAPICalls] callApvBiz3API formData : ', formData);
-        console.log('[ApprovalAPICalls] callApvBiz3API selectedEmployees : ', selectedEmployees);
-
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
@@ -421,29 +413,39 @@ export const callApvBiz3API = ({ formData, selectedEmployees }) => {
 /* 전자결재 양식 - 지출 */
 
 /* 전자결재 - 지출 : exp1 지출결의서 */
-export const callApvExp1API = ({ formData, selectedEmployees }) => {
+export const callApvExp1API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] exp1 callApvExp1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp1`;
 
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+ 
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-
-        console.log('[ApprovalAPICalls] exp1 callApvExp1API formData : ', formData);
-        console.log('[ApprovalAPICalls] exp1 callApvExp1API selectedEmployees : ', selectedEmployees);
-
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
+
 
             console.log('[ApprovalAPICalls] exp1 callApvExp1API RESULT : ', result);
 
@@ -459,61 +461,87 @@ export const callApvExp1API = ({ formData, selectedEmployees }) => {
 
 
 /* 전자결재 - 지출 : exp2 지출결의서 */
-export const callApvExp2API = ({ formData }) => {
+export const callApvExp2API = ({ requestData }) => {
 
-    console.log('[ApprovalAPICalls] callApvExp2API Call');
+    console.log('[ApprovalAPICalls] exp2 callApvExp1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/exp1`;
+    const requestURL = `http://localhost:8080/api/approval/insert/exp2`;
+
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+ 
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
 
     return async (dispatch, getState) => {
-
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvExp2API RESULT : ', result.data);
 
-            dispatch({ type: POST_APPROVAL_EXP2, payload: result.data });
+            console.log('[ApprovalAPICalls] exp2 callApvExp2API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_EXP2, payload: result });
+            return result;
         } catch (error) {
-            console.error('[ApprovalAPICalls] Error in callApvExp2API: ', error);
+            console.error('[ApprovalAPICalls] exp2 Error in callApvExp2API: ', error);
             throw error;
         }
-
     };
 };
 
 
 
 /* 전자결재 - 지출 : exp4 출장경비정산서 */
-export const callApvExp4API = ({ formData, selectedEmployees }) => {
-    console.log('[ApprovalAPICalls] exp4 callApvExp4API Call');
+export const callApvExp4API = ({ requestData }) => {
+
+    console.log('[ApprovalAPICalls] exp4 callApvExp1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp4`;
 
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+ 
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-        console.log('[ApprovalAPICalls] exp4 callApvExp4API formData : ', formData);
-        console.log('[ApprovalAPICalls] exp4 callApvExp4API selectedEmployees : ', selectedEmployees);
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
+
 
             console.log('[ApprovalAPICalls] exp4 callApvExp4API RESULT : ', result);
 
@@ -523,33 +551,45 @@ export const callApvExp4API = ({ formData, selectedEmployees }) => {
             console.error('[ApprovalAPICalls] exp4 Error in callApvExp4API: ', error);
             throw error;
         }
-
     };
 };
 
 
 
 /* 전자결재 - 지출 : exp6 경조금 신청서 */
-export const callApvExp6API = ({ formData, selectedEmployees }) => {
-    console.log('[ApprovalAPICalls] exp6 callApvExp6API Call');
+export const callApvExp6API = ({ requestData }) => {
+
+    console.log('[ApprovalAPICalls] exp6 callApvExp1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp6`;
 
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+ 
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-        console.log('[ApprovalAPICalls] exp6 callApvExp6API formData : ', formData);
-        console.log('[ApprovalAPICalls] exp6 callApvExp6API selectedEmployees : ', selectedEmployees);
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
+
 
             console.log('[ApprovalAPICalls] exp6 callApvExp6API RESULT : ', result);
 
@@ -559,32 +599,44 @@ export const callApvExp6API = ({ formData, selectedEmployees }) => {
             console.error('[ApprovalAPICalls] exp6 Error in callApvExp6API: ', error);
             throw error;
         }
-
     };
 };
 
 
 /* 전자결재 - 지출 : exp7 법인카드사용보고서 */
-export const callApvExp7API = ({ formData, selectedEmployees }) => {
-    console.log('[ApprovalAPICalls] exp7 callApvExp6API Call');
+export const callApvExp7API = ({ requestData }) => {
+
+    console.log('[ApprovalAPICalls] exp7 callApvExp1API Call');
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp7`;
 
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+ 
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
     return async (dispatch, getState) => {
-        console.log('[ApprovalAPICalls] exp7 callApvExp7API formData : ', formData);
-        console.log('[ApprovalAPICalls] exp7 callApvExp7API selectedEmployees : ', selectedEmployees);
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
+
 
             console.log('[ApprovalAPICalls] exp7 callApvExp7API RESULT : ', result);
 
@@ -594,7 +646,6 @@ export const callApvExp7API = ({ formData, selectedEmployees }) => {
             console.error('[ApprovalAPICalls] exp7 Error in callApvExp7API: ', error);
             throw error;
         }
-
     };
 };
 
@@ -604,7 +655,6 @@ export const callApvExp7API = ({ formData, selectedEmployees }) => {
 /* 전자결재 양식 - 인사 */
 
 /* 전자결재 - 인사 : hrm1 연차신청서, hrm2 기타휴가신청서 */
-// export const callApvHrm1API = ({ formData, selectedEmployees, attachedFiles }) => {
 export const callApvHrm1API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] hrm1 callApvHrm1API Call');
@@ -612,25 +662,35 @@ export const callApvHrm1API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/hrm1`;
 
-    return async (dispatch, getState) => {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API formData : ', requestData.formData);
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API selectedEmployees : ', requestData.selectedEmployees);
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1API attachedFiles : ', requestData.attachedFiles);
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+        ? requestData.selectedEmployees
+        : [requestData.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
+    return async (dispatch, getState) => {
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: requestData.formData, apvLineDTOs: requestData.selectedEmployees, apvFileDTOs: requestData.attachedFiles }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] hrm1 callApvHrm1API RESULT : ', result);
+            console.log('[ApprovalAPICalls] biz1 callApvBiz1API RESULT : ', result);
+
 
             dispatch({ type: POST_APPROVAL_HRM1, payload: result });
             return result;
@@ -656,13 +716,12 @@ export const callApvHrm1UpdateAPI = ({ formData, selectedEmployees }) => {
 
         try {
             const result = await fetch(requestURL, {
-                method: "PUT",
+                method: 'PUT',
                 headers: {
-                    "Accept": "*/*",
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "X-HTTP-Method-Override": "PUT",
+                    'Access-Control-Allow-Origin': '*',
                 },
                 body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
             })
@@ -683,33 +742,44 @@ export const callApvHrm1UpdateAPI = ({ formData, selectedEmployees }) => {
 
 
 /* 전자결재 - 인사 : hrm3 서류발급신청서 */
-export const callApvHrm3API = ({ formData, selectedEmployees }) => {
+export const callApvHrm3API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] hrm3 callApvHrm3API Call');
+    console.log('ApprovalAPICalls requestData', requestData);
 
     const requestURL = `http://localhost:8080/api/approval/insert/hrm3`;
 
-    return async (dispatch, getState) => {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
-        console.log('[ApprovalAPICalls] hrm3 callApvHrm3API formData : ', formData);
-        console.log('[ApprovalAPICalls] hrm3 callApvHrm3API selectedEmployees : ', selectedEmployees);
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+        ? requestData.selectedEmployees
+        : [requestData.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
+    return async (dispatch, getState) => {
         try {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
-                    "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
+                body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
 
-
             console.log('[ApprovalAPICalls] hrm3 callApvHrm3API RESULT : ', result);
 
-            dispatch({ type: POST_APPROVAL_HRM3, payload: result });
+
+            dispatch({ type: POST_APPROVAL_HRM1, payload: result });
             return result;
 
         } catch (error) {

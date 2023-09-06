@@ -6,7 +6,7 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
-import { callApvBiz1API, callApvBiz1UpdateAPI } from '../../../apis/ApprovalAPICalls';
+import { callApvBiz1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
 
@@ -21,30 +21,30 @@ function Biz1({ mode, data }) {
 
     const approval = useSelector(state => state.approval);
 
-    const isEditMode = approval.apvNo? true : false;
+    const isEditMode = approval.apvNo ? true : false;
     console.log('isEditMode 1 : ', isEditMode);
     console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
-        apvNo: approval.apvNo?approval.apvNo:'',
-        title: approval.title?approval.title:'',
+        apvNo: approval.apvNo ? approval.apvNo : '',
+        title: approval.title ? approval.title : '',
         writeDate: '',
         apvStatus: '결재예정',
         isUrgency: 'F',
         category: '업무',
         empNo: empNo,
-        contents1: approval.contents1? approval.contents1 : '',
-        contents2: approval.contents2? approval.contents2 : '',
+        contents1: approval.contents1 ? approval.contents1 : '',
+        contents2: approval.contents2 ? approval.contents2 : '',
         empName: authes.name,
         deptName: authes.dept,
         jobName: authes.job,
-        apvLines: approval.apvLines?approval.apvLines: [],
+        apvLines: approval.apvLines ? approval.apvLines : [],
         apvFiles: approval.apvFiles ? approval.apvFiles : [],
     });
 
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
 
     useEffect(() => {
         console.log('isEditMode 2 : ', isEditMode);
@@ -63,8 +63,8 @@ function Biz1({ mode, data }) {
         }));
     };
 
-    
-	const initialSelectedEmployees = [{
+
+    const initialSelectedEmployees = [{
         degree: 0,
         isApproval: 'T',
         apvDate: new Date(),
@@ -77,17 +77,17 @@ function Biz1({ mode, data }) {
     const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
     useEffect(() => {
-		console.log('Biz1 - selectedEmployees : ', selectedEmployees);
-		if (approval.apvLines) {
-			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
-				...line,
-				isApproval: 'F',
-				apvLineNo: line.apvLineNo,
-			}));
-	
-			setSelectedEmployees(initialSelectedEmployees);
-		}
-	}, [approval, setSelectedEmployees]);
+        console.log('Biz1 - selectedEmployees : ', selectedEmployees);
+        if (approval.apvLines) {
+            const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+                ...line,
+                isApproval: 'F',
+                apvLineNo: line.apvLineNo,
+            }));
+
+            setSelectedEmployees(initialSelectedEmployees);
+        }
+    }, [approval, setSelectedEmployees]);
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -98,67 +98,68 @@ function Biz1({ mode, data }) {
     }
 
     const [fileList, setFileList] = useState([]);
-	const handleFileUpload = (file) => {
-		if (file) {
-			// Create a copy of the current apvFiles array and add the new file to it
-			const updatedApvFiles = [...formData.apvFiles, file];
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvFiles: updatedApvFiles,
-			}));
+    const handleFileUpload = (file) => {
+        if (file) {
+            // Create a copy of the current apvFiles array and add the new file to it
+            const updatedApvFiles = [...formData.apvFiles, file];
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                apvFiles: updatedApvFiles,
+            }));
 
-			// Update the fileList state for rendering in the component
-			setFileList([...fileList, file]);
-			console.log('ApvSummitBar에서 업로드한 파일:', file);
-		}
-	};
-    
+            // Update the fileList state for rendering in the component
+            setFileList([...fileList, file]);
+            console.log('ApvSummitBar에서 업로드한 파일:', file);
+        }
+    };
+
     const updateFileList = (newFileList) => {
-		setFileList(newFileList);
-	  };
+        setFileList(newFileList);
+    };
 
-	useEffect(() => {
-		console.log('fileList : ', fileList);
-	}, [fileList])
+    useEffect(() => {
+        console.log('fileList : ', fileList);
+    }, [fileList])
 
-	const APIPoint = isEditMode ? callApvBiz1UpdateAPI : callApvBiz1API;
+    const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz1API;
 
-	const handleSubmissionClick = () => {
-		const submissionData = {
-			empNo,
-			isEditMode,
-			formData,
-			selectedEmployees,
-			navigate,
-			fileList,
-			APIPoint,
-			dispatch,
-		};
+    const handleSubmissionClick = () => {
+        const submissionData = {
+            empNo,
+            isEditMode,
+            formData,
+            selectedEmployees,
+            navigate,
+            fileList,
+            APIPoint,
+            dispatch,
+        };
 
-		console.log('submissionData', submissionData);
-		handleSubmission(null, submissionData);
-	};
+        console.log('submissionData', submissionData);
+        handleSubmission(null, submissionData);
+    };
     console.log('Biz formData : ', formData);
 
     return (
         <section>
             <ApvMenu />
             <div>
-				<ApvSummitBar
-					onSubmit={handleSubmissionClick}
-					updateIsUrgency={updateIsUrgency}
-					setSelectedEmployees={setSelectedEmployees}
-					fileList={fileList}
-					updateFileList={updateFileList}
-				/>
-				<div className="containerApv">
+                <ApvSummitBar
+                    onSubmit={handleSubmissionClick}
+                    updateIsUrgency={updateIsUrgency}
+                    setSelectedEmployees={setSelectedEmployees}
+                    fileList={fileList}
+                    updateFileList={updateFileList}
+                    data={data}
+                />
+                <div className="containerApv">
                     <div className="apvApvTitle">기안서</div>
                     <ApvSummitLine
-						mode="create"
-						selectedEmployees={selectedEmployees}
-						authes={authes}
-						approval={approval}
-					/>
+                        mode="create"
+                        selectedEmployees={selectedEmployees}
+                        authes={authes}
+                        approval={approval}
+                    />
                     <div className="apvContent">
                         <div className="apvContentTitle">
                             <div className="column1">제목</div>
@@ -194,10 +195,10 @@ function Biz1({ mode, data }) {
                         </div>
                     </div>
                     <ApvFileList files={fileList} />
-				</div>
-			</div>
-		</section>
-	);
+                </div>
+            </div>
+        </section>
+    );
 }
 
 export default Biz1;

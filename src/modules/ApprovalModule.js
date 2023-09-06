@@ -15,7 +15,7 @@ export const GET_APPROVAL = 'approval/GET_APPROVAL';
 export const DELETE_APPROVAL = 'approval/DELETE_APPROVAL';
 
 export const POST_APPROVAL_BIZ1 = 'approval/POST_APPROVAL_BIZ1';
-export const PUT_APPROVAL_BIZ1 = 'approval/PUT_APPROVAL_BIZ1';
+export const PUT_APPROVAL = 'approval/PUT_APPROVAL';
 
 export const POST_APPROVAL_BIZ2 = 'approval/POST_APPROVAL_BIZ2';
 export const POST_APPROVAL_BIZ3 = 'approval/POST_APPROVAL_BIZ3';
@@ -46,7 +46,7 @@ const actions = createActions({
     [DELETE_APPROVAL]: () => { },
 
     [POST_APPROVAL_BIZ1]: () => { },
-    [PUT_APPROVAL_BIZ1]: () => { },
+    [PUT_APPROVAL]: () => { },
 
     [POST_APPROVAL_BIZ2]: () => { },
     [POST_APPROVAL_BIZ3]: () => { },
@@ -89,7 +89,7 @@ const approvalReducer = handleActions(
         [POST_APPROVAL_BIZ1]: (state, { payload }) => {
             return payload;
         },
-        [PUT_APPROVAL_BIZ1]: (state, { payload }) => {
+        [PUT_APPROVAL]: (state, { payload }) => {
             return payload;
         },
 

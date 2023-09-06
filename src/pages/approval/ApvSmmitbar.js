@@ -4,6 +4,7 @@ import ApvLineTree from './ApvLineTree';
 import ApvFile from './ApvFile';
 import ApvFileList from './ApvFileList';
 import { uploadFiles } from './ApvFileUpload';
+import PdfDocument from './PDFView';
 
 const modalStyles = {
     content: {
@@ -20,7 +21,7 @@ const modalStyles = {
 };
 
 
-function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList }) {
+function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, currentPage, generatePdfData }) {
     const [isUrgency, setIsUrgency] = useState('F');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFileModalOpen, setIsFileModalOpen] = useState(false);
@@ -121,8 +122,17 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
         onSubmit(dateToSend);
 
     };
+    const handleExportToPdf = async () => {
+        if (generatePdfData) {
+            const pdfBlob = generatePdfData(); // 수정: generatePdfData 함수를 호출하여 PDF Blob을 가져옴
+            const pdfDataUrl = URL.createObjectURL(pdfBlob);
 
-
+            // PDF를 새 창에서 열기
+            window.open(pdfDataUrl);
+        } else {
+            console.error('PDF 생성 콜백이 사용 가능하지 않습니다.');
+        }
+    };
 
 
     return (
@@ -135,7 +145,6 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
                     <Modal isOpen={isFileModalOpen} onRequestClose={handleFileModalClose} style={modalStyles}>
                         <div>
                             <div>
-                                {/* Use the onChange event to handle file selection */}
                                 <input type="file" onChange={handleFileChange} />
                                 <button className="apvBtn2" onClick={handleUploadClick}>업로드</button>
                             </div>
@@ -164,6 +173,7 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
                     <ApvLineTree onSelect={handleCompleteSelection} />
                 </Modal>
                 <button>설정</button>
+                <button onClick={handleExportToPdf}>PDF로 내보내기</button>
             </div>
         </div >
     );
