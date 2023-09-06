@@ -46,11 +46,10 @@ import "../chatting/ChatTextBalloon.css";
             }
         }, [socketData]);
     
+
+
+
         
-    
-        //============================= WebSocket =====================================
-        //============================= WebSocket =====================================
-        //============================= WebSocket =====================================
         //============================= WebSocket =====================================
 
         // 사용자가 텍스트 입력할 때 호출되는 함수
@@ -61,7 +60,7 @@ import "../chatting/ChatTextBalloon.css";
     
         //웹소켓 연결 설정
         const webSocketLogin = useCallback(() => {
-            ws.current = new WebSocket("ws://localhost:8080/socket/chatting"); // 웹소켓 연결
+            ws.current = new WebSocket("ws://localhost:8080/ws-stomp"); // 웹소켓 연결
     
             ws.current.onmessage = (message) => {
                 const dataSet = JSON.parse(message.data);   // 웹소켓에서 받은 메세지데이터 파싱
@@ -118,12 +117,9 @@ import "../chatting/ChatTextBalloon.css";
             setMsg(""); // 메세지 입력창 초기화
         });
 
+        //============================= WebSocket =====================================
 
-        //============================= WebSocket =====================================
-        //============================= WebSocket =====================================
-        //============================= WebSocket =====================================
-        //============================= WebSocket =====================================
-        
+    
         
 
 

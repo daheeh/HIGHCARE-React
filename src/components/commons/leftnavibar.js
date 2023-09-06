@@ -53,7 +53,7 @@ function LeftNavibar(){
             </div>
             {/* 채팅 모달 */}
             {isChattingModalOpen && (
-                <ChattingMain onClose={closeChattingModal} />
+                <ChattingMain onClose={closeChattingModal} isOpen={isChattingModalOpen} />
             )}
 
         </>

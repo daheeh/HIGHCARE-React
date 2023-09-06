@@ -189,7 +189,6 @@ function App() {
           <Route path="/mypage/annual" element={<MypageAnnual />}/>
 
 
-          <Route path="/socket/chatting" element={<ChattingPage />} />
 
         </Route>
         <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />

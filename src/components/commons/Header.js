@@ -59,8 +59,7 @@ function Header() {
 
     const onClickLogoutHandler = () => {
         dispatch(callLogoutAPI());
-        navigate("/", { replace: true });
-        
+        navigate("/", { replace: true });        
     }
 
     // console.log("로그인정보 확인" ,loginMember);
