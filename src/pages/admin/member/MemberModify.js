@@ -3,14 +3,14 @@ import MemberModifyStyle from "./MemberModify.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { accountStatus } from "./MemberList";
-import ModifyInfo from "./ModifyInfo";
 import { ModifyInfoAPI } from "../../../apis/MemberAPICalls";
+import { SendAndArchive } from "@mui/icons-material";
 
 // 계정상태 유형 변경 
 function MemberModify() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
 
     const memberlist = useSelector(state => state.members.data);
 
@@ -19,67 +19,77 @@ function MemberModify() {
     const [member, setMember] = useState([]);
 
     const [inputDisabled, setInputDisabled] = useState(true);
-    const [radioStatus, setRadioStatus ] = useState(null); 
+    const [radioStatus, setRadioStatus] = useState(null);
+    const [accstat, setAccstat] = useState('');
+    const [sendData, setSendData] = useState('');
 
-    const [status, setStatus] = useState('');
+    const [data, setData] = useState({
+        id: '',
+        empNo: empNo,
+        name: '',
+        jobName: '',
+        deptName: '',
+        phone: '',
+        email: '',
+        status: '',
+        method: ''
+    });
 
 
-    useEffect( () => {
-        
-        ( async () => {  // 선택 멤버 정보 
+    useEffect(() => {
+
+        const fetchData = async () => {  // 선택 멤버 정보 
             await setMember(memberlist.filter(mem => mem.empNo == empNo)[0]);
-        })();
+            setData({ ...data, id: member.memberId })
+            // 선택멤버 계정 정보 
+            setAccstat(accountStatus(member.accessManager));
 
-        // 선택멤버 계정 정보 
-        setStatus(accountStatus(member.accessManager))
 
-    }, []);
+        }
+        fetchData();
+
+    }, [member]);
 
     // 정보수정 활성화 버튼 
-    const modifyActiveBtnClick = () => {
+    const modifyActiveBtnClick = async () => {
         setInputDisabled(!inputDisabled);
     }
 
-
     // 라디오버튼 
-    const handleRadioChange  = (e) => {
-        setRadioStatus(e.target.id); 
+    const handleRadioChange = (e) => {
+        // setRadioStatus(e.target.id);
+        console.log('1');
+        setData({ ...data, status: e.target.id })
+        console.log('2');
+        console.log('data===>', data);
     }
 
-    const params = {
-        memberId: '',
-        accountStatus:''
-    };
+    const infoChange = (e) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+    }
+
+
 
     // 수정버튼 
     const modifyAccountStatus = () => {
-
-        const data = {
-            id: member.memberId,
-            status: radioStatus,
-            method: ''
+        if (data.status) {
+            if (radioStatus === 'isWithDraw') {
+                data.method = 'delete'
+            } else {
+                data.method = 'put'
+            }
+            dispatch(ModifyInfoAPI(data))
         }
-
-        console.log('status====> ', radioStatus);
-        if(radioStatus === 'isWithDraw') {
-            data.method = 'delete'
-        } else {
-            data.method = 'put'
-        }
-
-        if(radioStatus) {
-
-            ( async () => {
-                await dispatch(ModifyInfoAPI(data))
-            })();
-        }
-
     }
 
     return (
         <div>
 
             <div className={MemberModifyStyle.container} >
+            
 
                 <div>
                     <button style={{ marginRight: 0, width: 150, height: 40, background: 'gray', fontSize: 16 }}
@@ -92,31 +102,31 @@ function MemberModify() {
                 </div>
                 <div>
                     <div className="label" htmlFor="">이름</div>
-                    <input type="text" name="name" id="modify" required disabled={inputDisabled} defaultValue={member.employee?.name} />
+                    <input type="text" name="name" id="modify" required disabled={inputDisabled} defaultValue={member?.employee?.name} onBlur={infoChange} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">직급</div>
-                    <input type="text" name="jobName" id="modify" required disabled={inputDisabled} defaultValue={member.employee?.jobCode.jobName} />
+                    <input type="text" name="jobName" id="modify" required disabled={inputDisabled} defaultValue={member?.employee?.jobCode.jobName} onBlur={infoChange} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">부서</div>
-                    <input type="text" name="deptName" id="modify" required disabled={inputDisabled} defaultValue={member.employee?.deptCode.deptName} />
+                    <input type="text" name="deptName" id="modify" required disabled={inputDisabled} defaultValue={member?.employee?.deptCode.deptName} onBlur={infoChange} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">연락처</div>
-                    <input type="text" name="phone" id="modify" required disabled={inputDisabled} defaultValue={member.employee?.phone} />
+                    <input type="text" name="phone" id="modify" required disabled={inputDisabled} defaultValue={member?.employee?.phone} onBlur={infoChange} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">아이디</div>
-                    <input type="text" name="memberId" required disabled defaultValue={member.memberId} />
+                    <input type="text" name="memberId" required disabled defaultValue={member?.memberId} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">이메일</div>
-                    <input type="text" name="mail" id="modify" required disabled={inputDisabled} defaultValue={member.employee?.email} />
+                    <input type="text" name="email" id="modify" required disabled={inputDisabled} defaultValue={member?.employee?.email} onBlur={infoChange} />
                 </div>
                 <div>
                     <div className="label" htmlFor="">계정상태</div>
-                    <input type="text" name="accountStatus" id="accountStatus" required disabled defaultValue={status} />
+                    <input type="text" name="accountStatus" id="accountStatus" required disabled defaultValue={accstat} />
                 </div>
 
                 <br />
@@ -124,23 +134,23 @@ function MemberModify() {
                 <div>
                     {/* 계정 잠금N, 비활성화N, 만료N, 탈퇴N, USER */}
                     <label htmlFor="user">정상</label>
-                    <input type="radio" name="accountStatus" id="user" onChange={handleRadioChange}/>
+                    <input type="radio" name="status" id="user" onChange={handleRadioChange} />
 
                     {/* 계정 잠금Y, 비활성화N, 만료N, 탈퇴N, PREV */}
                     <label htmlFor="isLock">잠금</label>
-                    <input type="radio" name="accountStatus" id="isLock" onChange={handleRadioChange} />
+                    <input type="radio" name="status" id="isLock" onChange={handleRadioChange} />
 
                     {/* 계정 잠금N, 비활성화Y, 만료N, 탈퇴N, PREV */}
                     <label htmlFor="isInActive">차단</label>
-                    <input type="radio" name="accountStatus" id="isInActive" onChange={handleRadioChange}/>
+                    <input type="radio" name="status" id="isInActive" onChange={handleRadioChange} />
 
                     {/* 계정 잠금N, 비활성화N, 만료Y, 탈퇴N, PREV */}
                     <label htmlFor="isExpired">만료</label>
-                    <input type="radio" name="accountStatus" id="isExpired" onChange={handleRadioChange}/>
+                    <input type="radio" name="status" id="isExpired" onChange={handleRadioChange} />
 
                     {/* 계정 잠금N, 비활성화N, 만료N, 탈퇴Y, DRAW */}
-                    <label htmlFor="isWithDraw" style={{color:'red'}}>탈퇴(확정)</label>
-                    <input type="radio" name="accountStatus" id="isWithDraw" onChange={handleRadioChange}/>
+                    <label htmlFor="isWithDraw" style={{ color: 'red' }}>탈퇴(확정)</label>
+                    <input type="radio" name="status" id="isWithDraw" onChange={handleRadioChange} />
                 </div>
 
                 <div>
