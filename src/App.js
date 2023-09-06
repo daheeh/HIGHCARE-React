@@ -86,6 +86,7 @@ import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 import { TokenVerification } from "./pages/admin/auth/TokenVerification";
 import { AdminNav } from "./pages/admin/AdminNav";
 import { AuthVarification } from "./pages/admin/auth/AuthVerification";
+import ResourceMod from "./pages/reservation/ResourceMod";
 
 
 
@@ -188,6 +189,7 @@ function App() {
               <Route path="mystatus" element={<MyReservationStatus />} />
               <Route path="add" element={<ResourceAdd />} />
               <Route path="reserve" element={<Reserve />} />
+              <Route path="mod" element={<ResourceMod />}/>
             </Route>
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/mypage/list/regist" element={<Businesscardregist />} />

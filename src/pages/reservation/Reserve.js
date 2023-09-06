@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Calendar from './Calendar/Calendar';
 import Rmodal from './modal/Rmodal';
+import { NavLink } from 'react-router-dom';
 function Reserve(){
 
     const resContent = useSelector(state => state.resContentReducer);
@@ -31,7 +32,8 @@ function Reserve(){
                             <div>시설명 : <span>{content.resourceName}</span></div>
                             <div>지역 : <span>{content.area}</span></div>
                             <div>위치 : <span>{content.location}</span></div>
-                            <div>사용시간 : <span>09:00 ~ 14:00</span></div>
+                            <div>사용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
+                            <div><NavLink to="/reservation/mod">관리</NavLink></div>
                         </div>
                   </div>
                     <div style={{display: 'flex'}}>

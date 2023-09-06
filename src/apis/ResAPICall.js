@@ -1,7 +1,8 @@
 import{
     GET_RES,
     POST_RES,
-    POST_RESR
+    POST_RESR,
+    PUT_RES
 } from '../modules/reservationModule';
 
 export const callResAPI = () => {
@@ -59,4 +60,24 @@ export const callResRegistAPI = ({form}) => {
         dispatch({type: POST_RESR, payload: result});
     }
     
+}
+
+export const callResModAPI = ({form})=> {
+    const requestURL = `http://localhost:8080/res/modRes`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Accept": "*/*" ,
+                "Access-Control-Allow-Origin": "*" 
+            },
+            body: form
+        })
+        .then(response => response.json());
+
+        dispatch({type: PUT_RES, payload: result});
+    }
+
+
 }
