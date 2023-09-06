@@ -4,10 +4,12 @@ import Bmodal from '../bulletin/bmodal/Bmodal';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../bulletin/editor/Editor';
+import { NavLink } from 'react-router-dom';
 
 import {
     callResAPI,
-    callResModAPI
+    callResModAPI,
+    callDeleteAPI
 } from '../../apis/ResAPICall';
 
 function ResourceMod(){
@@ -18,7 +20,6 @@ function ResourceMod(){
     const content = resContent.data;
     const [value, setValue] = useState( content.serviceGuide);
     const [start, setStart] = useState(0);
-    const [modal,setModal] = useState(false);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
@@ -67,14 +68,7 @@ function ResourceMod(){
     }
 
 
-    	const openModal = () => {
-		setModal(true);
-	};
 
-	const closeModal = () =>{
-		setModal(false);
-        setStart(start+1);
-	};
 
     const getValue = (x) =>{
         setValue(x)
@@ -90,6 +84,13 @@ function ResourceMod(){
             [e.target.name]: e.target.value
         });
     };
+
+    const onClickDeleteHandler = ()=>{
+        dispatch(callDeleteAPI({
+            resourceCode:content.resourceCode
+        }));
+        // navigate("/reservation",{replace:true})
+    }
 
     const onClickResourceModHandler = () => {
         const formData = new FormData();
@@ -112,7 +113,6 @@ function ResourceMod(){
     return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>시설관리</h1>
-            {modal && <Bmodal onClose={closeModal}/>}
         <div className={BoardStyle.add_content}>
             <div>
                 <span>시설그룹</span>
@@ -124,7 +124,6 @@ function ResourceMod(){
                         )
                     )}
                 </select>
-                <span onClick={openModal}>추가하기</span>
             </div>
             <div>
                 <span>지역</span>
@@ -173,8 +172,8 @@ function ResourceMod(){
 
             <div className={BoardStyle.button_list}>
             <button onClick={onClickResourceModHandler}>수정</button>
-            <button>삭제</button>
-            <button>취소</button>
+            <button onClick={onClickDeleteHandler}>삭제</button>
+            <button><NavLink to="/reservation">취소</NavLink></button>
             </div>
         </div>
     </div>

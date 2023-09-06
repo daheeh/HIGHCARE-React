@@ -2,7 +2,8 @@ import{
     GET_RES,
     POST_RES,
     POST_RESR,
-    PUT_RES
+    PUT_RES,
+    PUT_RESR
 } from '../modules/reservationModule';
 
 export const callResAPI = () => {
@@ -70,7 +71,8 @@ export const callResModAPI = ({form})=> {
             headers: {
                 "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Accept": "*/*" ,
-                "Access-Control-Allow-Origin": "*" 
+                "Access-Control-Allow-Origin": "*" ,
+                "Content-Type": "application/json"
             },
             body: form
         })
@@ -79,5 +81,28 @@ export const callResModAPI = ({form})=> {
         dispatch({type: PUT_RES, payload: result});
     }
 
+
+}
+
+export const callDeleteAPI = ({resourceCode})=>{
+    const requestURL = `http://localhost:8080/res/deleteRes`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Accept": "*/*" ,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+                resourceCode: resourceCode,
+          
+            })
+        })
+        .then(response => response.json());
+
+        dispatch({type: PUT_RES, payload: result});
+    }
 
 }
