@@ -253,7 +253,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 									</>
 								)
 							) : <>
-
+								{emp.apvDate && <span>{emp.apvDate}</span>}
 							</>}
 						</div>
 					</div>
