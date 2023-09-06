@@ -9,8 +9,7 @@ function ErrorComponent({ error, resetErrorBoundary }) {
 
     return (
         <div>
-                <PageNotFound/>
-               
+            <PageNotFound />
         </div>
     );
 };

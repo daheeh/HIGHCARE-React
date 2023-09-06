@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { log } from "loglevel";
+import { loginAction } from "../modules/authSlice";
 
 export const OauthLoginAPI = createAsyncThunk(
     'oauth/regist',
@@ -11,10 +12,13 @@ export const OauthLoginAPI = createAsyncThunk(
                     headers: {
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*",
+                        // "Authorization": "Bearer " + window.localStorage.getItem("accessToken")
                     }
                 }
             );
             console.log(response.data);
+            window.localStorage.setItem('accessToken', response.data.data.accessToken);
+
             return response.data;
         } catch (error) {
             throw error.response.data;
@@ -23,27 +27,25 @@ export const OauthLoginAPI = createAsyncThunk(
 );
 
 export const kakaoAuth = createAsyncThunk(
-    'kakao/request',
-    async () => {
+    'login/authes',
+    async (props) => {
         console.log("kakaoAuth start");
+        console.log("code :", props);
+        console.log("콜백 api의 넘겨받은 id :", props.id);
+
         try {
-            const response = 
-            await axios.get(`http://kauth.kakao.com/oauth/authorize?
-                            client_id="aad8685798054dd9e7932b5ce49f5df5"
-                            &redirect_uri='http://localhost:3000'
-                            &response_type=code`
-                ,{
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                    }
-                }
-            );
+            const response =
+                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}`);
             console.log(response.data);
+            console.log(response.data.data.accessToken);
+            window.localStorage.setItem('accessToken', response.data.data.accessToken);
+
             return response.data;
+
         } catch (error) {
             console.log(error.response.data);
             throw error.response.data;
         }
     }
 );
+

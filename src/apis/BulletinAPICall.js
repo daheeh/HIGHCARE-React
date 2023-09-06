@@ -4,22 +4,26 @@ import {
     GET_BOARD
     ,GET_BOARDS
     ,GET_BOARDD
+    ,GET_THREAD
     ,POST_BOARD
     ,POST_REGISTER
     ,POST_REGISTERS
     ,PUT_BOARD
     ,PUT_BOARDS
+    ,PUT_COMMENT
+    ,PUT_COMMENTS
 } from '../modules/BoardModule';
 
-export const callBulletinAPI = ({categoryCode, currentPage}) => {
+export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 //    export const callBulletinAPI = () => {
-   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}`;
+   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}&empNo=${empNo}`;
 //    const requestURL = `http://localhost:8080/bulletin/board`;
 
    return async (dispatch, getState) => {
     const result = await fetch(requestURL,{
         method: "GET",
         headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
             "Content-Type": "application/json",
             "Accept": "*/*"
         }
@@ -32,7 +36,23 @@ export const callBulletinAPI = ({categoryCode, currentPage}) => {
    };
 
 }
-
+export const callBoardDetailSAPI = ({bulletinCode})=>{
+    const requestURL = `http://localhost:8080/bulletin/thr?bulletinCode=${bulletinCode}`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+        dispatch({ type: GET_THREAD,  payload: result});
+        }
+    };
+}
 export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
     const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
 
@@ -40,6 +60,7 @@ export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -60,6 +81,7 @@ export const callBulletinNavAPI= ()=>{
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -79,6 +101,7 @@ export const callBoardNameAddAPI = ({form}) => {
     const result = await fetch(requestURL, {
         method: "POST",
         headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
             "Content-Type": "application/json",
             "Accept": "*/*" ,
             "Access-Control-Allow-Origin": "*" 
@@ -101,6 +124,7 @@ export const callRegisterAPI = ({form}) => {
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -128,6 +152,7 @@ export const callCommentAPI = ({form}) =>{
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -151,6 +176,7 @@ export const callUpdateAPI = ({form}) =>{
         const result = await  fetch(requestURL, {
             method: "PUT",
             headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -174,6 +200,7 @@ export const callDeleteAPI = ({form}) =>{
         const result = await  fetch(requestURL, {
             method: "PUT",
             headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             },
@@ -188,6 +215,46 @@ export const callDeleteAPI = ({form}) =>{
             dispatch({type: PUT_BOARDS, payload: result});
         }
     }
+}
+export const callCommentDeleteAPI = ({commentCode}) =>{
+    const requestURL = `http://localhost:8080/bulletin/deleteComment`;
 
-
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "PUT",
+            headers:{
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Accept": "*/*"  
+            },
+            body: JSON.stringify({
+                commentCode: commentCode
+            })
+        })
+        .then(response => response.json());
+        if(result.statue === 201){
+            dispatch({type: PUT_COMMENT, payload: result});
+        }
+    }
+}
+export const callCommentUpdateAPI = ({commentCode,commentContent})=>{
+        const requestURL = `http://localhost:8080/bulletin/updateComment`;
+        return async (dispatch, getState) => {
+            const result = await fetch(requestURL,{
+                method: "PUT",
+                headers:{
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"  
+                },
+                body: JSON.stringify({
+                    commentCode: commentCode,
+                    commentContent: commentContent
+                })
+            })
+            .then(response => response.json());
+            if(result.statue === 201){
+                dispatch({type: PUT_COMMENTS, payload: result});
+            }
+        }
 }

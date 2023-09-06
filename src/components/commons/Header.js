@@ -3,8 +3,8 @@ import HeaderCSS from './Header.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
-import { decodeJwt } from '../../utils/decodeJwt';
 import LoginVerify from '../../utils/LoginVerify';
+import { decodeJwt } from "../../utils/decodeJwt";
 
 function Header() {
 
@@ -14,17 +14,18 @@ function Header() {
 
     const loginInfo = {
         id: loginMember.id,
-        refreshExp:loginMember.refreshExp,
+        refreshExp: loginMember.refreshExp,
         name: loginMember.name,
-        dept:loginMember.dept,
-        job:loginMember.job,
-        role:loginMember.role,
+        dept: loginMember.dept,
+        job: loginMember.job,
+        role: loginMember.role,
         isLogin: loginMember.isLogin,
-        status:loginMember.status,
+        status: loginMember.status,
     }
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
+<<<<<<< HEAD
     const [form, setForm] = useState({
         id: '',
         password: ''
@@ -61,8 +62,13 @@ function Header() {
         dispatch(callLogoutAPI());
         navigate("/", { replace: true });        
     }
+=======
+    const onClickLogoutHandler = async () => {
+        await dispatch(callLogoutAPI());
+        navigate("/", { replace: true });
+>>>>>>> 3bb03d96d7f498184848cc8c01d8b59e7d70e703
 
-    // console.log("로그인정보 확인" ,loginMember);
+    }
 
     function BeforeLogin() {
 
@@ -73,27 +79,7 @@ function Header() {
                     <button>
                         로그인
                     </button> </Link>
-
-
-                {/* <form>
-
-                        <input
-                            type="text"
-                            name='id'
-                            placeholder="아이디"
-                            autoComplete='off'
-                            onChange={onChangeHandler}
-                        />
-                        <input
-                            type="password"
-                            name='password'
-                            placeholder="패스워드"
-                            autoComplete='off'
-                            onChange={onChangeHandler}
-                        />
-                    </form> */}
             </div>
-
 
         )
     }
@@ -121,31 +107,14 @@ function Header() {
 
     return (
         <>
-            {/* { loginModal ? <LoginModal setLoginModal={ setLoginModal }/> : null} */}
-
             <div className={HeaderCSS.HeaderDiv}>
-                {/* <h1>HICARE</h1> */}
                 <Link to="/">
                     <button
                         className={HeaderCSS.LogoBtn}
-                    // onClick={ onClickLogoHandler }
                     >
-
                     </button>
                 </Link>
-                {/* <input 
-                    className={ HeaderCSS.InputStyle }
-                    type="text" 
-                    placeholder="검색" 
-                    value={ search }
-                    onKeyUp={ onEnterkeyHandler }
-                    onChange={ onSearchChangeHandler }
-                />
-                 */}
-
                 <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '20px', marginLeft: 'auto' }} >
-
-                    {/* {(isLogin == null || isLogin === undefined || loginMember.status === false) ? <BeforeLogin /> : <AfterLogin />} */}
                     {(loginInfo.isLogin === false) ? <BeforeLogin /> : <AfterLogin />}
 
                 </div>

@@ -4,14 +4,14 @@ import {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import{
-    callBoardNameAddAPI
-} from '../../../apis/BulletinAPICall';
+    callResAddAPI
+} from '../../../apis/ResAPICall';
 
     function Bmodal({ onClose }) {
         const dispatch = useDispatch();
         
         const [form, setForm] = useState({
-            nameBoard: ''
+            name: ''
         });
 
         const onChangeHandler = (e) => {
@@ -23,7 +23,7 @@ import{
 
         const onClickBoardNameHandler = () => {
             console.log(form);
-            dispatch(callBoardNameAddAPI({
+            dispatch(callResAddAPI({
                 form: form
             }));
         }
@@ -33,8 +33,8 @@ import{
                 <div className={modalStyle.bmodal}>
                     <button className={modalStyle.bcloseButton} onClick={onClose}>X</button>
                     <h2 className={modalStyle.modalH}>HIGHCARE</h2>
-                    <p>게시판 추가하기111</p>
-                    <input type='text' name='nameBoard' onChange={onChangeHandler} className={modalStyle.inputModal}/><br/>
+                    <p>시설 그룹 추가하기</p>
+                    <input type='text' name='name' onChange={onChangeHandler} className={modalStyle.inputModal}/><br/>
                     <button className={modalStyle.add} onClick={onClickBoardNameHandler}>추가하기</button>
                 </div>
             </div>

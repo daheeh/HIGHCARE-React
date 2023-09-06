@@ -43,6 +43,11 @@
   font-size: 16px;
   margin-bottom: 20px;
 }
+.Image{
+  margin-top: 5px;
+  width: 80%;
+  height: 90%;    
+}
 .content_info span{
   margin-right: 10px;
 }
@@ -50,6 +55,25 @@
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
+  width : 400px;
+  min-height: 40px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: #f4f4f4;
+  border : none;
+  resize: none;
+  cursor: default;
+}
+.comment_mod{
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width : 400px;
+  min-height: 40px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: #f4f4f4;
+  resize: none;
 }
 .write_bulletin{
   text-align: end;

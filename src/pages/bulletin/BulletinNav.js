@@ -1,8 +1,5 @@
 import React from 'react';
 import BoardNavStyle from './BulletinNavStyle.module.css'; 
-import Bmodal from './bmodal/Bmodal';
-import { useSelector, useDispatch} from 'react-redux';
-import { useEffect, useState } from 'react'; 
 import { NavLink } from 'react-router-dom';
 // import {
 //     callBulletinNavAPI
@@ -55,6 +52,7 @@ return (
 					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/1">전체 게시판</NavLink></div>
 					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/4">공지 사항</NavLink></div>
 					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/3">자유 게시판</NavLink></div>
+					<div className={BoardNavStyle.apv_navibox_maintitle}><NavLink to="/bulletin/board/5">나의 글 보기</NavLink></div>
 				</div>
 			</div>
 		</div>

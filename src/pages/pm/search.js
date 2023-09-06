@@ -10,7 +10,7 @@ function PmMenu() {
     const itemsPerPage = 10;
 
     const dispatch = useDispatch();
-    const results = useSelector(state => state.treeview);
+    const results = useSelector(state => state.pmreduccer);
     const [selectedStatus, setSelectedStatus] = useState('사원조회');
 
     console.log(results);
