@@ -13,28 +13,82 @@ import ModifyInfo from "./ModifyInfo";
 function MemberList() {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     useEffect(() => {
 
-        dispatch(allMemberListApi())
+        dispatch(allMemberListApi)
 
     }, [])
 
     const memberList = useSelector(state => state.members.data);
 
-    const [normalMember, setNormalMember] = useState(0); 
-    const [preMember, setPreMember ] = useState(0);
-    const [drawMember, setDrawMember ] = useState(0);
+    const [normalMember, setNormalMember] = useState(0);
+    const [preMember, setPreMember] = useState(0);
+    const [drawMember, setDrawMember] = useState(0);
 
-    const [inactiveMember, setInactiveMember ] = useState(0);
-
-  
-
+    const [inactiveMember, setInactiveMember] = useState(0);
 
     const role = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER', 'ROLE_PRE_USER', 'ROLE_WITHDRAW'];
 
+    const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스의 상태
+
+    // const [check, setCheck] = useState(false); // 전체 선택 체크박스의 상태
+    const [selectedItems, setSelectedItems] = useState([]); // 선택된 체크박스의 값(empNo)을 저장할 배열
 
 
+    const allCheckbox = () => {
+
+        setAllChecked(!allChecked); // 전체 선택 체크박스의 상태 토글
+
+        if (!allChecked) {
+            // 전체 선택 체크박스가 체크되면 모든 아이템을 선택된 아이템 목록에 추가
+            const allEmpNos = memberList.map((member) => member.empNo);
+            setSelectedItems(allEmpNos);
+        } else {
+            // 전체 선택 체크박스가 해제되면 모든 아이템을 선택된 아이템 목록에서 제거
+            setSelectedItems([]);
+        }
+    };
+
+    useEffect(() => {
+
+    }, [selectedItems])
+
+    const checkBox = (e) => {
+        // setAllChecked()
+        const empNo = e.target.value;
+        const isChecked = e.target.checked;
+
+        if (allChecked) {
+            setAllChecked(false);
+            setSelectedItems([empNo]);
+        }
+
+        // 선택 상태를 업데이트
+        setSelectedItems((prevSelectedItems) => {
+            if (isChecked && !prevSelectedItems.includes(empNo)) {
+                // 선택 상태를 추가하고 중복을 피하기 위해 체크
+                return [...prevSelectedItems, empNo];
+            } else if (!isChecked) {
+                // 선택 상태를 제거
+                return prevSelectedItems.filter((item) => item !== empNo);
+            }
+            // 선택 상태가 변경되지 않았을 경우 이전 상태를 그대로 반환
+            return prevSelectedItems;
+        });
+        console.log("selectitems : ", selectedItems);
+    };
+
+
+    const [putUserList, setPutUserList] = useState({
+        id: '',
+        status: 'user',
+        method: 'put'
+    })
+
+    const memberListRegist = () => {
+
+    }
 
 
     useEffect(() => {
@@ -49,7 +103,7 @@ function MemberList() {
                     inactiveCount++;
                 } else if (member.accessManager.isExpired === 'Y') {
                 } else if (member.accessManager.isWithDraw === 'Y') {
-                    drawCount ++;
+                    drawCount++;
                 } else {
                 }
             }
@@ -64,35 +118,35 @@ function MemberList() {
         setPreMember(preCount);
         setInactiveMember(inactiveCount);
         setDrawMember(drawCount)
-        setNormalMember(memberList.length - preCount - inactiveCount- drawCount);
+        setNormalMember(memberList.length - preCount - inactiveCount - drawCount);
     }, [memberList]);
 
 
-    
+
     const memberClick = (member) => {
         navigate(`/admin/member/modify/${member.empNo}`, { replace: false });
 
         // return (
         //     // <ModifyInfo member={member}/>
         // )
-        
+
     }
 
- 
+
     return (
         <section>
             <AdminNav />
             <div style={{ marginTop: 20 }}>
                 <div className={MemberListCss.title}>회원 통합관리
                     <div>
-                        <div>현재 멤버 수: { memberList.length }명 </div>
-                        <div>정상: { normalMember }명 / 임시: { preMember }명 / 차단: { inactiveMember }명 / 탈퇴(예정): { drawMember }명 </div>
+                        <div>현재 멤버 수: {memberList.length}명 </div>
+                        <div>정상: {normalMember}명 / 임시: {preMember}명 / 차단: {inactiveMember}명 / 탈퇴(예정): {drawMember}명 </div>
                     </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: 1200 }} >
                     <div className={MemberListCss.crudBtn}>
                         {/* 임시회원상태만 클릭시 회원등록확정 alert창 띄워지고 권한 일반회원으로 변경됨 */}
-                        <button>회원등록</button>
+                        <button onClick={memberListRegist}>회원등록</button>
                     </div>
                     <div className={MemberListCss.excelBtn}>
                         <button>목록다운로드</button>
@@ -100,6 +154,8 @@ function MemberList() {
                     </div>
                 </div>
                 <div className={MemberListCss.category}>
+                    <input type="checkbox" name="allCheck" checked={allChecked} onChange={allCheckbox} />
+
                     <div>사원번호</div>
                     <div>이름</div>
                     <div>
@@ -141,26 +197,27 @@ function MemberList() {
                         </select>
                     </div>
                 </div>
-                {Array.isArray(memberList) && memberList.map( 
+                {Array.isArray(memberList) && memberList.map(
                     (member) => (
-                    <div 
-                        key={member.empNo} className={MemberListCss.category}
-                        onClick={()=> memberClick(member)}
-                    >
-                        <div>{member.empNo}</div>
-                        <div>{member.employee.name}</div>
-                        <div>{member.employee.jobCode.jobName}</div>
-                        <div>{member.employee.deptCode.deptName}</div>
-                        <div>{member.memberId}</div>
-                        <div>{member.employee.email}</div>
-                        <div>
-                            {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
+                        <div
+                            key={member.empNo} className={MemberListCss.category}
+
+                        >
+                            <input type="checkbox" value={member.empNo} checked={selectedItems.some(memNo => memNo == member.empNo)} onChange={checkBox} />
+                            <div onClick={() => memberClick(member)} >{member.empNo}</div>
+                            <div onClick={() => memberClick(member)} >{member.employee.name}</div>
+                            <div onClick={() => memberClick(member)} >{member.employee.jobCode.jobName}</div>
+                            <div onClick={() => memberClick(member)} >{member.employee.deptCode.deptName}</div>
+                            <div onClick={() => memberClick(member)} >{member.memberId}</div>
+                            <div onClick={() => memberClick(member)} >{member.employee.email}</div>
+                            <div onClick={() => memberClick(member)} >
+                                {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
+                            </div>
+                            <div onClick={() => memberClick(member)}>
+                                {accountStatus(member.accessManager ? member.accessManager : '')}
+                            </div>
                         </div>
-                        <div>
-                            {accountStatus(member.accessManager ? member.accessManager : '')}
-                        </div>
-                    </div>
-                ))}
+                    ))}
 
                 <div>
 
@@ -198,7 +255,7 @@ function MemberList() {
     );
 }
 
-export default MemberList; 
+export default MemberList;
 
 
 export const roleCode = (roleCode) => {
@@ -220,14 +277,14 @@ export const roleCode = (roleCode) => {
 }
 
 export const accountStatus = (am) => {
-    if (am?.isLock === 'Y') {
+    if (am?.isLock == 'Y') {
         return '잠금'
-    } else if (am?.isInActive === 'Y') {
+    } else if (am?.isInActive == 'Y') {
         return '차단'
-    } else if (am?.isExpired === 'Y') {
+    } else if (am?.isExpired == 'Y') {
         return '만료'
     }
-    else if (am?.isWithDraw === 'Y') {
+    else if (am?.isWithDraw == 'Y') {
         return '탈퇴'
     } else {
         return '정상';
@@ -235,7 +292,7 @@ export const accountStatus = (am) => {
 };
 
 export const accountStatusEng = (am) => {
-    
+
     if (am?.isLock === 'Y') {
         return 'isLock'
     } else if (am?.isInActive === 'Y') {
