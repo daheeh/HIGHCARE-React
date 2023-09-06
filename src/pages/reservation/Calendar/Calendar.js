@@ -9,17 +9,20 @@ import {
     callDateResAPI
 } from '../../../apis/DateResAPICall';
 
-function Calendar(){
+function Calendar({setData}){
     const dispatch = useDispatch();
     const dateres = useSelector(state => state.dateReducer);
+    const resContent = useSelector(state => state.resContentReducer);
+    const content = resContent.data;
 
 
 
    const dateClick=(info)=>{
         dispatch(callDateResAPI({
-            reservationDate : info.dateStr
+            reservationDate : info.dateStr,
+            resourceCode : content.resourceCode
         }));
-        
+        setData(info.dateStr);
     }
     
         return(

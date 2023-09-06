@@ -2,8 +2,8 @@ import{
     GET_DATERES,
 } from '../modules/DateModule';
 
-export const callDateResAPI = ({reservationDate})=>{
-    const requestURL = `http://localhost:8080/res/dateRes?reservationDate=${reservationDate}`;
+export const callDateResAPI = ({reservationDate,resourceCode})=>{
+    const requestURL = `http://localhost:8080/res/dateRes?reservationDate=${reservationDate}&resourceCode=${resourceCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",

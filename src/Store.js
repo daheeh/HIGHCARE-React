@@ -16,7 +16,7 @@ import resReducer from './modules/reservationModule';
 import resListReducer from './modules/resLIstModule';
 import resContentReducer from './modules/resContentModule';
 import dateReducer from './modules/DateModule';
-
+import resStatusReducer from './modules/resultStatusModule';
 
 
 
@@ -41,7 +41,8 @@ const store = configureStore({
         resReducer : resReducer,
         resListReducer : resListReducer,
         resContentReducer : resContentReducer,
-        dateReducer : dateReducer
+        dateReducer : dateReducer,
+        resStatusReducer : resStatusReducer
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
 

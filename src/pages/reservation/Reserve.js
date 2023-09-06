@@ -11,8 +11,9 @@ function Reserve(){
     const dateres = useSelector(state => state.dateReducer);
     const [modal,setModal] = useState(false);
     const daterese = dateres.data;
-
+    const [data, setData] = useState('');
     const openModal = () =>{
+        console.log('data' , data);
         setModal(true);
     }
     const closeModal = () =>{
@@ -22,7 +23,7 @@ function Reserve(){
     return (
         <div class={BoardStyle.content_bullentin_main}>
             <h1 class={BoardStyle.content_title}>신청하기</h1>
-            {modal && <Rmodal onClose={closeModal}/>}
+            {modal && <Rmodal onClose={closeModal} data={data}/>}
            <div className={BoardStyle.applay_main}>
                <div className={BoardStyle.apply_content}>
                 <img src="../../img/dog.jpg" alt="" width="400px" height="200px"/>
@@ -35,7 +36,7 @@ function Reserve(){
                   </div>
                     <div style={{display: 'flex'}}>
                         <div id='calendar' style={{width: '80%'}}>
-                            <Calendar />
+                            <Calendar setData={setData}/>
                         </div>
                         <div id="reservation-status">
                             <h3>예약현황</h3>{ Array.isArray(daterese) && daterese.map(
