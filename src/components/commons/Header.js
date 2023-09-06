@@ -25,48 +25,9 @@ function Header() {
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-<<<<<<< HEAD
-    const [form, setForm] = useState({
-        id: '',
-        password: ''
-    });
-
-
-    // const isLogin = window.localStorage.getItem('accessToken');
-
-    // // 토큰만료 검증 
-    // const token = decodeJwt(window.localStorage.getItem("accessToken"));   
-    // if(token != null ){
-    //     if(!LoginVerify(token, loginInfo.refreshExp)){
-    //         // alert('로그인을 먼저해주세요');
-    //         navigate("/login", { replace: true });
-    //     }
-    // } 
-
-
-    // const onChangeHandler = e => {
-    //     setForm({
-    //         ...form,
-    //         [e.target.name]: e.target.value
-    //     });
-    // };
-
-    // const onClickLoginHandler = () => {
-    //     dispatch(callLoginAPI({ form }));
-    //     console.log("callapi 반환");
-    //     console.log(loginInfo);
-    //     console.log(loginInfo.status);
-    // }
-
-    const onClickLogoutHandler = () => {
-        dispatch(callLogoutAPI());
-        navigate("/", { replace: true });        
-    }
-=======
     const onClickLogoutHandler = async () => {
         await dispatch(callLogoutAPI());
         navigate("/", { replace: true });
->>>>>>> 3bb03d96d7f498184848cc8c01d8b59e7d70e703
 
     }
 

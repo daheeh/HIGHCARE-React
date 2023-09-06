@@ -205,7 +205,7 @@ function App() {
 
 
 
-            {/* 여기부터 관리자 권한 필요  */}
+            {/* ****************************** 여기부터 관리자 권한 필요 ******************************* */}
 
             <Route element={<AuthVarification />}>
 
@@ -218,35 +218,8 @@ function App() {
                 <Route path="member/auth" element={<AuthManager />} />
               </Route>
 
-<<<<<<< HEAD
-            <Route path="thread" element={<Thread />} />
-
-            <Route path="thread/:bulletinCode" element={<Thread />} />
-            <Route path="mod/:bulletinCode" element={<BullentinMod/>}/>
-
-            <Route path="bulletinWrite" element={<BullentinWrite />} />
-          </Route>
-
-
-          <Route path="/reservation" element={<ReservationMain />}>
-            <Route index element={<Reservation />} />
-            <Route path="status" element={<ReservationStatus />} />
-            <Route path="mystatus" element={<MyReservationStatus />} />
-            <Route path="add" element={<ResourceAdd />} />
-            <Route path="reserve" element={<Reserve />} />
-          </Route>
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage/list/regist" element={<Businesscardregist />} />
-          <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-          <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-          <Route path="/mypage/profile" element={<Profile />}/>
-          <Route path="/mypage/annual" element={<MypageAnnual />}/>
-
-
-=======
             </Route>
-            {/* 여기까지 관리자 권한 필요  */}
->>>>>>> 3bb03d96d7f498184848cc8c01d8b59e7d70e703
+            {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
 
         </Route>
 
