@@ -41,6 +41,7 @@ import PmMemberResist from "./pages/pm/pm-resist";
 import PmWork from "./pages/pm/work";
 import TreeView from "./pages/pm/treeview";
 import SecondTree from "./pages/pm/secondTree";
+import PmMemberInsert from "./pages/pm/pm-resist-insert"
 // import Businesscardregist from "./pages/mypage/businesscardregist";
 import Mypage from "./pages/mypage/mypage";
 // import Customerlog from "./pages/mypage/customerlog";
@@ -169,6 +170,7 @@ function App() {
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
           <Route path="/pm/secondTree" element={<SecondTree />} />
+          <Route path="/pm/pm-resist-insert" element={< PmMemberInsert/>} />
 
           <Route path="/bulletin" element={<BulletinMain />}>
             {/* <Route index element={<Bulletin />} /> */}

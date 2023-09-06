@@ -8,7 +8,7 @@ function PmResist() {
 <PmNav/>
 <div className="apv-navibox">
         <div className="pm-de-top">
-            <div className="pm-div-font">사원 등록하기(조직도)</div>
+            <div className="pm-div-font">사원 등록하기</div>
         </div>
             <br />
             <div className='div7'>
@@ -16,6 +16,18 @@ function PmResist() {
                 <div className="pm-de-regist-in">
                 <div className="pm-de-regist">이름</div>
                 <input className="pm-input"/>
+                </div> 
+                <div className="pm-de-regist-in">
+                    <div className="pm-de-regist">주민등록번호</div>
+                    <input className="pm-input"/>
+                </div>
+                <div className="pm-de-regist-in">
+                    <div className="pm-de-regist">최종학력</div>
+                    <input className="pm-input"/>
+                </div> 
+                <div className="pm-de-regist-in">
+                    <div className="pm-de-regist">주소</div>
+                    <input className="pm-input"/>
                 </div>
                 <div className="pm-de-regist-in">
                     <div className="pm-de-regist">부서</div>
@@ -37,12 +49,8 @@ function PmResist() {
                     <div className="pm-de-regist">휴대폰</div>
                     <input className="pm-input"/>
                 </div>
-                <div className="pm-de-regist-in">
-                <div className="pm-de-regist">이메일</div>
-                <input className="pm-input"/>
-                </div>
                 <div className="pm-de-regist-in-last">
-                    <div className="pm-de-regist-last">비고</div>
+                    <div className="pm-de-regist-last">이메일</div>
                     <input className="pm-input"/>
                 </div>
             </div>

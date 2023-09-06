@@ -1,220 +1,201 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './pm-member.css'
 import PmNav from './pmNav';
+import { useDispatch, useSelector } from 'react-redux';
+import { callPmMemberAPI } from '../../apis/PmAPICalls';
 
 function PmMemberResist() {
-	return (
-<section>
-<PmNav/>
-<div className="apv-navibox">
+  const dispatch = useDispatch();
+  const resist = useSelector(state => state.pmmem);
+
+  console.log('----------',resist);
+
+  const empinfo = useSelector(state => state.authes);
+  const empNum = empinfo.empNo;
+
+  console.log(empNum);
+
+  useEffect(() => {
+    dispatch(callPmMemberAPI(empNum));
+  },[]);
+
+  return (
+    <section>
+      <PmNav/>
+      <div className="apv-navibox">
         <div className="pm-de-top">
-            <div className="pm-div-font">사원 상세 조회</div>
-            </div>
-            <br />
-            <div>
-                    <div class="pm-section">
-                        <div className='div4'>
-                        <div className='div5'>
-                        <div className="pm-photobox"></div>
-                        <div>
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">이름</div>
-                            <input className="pm-input"/>
-                        </div>
-                        <div className="pm-flex">
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">주민등록번호</div>
-                            <input className="pm-input"/>
-                            </div>
-                        </div>
-                        <div className="pm-flex">
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">전화번호</div>
-                            <input className="pm-input"/>
-                            </div>
-                        </div>
-                        <div className="pm-flex">
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">생년월일</div>
-                            <input className="pm-input"/>
-                            </div>
-                        </div>
-                        <div className="pm-flex">
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">주소</div>
-                            <input className="pm-input"/>
-                            </div>
-                        </div>
-                        <div className="pm-flex">
-                            <div className="pm-content">
-                            <div className="pm-memberinfo-title">이메일</div>
-                            <input className="pm-input"/>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div>
-                        <div>
-                        <div className="pm-content2">
-                            <div className="pm-titlebox">가족</div>
-                            <div>
-                                <div className="pm-titlefontbox">관계</div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                            </div>
-                            <div>
-                                <div className="pm-titlefontbox">성명</div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                            </div>
-                            <div>
-                                <div className="pm-titlefontbox">생년월일</div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                            </div>
-                            <div>
-                                <div className="pm-titlefontbox">학력</div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                                <div className="pm-titlefontbox2"></div>
-                            </div>
-                            <div>
-                                <div className="pm-titlefontbox4">연락처</div>
-                                <div className="pm-titlefontbox3"></div>
-                                <div className="pm-titlefontbox3"></div>
-                                <div className="pm-titlefontbox3"></div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="pm-content2">
-                                <div className="pm-titlebox">학력사항</div>
-                                <div>
-                                    <div className="pm-titlefontbox">재학기간</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">학교명</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">전공</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">졸업일</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox4">성적</div>
-                                    <div className="pm-titlefontbox3"></div>
-                                    <div className="pm-titlefontbox3"></div>
-                                    <div className="pm-titlefontbox3"></div>
-                                </div>
-                                </div>
-                            </div>
-
-                        <div>
-                            <div className="pm-content2">
-                                <div className="pm-titlebox">경력사항</div>
-                                <div>
-                                    <div className="pm-titlefontbox">근무기간</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">회사명</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">직위</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox">담당업무</div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                    <div className="pm-titlefontbox2"></div>
-                                </div>
-                                <div>
-                                    <div className="pm-titlefontbox4">퇴사사유</div>
-                                    <div className="pm-titlefontbox3"></div>
-                                    <div className="pm-titlefontbox3"></div>
-                                    <div className="pm-titlefontbox3"></div>
-                                </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="pm-content2">
-                                    <div className="pm-titlebox">기타사항</div>
-                                    <div>
-                                        <div className="pm-titlefontbox">자격증이름</div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                    </div>
-                                    <div>
-                                        <div className="pm-titlefontbox">발급기관명</div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                    </div>
-                                    <div>
-                                        <div className="pm-titlefontbox">발급일자</div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                    </div>
-                                    <div>
-                                        <div className="pm-titlefontbox">만료일자</div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                        <div className="pm-titlefontbox2"></div>
-                                    </div>
-                                    <div>
-                                        <div className="pm-titlefontbox4">활용수준</div>
-                                        <div className="pm-titlefontbox3"></div>
-                                        <div className="pm-titlefontbox3"></div>
-                                        <div className="pm-titlefontbox3"></div>
-                                    </div>
-                                    </div>
-                                </div>
-                    </div>
-                    <h6 className="pm-font"> 상기 내용은 사실과 다름없음을 확인합니다.</h6>
-                    <h6 className="pm-font">년      월      일</h6>
-                    <h6 className="pm-font2">작성자:     (인)</h6>
-                </div>
-            </div>
-            </div>
-            <br></br>
-                <div className="paging">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                </div>
+          <div className="pm-div-font">사원 상세 조회</div>
         </div>
+        <br />
+        <div>
+          <div className="pm-section">
+            <div className='div4'>
+              <div className='div5s'>
+                <div className="pm-photobox"></div>
+                <div>
+                  <div className="pm-content">
+                    <div className="pm-memberinfo-title">이름</div>
+                    { resist.empName && resist.empName }
+                  </div>
+                  <div className="pm-flex">
+                    <div className="pm-content">
+                      <div className="pm-memberinfo-title">주민등록번호</div>
+                      { resist.residentNo && resist.residentNo }
+                    </div>
+                  </div>
+                  <div className="pm-flex">
+                    <div className="pm-content">
+                      <div className="pm-memberinfo-title">전화번호</div>
+                      { resist.phone && resist.phone }
+                    </div>
+                  </div>
+                  <div className="pm-flex">
+                    <div className="pm-content">
+                      <div className="pm-memberinfo-title">최종학력</div>
+                      { resist.education && resist.education }
+                    </div>
+                  </div>
+                  <div className="pm-flex">
+                    <div className="pm-content">
+                      <div className="pm-memberinfo-title">주소</div>
+                      { resist.address && resist.address }
+                    </div>
+                  </div>
+                  <div className="pm-flex">
+                    <div className="pm-content-last">
+                      <div className="pm-memberinfo-title">이메일</div>
+                      { resist.empEmail && resist.empEmail }
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div className="pm-contents">
+                    <div className="pm-titleboxs">입사정보</div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="pm-test2">부서</th>
+                          <th className="pm-test2">직급</th>
+                          <th className="pm-test2">부서전화번호</th>
+                          <th className="pm-test2">입사일</th>
+                          <th className="pm-test4">퇴사일</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td  className="pm-test8">{resist.job?.name || ''}</td>
+                          {/* <td className="pm-test8">{resist.job.name || ''}</td> */}
+                          <td className="pm-test8">{ resist?.telephone || '' }</td>
+                          <td className="pm-test8">{ resist?.startDate || '' }</td>
+                          <td className="pm-test9">{ resist?.endDate || '' }</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="pm-contents">
+                    <div className="pm-titleboxs">병역사항</div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="pm-test2">기간</th>
+                          <th className="pm-test2" >병역기간</th>
+                          <th className="pm-test2">병역상태</th>
+                          <th className="pm-test4">공란</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[...resist.military, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-test9">{item?.status || ''}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="pm-contents">
+                    <div className="pm-titleboxs">경력사항</div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="pm-test2">회사명</th>
+                          <th className="pm-test2">직위</th>
+                          <th className="pm-test2">근속년수</th>
+                          <th className="pm-test2">입사일</th>
+                          <th className="pm-test4">퇴사일</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[...resist.career, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.name || ''}</td>
+                            <td className="pm-tests">{item?.job || ''}</td>
+                            <td className="pm-tests">{item?.history ? item.history + '년' : ''}</td>
+                            <td className="pm-tests">{item?.startDate || ''}</td>
+                            <td className="pm-test9">{item?.endDate || ''}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="pm-contents-last">
+                    <div className="pm-titleboxs">자격증</div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="pm-test2">자격증명</th>
+                          <th className="pm-test2">발급기관</th>
+                          <th className="pm-test2">발급일</th>
+                          <th className="pm-test2">만료일</th>
+                          <th className="pm-test4">활용수준</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[...resist.certification, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.name || ''}</td>
+                            <td className="pm-tests">{item?.institution || ''}</td>
+                            <td className="pm-tests">{item?.startDate || ''}</td>
+                            <td className="pm-tests">{item?.endDate || ''}</td>
+                            <td className="pm-test9">상</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            <h6 className="pm-font"> 상기 내용은 사실과 다름없음을 확인합니다.</h6>
+            <h6 className="pm-font">년      월      일</h6>
+            <h6 className="pm-font2">작성자:     (인)</h6>
+            </div>
+          </div>
+        </div>
+        <br></br>
+        <div className="paging">
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+        </div>
+      </div>
     </section>
-	);
+  );
 }
 
 export default PmMemberResist;

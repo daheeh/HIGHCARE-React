@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box-container{
+            display: flex;
+        }
+        .box{
+            board: 1px solid black;
+            width: 150px;
+            height: 100px;
+        }
+        .pm-test1{
+    width: 70px;
+    height: 200px;
+    writing-mode: vertical-lr;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9d4d4;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    margin-right: 50px;
+
+}
+
+.pm-test2{
+    width: 205px;
+    height: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #d9d4d4;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.pm-test4{
+    width: 205px;
+    height: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #d9d4d4;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-left: 45px;
+}
+
+
+.pm-tes3{
+    display: flex;
+    width: 205px;
+    height: 49px;
+    text-align: center;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+
+.pm-test5{
+    width: 205px;
+    height: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-left: 45px;
+}
+
+.pm-test6{
+    display: flex;
+}
+
+.pm-test7{
+    writing-mode: vertical-lr;
+    display: flex;
+}
+
+    </style>
+</head>
+<body>
+    <div style="display: flex;">
+    <div style="writing-mode: vertical-lr; display: flex;">경력사항</div>
+    <div class="box-container">
+    <div class="box">회사명</div>
+    <div class="box">직위</div>
+    <div class="box">근속년수</div>
+    <div class="box">입사일</div>
+    <div class="box">퇴사일</div>
+    <div class="box-container">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+    </div>
+    </div>
+</div>
+
+<div>
+    <div className="pm-test6">
+        <div className="pm-test7">경력사항</div>
+        <div class="pm-test6">
+        <div className="pm-test4">회사명</div>
+        <div className="pm-test2">직위</div>
+        <div className="pm-test2">근속년수</div>
+        <div className="pm-test2">입사일</div>
+        <div className="pm-test2">퇴사일</div>
+        <div  class="pm-test6">
+        <div className="pm-tes5"></div>
+        <div className="pm-tes5"></div>
+        <div className="pm-tes5"></div>
+        <div className="pm-tes5"></div>
+        </div>  
+    </div>
+</div>
+
+
+
+</body>
+</html>

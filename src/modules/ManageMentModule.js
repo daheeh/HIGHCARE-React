@@ -8,11 +8,15 @@ export const POST_PM_MANAGEMENT = "manage/POST_PM_MANAGEMENT";
 
 export const POST_PM_END = "manage/POST_PM_END";
 
+export const GET_PM_MEMBER = "manage/GET_PM_MEMBER"
+
 const actions = createActions({
     [GET_MANAGEMENT]:() => {},
 
     [POST_PM_MANAGEMENT]:() => {},
-    [POST_PM_END]:() => {}
+    [POST_PM_END]:() => {},
+
+    [GET_PM_MEMBER]:() => {},
     
 });
 
@@ -26,6 +30,9 @@ const ManagementReduccer = handleActions(
             return payload;
         },
         [POST_PM_END]: (state, {payload}) => {
+            return payload;
+        },
+                [GET_PM_MEMBER]: (state, {payload}) => {
             return payload;
         },
         

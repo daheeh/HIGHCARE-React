@@ -1,26 +1,26 @@
-import { createActions, handleActions} from 'redux-actions';
+// import { createActions, handleActions} from 'redux-actions';
 
-const initialState = [];
+// const initialState = [];
 
-export const GET_MEMBER = 'pmreduccer/GET_MEMBER';
+// export const GET_MEMBER = 'pmreduccer/GET_MEMBER';
 
-const actions = createActions({
-    [GET_MEMBER]: () => {},
+// const actions = createActions({
+//     [GET_MEMBER]: () => {},
 
     
-});
+// });
 
-const PmReduccer = handleActions(
-    {
-        [GET_MEMBER]: (state, {payload}) => {
-            return payload;
-        }
+// const PmReduccer = handleActions(
+//     {
+//         [GET_MEMBER]: (state, {payload}) => {
+//             return payload;
+//         }
         
-    },
-    initialState  
-);
+//     },
+//     initialState  
+// );
 
 
 
 
-export default PmReduccer;
+// export default PmReduccer;

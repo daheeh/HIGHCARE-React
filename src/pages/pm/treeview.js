@@ -8,8 +8,9 @@ import { callTreeviewOneAPI } from '../../apis/PmAPICalls';
 function TreeView({setEmpInfo}) {
 
   const dispatch = useDispatch();
-  const result = useSelector(state => state.treeview);
+  let result = useSelector(state => state.treeview);
 
+  
   const [selectedNode, setSelectedNode] = useState({
     empNo: '',
     empName: '',
@@ -17,9 +18,9 @@ function TreeView({setEmpInfo}) {
     deptName: ''
   });
   
-  console.log('-----------------------------------> ', result);
   useEffect(() => {
-      dispatch(callTreeviewOneAPI());
+    dispatch(callTreeviewOneAPI());
+    console.log('-----------------------------------1> ', result);
  
   },[]);
 

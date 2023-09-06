@@ -49,9 +49,9 @@ function PmWork() {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
         dispatch(callManagementAPI());
         // 여기 result.data로 변경한것을 result로 다시변경
-        if (result) {
-            console.log("result >>>>>: ", result);
-            let statuss = type === 'start'? '출근' : '퇴근';
+        if (result.manage) {
+            console.log("result >>>>>222: ", result.manage);
+            let status = type === 'start'? '출근' : '퇴근';
            
             setFormData(form => ({
               ...form, 
@@ -62,7 +62,7 @@ function PmWork() {
               jobName:  jobName,
               startTime: '',
               endTime: '',
-              status: statuss ,
+              status: status,
               workTime: '',
               totalWorkTime: '',
             }));
@@ -104,6 +104,8 @@ function PmWork() {
 
     const endSubmission = async() => {
         setType('end');
+
+        
         if (empNo !== undefined) {
 			try {
 				const response = await dispatch(callMgEndAPI({ formData }));
@@ -130,7 +132,7 @@ function PmWork() {
 		}
     };
 
-	return (~~
+	return (
 <section>
 <PmNav/>
 <div className="apv-navibox">
@@ -153,11 +155,11 @@ function PmWork() {
                         </div>
                         <div className="pm-workin-box2">
                             <h2>출근시간</h2>
-                            {/* <h2>{ result.data.user.startTime  }</h2> */}
+                            <h2>{ result.user && result.user.startTime  }</h2>
                         </div>
                         <div className="pm-workin-box-last">
                             <h2>퇴근시간</h2>
-                            {/* <h2>{ result.data.user.endTime  }</h2> */}
+                            <h2>{ result.user && result.user.endTime  }</h2>
                         </div>
                     </div>
                 <table className="pm-job-table">
@@ -173,12 +175,12 @@ function PmWork() {
                         <th className="columnpm0">상태</th>
                         <th className="columnpm0">근무시간</th>
                         <th className="columnpm0">총 근무시간</th>
-                    </tr>
-                    {/* {Array.isArray(result.data.manage) && result.data.manage */}
-                    {Array.isArray(result) && result
+                    </tr>{/* {Array.isArray(result) && result */}
+                    { console.log('======1> ' ,result.data)}
+                    {result.manage !== undefined && Array.isArray(result.manage) && result.manage
                         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((res) => (
-                            <tr key={res.manNo}>d
+                            <tr key={res.manNo}>
                                 <td>{res.manNo}</td>
                                 <td>{res.empName}</td>
                                 <td>{res.manDate}</td>
@@ -192,7 +194,7 @@ function PmWork() {
                             </tr>
                         ))
                     }
-                    {/* {  result.data.length === 0 && <tr><td colSpan={10}>조회된 결과가 없습니다.</td></tr>} */}
+                    { result.manage === undefined && <tr><td colSpan={10}>조회된 결과가 없습니다.</td></tr>}
                     </tbody>
                 </table>
                 <br></br>
