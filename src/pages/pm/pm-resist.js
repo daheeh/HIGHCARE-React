@@ -12,6 +12,7 @@ function PmMemberResist() {
 
   const empinfo = useSelector(state => state.authes);
   const empNum = empinfo.empNo;
+  const department = empinfo.dept;
 
   console.log('================================================empnNum>>>>',empNum);
 
@@ -85,8 +86,8 @@ function PmMemberResist() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td  className="pm-test8">{resist.job?.name || ''}</td>
-                          {/* <td className="pm-test8">{resist.job.name || ''}</td> */}
+                          <td  className="pm-test8">{department || ''}</td>
+                          <td className="pm-test8">{resist.job?.name || ''}</td>
                           <td className="pm-test8">{ resist?.telephone || '' }</td>
                           <td className="pm-test8">{ resist?.startDate || '' }</td>
                           <td className="pm-test9">{ resist?.endDate || '' }</td>

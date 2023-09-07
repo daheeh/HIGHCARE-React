@@ -32,6 +32,7 @@ export const callEmployeeAPI = ({ empNo= 1, pmStatus }) => {
         const result = await fetch(requestURL, {
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -62,6 +63,7 @@ return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -92,6 +94,7 @@ export const callTreeviewTwoAPI = () => {
             const result = await fetch(requestURL, {
                 method: "GET",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*"
                 }
@@ -125,6 +128,7 @@ export const callManagementAPI = () => {
                 const result = await fetch(requestURL, {
                     method: "GET",
                     headers: {
+                        "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                         "Content-Type": "application/json",
                         "Accept": "*/*"
                     }
@@ -155,6 +159,7 @@ export const callMgStartAPI = ({ formData }) => {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -192,6 +197,7 @@ export const callMgEndAPI = ({ formData }) => {
             const result = await fetch(requestURL, {
                 method: "POST",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
@@ -222,6 +228,7 @@ export const callPmMemberAPI = (empNo) => {
     console.log('[PmAPICalls] callPmMemberAPI Call');
     
     const requestURL = `http://localhost:8080/api/pm/member/detail/${empNo}`;
+    
 
     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
     
@@ -231,6 +238,7 @@ export const callPmMemberAPI = (empNo) => {
             const result = await fetch(requestURL, {
                 method: "GET",
                 headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*"
                 }
@@ -285,7 +293,7 @@ export const callPmMemberAPI = (empNo) => {
 export const callPmInsertAPI = ({ formData }) => {
     console.log('[PmAPICalls] callPmInsertAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/all`;
+    const requestURL = `http://localhost:8080/api/pm/member/all`;
     console.log('insert ', formData);
     return async (dispatch, getState) => {
 
@@ -295,6 +303,7 @@ export const callPmInsertAPI = ({ formData }) => {
                 method: "POST",
                 headers: {
                     "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     'Content-Type': 'application/json; boundary=WebAppBoundary',
                     "Access-Control-Allow-Origin": "*",
                 },
