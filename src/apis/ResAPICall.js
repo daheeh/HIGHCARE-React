@@ -1,7 +1,9 @@
 import{
     GET_RES,
     POST_RES,
-    POST_RESR
+    POST_RESR,
+    PUT_RES,
+    PUT_RESR
 } from '../modules/reservationModule';
 
 export const callResAPI = () => {
@@ -59,4 +61,48 @@ export const callResRegistAPI = ({form}) => {
         dispatch({type: POST_RESR, payload: result});
     }
     
+}
+
+export const callResModAPI = ({form})=> {
+    const requestURL = `http://localhost:8080/res/modRes`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Accept": "*/*" ,
+                "Access-Control-Allow-Origin": "*" ,
+                "Content-Type": "application/json"
+            },
+            body: form
+        })
+        .then(response => response.json());
+
+        dispatch({type: PUT_RES, payload: result});
+    }
+
+
+}
+
+export const callDeleteAPI = ({resourceCode})=>{
+    const requestURL = `http://localhost:8080/res/deleteRes`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Accept": "*/*" ,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+                resourceCode: resourceCode,
+          
+            })
+        })
+        .then(response => response.json());
+
+        dispatch({type: PUT_RES, payload: result});
+    }
+
 }
