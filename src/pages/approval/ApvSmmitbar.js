@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import Modal from 'react-modal';
 import ApvLineTree from './ApvLineTree';
 import ApvFile from './ApvFile';
 import ApvFileList from './ApvFileList';
 import { uploadFiles } from './ApvFileUpload';
 import PdfDocument from './PdfDocument';
-import { pdf } from '@react-pdf/renderer';
+import { useReactToPrint } from 'react-to-print';
+import { current } from 'immer';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const modalStyles = {
     content: {
@@ -22,16 +25,13 @@ const modalStyles = {
 };
 
 
-function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, currentPage, data }) {
+
+const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, data }, ref) => {
     const [isUrgency, setIsUrgency] = useState('F');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFileModalOpen, setIsFileModalOpen] = useState(false);
-    // const [fileList, setFileList] = useState([
-    //     {
-    //         originalFileNames: '',
-    //     }
-    // ]);
-    // const [originalFileNames, setOriginalFileNames] = useState([]);
+    const htmlCode = ref?.current;
+    console.log("htmlCode" + htmlCode);
 
     const handleEmergencyClick = () => {
         const newIsUrgency = isUrgency === 'F' ? 'T' : 'F';
@@ -61,7 +61,6 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
         setSelectedFile(e.target.files[0]);
     };
 
-
     // 업데이트된 handleUploadClick 함수
     const handleUploadClick = () => {
         if (selectedFile) {
@@ -73,7 +72,6 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
         }
     };
 
-
     // 여기서 업로드한 파일을 처리
     const handleFileUpload = async (fle) => {
         if (selectedFile) {
@@ -84,7 +82,6 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
             setSelectedFile(null); // Reset selectedFile
         }
     }
-
 
     // 업로드 파일 삭제
     const handleRemoveFile = (fileIndex) => {
@@ -124,23 +121,30 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
 
     };
 
-    const generatePdfData = () => {
-        return pdf(<PdfDocument data={data} currentPage={currentPage}/>).toBlob();
-      };
-    
-    
+    // const generatePdfData = () => {
+    //     return pdf(<PdfDocument data={data} currentPage={currentPage} />).toBlob();
+    // };
 
-      const handleExportToPdf = () => {
-        const pdfBlob = pdf(<PdfDocument data={data} currentPage={currentPage} />).toBlob();
 
-  // PDF Blob을 데이터 URL로 변환
-  const pdfDataUrl = URL.createObjectURL(pdfBlob);
 
-  // 새로운 탭에서 PDF 열기
-  window.open(pdfDataUrl);
+    const handleExportToPdf = (ref) => {
+        // const pdfBlob = pdf(currentPage).toBlob();
 
-  // 새로운 탭이 열린 후 URL 객체 정리
-  URL.revokeObjectURL(pdfDataUrl);
+        // // PDF Blob을 데이터 URL로 변환
+        // const pdfDataUrl = URL.createObjectURL(pdfBlob);
+
+        // // 새로운 탭에서 PDF 열기
+        // window.open(pdfDataUrl);
+
+        // // 새로운 탭이 열린 후 URL 객체 정리
+        // URL.revokeObjectURL(pdfDataUrl);
+
+        html2canvas(ref.current).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'JPEG', 0, 0, 200, 280);
+            pdf.save("download.pdf")
+        })
     };
 
     // const handleExportToPdf = () => {
@@ -148,21 +152,21 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
     //       const pdfBlob = generatePdfData(); // Generate the PDF Blob using generatePdfData function
     //       // Create a URL for the Blob
     //       const pdfUrl = URL.createObjectURL(pdfBlob);
-          
+
     //       // Create a downloadable link
     //       const downloadLink = document.createElement('a');
     //       downloadLink.href = pdfUrl;
     //       downloadLink.download = 'document.pdf'; // Specify the desired file name
     //       downloadLink.click();
-          
+
     //       // Clean up the URL object after the download link is clicked
     //       URL.revokeObjectURL(pdfUrl);
     //     } else {
     //       console.error('PDF 생성 콜백이 사용 가능하지 않습니다.');
     //     }
     //   };
-      
-      
+
+
 
 
     return (
@@ -203,10 +207,11 @@ function ApvSummitBar({ onSubmit, updateIsUrgency, setSelectedEmployees, fileLis
                     <ApvLineTree onSelect={handleCompleteSelection} />
                 </Modal>
                 <button>설정</button>
-                <button onClick={handleExportToPdf}>PDF로 내보내기</button>
+                <button onClick={() => handleExportToPdf(ref)}>PDF로 내보내기</button>
+                
             </div>
         </div >
     );
-}
+})
 
 export default ApvSummitBar;

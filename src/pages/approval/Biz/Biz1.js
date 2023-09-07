@@ -14,6 +14,7 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 function Biz1({ mode, data }) {
 
     const dispatch = useDispatch();
+
     dispatch({ type: RESET_APPROVAL});
 
     const authes = useSelector(state => state.authes);
