@@ -46,25 +46,11 @@ function PmMemberInsert() {
   //   }
   // };
 
-  const deleteFormData = (formData) => {
-    for (let [key, value] of formData) {
-      if (!value) {
-        formData.delete(key);
-        deleteFormData(formData)
-      }
-    }
-  }
-
   const onSumbitHandler = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
 
-    deleteFormData(formData)
-
-    for (let [key, value] of formData) {
-      console.log(key, value);
-    }
     const response = await dispatch(callPmInsertAPI({ formData }));
 
     console.log(response);
@@ -128,8 +114,8 @@ function PmMemberInsert() {
                     <table>
                       <thead>
                         <tr>
-                          <th className="pm-test2">부서코드</th>
-                          <th className="pm-test2">직급코드</th>
+                          <th className="pm-test2">부서</th>
+                          <th className="pm-test2">직급</th>
                           <th className="pm-test2">부서전화번호</th>
                           <th className="pm-test2">입사일</th>
                           <th className="pm-test4">퇴사일</th>
@@ -138,10 +124,10 @@ function PmMemberInsert() {
                       <tbody>
                         <tr>
                           <td className="pm-test8">
-                            <input className="pm-input" name="deptCode" />
+                            <input className="pm-input" name="deptName" />
                           </td>
                           <td className="pm-test8">
-                            <input className="pm-input" name="jobCode" />
+                            <input className="pm-input" name="jobName" />
                           </td>
                           <td className="pm-test8">
                             <input className="pm-input" name="telephone" />
@@ -164,8 +150,8 @@ function PmMemberInsert() {
                     <table>
                       <thead>
                         <tr>
-                          <th className="pm-test2">입대일</th>
-                          <th className="pm-test2">전역일</th>
+                          <th className="pm-test2">기간</th>
+                          <th className="pm-test2">병역기간</th>
                           <th className="pm-test2">병역상태</th>
                           <th className="pm-test4">공란</th>
                         </tr>

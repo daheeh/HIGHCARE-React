@@ -111,22 +111,22 @@ function PmMemberResist() {
                       </thead>
                       <tbody>
                       {Array.isArray(resist.military) ? (
-  resist.military.map((item, index) => (
-    <tr key={index}>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-test9">{item?.status || ''}</td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-test9">{resist.military?.status || ''}</td>
-  </tr>
-)}
+                        resist.military.map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-test9">{item?.status || ''}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-test9">{resist.military?.status || ''}</td>
+                        </tr>
+                      )}
 
 
 

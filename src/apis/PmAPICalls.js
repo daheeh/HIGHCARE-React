@@ -304,10 +304,8 @@ export const callPmInsertAPI = ({ formData }) => {
                 headers: {
                     "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json; boundary=WebAppBoundary',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: formData,
             })
             // .then(response => {
             //     console.log('-----------------> \n', response);
