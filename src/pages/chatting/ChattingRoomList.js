@@ -8,18 +8,17 @@ import axios from 'axios';
 
 function ChattingRoomList({ onClose }) {
 
-    const [chatrooms, setChatrooms] = useState([]);
 
-    useEffect(() => {
-        // Redis에 저장된 채팅방 리스트를 가져오는 API호출
-        axios.get('/api/chat/rooms')
-            .then(response => {
-                setChatrooms(response.data);
-            })
-            .catch(error => {
-                console.error('채팅방리스트 fetch실패', error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     // Redis에 저장된 채팅방 리스트를 가져오는 API호출
+    //     axios.get('/api/chat/rooms')
+    //         .then(response => {
+    //             setChatrooms(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('채팅방리스트 fetch실패', error);
+    //         });
+    // }, []);
 
     return (
         <>

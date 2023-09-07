@@ -32,9 +32,8 @@ function MemberRequest() {
 
   useEffect(() => {
 
-    if (loadMember) {
       console.log("loadMember : ", loadMember);
-      setForm(form => ({
+      setForm(({
         ...form, 
         empNo: empNo,
         name: name,
@@ -43,18 +42,18 @@ function MemberRequest() {
         phone: phone,
         email: email,
       }));
-    }
 
-  }, [loadMember]);
+  }, [loadMember, empNo]);
   
 
   const onChangeHandler = (e) => {
-    setEmpNo(e.target.value)
+    setForm({...form, [e.target.name]: e.target.value})
   } 
 
   const memberSelectClick = async () => {
+    setEmpNo(form.empNo)
     // requestMember(empNo, dispatch);
-    await dispatch(selectMember(empNo));
+    await dispatch(selectMember(form.empNo));
     
   }
   
@@ -71,7 +70,7 @@ function MemberRequest() {
           <div className="label" htmlFor="name">사번</div>
           <input type="text" name="empNo" required
           placeholder="사원번호 입력"
-            value={empNo||""}
+            defaultValue={form.empNo||""}
             onChange={onChangeHandler}
           />
           <button name="selectbtn" onClick={memberSelectClick}>사번 조회</button>
@@ -105,9 +104,10 @@ function MemberRequest() {
             가입할 사원의 이메일주소를 정확히 입력하세요.<br/> (해당 이메일로 아이디와 임시비밀번호가 부여됩니다.)</p>
         <div>
           <div className="label" htmlFor="">이메일</div>
-          <input type="mail" name="mail" required
+          <input type="mail" name="email" required
+          onChange={onChangeHandler}
             placeholder="이메일주소 입력"
-            value={form.email||""}
+            defaultValue={form.email||""}
           />
         </div>
   

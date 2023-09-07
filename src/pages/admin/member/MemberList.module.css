@@ -35,25 +35,33 @@
 }
 
 
+
 .category {
     display: flex;
     font-size: 14px;
-    width: 1200px;
+    width: 1300px;
     height: 40px;
     margin-left: 20px;
     text-align: center;
     border-top: 1px lightgray solid;
-
-    
+    background-color: transparent;
 }
 
+
+.category:hover {
+    background-color: rgba(0, 94, 255, 0.233);;
+    cursor: pointer;
+}
+
+
+.categoryinner {
+    display: contents;
+    width: 1200px;
+}
 
 .category div { 
     width: 180px;    
     align-self: center;
-
-    
-    
 }
 
 .category select { 

@@ -61,6 +61,14 @@
     /* display: flex; */
 }
 
+.searchBoxInRoomList {
+
+    outline: none;
+    border: none;
+    width: 300px;
+    margin-top: 6px;
+    display: flex;
+}
 
 .chattingFooter {
     /* position: absolute; */
@@ -110,6 +118,16 @@ input::-webkit-search-results-decoration{
 /* 길이 넘어가면 스크롤 생성 */
 .chattingTreeView {
     width: 360px;
+    height: 335px;
+    background-color: #edf2ff;
+    max-height: 340px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 넘치면 스크롤 생성 */
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+.chattingChattingRoomList {
+    width: 360px;
     height: 325px;
     background-color: #edf2ff;
     max-height: 340px; /* 최대 높이 지정 */
@@ -117,3 +135,4 @@ input::-webkit-search-results-decoration{
     padding-top: 20px;
     padding-left: 30px;
 }
+

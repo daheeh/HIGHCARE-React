@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
-import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
-import { callApvHrm1ViewAPI } from '../../../apis/ApprovalAPICalls';
+import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 
 function Hrm1View() {
 	const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
-    console.log("Biz1View empNo : ", empNo);
+    console.log("Hrm1View empNo : ", empNo);
 
 
     const dispatch = useDispatch();
@@ -24,7 +23,7 @@ function Hrm1View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await dispatch(callApvHrm1ViewAPI({ apvNo }));
+                const data = await dispatch(callApvViewAPI({ apvNo }));
                 setData(data);
                 console.log('data : ', data);
             } catch (error) {
@@ -38,9 +37,13 @@ function Hrm1View() {
 	const [dateRange, setDateRange] = useState("");
 
 	useEffect(() => {
-			const formattedStartDate = (data.apvVacations[0].startDate).toLocaleDateString();
-			const formattedEndDate = (data.apvVacations[0].endDate).toLocaleDateString();
-			setDateRange(`${formattedStartDate} ~ ${formattedEndDate}`);
+
+		console.log('data : ', data);
+		console.log('apvNo : ',data.apvNo);
+		console.log('apvLines : ',data.apvLines);
+			// const formattedStartDate = (data.apvVacations[0].startDate).toLocaleDateString();
+			// const formattedEndDate = (data.apvVacations[0].endDate).toLocaleDateString();
+			// setDateRange(`${formattedStartDate} ~ ${formattedEndDate}`);
 	}, []);
 
 
@@ -97,7 +100,7 @@ function Hrm1View() {
 						<div className="apvContentDetail">- 사유 -</div>
 						<div className="apvContentDetailComent">
 							<textarea rows="20"
-								value={data?.comment || ''}
+								value={data.apvVacations[0]?.comment || ''}
 								></textarea>
 						</div>
 					</div>

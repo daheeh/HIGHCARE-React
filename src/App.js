@@ -13,6 +13,7 @@ import Biz4 from './pages/approval/Biz/Biz4';
 import Biz5 from './pages/approval/Biz/Biz5';
 import Biz4Offcial from './pages/approval/Biz/Biz4Offcial';
 import Exp1 from './pages/approval/Exp/Exp1';
+import Exp1View from './pages/approval/Exp/Exp1View';
 import Exp2 from './pages/approval/Exp/Exp2';
 import Exp3 from './pages/approval/Exp/Exp3';
 import Exp4 from './pages/approval/Exp/Exp4';
@@ -84,7 +85,9 @@ import PrivateRoute from "./errors/PrivateRoute";
 import MypageAnnual from "./pages/mypage/annual";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
-import TokenVerification from "./pages/admin/auth/TokenVerification";
+import { TokenVerification } from "./pages/admin/auth/TokenVerification";
+import { AdminNav } from "./pages/admin/AdminNav";
+import { AuthVarification } from "./pages/admin/auth/AuthVerification";
 
 
 
@@ -107,57 +110,54 @@ function App() {
             <Route path="find/step1" element={<Step1 />} />
             <Route path="find/step2" element={<Step2 />} />
             <Route path="find/reset" element={<Step2pass />} />
-            <Route path="member/request" element={<MemberRequest />} />
           </Route>
+          <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
           <Route path="/logout" element={<MainLayOut />} />
+
+          <Route path="/manager/member/request" element={<MemberRequest />} />
+
+
+          {/* 여기부터 토큰(로그인 권한 인증) 유효성 체크 적용됨  */}
+          <Route element={<TokenVerification />} >
 
             <Route path="approval">
               <Route index element={<ApvMain />} />
               <Route path="receivebox" element={<ReceiveBox />} />
               <Route path="writebox" element={<WriteBox />} />
 
-            <Route path="biz1" element={<Biz1 />} />
-            <Route path="biz1/:apvNo" element={<Biz1View />} />
-            <Route path="biz2" element={<Biz2 />} />
-            <Route path="biz3" element={<Biz3 />} />
-            <Route path="biz4" element={<Biz4 />} />
-            <Route path="biz5" element={<Biz5 />} />
-            <Route path="bizOffcial" element={<Biz4Offcial />} />
+              <Route path="biz1" element={<Biz1 />} />
+              <Route path="biz1/:apvNo" element={<Biz1View />} />
+              <Route path="biz2" element={<Biz2 />} />
+              <Route path="biz3" element={<Biz3 />} />
+              <Route path="biz4" element={<Biz4 />} />
+              <Route path="biz5" element={<Biz5 />} />
+              <Route path="bizOffcial" element={<Biz4Offcial />} />
 
 
-            <Route path="exp1" element={<Exp1 />} />
-            <Route path="exp2" element={<Exp2 />} />
-            <Route path="exp3" element={<Exp3 />} />
-            <Route path="exp4" element={<Exp4 />} />
-            <Route path="exp5" element={<Exp5 />} />
-            <Route path="exp6" element={<Exp6 />} />
-            <Route path="exp7" element={<Exp7 />} />
+              <Route path="exp1" element={<Exp1 />} />
+              <Route path="exp1/:apvNo" element={<Exp1View />} />
+              <Route path="exp2" element={<Exp2 />} />
+              <Route path="exp3" element={<Exp3 />} />
+              <Route path="exp4" element={<Exp4 />} />
+              <Route path="exp5" element={<Exp5 />} />
+              <Route path="exp6" element={<Exp6 />} />
+              <Route path="exp7" element={<Exp7 />} />
 
-            <Route path="hrm1" element={<Hrm1 />} />
-            <Route path="hrm1/:apvNo" element={<Hrm1View />} />
-            <Route path="hrm2" element={<Hrm2 />} />
-            <Route path="hrm3" element={<Hrm3 />} />
-            <Route path="hrm4" element={<Hrm4 />} />
-            <Route path="hrm5" element={<Hrm5 />} />
-            <Route path="hrm6" element={<Hrm6 />} />
-            <Route path="hrm7" element={<Hrm7 />} />
+              <Route path="hrm1" element={<Hrm1 />} />
+              <Route path="hrm1/:apvNo" element={<Hrm1View />} />
+              <Route path="hrm2" element={<Hrm2 />} />
+              <Route path="hrm3" element={<Hrm3 />} />
+              <Route path="hrm4" element={<Hrm4 />} />
+              <Route path="hrm5" element={<Hrm5 />} />
+              <Route path="hrm6" element={<Hrm6 />} />
+              <Route path="hrm7" element={<Hrm7 />} />
 
-          </Route>
+            </Route>
 
 
 
-          <Route path="/modifyinfo" element={<ModifyInfo />} />
-          <Route path="myinfo" element={<Myinfo />} />
-          <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
-
-          <Route path="/admin">
-            <Route index element={<AdminPage />} />
-            <Route path="member" element={<MemberList />} />
-            <Route path="member/modify" element={<MemberModify />} />
-            <Route path="member/log" element={<MemberLog />} />
-            <Route path="member/auth" element={<AuthManager />} />
-          </Route>
-
+            <Route path="/modifyinfo" element={<ModifyInfo />} />
+            <Route path="myinfo" element={<Myinfo />} />
 
           <Route path="/pm" element={<PmTest />} />
           <Route path="/pm/search" element={<PmMenu />} />
@@ -166,45 +166,65 @@ function App() {
           <Route path="/pm/de-resist" element={<PmResist />} />
           <Route path="/pm/department" element={<PmDepartment />} />
           <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
-          <Route path="/pm/member" element={<PmMemberResist />} />
+          <Route path="/pm/pm-resist" element={<PmMemberResist />} />
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
           <Route path="/pm/secondTree" element={<SecondTree />} />
-          <Route path="/pm/pm-resist-insert" element={< PmMemberInsert/>} />
 
-          <Route path="/bulletin" element={<BulletinMain />}>
-            {/* <Route index element={<Bulletin />} /> */}
+            <Route path="/bulletin" element={<BulletinMain />}>
+              {/* <Route index element={<Bulletin />} /> */}
 
-            <Route path="board/:categoryCode" element={<BulletinBoard />} />
+              <Route path="board/:categoryCode" element={<BulletinBoard />} />
 
-            <Route path="thread" element={<Thread />} />
+              <Route path="thread" element={<Thread />} />
 
-            <Route path="thread/:bulletinCode" element={<Thread />} />
-            <Route path="mod/:bulletinCode" element={<BullentinMod />} />
+              <Route path="thread/:bulletinCode" element={<Thread />} />
+              <Route path="mod/:bulletinCode" element={<BullentinMod />} />
 
-            <Route path="bulletinWrite" element={<BullentinWrite />} />
+              <Route path="bulletinWrite" element={<BullentinWrite />} />
+            </Route>
+
+
+            <Route path="/reservation" element={<ReservationMain />}>
+              <Route index element={<Reservation />} />
+              <Route path="status" element={<ReservationStatus />} />
+              <Route path="mystatus" element={<MyReservationStatus />} />
+              <Route path="add" element={<ResourceAdd />} />
+              <Route path="reserve" element={<Reserve />} />
+            </Route>
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/list/regist" element={<Businesscardregist />} />
+            <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
+            <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+            <Route path="/mypage/profile" element={<Profile />} />
+            <Route path="/mypage/annual" element={<MypageAnnual />} />
+
+
+            <Route path="/socket/chatting" element={<ChattingPage />} />
+
+
           </Route>
+          <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
 
-          <Route path="/reservation" element={<ReservationMain />}>
-            <Route index element={<Reservation />} />
-            <Route path="status" element={<ReservationStatus />} />
-            <Route path="mystatus" element={<MyReservationStatus />} />
-            <Route path="add" element={<ResourceAdd />} />
-            <Route path="reserve" element={<Reserve />} />
-          </Route>
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage/list/regist" element={<Businesscardregist />} />
-          <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-          <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-          <Route path="/mypage/profile" element={<Profile />} />
-          <Route path="/mypage/annual" element={<MypageAnnual />} />
 
+            {/* ****************************** 여기부터 관리자 권한 필요 ******************************* */}
 
-          <Route path="/socket/chatting" element={<ChattingPage />} />
+            <Route element={<AuthVarification />}>
+
+              <Route path="/admin">
+                <Route index element={<AdminPage />} />
+
+                <Route path="member" element={<MemberList />} />
+                <Route path="member/modify/:empNo" element={<MemberModify />} />
+                <Route path="member/log" element={<MemberLog />} />
+                <Route path="member/auth" element={<AuthManager />} />
+              </Route>
+
+            </Route>
+            {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
 
         </Route>
-        <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} />
 
       </Routes>
 

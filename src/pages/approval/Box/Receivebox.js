@@ -5,6 +5,7 @@ import ApvMenu from '../AprovalNav';
 import './ApprovalBox.css';
 import '../Approval.css';
 import { callApvReceiveBoxAPI } from '../../../apis/ApprovalAPICalls';
+import { handleDocumentClick } from '../HandleDocumentClick';
 
 
 function ReceiveBox() {
@@ -44,32 +45,8 @@ function ReceiveBox() {
     const navigate = useNavigate();
 
     
-    const handleDocumentClick = (apvNo) => {
-        
-        console.log('apvNo, :', apvNo);
-        const selectResult = results.find(result => result.apvNo === apvNo);
-        
-        if (selectResult) {
-            const title = selectResult.title;
-            console.log('title:', title);
-    
-            let action = '';
-            switch (title) {
-                case '지출결의서':
-                    action = `/approval/exp1/${apvNo}`;
-                    break;
-                case '경조금신청서':
-                    action = `/approval/exp3/${apvNo}`;
-                    break;
-                default:
-                    action = `/approval/biz1/${apvNo}`;
-                    break;
-            }
-            console.log('Action:', action);
-            navigate(action);
-        } else {
-            console.error(`No result found for apvNo: ${apvNo}`);
-        }
+    const handleDocumentClickInReceiveBox = (apvNo) => {
+        handleDocumentClick(apvNo, results, navigate);
     };
 
 
@@ -114,7 +91,7 @@ function ReceiveBox() {
                                     <tr key={result.apvNo}>
                                         <td
                                             key={result.apvNo}
-                                            onClick={() => handleDocumentClick(result.apvNo)}
+                                            onClick={() => handleDocumentClickInReceiveBox(result.apvNo)}
                                             style={{ cursor: 'pointer' }}
                                         >{result.apvNo}</td>
                                         <td>{result.title}</td>

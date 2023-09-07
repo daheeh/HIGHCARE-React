@@ -6,46 +6,57 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalExp.css';
 import '../Approval.css';
-import { callApvExp1API } from '../../../apis/ApprovalAPICalls';
+import { callApvExp1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
+import ApvFileList from '../ApvFileList';
+import { handleSubmission } from '../ApvSubmit';
+import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 function Exp1({ mode, data }) {
-    const authes = useSelector(state => state.authes);
-    const empNo = authes.empNo;
 
 	const dispatch = useDispatch();
-    const navigate = useNavigate();
+    dispatch({ type: RESET_APPROVAL});
 
-    const exp1 = useSelector(state => state.approval);
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
 
-	console.log('exp1 first : ', exp1);
-	
+	const navigate = useNavigate();
+
+	const approval = useSelector(state => state.approval);
+
+	const isEditMode = approval.apvLines ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+	console.log('exp1 first : ', approval.data);
+
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '지출결의서',
 		writeDate: '',
-		apvStatus: '결재진행중',
+		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
 		empNo: empNo,
 		empName: authes.name,
-        deptName: authes.dept,
-        jobName: authes.job,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvExpForms: [{
-			requestDate: '',
-			payee: '',
-			bank: '',
-			accountHolder: '',
-			accountNumber: '',
-			details: '',
-			account: '',
-			amount: '',
-			comment: '',
+			requestDate: approval.requestDate ? approval.requestDate : '',
+			payee: approval.payee ? approval.payee : '',
+			bank: approval.bank ? approval.bank : '',
+			accountHolder: approval.accountHolder ? approval.accountHolder : '',
+			accountNumber: approval.accountNumber ? approval.accountNumber : '',
+			details: approval.details ? approval.details : '',
+			account: approval.account ? approval.account : '',
+			amount: approval.amount ? approval.amount : 0,
+			comment: approval.comment ? approval.comment : '',
 		}]
 	});
 
 	const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
+	const initialData = location.state ? location.state.initialData : null;
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -56,11 +67,11 @@ function Exp1({ mode, data }) {
 
 
 	const [sharedProperties, setSharedProperties] = useState({
-		requestDate: '',
-		payee: '',
-		bank: '',
-		accountHolder: '',
-		accountNumber: ''
+		requestDate: approval.requestDate ? approval.requestDate : '',
+		payee: approval.payee ? approval.payee : '',
+		bank: approval.bank ? approval.bank : '',
+		accountHolder: approval.accountHolder ? approval.accountHolder : '',
+		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
 	const onChangeHandler = (e, index) => {
@@ -114,36 +125,47 @@ function Exp1({ mode, data }) {
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
 	useEffect(() => {
-        const currentDate = new Date();
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            writeDate: currentDate,
-            ...(initialData ? initialData : {}),
-        }));
-    }, [initialData]);
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
 
-    const updateIsUrgency = (newIsUrgency) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            isUrgency: newIsUrgency
-        }));
-    };
+	const updateIsUrgency = (newIsUrgency) => {
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
 
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
 
-    useEffect(() => {
-        console.log('Biz1 - selectedEmployees : ', selectedEmployees);
-    }, [setSelectedEmployees]);
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
 
-    const handleEmployeeSelect = (selectedEmployee) => {
-        setSelectedEmployees((prevSelectedEmployees) => [
-            ...prevSelectedEmployees,
-            {
-                ...selectedEmployee,
-                isApproval: 'F',
-            }
-        ]);
-    };
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+
+	useEffect(() => {
+		console.log('Exp1 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
+
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -233,49 +255,69 @@ function Exp1({ mode, data }) {
 			</div>
 		);
 	};
+	const [fileList, setFileList] = useState([]);
+    const handleFileUpload = (file) => {
+        if (file) {
+            // Create a copy of the current apvFiles array and add the new file to it
+            const updatedApvFiles = [...formData.apvFiles, file];
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                apvFiles: updatedApvFiles,
+            }));
 
-	const handleSubmission = async () => {
-        if (empNo !== undefined) {
-            try {
-                let response;
-                if (data) {
-                    // response = await dispatch(callApvBiz1UpdateAPI({ formData, selectedEmployees, apvNo: data.apvNo }));
-                } else {
-                    response = await dispatch(callApvExp1API({ formData, selectedEmployees }));
-                }
-                if (response.status === 200) {
-                    if (response.data === "기안 상신 실패") {
-                        window.alert("결재 등록 실패");
-                    } else {
-                        window.alert("결재 등록 성공");
-                        navigate('/approval');
-                    }
-                } else {
-                    window.alert("결재 등록 중 오류가 발생했습니다.");
-                }
-            } catch (error) {
-                console.error("API error:", error);
-                window.alert("API 요청 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
+            // Update the fileList state for rendering in the component
+            setFileList([...fileList, file]);
+            console.log('ApvSummitBar에서 업로드한 파일:', file);
         }
     };
-	console.log('Exp formData : ', formData);
 
+    const updateFileList = (newFileList) => {
+        setFileList(newFileList);
+    };
+
+    useEffect(() => {
+        console.log('fileList : ', fileList);
+    }, [fileList])
+
+    const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp1API;
+
+    const handleSubmissionClick = () => {
+        const submissionData = {
+            empNo,
+            isEditMode,
+            formData,
+            selectedEmployees,
+            navigate,
+            fileList,
+            APIPoint,
+            dispatch,
+        };
+
+        console.log('submissionData', submissionData);
+        handleSubmission(null, submissionData);
+    };
+    console.log('Biz formData : ', formData);
 
 	return (
 
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
-				<div className="containerApv">
+			<ApvSummitBar
+                    onSubmit={handleSubmissionClick}
+                    updateIsUrgency={updateIsUrgency}
+                    setSelectedEmployees={setSelectedEmployees}
+                    fileList={fileList}
+                    updateFileList={updateFileList}
+                    data={data}
+                />
+                <div className="containerApv">
 					<div className="apvApvTitle">지출결의서(단건)</div>
 					<ApvSummitLine
+						mode="create"
 						selectedEmployees={selectedEmployees}
 						authes={authes}
+						approval={approval}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
@@ -334,11 +376,11 @@ function Exp1({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-				</div>
-			</div>
-		</section>
-
-	);
+					<ApvFileList files={fileList} />
+                </div>
+            </div>
+        </section>
+    );
 }
 
 export default Exp1;
