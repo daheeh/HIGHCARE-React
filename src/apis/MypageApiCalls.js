@@ -18,9 +18,9 @@ export const callMypageProfileSelectAPI = (empNo) => {
             const result = await fetch(requestURL, {
                 method: "GET",
                 headers: {
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     "Content-Type": "application/json",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
 
                 },
                 // body: JSON.stringify(),

@@ -83,7 +83,7 @@ import PrivateRoute from "./errors/PrivateRoute";
 
 import LoginVerify from "./utils/LoginVerify";
 
-import MypageAnnual from "./pages/mypage/annual";
+import MypageAnnual from "./pages/mypage/myannual";
 import MyManegement from "./pages/mypage/mymanegement";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
@@ -199,7 +199,7 @@ function App() {
             <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
             <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
             <Route path="/mypage/profile" element={<Profile />} />
-            <Route path="/mypage/annual" element={<MypageAnnual />} />
+            <Route path="/mypage/myannual" element={<MypageAnnual />} />
 
 
             <Route path="/socket/chatting" element={<ChattingPage />} />
@@ -210,18 +210,6 @@ function App() {
 
 
 
-            {/* 여기부터 관리자 권한 필요  */}
-
-            <Route element={<AuthVarification />}>
-
-              <Route path="/admin">
-                <Route index element={<AdminPage />} />
-
-                <Route path="member" element={<MemberList />} />
-                <Route path="member/modify/:empNo" element={<MemberModify />} />
-                <Route path="member/log" element={<MemberLog />} />
-                <Route path="member/auth" element={<AuthManager />} />
-              </Route>
 
           <Route path="/bulletin" element={<BulletinMain />}>
             {/* <Route index element={<Bulletin />} /> */}
@@ -249,16 +237,26 @@ function App() {
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
           <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
 
-          <Route path="/mypage/profile" element={<Profile />}/>
-          <Route path="/mypage/annual" element={<MypageAnnual />}/>
+          <Route path="/mypage/profile" element={<Profile />} />
+          <Route path="/mypage/annual" element={<MypageAnnual />} />
           <Route path="/mypage/mymanegement" element={<MyManegement />} />
+        </Route>
 
 
+        {/* 여기부터 관리자 권한 필요  */}
 
+        <Route element={<AuthVarification />}>
 
-          <Route path="/socket/chatting" element={<ChattingPage />} />
-            </Route>
-            {/* 여기까지 관리자 권한 필요  */}
+          <Route path="/admin">
+            <Route index element={<AdminPage />} />
+
+            <Route path="member" element={<MemberList />} />
+            <Route path="member/modify/:empNo" element={<MemberModify />} />
+            <Route path="member/log" element={<MemberLog />} />
+            <Route path="member/auth" element={<AuthManager />} />
+          </Route>
+
+          {/* 여기까지 관리자 권한 필요  */}
 
         </Route>
 

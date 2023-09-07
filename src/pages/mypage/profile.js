@@ -7,6 +7,7 @@ import { decodeJwt } from "../../utils/decodeJwt";
 
 import { callMypageProfileSelectAPI } from '../../apis/MypageApiCalls';
 import { callProfileInsertAPI } from '../../apis/MypageApiCalls';
+import MypageNav from './MypageNav';
 
 
 function Profile() {
@@ -18,17 +19,18 @@ function Profile() {
     const [imageUrl, setImageUrl] = useState(null);
     const imageInput = useRef();    // 이미지 업 데이트 
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
-
     const mypage = useSelector(state => state.mypage);
-
+    const [imageLink, setImageLink] = useState('');
+    
     console.log("아이디 : ", id);
     console.log("마이페이지에 담긴 정보 : ", mypage);
-
+    // {`${image}`? `${imageUrl?.chName }` !== undefined ? `http://localhost:8080/images/${imageUrl?.chName}` : `${imageUrl}`:''}
     //  employee empNo로 조회
     useEffect(
         () => {
             dispatch(callMypageProfileSelectAPI(employee.empNo));       
             /// empNo로 불러오기
+            
         }
         , []); // 빈배열이면 랜더링 한번 되고 Apicalls를 준다.  
 
@@ -53,11 +55,19 @@ function Profile() {
                     if (result) {
                         console.log('check result : ', result)
                         setImageUrl(result);    // payload의 결과
+                        setImageLink(result);
                     }
 
                 }
                 fileReader.readAsDataURL(image)
             }
+            console.log('check------->',mypage);
+            setImageUrl(mypage?.data?.myProfileFile);
+            console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)
+            if(!imageLink){
+                    // 바꿀때만 상태값 바꿔주고 아니면 그대로 둔다.
+                setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
+            } 
         },
         [image]);
 
@@ -72,6 +82,7 @@ function Profile() {
             // setImageUrl(image2);
             setImage(image2);
             console.log('Img URL:', image2);
+            
         }
         // setImage(imageUrl);
     };
@@ -108,7 +119,8 @@ function Profile() {
 
         <>
             <section>
-                <div className="leftmenu">
+                <MypageNav />
+                {/* <div className="leftmenu">
                     <div className="leftmenu1"></div>
                     <div className="leftmenu2">
                         <div className="mainlogo">
@@ -146,7 +158,7 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* <!-- 아이디 주민번호 입사일 직급 --> */}
                 <div className="profile-form">
                     <div className="double">
@@ -156,12 +168,26 @@ function Profile() {
                             <div className="profileRegistration"
                             >
                                 {/* { console.log('check ==============> ',picture.chName)} */}
-                                { console.log('check imageUrl ==============> ', imageUrl)}
-                                {
+                                { console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
+                                {/* {
                                     // d이미지유알엘이 빈값이라 진입못함
                                   <img
                                     className=""
-                                    src={imageUrl ? imageUrl :  `http://localhost:8080/images/${picture?.chName}`}
+                                    src={  `http://localhost:8080/images/${imageUrl?.chName}`}
+                                    // src={imageUrl ? imageUrl :  `file:C:/dev/profileImages/${picture?.chName}`}
+                                    // src={picture.chName !== undefiend? `http://localhost:8080/images/${picture.chName}` : imageUrl}
+                                    // src = {imageUrl}
+                                    alt="preview"
+
+                                    style={{ width: 180, height: 120 }}
+                                />} */}
+
+{
+                                    // d이미지유알엘이 빈값이라 진입못함
+                                  <img
+                                    className=""
+                                    src={imageLink}
+                                    // src={imageUrl ? imageUrl :  `file:C:/dev/profileImages/${picture?.chName}`}
                                     // src={picture.chName !== undefiend? `http://localhost:8080/images/${picture.chName}` : imageUrl}
                                     // src = {imageUrl}
                                     alt="preview"
