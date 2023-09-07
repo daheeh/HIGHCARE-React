@@ -13,6 +13,7 @@ import Biz4 from './pages/approval/Biz/Biz4';
 import Biz5 from './pages/approval/Biz/Biz5';
 import Biz4Offcial from './pages/approval/Biz/Biz4Offcial';
 import Exp1 from './pages/approval/Exp/Exp1';
+import Exp1View from './pages/approval/Exp/Exp1View';
 import Exp2 from './pages/approval/Exp/Exp2';
 import Exp3 from './pages/approval/Exp/Exp3';
 import Exp4 from './pages/approval/Exp/Exp4';
@@ -133,6 +134,7 @@ function App() {
 
 
               <Route path="exp1" element={<Exp1 />} />
+              <Route path="exp1/:apvNo" element={<Exp1View />} />
               <Route path="exp2" element={<Exp2 />} />
               <Route path="exp3" element={<Exp3 />} />
               <Route path="exp4" element={<Exp4 />} />
