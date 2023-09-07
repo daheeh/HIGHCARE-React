@@ -155,7 +155,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 					break;
 			}
 			console.log('Action:', action);
-			navigate(action, { state: { initialData: data } });
+			navigate(action, { state: { initialData: data, isEditMode: true } });
 		} else {
 			console.error(`No result found for apvNo: ${apvNo}`);
 		}
@@ -225,12 +225,17 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 						<div className="row4">
 							{index === 0 && authes.empNo === emp.empNo ? (
 								<>
-									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ? (
-										<>
-											<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
-											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
-										</>
-									) :
+									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
+										data.apvStatus !== "결재진행중" ? (
+											<>
+												<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
+												<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+											</>
+										) :
+											<>
+											{emp.apvDate && <span>{emp.apvDate}</span>}
+											</>
+										:
 										<>
 											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
 										</>}

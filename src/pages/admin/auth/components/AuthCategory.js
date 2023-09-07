@@ -2,7 +2,7 @@ import AuthSytle from "../AuthManager.module.css"
 
 function AuthCategory(){
 
-    const job = treeview 
+    // const job = treeview 
 
 
     return ( 
