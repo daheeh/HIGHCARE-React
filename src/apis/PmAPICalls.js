@@ -219,44 +219,74 @@ export const callMgEndAPI = ({ formData }) => {
 
 
 export const callPmMemberAPI = (empNo) => {
-
-    console.log('[PmAPICalls] callPmMemberAPI Call   {} ', empNo);
-
-
-    const requestURL = `http://localhost:8080/api/pm/member/${empNo}`;
+    console.log('[PmAPICalls] callPmMemberAPI Call');
     
+    const requestURL = `http://localhost:8080/api/pm/member/detail/${empNo}`;
+
     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
+    
     return async (dispatch, getState) => {
-
+    
         try{
-        const result = await fetch(requestURL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "*/*"
-            }
-        })
-        .then(response => {
-            console.log(response);
-            return response.json()
-        });
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"
+                }
+            })
+            .then(response => {
+                console.log('-----------------> \n', response);
+                return response.json()
+            });
+    
+            console.log('[PmAPICalls] callPmMemberAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
+    
+            dispatch({type: GET_PM_MEMBER, payload: result.data});
+        } catch(error) {
+            console.error('[PmAPICalls] Error in callPmMemberAPI: ', error);
+        }
+        };
+    };
 
-        console.log('[PmAPICalls] callPmMemberAPI RESULT : ', result.data);
+// export const callPmMemberAPI = (empNo) => {
 
-        dispatch({ type: GET_PM_MEMBER,  payload: result.data});
-    } catch (error) {
-        console.error('[PmAPICalls] Error in callPmMemberAPI: ', error);
-    }
+//     console.log('[PmAPICalls] callPmMemberAPI Call   {} ', empNo);
+
+//     const requestURL = `http://localhost:8080/api/pm/member/${empNo}`;
+    
+//     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
+//     return async (dispatch, getState) => {
+
+//         try{
+//         const result = await fetch(requestURL, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Accept": "*/*"
+//             }
+//         })
+//         .then(response => {
+//             console.log('-----------------> \n', response);
+//             return response.json()
+//         });
+
+//         console.log('[PmAPICalls] callPmMemberAPI RESULT : ', result.data);
+
+//         dispatch({ type: GET_PM_MEMBER,  payload: result.data});
+//     } catch (error) {
+//         console.error('[PmAPICalls] Error in callPmMemberAPI: ', error);
+//     }
         
-    };    
-};
+//     };    
+// };
 
 
 export const callPmInsertAPI = ({ formData }) => {
     console.log('[PmAPICalls] callPmInsertAPI Call');
     
     const requestURL = `http://localhost:8080/api/pm/all`;
-    console.log('check1 ', formData);
+    console.log('insert ', formData);
     return async (dispatch, getState) => {
 
         console.log('[PmAPICalls] callPmInsertAPI formData : ', formData);

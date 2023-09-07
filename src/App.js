@@ -166,7 +166,7 @@ function App() {
           <Route path="/pm/de-resist" element={<PmResist />} />
           <Route path="/pm/department" element={<PmDepartment />} />
           <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
-          <Route path="/pm/pm-resist" element={<PmMemberResist />} />
+          <Route path="/pm/member" element={<PmMemberResist />} />
           <Route path="/pm/work" element={<PmWork />} />
           <Route path="/pm/treeview" element={<TreeView />} />
           <Route path="/pm/secondTree" element={<SecondTree />} />
