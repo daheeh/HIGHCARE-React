@@ -66,9 +66,9 @@ function TreeView({setEmpInfo}) {
       
       {selectedNode && (
         <div className="selectedNodeInfo">
-          <h2>선택한 노드 정보</h2>
+          <h2>선택한 사원 정보</h2>
           <pre>{JSON.stringify(selectedNode, null, 2)}</pre>
-          <button onClick={employeeSelect}> 사원 선택</button>
+          <button style={{width:100}} onClick={employeeSelect}> 사원 선택</button>
         </div>
       )}
       
