@@ -154,7 +154,8 @@ function MemberList() {
                     </div>
                 </div>
                 <div className={MemberListCss.category}>
-                    <input type="checkbox" name="allCheck" checked={allChecked} onChange={allCheckbox} />
+                    <input type="checkbox" name="allCheck"
+                        checked={allChecked} onChange={allCheckbox} />
 
                     <div>사원번호</div>
                     <div>이름</div>
@@ -203,7 +204,9 @@ function MemberList() {
                             key={member.empNo} className={MemberListCss.category}
 
                         >
-                            <input type="checkbox" value={member.empNo} checked={selectedItems.some(memNo => memNo == member.empNo)} onChange={checkBox} />
+                            <input type="checkbox" value={member.empNo}
+                                checked={selectedItems.some(memNo => memNo == member.empNo)}
+                                onChange={checkBox} />
                             <div onClick={() => memberClick(member)} >{member.empNo}</div>
                             <div onClick={() => memberClick(member)} >{member.employee.name}</div>
                             <div onClick={() => memberClick(member)} >{member.employee.jobCode.jobName}</div>
