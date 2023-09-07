@@ -2,9 +2,6 @@ import AuthSytle from "../AuthManager.module.css"
 
 function AuthCategory(){
 
-    const job = treeview 
-
-
     return ( 
 
         <div className={AuthSytle.AuthCategoryBox}>
