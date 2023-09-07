@@ -58,6 +58,7 @@ return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }
@@ -89,7 +90,8 @@ export const callTreeviewTwoAPI = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "*/*"
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 }
             })
             .then(response => {
