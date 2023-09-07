@@ -6,15 +6,20 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalExp.css';
 import '../Approval.css';
-import { callApvExp4API } from '../../../apis/ApprovalAPICalls';
-import { GET_APPROVAL_EXP4 } from '../../../modules/ApprovalModule';
+import { callApvExp4API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
+import ApvFileList from '../ApvFileList';
+import { handleSubmission } from '../ApvSubmit';
+import { GET_APPROVAL_EXP4, RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Exp4({ mode, data }) {
+
+	const dispatch = useDispatch();
+    dispatch({ type: RESET_APPROVAL});
+
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
@@ -42,13 +47,13 @@ function Exp4({ mode, data }) {
 					},
 				}).then(response => response.json());
 
-				console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI RESULT : ', result.data);
+				console.log('[ApprovalAPICalls] Exp4 callApvBiz1ViewAPI RESULT : ', result.data);
 
 				dispatch({ type: GET_APPROVAL_EXP4, payload: result.data });
 				console.log('신청서 조회 결과: ', result.data);
 				setResultData(result.data);
 			} catch (error) {
-				console.error('[ApprovalAPICalls] biz1 Error in callApvBiz1ViewAPI: ', error);
+				console.error('[ApprovalAPICalls] Exp4 Error in callApvBiz1ViewAPI: ', error);
 				throw error;
 			}
 		};
@@ -56,7 +61,7 @@ function Exp4({ mode, data }) {
 		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
 	}, [empNo, dispatch]);
 
-	// result.data에서 apvNo만 추출하여 배열로 만듭니다.
+	// result.data에서 apvNo만 추출하여 배열
 	const apvNoOptions = resultData.map(item => ({
 		value: item.apvNo,
 		label: `${item.apvNo} - ${item.purpose}`
@@ -82,11 +87,6 @@ function Exp4({ mode, data }) {
 		  refApvNo: selectedApvNo ? selectedApvNo : '',
 		}));
 	  }, [selectedApvNo]);
-
-	console.log('-----resultData : ', resultData);
-	console.log('-----apvNoOptions : ', apvNoOptions);
-	console.log('-----selectedInfo : ', selectedInfo);
-
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -162,14 +162,12 @@ function Exp4({ mode, data }) {
 			}));
 		} else {
 
-
 			setFormData(prevFormData => ({
 				...prevFormData,
 				[name]: value
 			}));
 		}
 	};
-
 
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
@@ -308,46 +306,62 @@ function Exp4({ mode, data }) {
 	};
 
 
-	const handleSubmission = async () => {
+	const [fileList, setFileList] = useState([]);
+    const handleFileUpload = (file) => {
+        if (file) {
+            // Create a copy of the current apvFiles array and add the new file to it
+            const updatedApvFiles = [...formData.apvFiles, file];
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                apvFiles: updatedApvFiles,
+            }));
 
-		if (empNo !== undefined) {
-			try {
-				let response;
-				if ((isEditMode)) {
-					// response = await dispatch(callApvExp4UpdateAPI({ formData, selectedEmployees }));
-				} else {
+            // Update the fileList state for rendering in the component
+            setFileList([...fileList, file]);
+            console.log('ApvSummitBar에서 업로드한 파일:', file);
+        }
+    };
 
-					response = await dispatch(callApvExp4API({ formData, selectedEmployees }));
-				}
-				if (response.status === 200) {
-					if (response.data === "기안 상신 실패") {
-						window.alert("결재 등록 실패");
-					} else {
-						window.alert("결재 등록 성공");
-						navigate('/approval');
-					}
-				} else {
-					window.alert("결재 등록 중 오류가 발생했습니다.");
-				}
-			} catch (error) {
-				console.error("API error:", error);
-				window.alert("API 요청 중 오류가 발생했습니다.");
-			}
-		} else {
-			window.alert("재로그인 요청");
-			navigate('/');
-		}
-	};
+    const updateFileList = (newFileList) => {
+        setFileList(newFileList);
+    };
 
-	console.log('formData : ', formData);
+    useEffect(() => {
+        console.log('fileList : ', fileList);
+    }, [fileList])
+
+    const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp4API;
+
+    const handleSubmissionClick = () => {
+        const submissionData = {
+            empNo,
+            isEditMode,
+            formData,
+            selectedEmployees,
+            navigate,
+            fileList,
+            APIPoint,
+            dispatch,
+        };
+
+        console.log('submissionData', submissionData);
+        handleSubmission(null, submissionData);
+    };
+    console.log('Exp4 formData : ', formData);
 
 	return (
-
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
-				<div className="containerApv">
+			<ApvSummitBar
+                    onSubmit={handleSubmissionClick}
+                    updateIsUrgency={updateIsUrgency}
+                    setSelectedEmployees={setSelectedEmployees}
+                    fileList={fileList}
+                    updateFileList={updateFileList}
+                    data={data}
+                />
+                <div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
 					<ApvSummitLine
 						mode="create"
@@ -422,12 +436,11 @@ function Exp4({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-				</div>
-			</div>
-		</section>
-
-
-	);
+					<ApvFileList files={fileList} />
+                </div>
+            </div>
+        </section>
+    );
 }
 
 export default Exp4;

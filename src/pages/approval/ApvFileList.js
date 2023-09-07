@@ -30,7 +30,7 @@ function ApvFileList({ files, onRemoveFile, data }) {
                     {files.map((file, index) => (
                         <li key={index}>
                             {file.name}
-                            <button onClick={() => onRemoveFile(index)}>Remove</button>
+                            <button className="apvBtn2" onClick={() => onRemoveFile(index)}>Remove</button>
                         </li>
                     ))}
                 </ul>

@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import ApvLineTree from './ApvLineTree';
 import ApvFile from './ApvFile';
 import ApvFileList from './ApvFileList';
-import { uploadFiles } from './ApvFileUpload';
 import PdfDocument from './PdfDocument';
 import { useReactToPrint } from 'react-to-print';
 import { current } from 'immer';

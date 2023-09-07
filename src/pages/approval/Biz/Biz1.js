@@ -14,19 +14,20 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 function Biz1({ mode, data }) {
 
     const dispatch = useDispatch();
-
-    dispatch({ type: RESET_APPROVAL});
-
+    
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
-
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
     const navigate = useNavigate();
-
+    
     const approval = useSelector(state => state.approval);
-
-    const isEditMode = approval.apvNo ? true : false;
-    console.log('isEditMode 1 : ', isEditMode);
+    
+    // const isEditMode = data.apvNo ? true : false;
+    // const isEditMode = approval.apvNo ? true : false;
+    // console.log('isEditMode 1 : ', isEditMode);
     console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
@@ -46,9 +47,17 @@ function Biz1({ mode, data }) {
         apvFiles: approval.apvFiles ? approval.apvFiles : [],
     });
 
-
-    const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
+    const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
+    
+    useEffect(() => {
+        if (!isEditMode) {
+            dispatch({ type: RESET_APPROVAL });
+        }
+    }, [isEditMode, dispatch]);
+    
+    // const location = useLocation();
+    // const initialData = location.state ? location.state.initialData : null;
 
     useEffect(() => {
         console.log('isEditMode 2 : ', isEditMode);

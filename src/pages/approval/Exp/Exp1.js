@@ -26,7 +26,7 @@ function Exp1({ mode, data }) {
 
 	const isEditMode = approval.apvLines ? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
-	console.log('exp1 first : ', approval.data);
+	console.log('Exp4 first : ', approval.data);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -255,6 +255,7 @@ function Exp1({ mode, data }) {
 			</div>
 		);
 	};
+
 	const [fileList, setFileList] = useState([]);
     const handleFileUpload = (file) => {
         if (file) {
@@ -296,10 +297,9 @@ function Exp1({ mode, data }) {
         console.log('submissionData', submissionData);
         handleSubmission(null, submissionData);
     };
-    console.log('Biz formData : ', formData);
+    console.log('Exp1 formData : ', formData);
 
 	return (
-
 		<section>
 			<ApvMenu />
 			<div>
