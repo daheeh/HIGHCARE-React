@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AuthSytle from "./AuthManager.module.css";
 import { AdminNav } from "../AdminNav";
-import { AuthCategory, AuthUser, AuthSetting } from "./components/AuthCategory";
+import { AuthCategory, AuthUser, AuthSetting } from "./AuthCategory";
 
 function AuthManager() {
   

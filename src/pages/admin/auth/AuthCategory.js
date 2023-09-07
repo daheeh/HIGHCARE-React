@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import AuthSytle from "../AuthManager.module.css"
+import AuthSytle from "./AuthManager.module.css"
 import { useDispatch, useSelector } from "react-redux";
-import { selectMenuGroupList } from "../../../../apis/AdminAPI";
-import TreeView from "../../../pm/treeview"
+import { selectMenuGroupList } from "../../../apis/AdminAPI";
+import TreeView from "../../pm/treeview"
 import {
     GET_TREEVIEW_ONE
-} from '../../../..//modules/TreeModule';
+} from '../../../modules/TreeModule';
 
 export function AuthCategory() {
 
@@ -29,9 +29,6 @@ export function AuthCategory() {
 
         setMenuManagers([...menuGroupList].filter(menu => menu.groupCode == code)[0]);
     }
-
-    const job = treeview
-
 
     return (
         <section>
@@ -92,7 +89,7 @@ function Modal({ isOpen, onClose }) {
         </div>
     );
 }
-``
+
 function AuthUser({ menuManagers }) {
 
     const accountList = useSelector(state => state.members.data);
