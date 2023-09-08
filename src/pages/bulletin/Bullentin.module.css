@@ -15,7 +15,6 @@
 .comment_count{
   margin-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
 }
 .comment_content{
   font-size: 16px;
@@ -28,11 +27,11 @@
   margin-top: 70px;
   padding-left: 50px;
   padding-right: 200px;
-  width: 100vw;
+  width: 70vw;
 }
-.content_main h3{
+.content_main h2{
   border-bottom: 1px solid #ccc;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 .content_main_main{
   border-top: 1px solid #ccc;
@@ -40,7 +39,7 @@
   min-height: 500px;
 }
 .content_info{
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 20px;
 }
 .Image{
@@ -52,11 +51,10 @@
   margin-right: 10px;
 }
 .comment_detail{
-  font-size: 20px;
+  font-size: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width : 400px;
-  min-height: 40px;
+  width: 80%;
   padding-top: 0px;
   padding-bottom: 0px;
   background-color: #f4f4f4;
@@ -64,11 +62,29 @@
   resize: none;
   cursor: default;
 }
+.comment_add{
+  width: 80%;
+  padding: 10px;
+  
+  font-size: 10px;
+}
+.comment_ok:hover{
+  color: #000;
+  background-color: #FFC338;
+  cursor: pointer;
+}
+.comment_ok{
+  border: 1px solid white;
+  background-color: #10479A;
+  padding: 10px;
+  color: white;
+  border-radius: 6px;
+}
 .comment_mod{
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  width : 400px;
+  width: 80%;
   min-height: 40px;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -83,8 +99,14 @@
 }
 .bullentin_category span{
   margin-right: 20px;
+
+}
+.bullentin_category{
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 .write_title {
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -94,7 +116,9 @@
 .content_title{
     padding-left: 20px;
     padding-bottom: 10px;
-    margin-top: 70px;
+    margin-top: 40px;
+    text-align: left;   
+    color: black;
     /* border-bottom: 1px solid #000; */
 }
 table{
@@ -103,17 +127,31 @@ table{
     border-collapse: collapse;
 }
 .permit{
-
+  margin-top: 100px;
 }
 .registration{
  float: right;
- margin-right: 90px;
+ margin-right: 0px;
+}
+.registration button{
+  width: 50px;
+  height: 50px;
+  font-size: 16px;
+  margin-right: 10px;
+  color: white;
+  background-color: #10479A;
+  border: 1px solid white;
+}
+
+.registration button:hover{
+  color: #000;
 }
 th,td{
     text-align: center;
-    border-bottom: 1px solid #444444;
+    border-bottom: 1px solid #e2e2e2;;;
     font-size: 20px;
     padding: 5px;
+    
 }
 th{
     width: 5%;
@@ -121,13 +159,32 @@ th{
 td{
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: 16px;
 }
 .title_head{
     width: 50%;  
 }
-
+.trtr:hover{
+  color: white;
+  background-color: #10479A;
+  cursor: pointer;
+}
 .date_head{
     width: 10%;
+}
+.pagingButton button{
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  
+}
+.pagingButtona{
+  color: black;
+  background-color: #f4f4f4;
+}
+.pagingButtona:hover{
+  color: white;
+  background-color: #10479A;
 }
 
 .search {
@@ -140,7 +197,7 @@ td{
   
   .searchTerm {
     width: 50%;
-    border: 3px solid #00B4CC;
+    border: 3px solid #10479A;
     border-right: none;
     padding: 5px;
     height: 20px;
@@ -157,8 +214,8 @@ td{
   .searchButton {
     width: 40px;
     height: 36px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
+    border: 1px solid #10479A;
+    background: #10479A;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;
@@ -208,6 +265,10 @@ td{
   }
   .step_3{
     min-width: 400px;
+  }
+  .tbodye{
+    width: 85vw;
+    margin-bottom: 20px;
   }
   .step_3 h3{
     min-width: 400px;

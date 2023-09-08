@@ -105,6 +105,7 @@ Quill.register('modules/ImageResize', ImageResize);
             onChange={props.getValue}
             // placeholder={placeholder}
             preserveWhitespace
+            style={{height:"600px"}}
         ></ReactQuill>
     );
 };

@@ -49,7 +49,7 @@ function Thread(){
             }));
             setStart(0);
         }
-        ,[start]
+        ,[start,currentPage]
     );
     const onClickComment = () =>{
         dispatch(callCommentAPI({
@@ -101,12 +101,14 @@ function Thread(){
             {  boardDetail &&
             
                 <div className={BoardStyle.content_main}>
-                    <h3>{boardDetail.title} </h3>
-                    <div onClick={onClickUpdate}>수정</div>
+                    <h2>{boardDetail.title} </h2>
+                    <div style={{display : "flex"}}>
                     <div className={BoardStyle.content_info}>
                         <span>{boardDetail.bulletinEmployee.empName}</span>
                         <span>{boardDetail.modifiedDate}</span>
                         조회수<span>{boardDetail.views}</span>
+                    </div>
+                    <div onClick={onClickUpdate} style={{marginLeft: "auto", marginRight:"20px", fontSize:"14px", padding:"3px", height:"20px"}} className={BoardStyle.comment_ok}>수정</div>
                     </div>
                     <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html: boardDetail.content}}>
                         
@@ -130,15 +132,15 @@ function Thread(){
                                     댓글{boardDetail.commentCnt}개
                                 </div>
                             <div style={{display: 'flex'}}>
-                                <textarea onChange={changeContent} name='content'></textarea>
+                                <textarea onChange={changeContent} className={BoardStyle.comment_add} rows={2} name='content'></textarea>
                                 {/* <input type="text" onChange={changeContent} name='content'/> */}
-                                <div onClick={onClickComment}>등록</div>
+                                <div onClick={onClickComment} className={BoardStyle.comment_ok} style={{margin:"auto", marginLeft:"10px"}}>등록</div>
                             </div>
                                 {Array.isArray(boardList) && boardList.map(
                                     (boards) =>(
                                         <div className={BoardStyle.comment} >
-                                                <span>{boards.bulletinEmployee.empName }</span>
-                                        <span>{ boards.modifiedDate}</span>
+                                                <span>{boards.bulletinEmployee.empName } </span>
+                                        <span>{ boards.modifiedDate} </span>
                                         <span onClick={() => onClickCommentUpdate(boards.commentCode)} id={`update${boards.commentCode}`}> 수정</span>
                                         <span key={boards.commentCode} onClick={() => onCLickDelete(boards.commentCode)}> 삭제</span>
                                         <br></br>
@@ -179,24 +181,29 @@ function Thread(){
 
                         </div> 
                     }
-                                <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
-                                    { Array.isArray(board) &&
+                                <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
+                                    { Array.isArray(boardList) &&
                                         <button 
                                         onClick={() => setCurrentPage(currentPage - 1)} 
-                                        disabled={currentPage === 1}>&lt;</button>
+                                        disabled={currentPage === 1
+                                        }
+                className={BoardStyle.pagingButtona}
+                >&lt;</button>
                                     }
                                     {pageNumber.map((num) => (
-                                        <li key={num} onClick={() => setCurrentPage(num)}>
+                                        <li key={num} onClick={() => setCurrentPage(num)} className={BoardStyle.pagingButton}>
                                             <button
-                                                style={ currentPage === num ? {backgroundColor : 'orange' } : null}>
-                                                {num}
+                                       style={ currentPage === num ? {backgroundColor : '#10479A' } : {backgroundColor : '#f4f4f4',color : 'black' } }
+                                       >                  {num}
                                             </button>
                                         </li>
                                     ))}
-                                    { Array.isArray(board) && pageInfo != null &&
+                                    { Array.isArray(boardList) && pageInfo != null &&
                                     <button 
                                         onClick={() => setCurrentPage(currentPage + 1)} 
-                                        disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}>
+                                        disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+                className={BoardStyle.pagingButtona}
+                >
                                         &gt;
                                     </button>
                                     }
