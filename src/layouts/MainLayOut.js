@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
 import MainLayOutCss from "./MainLayOut.module.css"
 import BulletinBoard from "../pages/bulletin/BulletinBoard";
+import ApvMainBox from "../pages/approval/ApprovalMainBox";
 import Board3 from "./prevBoard/board3";
+
 function MainLayOut() {
 
     return (
@@ -14,8 +16,8 @@ function MainLayOut() {
                 </div>
                 <div className={MainLayOutCss.box}>
                     <h2>결재문서</h2>
-                    <p>결재진행상황 </p>
-                    <a href="#">더 보기</a>
+                    <ApvMainBox showCounts={true} />
+                    <Link to="/approval">더보기</Link>
                 </div>
                 <div className={MainLayOutCss.box} style={{ width: 400 }}>
                     <h2>공지사항</h2>
