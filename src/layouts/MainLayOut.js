@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import MainLayOutCss from "./MainLayOut.module.css"
-import BulletinBoard from "../pages/bulletin/BulletinBoard";
 import ApvMainBox from "../pages/approval/ApprovalMainBox";
 import Board3 from "./prevBoard/board3";
 
