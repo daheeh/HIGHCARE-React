@@ -33,7 +33,7 @@ function Reserve(){
                             <div>지역 : <span>{content.area}</span></div>
                             <div>위치 : <span>{content.location}</span></div>
                             <div>사용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
-                            <div><NavLink to="/reservation/mod">관리</NavLink></div>
+                            <div className={BoardStyle.comment_ok} style={{width:"30px",height:"30px",fontSize:"14px",paddingBottom:"0px"}}><NavLink to="/reservation/mod">관리</NavLink></div>
                         </div>
                   </div>
                     <div style={{display: 'flex'}}>

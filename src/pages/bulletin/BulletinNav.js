@@ -39,10 +39,11 @@ return (
 	<div className={BoardNavStyle.leftmenu}>
 		
 			<div className={BoardNavStyle.leftmenu2}>
+		
+				<div className={BoardNavStyle.apv_navibox}>
 				<div className={BoardNavStyle.maintitle}>
 					게시판
 				</div>
-				<div className={BoardNavStyle.apv_navibox}>
 					<div className={BoardNavStyle.apv_navibox_top}>
 					<NavLink to="/bulletin/bulletinWrite">
 						작성하기

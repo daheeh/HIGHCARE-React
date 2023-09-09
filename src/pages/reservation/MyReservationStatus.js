@@ -59,18 +59,18 @@ function MyReservationStatus(){
                    ) }
                 </tbody>
             </table>
-            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
             { Array.isArray(resList) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
                 disabled={currentPage === 1}
-       
+                className={BoardStyle.pagingButtona}
             >
                 &lt;
             </button>
             }
             {pageNumber.map((num) => (
-            <li key={num} onClick={() => setCurrentPage(num)}>
+            <li key={num} onClick={() => setCurrentPage(num)} className={BoardStyle.pagingButton}>
                 <button
                     style={ currentPage === num ? {backgroundColor : 'orange' } : null}
                 >
@@ -82,7 +82,8 @@ function MyReservationStatus(){
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
-            >
+                className={BoardStyle.pagingButtona}
+          >
                 &gt;
             </button>
             }

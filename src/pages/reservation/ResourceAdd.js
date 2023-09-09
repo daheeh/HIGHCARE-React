@@ -119,7 +119,7 @@ function ResourceAdd(){
                         )
                     )}
                 </select>
-                <span onClick={openModal}>추가하기</span>
+                <span onClick={openModal}style={{width:'45px', marginLeft:'20px',fontSize:'16px',padding:'2px',textAlign:'center'}}  className={BoardStyle.comment_ok}>추가</span>
             </div>
             <div>
                 <span>지역</span>
@@ -137,10 +137,10 @@ function ResourceAdd(){
                 <span>위치</span>
                 <input type="text" name='location' onChange={onChangeHandler}/>
             </div>
-            <div>
+            <div  className={BoardStyle.content_time} >
                 <span>사용시간</span>
                 <input type="text" name='startTime' onChange={onChangeHandler}/>
-                ~
+                -
                 <input type="text" name='endTime' onChange={onChangeHandler}/>
             </div>
             <div>
@@ -148,6 +148,8 @@ function ResourceAdd(){
                            src={ imageUrl } 
                            className={BoardStyle.Image}
                             alt="preview"
+                            style={{width:"400px", height:"200px"}}
+                            
                         />}
                           <input                
                             style={ { display: 'none' }}
@@ -157,11 +159,13 @@ function ResourceAdd(){
                             onChange={ onChangeImageUpload }
                             ref={ imageInput }
                         />
-                        <button 
+                        <div 
                             onClick={ onClickImageUpload } 
+                            className={BoardStyle.comment_ok}
+                            style={{width:"100px", fontSize:"16px"}} 
                         >
-                            이미지 업로드
-                            </button>
+                            이미지 선택
+                            </div>
             </div>
             <span>이용안내</span>
             <Editor value={value} getValue={getValue}/>

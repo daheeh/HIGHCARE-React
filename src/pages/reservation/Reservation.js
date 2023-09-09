@@ -27,6 +27,8 @@ function Reservation(){
 
     const resContent = useSelector(state => state.resContentReducer);
     const content = resContent.data;
+    const [stepA, setStepA] = useState(-1);
+    const [stepB, setStepB] = useState(-1);
 
     useEffect(
         () =>{
@@ -35,6 +37,7 @@ function Reservation(){
     );
 
     const onClickCategory = (categoryCode) =>{
+        setStepA(categoryCode);
             dispatch(callResListAPI({
                     categoryCode: categoryCode
                 }));
@@ -44,6 +47,7 @@ function Reservation(){
 
     }
     const onClickArea = (resourceCode) =>{
+        setStepB(resourceCode);
         dispatch(callResContentAPI({
             resourceCode: resourceCode
         }));
@@ -65,7 +69,8 @@ function Reservation(){
                 <ul>
                     {Array.isArray(resCategory) && resCategory.map(
                         (category) => (
-                            <li onClick={() => onClickCategory(category.categoryCode)}>{category.name}</li>
+                            <li onClick={() => onClickCategory(category.categoryCode)} 
+                            style={category.categoryCode === stepA?{backgroundColor: '#00b6c2',color:'#fff'}: {backgroundColor : '#f4f4f4',color:'black'}}>{category.name}</li>
                         )
                     )}
                 </ul>
@@ -77,7 +82,8 @@ function Reservation(){
                 <ul>
                 {Array.isArray(resLoc) && resLoc.map(
                         (area) => (
-                            <li onClick={() => onClickArea(area.resourceCode)}>{area.area}</li>
+                            <li onClick={() => onClickArea(area.resourceCode)}
+                            style={area.resourceCode === stepB?{backgroundColor: '#00b6c2',color:'#fff'}: {backgroundColor : '#f4f4f4',color:'black'}}>{area.area}</li>
                         )
                     )}
                 </ul>
@@ -87,12 +93,12 @@ function Reservation(){
             <h3 className="">정보확인</h3>
             <div id="step-3-content" className={BoardStyle.abcdefg}>
             {  content &&
-            <div> 
+            <div style={{fontWeight:"800"}}> 
                 <div>시설명 : <span>{content.resourceName}</span></div>
                 <div>위치 : <span>{content.location}</span></div>
                 <div>이용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
-                <img src="../../img/dog.jpg" alt="" width="300px" height="200px"/>
-                <div style={{textAlign: 'center'}} onClick={() => onCLickRes(content.resourceCode)}>예약하기</div>
+                <img src="../../img/dog.jpg" alt="" width="350px" height="200px"/>
+                <div style={{textAlign: 'center',width:'80px',margin:'auto',height:'30px',fontSize:'14px'}} onClick={() => onCLickRes(content.resourceCode)} className={BoardStyle.comment_ok}>예약하기</div>
             </div>
             }
             </div>
