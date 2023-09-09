@@ -39,13 +39,12 @@
 }
 
 .AuthUserBox th {
-    border-top: gray solid 1px;
-    border-bottom: gray solid 1px;
+    border: none;
 }
 
 .AuthUserBox td {
     font-size: 18px;
-    border-bottom: gray dashed 1px;
+    border-bottom: none;
 }
 
 

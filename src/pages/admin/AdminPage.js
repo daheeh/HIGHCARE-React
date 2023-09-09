@@ -17,7 +17,7 @@ function AdminPage() {
 
     useEffect(() => {
 
-        dispatch(allMemberListApi())
+        // dispatch(allMemberListApi())
 
     })
 	return (
