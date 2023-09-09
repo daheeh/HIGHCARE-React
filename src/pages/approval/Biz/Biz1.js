@@ -189,6 +189,7 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
                             <textarea
+                                className='apvTextarea'
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents1"
@@ -199,6 +200,7 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
                             <textarea
+                            className='apvTextarea'
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents2"

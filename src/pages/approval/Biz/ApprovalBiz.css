@@ -48,7 +48,7 @@
     grid-column: 1 / span 8;
     min-height: 300px;
     max-width: 2000px;
-    border-bottom: 1px solid #7B7B7B;
+    /* border-bottom: 1px solid #7B7B7B; */
     overflow: hidden;
 }
 

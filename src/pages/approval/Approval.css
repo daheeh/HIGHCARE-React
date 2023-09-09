@@ -609,8 +609,9 @@ section {
 
 
 
-textarea {
+.apvTextarea {
     font-family: NanumGothic;
+    background: #f4f4f4;
     /* padding: 30px; */
     font-size: 24px;
     width: 100%;
@@ -623,6 +624,7 @@ textarea {
 
 .input1 {
     font-family: NanumGothic;
+    background: #f4f4f4;
     font-size: 24px;
     border: none;
     outline: none;
@@ -632,6 +634,7 @@ textarea {
 
 .input2 {
     font-family: NanumGothic;
+    background: #f4f4f4;
     font-size: 24px;
     border: none;
     outline: none;

@@ -2,12 +2,6 @@ import AuthSytle from "../AuthManager.module.css"
 
 function AuthCategory(){
 
-<<<<<<< HEAD
-=======
-    // const job = treeview 
-
-
->>>>>>> kimng
     return ( 
 
         <div className={AuthSytle.AuthCategoryBox}>
