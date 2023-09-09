@@ -25,9 +25,6 @@ function Biz1({ mode, data }) {
     
     const approval = useSelector(state => state.approval);
     
-    // const isEditMode = data.apvNo ? true : false;
-    // const isEditMode = approval.apvNo ? true : false;
-    // console.log('isEditMode 1 : ', isEditMode);
     console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
@@ -55,9 +52,6 @@ function Biz1({ mode, data }) {
             dispatch({ type: RESET_APPROVAL });
         }
     }, [isEditMode, dispatch]);
-    
-    // const location = useLocation();
-    // const initialData = location.state ? location.state.initialData : null;
 
     useEffect(() => {
         console.log('isEditMode 2 : ', isEditMode);
@@ -189,6 +183,7 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
                             <textarea
+                                className='apvTextarea'
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents1"
@@ -199,6 +194,7 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
                             <textarea
+                            className='apvTextarea'
                                 placeholder="내용 작성"
                                 rows="9"
                                 name="contents2"

@@ -33,7 +33,7 @@ function Biz2({ mode, data }) {
 	const [formData, setFormData] = useState({
 
 		apvNo: approval.apvNo ? approval.apvNo : '',
-		title: '회의록',
+		title : '회의록',
 		writeDate: '',
 		apvStatus: '결재예정',
 		isUrgency: 'F',
@@ -208,7 +208,7 @@ function Biz2({ mode, data }) {
 						</div>
 						<div className="apvContentBiz2Last">
 							<div className="column1">회의내용</div>
-							<div><textarea placeholder="회의 내용 작성" rows="30" name='contents1'
+							<div><textarea placeholder="회의 내용 작성" rows="30" name='contents1' className='apvTextarea'
 								value={formData.apvMeetingLogs[0].contents1}
 								onChange={onChangeHandler} />
 							</div>

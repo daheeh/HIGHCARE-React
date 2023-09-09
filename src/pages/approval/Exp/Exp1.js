@@ -13,20 +13,18 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 function Exp1({ mode, data }) {
 
-	const dispatch = useDispatch();
-    dispatch({ type: RESET_APPROVAL});
-
-	const authes = useSelector(state => state.authes);
-	const empNo = authes.empNo;
-	console.log("empNo : ", empNo);
-
-	const navigate = useNavigate();
-
-	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
-	console.log('Exp4 first : ', approval.data);
+    const dispatch = useDispatch();
+    
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
+    const navigate = useNavigate();
+    
+    const approval = useSelector(state => state.approval);
+	console.log('Exp1 first : ', approval.data);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -55,8 +53,15 @@ function Exp1({ mode, data }) {
 		}]
 	});
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
+    
+    useEffect(() => {
+        if (!isEditMode) {
+            dispatch({ type: RESET_APPROVAL });
+        }
+    }, [isEditMode, dispatch]);
+    
 
 	const [amounts, setAmounts] = useState([0]);
 
