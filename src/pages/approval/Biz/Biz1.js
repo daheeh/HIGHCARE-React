@@ -25,9 +25,6 @@ function Biz1({ mode, data }) {
     
     const approval = useSelector(state => state.approval);
     
-    // const isEditMode = data.apvNo ? true : false;
-    // const isEditMode = approval.apvNo ? true : false;
-    // console.log('isEditMode 1 : ', isEditMode);
     console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
@@ -55,9 +52,6 @@ function Biz1({ mode, data }) {
             dispatch({ type: RESET_APPROVAL });
         }
     }, [isEditMode, dispatch]);
-    
-    // const location = useLocation();
-    // const initialData = location.state ? location.state.initialData : null;
 
     useEffect(() => {
         console.log('isEditMode 2 : ', isEditMode);

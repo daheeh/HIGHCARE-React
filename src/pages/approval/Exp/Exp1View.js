@@ -41,47 +41,50 @@ function Exp1View() {
 
     const renderApvExpForm = (data) => {
         return (
-            <div className="apvContentDetailExp1Content">
+            <>
                 {data?.apvExpForms.map((form, index) => (
-                    <div className="apvContentDetailExp1List" key={index}>
-                        <div className="column21">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].details`}
-                                value={form.details || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column22">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].account`}
-                                value={form.account || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column23">
-                            <input
-                                className="input1"
-                                type="number"
-                                name={`apvExpForms[${index}].amount`}
-                                value={form.amount || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column24">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].comment`}
-                                value={form.comment || ''}
-                                readOnly
-                            />
+                    <div className="apvContentDetailExp1Content" key={index}>
+                        <div className="apvContentDetailExp1List">
+                            <div className="column21">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].details`}
+                                    value={form.details || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column22">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].account`}
+                                    value={form.account || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column23">
+                                <input
+                                    className="input1"
+                                    type="number"
+                                    name={`apvExpForms[${index}].amount`}
+                                    value={form.amount || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column24">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].comment`}
+                                    value={form.comment || ''}
+                                    readOnly
+                                />
+                            </div>
                         </div>
                     </div>
                 ))}
-            </div>
+            </>
         );
     };
+    
 
     return (
         <section>
