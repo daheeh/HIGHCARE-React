@@ -40,6 +40,7 @@ function Exp1({ mode, data }) {
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvExpForms: [{
 			requestDate: approval.requestDate ? approval.requestDate : '',
 			payee: approval.payee ? approval.payee : '',
