@@ -16,7 +16,7 @@ function MemberList() {
     const navigate = useNavigate();
     useEffect(() => {
 
-        dispatch(allMemberListApi)
+        dispatch(allMemberListApi());
 
     }, [])
 
@@ -137,7 +137,7 @@ function MemberList() {
         <section>
             <AdminNav />
             <div style={{ marginTop: 20 }}>
-                <div className={MemberListCss.title}>회원 통합관리
+                <div className={MemberListCss.title}>회원목록
                     <div>
                         <div>현재 멤버 수: {memberList.length}명 </div>
                         <div>정상: {normalMember}명 / 임시: {preMember}명 / 차단: {inactiveMember}명 / 탈퇴(예정): {drawMember}명 </div>
@@ -274,7 +274,7 @@ export const roleCode = (roleCode) => {
         case 'ROLE_WITHDRAW':
             return '탈퇴회원';
         default:
-            return '없음';
+            return 'none';
     }
 
 }

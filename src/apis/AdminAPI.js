@@ -79,3 +79,22 @@ export const selectMenuManagers = createAsyncThunk(
         }
     }
 )
+
+export const insertMenuManagers = createAsyncThunk(
+    'insert/menuManagers',
+    async (sendData) => {
+        try {
+            const response = await axios.post(`http://localhost:8080/api/admin/managers`, sendData,
+                {
+                    headers: {
+                        "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    }
+                });
+            console.log(response);
+            return response.data;
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+)
