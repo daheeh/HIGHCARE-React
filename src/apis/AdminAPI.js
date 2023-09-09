@@ -83,6 +83,7 @@ export const selectMenuManagers = createAsyncThunk(
 export const insertMenuManagers = createAsyncThunk(
     'insert/menuManagers',
     async (sendData) => {
+        console.log('넘겨받은 sendData : ', sendData);
         try {
             const response = await axios.post(`http://localhost:8080/api/admin/managers`, sendData,
                 {
