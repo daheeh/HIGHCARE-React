@@ -14,10 +14,12 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 function Biz1({ mode, data }) {
 
     const dispatch = useDispatch();
-    
+    dispatch({ type: RESET_APPROVAL});
+
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
+    
     const location = useLocation();
     const initialData = location.state ? location.state.initialData : null;
     

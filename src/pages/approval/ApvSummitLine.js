@@ -144,12 +144,29 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 
 			let action = '';
 			switch (title) {
+				case '회의록':
+					action = `/approval/biz2`;
+					break;
+				case '출장신청서':
+					action = `/approval/biz3`;
+					break;
+				case '공문':
+					action = `/approval/biz4`;
+					break;
+					
 				case '지출결의서':
 					action = `/approval/exp1`;
 					break;
 				case '경조금신청서':
 					action = `/approval/exp3`;
 					break;
+				case '연차신청서':
+					action = `/approval/hrm1`;
+					break;
+				case '기타휴가신청서':
+					action = `/approval/hrm2`;
+					break;
+
 				default:
 					action = `/approval/biz1`;
 					break;
@@ -233,7 +250,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 											</>
 										) :
 											<>
-											{emp.apvDate && <span>{emp.apvDate}</span>}
+												{emp.apvDate && <span>{emp.apvDate}</span>}
 											</>
 										:
 										<>

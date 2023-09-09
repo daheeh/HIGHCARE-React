@@ -10,25 +10,26 @@ import Biz1View from './pages/approval/Biz/Biz1View';
 import Biz2 from './pages/approval/Biz/Biz2';
 import Biz2View from './pages/approval/Biz/Biz2View';
 import Biz3 from './pages/approval/Biz/Biz3';
+import Biz3View from './pages/approval/Biz/Biz3View';
 import Biz4 from './pages/approval/Biz/Biz4';
-import Biz5 from './pages/approval/Biz/Biz5';
 import Biz4Offcial from './pages/approval/Biz/Biz4Offcial';
+import Biz5 from './pages/approval/Biz/Biz5';
 import Exp1 from './pages/approval/Exp/Exp1';
 import Exp1View from './pages/approval/Exp/Exp1View';
 import Exp2 from './pages/approval/Exp/Exp2';
-import Exp3 from './pages/approval/Exp/Exp3';
+import Exp2View from './pages/approval/Exp/Exp2View';
 import Exp4 from './pages/approval/Exp/Exp4';
-import Exp5 from './pages/approval/Exp/Exp5';
+import Exp4View from './pages/approval/Exp/Exp4View';
 import Exp6 from './pages/approval/Exp/Exp6';
+import Exp6View from './pages/approval/Exp/Exp6View';
 import Exp7 from './pages/approval/Exp/Exp7';
+import Exp7View from './pages/approval/Exp/Exp7View';
 import Hrm1 from './pages/approval/Hrm/Hrm1';
 import Hrm1View from './pages/approval/Hrm/Hrm1View';
 import Hrm2 from './pages/approval/Hrm/Hrm2';
+import Hrm2View from './pages/approval/Hrm/Hrm2View';
 import Hrm3 from './pages/approval/Hrm/Hrm3';
-import Hrm4 from './pages/approval/Hrm/Hrm4';
-import Hrm5 from './pages/approval/Hrm/Hrm5';
-import Hrm6 from './pages/approval/Hrm/Hrm6';
-import Hrm7 from './pages/approval/Hrm/Hrm7';
+import Hrm3View from './pages/approval/Hrm/Hrm3View';
 import Login from './pages/login/Login';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ApvMain from "./pages/approval/ApprovalMain";
@@ -132,29 +133,28 @@ function App() {
               <Route path="biz2" element={<Biz2 />} />
               <Route path="biz2/:apvNo" element={<Biz2View />} />
               <Route path="biz3" element={<Biz3 />} />
+              <Route path="biz3/:apvNo" element={<Biz3View />} />
               <Route path="biz4" element={<Biz4 />} />
-              <Route path="biz5" element={<Biz5 />} />
               <Route path="bizOffcial" element={<Biz4Offcial />} />
-
+              <Route path="biz5" element={<Biz5 />} />
 
               <Route path="exp1" element={<Exp1 />} />
               <Route path="exp1/:apvNo" element={<Exp1View />} />
               <Route path="exp2" element={<Exp2 />} />
-              <Route path="exp3" element={<Exp3 />} />
+              <Route path="exp2/:apvNo" element={<Exp2View />} />
               <Route path="exp4" element={<Exp4 />} />
-              <Route path="exp5" element={<Exp5 />} />
+              <Route path="exp4/:apvNo" element={<Exp4View />} />
               <Route path="exp6" element={<Exp6 />} />
+              <Route path="exp6/:apvNo" element={<Exp6View />} />
               <Route path="exp7" element={<Exp7 />} />
+              <Route path="exp7/:apvNo" element={<Exp7View />} />
 
               <Route path="hrm1" element={<Hrm1 />} />
               <Route path="hrm1/:apvNo" element={<Hrm1View />} />
               <Route path="hrm2" element={<Hrm2 />} />
+              <Route path="hrm2/:apvNo" element={<Hrm2View />} />
               <Route path="hrm3" element={<Hrm3 />} />
-              <Route path="hrm4" element={<Hrm4 />} />
-              <Route path="hrm5" element={<Hrm5 />} />
-              <Route path="hrm6" element={<Hrm6 />} />
-              <Route path="hrm7" element={<Hrm7 />} />
-
+              <Route path="hrm3/:apvNo" element={<Hrm3View />} />
             </Route>
 
 

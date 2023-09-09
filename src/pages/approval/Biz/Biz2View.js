@@ -93,7 +93,7 @@ function Biz2View() {
             <div className="apvContentBiz2Last">
               <div className="column1">회의내용</div>
               <div><textarea placeholder="회의 내용 작성" rows="30" name='contents1' className='apvTextarea'
-                value={data?.apvMeetingLogs[0].contents1}
+                value={data?.contents1}
               />
               </div>
             </div>

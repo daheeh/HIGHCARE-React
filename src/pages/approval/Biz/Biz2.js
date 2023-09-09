@@ -14,20 +14,20 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 function Biz2({ mode, data }) {
 
-
-	const dispatch = useDispatch();
+    const dispatch = useDispatch();
     dispatch({ type: RESET_APPROVAL});
 
-	const authes = useSelector(state => state.authes);
-	const empNo = authes.empNo;
-	console.log("empNo : ", empNo);
-
-	const navigate = useNavigate();
-
-	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+    
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
+    const navigate = useNavigate();
+    
+    const approval = useSelector(state => state.approval);
+    
 	console.log('Biz2 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
@@ -38,12 +38,13 @@ function Biz2({ mode, data }) {
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '업무',
-		contents1: '',
+		contents1: approval.contents1 ? approval.contents1 : '',
 		empNo: empNo,
 		empName: authes.name,
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvMeetingLogs: [{
 			meetingTitle: approval.meetingTitle ? approval.meetingTitle : '',
 			meetingDate: approval.meetingDate ? approval.meetingDate : '',
@@ -52,14 +53,14 @@ function Biz2({ mode, data }) {
 		}]
 	});
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
 
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevFormData) => ({
 			...prevFormData,
-			contents1: value,
+				[name]: value,
 			apvMeetingLogs: [{
 				...prevFormData.apvMeetingLogs[0],
 				[name]: value,
@@ -151,7 +152,7 @@ function Biz2({ mode, data }) {
         console.log('submissionData', submissionData);
         handleSubmission(null, submissionData);
     };
-	console.log('Biz1 formData : ', formData);
+	console.log('Biz2 formData : ', formData);
 
 	return (
 		<section>
@@ -209,7 +210,7 @@ function Biz2({ mode, data }) {
 						<div className="apvContentBiz2Last">
 							<div className="column1">회의내용</div>
 							<div><textarea placeholder="회의 내용 작성" rows="30" name='contents1' className='apvTextarea'
-								value={formData.apvMeetingLogs[0].contents1}
+								value={formData.contents1}
 								onChange={onChangeHandler} />
 							</div>
 						</div>

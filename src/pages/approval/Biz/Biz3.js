@@ -13,19 +13,20 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 function Biz3({ mode, data }) {
 
-	const dispatch = useDispatch();
+    const dispatch = useDispatch();
     dispatch({ type: RESET_APPROVAL});
 
-	const authes = useSelector(state => state.authes);
-	const empNo = authes.empNo;
-	console.log("empNo : ", empNo);
-
-	const navigate = useNavigate();
-
-	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+    
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
+    const navigate = useNavigate();
+    
+    const approval = useSelector(state => state.approval);
+    
 	console.log('Biz3 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
@@ -42,6 +43,7 @@ function Biz3({ mode, data }) {
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvBusinessTrips: [{
 			purpose: approval.purpose ? approval.purpose : '',
 			startDate: approval.startDate ? approval.startDate : '',
@@ -52,8 +54,8 @@ function Biz3({ mode, data }) {
 		}]
 	});
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
 
 	const calculateTravelDuration = () => {
 		const startDate = new Date(
@@ -124,7 +126,7 @@ function Biz3({ mode, data }) {
 			}));
 		}
 
-		console.log('Biz formData : ', formData);
+		console.log('Biz3 formData : ', formData);
 	}
 
 	useEffect(() => {
@@ -284,7 +286,7 @@ function Biz3({ mode, data }) {
 						<div className="apvContentDetail">상세내용
 						</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="내용 작성" rows="11" name='contents1'
+							<textarea placeholder="내용 작성" rows="11" name='contents1' className='apvTextarea'
 								value={formData.contents1}
 								onChange={onChangeHandler} />
 						</div>
