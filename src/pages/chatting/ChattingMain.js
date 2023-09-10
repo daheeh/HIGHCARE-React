@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import ChattingMainCSS from './ChattingMain.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,11 +16,14 @@ import { decodeJwt } from "../../utils/decodeJwt";
     function ChattingMain({ onClose, isOpen}) {
 
         const [activeTab, setActiveTab] = useState('user'); // 기본 탭 설정
+        const [selectedEmployee, setSelectedEmployee] = useState(null);
+        const webSocketRef = useRef({});
+        
+
 
         const handleTabChange = (tab) => {
             setActiveTab(tab);
         };
-
         
         // 채팅 모달 열었을 때, 로그인된 회원 정보 가져오기
             const authes = useSelector(state => state.authes);
@@ -42,6 +45,20 @@ import { decodeJwt } from "../../utils/decodeJwt";
                     console.log("loginEmpId: ", userId);
                 }
               }, [isOpen, userId]);
+
+
+        // TreeviewChatting컴포넌트에서 선택한 사원정보 전달 받는 함수
+        const handleEmpInfoChange = (selectedEmployee) => {
+            setSelectedEmployee(selectedEmployee); // 선택한 사원 정보 업데이트
+          };
+
+
+        const handleAddPartnerInWebSocket = () => {
+            if (selectedEmployee) {
+                webSocketRef.current.handleAddPartner(selectedEmployee.empName);
+              }
+        };
+
 
 
         return (
@@ -100,17 +117,24 @@ import { decodeJwt } from "../../utils/decodeJwt";
                         {activeTab === 'user' && (
                             <div className={ChattingMainCSS.chattingTreeView}>
                                  <div style={{ fontWeight: 'bold', color: 'black', marginBottom: '10px'}}>{empDept} {empName} {empJob}님</div>
-                                <TreeViewChatting />
+                                <TreeViewChatting setEmpInfo={handleEmpInfoChange} handleAddPartnerInWebSocket={handleAddPartnerInWebSocket}/>
                             </div>
                         )}
 
+                        {/* 트리뷰에서 받아온 사원정보를  WebSocketTestRoomList에 전달하고, 그 정보로 WebSocketTestRoomList에서 채팅방 생성함 */}
                         {activeTab === 'comment' && (
-                            <WebSocketTestRoomList userId={userId} />
+                            <WebSocketTestRoomList 
+                                userId={userId} 
+                                empName={empName} 
+                                selectedEmployee={selectedEmployee}
+                                ref={webSocketRef}
+                                />
                         )}
                     <ChattingFooter/>
                     </div>
                 </div>
                 </Draggable>
+
 
             </>
         );

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, forwardRef, useImperativeHandle} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -8,16 +8,15 @@ import axios from 'axios';
 import { insertPartner, insertMessage, receive } from '../../modules/ConversationList'
 import ConversationListItem from "./ConversationListItem";
 import SockJsClient from 'react-stomp';
-import AddPartner from './AddPartner';
+import '../login/login.css';
 
 
 
-function WebSocketTestRoomList({userId}) {
+function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
 
+    // Redux 상태에서 conversationlist 가져오기
     const conversationList = useSelector(state => state.conversationlist);
     console.log("conversationList =========> " + conversationList);
-    // const [conversations, setConversations] = useState([]);
-    const [addPartner, setAddPartner] = useState(false);
     const $websocket = useRef(null); 
     let topics = ['/topic/'+userId];
     const dispatch = useDispatch();
@@ -27,6 +26,7 @@ function WebSocketTestRoomList({userId}) {
       },[])
 
 
+    // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
     const getConversations = () => {
         axios({
           method:"get",
@@ -57,24 +57,34 @@ function WebSocketTestRoomList({userId}) {
       const recevieMessage = (msg) => {
         dispatch(receive(msg));    
       }
+
+
+      // const handleAddPartner = (name)=> {
+      //   dispatch(insertPartner({
+      //     photo:process.env.REACT_APP_USER_BASE_IMAGE,
+      //     partner:name,
+      //     list:[]
+      //   }))
+      // }
+
       
-      const handleAddPartner = (name)=> {
-        dispatch(insertPartner({
-          photo:process.env.REACT_APP_USER_BASE_IMAGE,
-          partner:name,
-          list:[]
-        }))
-      }
-    
-      const handleOpenAddPartner = () => {
-        setAddPartner(true);
-      }
-    
-      const handleLogOut = () => {
-        window.sessionStorage.removeItem("login");
-        window.sessionStorage.removeItem("userId");
-        window.location.reload();
-      }
+      // useImperativeHandle(ref, () => ({
+      //   handleAddPartner
+      // }));
+
+
+      useImperativeHandle(ref, () => ({
+        handleAddPartner: (name) => {
+          dispatch(
+            insertPartner({
+              photo: process.env.REACT_APP_USER_BASE_IMAGE,
+              partner: name,
+              list: [],
+            })
+          );
+        },
+      }));
+
 
 
       return (
@@ -86,18 +96,16 @@ function WebSocketTestRoomList({userId}) {
                         <FontAwesomeIcon icon={faMagnifyingGlass} style={{cursor: 'pointer'}} />
                         <input type="search" className={ChattingMainCSS.searchBox} placeholder="이름, 부서명, 전화번호 검색"/>
                     </div>
-                </div>
-                <button onClick={handleOpenAddPartner} key="add" icon="ion-ios-add-circle-outline" />
+                </div>                
                     <div className={ChattingRoomListCSS.chattingRoomLists} id="chattingList1">
                         {/* <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}> */}
                             {/* <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/> */}
                         </div>
                         <div className={ChattingRoomListCSS.chattingRoomInfo}>
                             {/* <div className={ChattingRoomListCSS.roomInfoText}> */}
+
                         { 
-                            //데이터가 정의되었을때 Object.keys(conversationList)에 할당하고, 
-                            // 정의되지 않았을때는 빈 배열을 반환하도록 조건걸기
-                            Object.keys(conversationList || {}).map((key) => 
+                            Object.keys(conversationList).map((key) => 
                             <ConversationListItem             
                                 key={key}
                                 //photo={conversation.photo}
@@ -108,7 +116,7 @@ function WebSocketTestRoomList({userId}) {
                             />
                             )
                         }
-                        <AddPartner userId={userId} open={addPartner} setOpen={setAddPartner} handleAddPartner={handleAddPartner}/>
+
                         <SockJsClient
                         url={process.env.REACT_APP_CHAT_BASE_URL}
                         topics={topics}
@@ -138,4 +146,4 @@ function WebSocketTestRoomList({userId}) {
 
 
 
-    export default WebSocketTestRoomList;
+    export default forwardRef(WebSocketTestRoomList);
