@@ -46,9 +46,14 @@ function BullentinWrite(){
         });
     };   
     const onClickWrite = () =>{
-        dispatch(callRegisterAPI({
-            form:form
-        }));
+        if(form.title ==='' || form.content ==='' || form.allowComments ===''){
+            alert('내용을 입력해주세요!')
+        }else{
+
+            dispatch(callRegisterAPI({
+                form:form
+            }));
+        }
 
     }
     const onClickBackHandler = () => {

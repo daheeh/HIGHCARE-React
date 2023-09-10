@@ -50,17 +50,23 @@ function BullentinMod(){
         });
     };   
     const onClickUpdate = () =>{
+        if(window.confirm("글을 수정 하시겠습니까?")){
+            if(form.title == '' ||value == ''){
+                alert('내용을 입력해주세요!');
+            }else{
         dispatch(callUpdateAPI({
             form:form
         }));
             navigate("/bulletin/board/1",{replace: true})
-        
+        }}
     }
     const onClickDelete = () =>{
+        if(window.confirm("글을 삭제 하시겠습니까?")){
         dispatch(callDeleteAPI({
             form:form
         }));
         navigate("/bulletin/board/1",{replace: true})
+    }
     }
 
 
