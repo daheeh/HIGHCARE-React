@@ -94,9 +94,7 @@ function BulletinBoard(){
                 )}
             </tbody>
         </table>
-            {/* <div className={BoardStyle.write_bulletin}>
-            글쓰기
-        </div> */}
+
         <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
             { Array.isArray(boardList) &&
             <button 

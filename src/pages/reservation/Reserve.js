@@ -14,8 +14,13 @@ function Reserve(){
     const daterese = dateres.data;
     const [data, setData] = useState('');
     const openModal = () =>{
-        console.log('data' , data);
-        setModal(true);
+
+        if(data==''){
+            alert('날짜를 선택해주세요.');
+        }else{
+            console.log('data' , data);
+            setModal(true);
+        }
     }
     const closeModal = () =>{
 		setModal(false);
@@ -27,7 +32,7 @@ function Reserve(){
             {modal && <Rmodal onClose={closeModal} data={data}/>}
            <div className={BoardStyle.applay_main}>
                <div className={BoardStyle.apply_content}>
-                <img src="../../img/dog.jpg" alt="" width="400px" height="200px"/>
+                <img src={content.fileUrl} alt="" width="400px" height="200px"/>
                         <div>
                             <div>시설명 : <span>{content.resourceName}</span></div>
                             <div>지역 : <span>{content.area}</span></div>
@@ -37,16 +42,20 @@ function Reserve(){
                         </div>
                   </div>
                     <div style={{display: 'flex'}}>
-                        <div id='calendar' style={{width: '80%'}}>
+                        <div id='calendar' style={{width: '100%'}}>
                             <Calendar setData={setData}/>
                         </div>
-                        <div id="reservation-status">
+                        <div className={BoardStyle.reservation_status}>
                             <h3>예약현황</h3>{ Array.isArray(daterese) && daterese.map(
                                 (res)=>(
                             <div>{res.startTime}:00-{res.endTime}:00</div>
                                 ))
+        
+                        }{
+                            daterese == null &&
+                            <span style={{fontSize:'16px'}}>예약자가 없습니다</span>
                         }
-                            <button onClick={openModal}>예약하기</button>
+                            <button onClick={openModal} style={{marginTop:"30px",fontSize:'16px',height:'30px'}}>예약하기</button>
                         </div>
                     </div>
                           <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html:content.serviceGuide}}></div>

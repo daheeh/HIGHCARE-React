@@ -45,6 +45,7 @@ function Reservation(){
                     resourceCode: 0
                 }));
 
+
     }
     const onClickArea = (resourceCode) =>{
         setStepB(resourceCode);
@@ -97,7 +98,7 @@ function Reservation(){
                 <div>시설명 : <span>{content.resourceName}</span></div>
                 <div>위치 : <span>{content.location}</span></div>
                 <div>이용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
-                <img src="../../img/dog.jpg" alt="" width="350px" height="200px"/>
+                <img src={content.fileUrl} alt="" width="350px" height="200px"/>
                 <div style={{textAlign: 'center',width:'80px',margin:'auto',height:'30px',fontSize:'14px'}} onClick={() => onCLickRes(content.resourceCode)} className={BoardStyle.comment_ok}>예약하기</div>
             </div>
             }

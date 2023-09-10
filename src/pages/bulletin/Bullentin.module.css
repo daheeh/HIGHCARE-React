@@ -362,13 +362,13 @@ ul{
   margin-bottom: 10px;
 }
 
-#reservation-status{
-  border: 1px solid #000;
+.reservation_status{
+  border: 5px solid #00b6c2;
   width: 30%;
   margin: 70px;
   height: 300px;
-  margin-top: 200px;
-  
+  margin-top: 150px;
+  border-radius: 6%;
   text-align: center;
 }
 #reservation-status h3{
