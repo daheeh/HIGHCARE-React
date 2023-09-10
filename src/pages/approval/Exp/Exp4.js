@@ -148,17 +148,17 @@ function Exp4({ mode, data }) {
 
 	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
 	const updateTotalAmount = () => {
-	  const newTotalAmount = formData.apvExpForms.reduce((sum, form) => {
-		return sum + parseFloat(form.amount || 0);
-	  }, 0);
+		const newTotalAmount = formData.apvExpForms.reduce((sum, form) => {
+			return sum + parseFloat(form.amount || 0);
+		}, 0);
 
-	  setFormData((prevFormData) => ({
-		...prevFormData,
-		totalAmount: newTotalAmount,
-	  }));
-  
-	  // totalAmount 상태 변수 업데이트
-	  setTotalAmount(newTotalAmount);
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			totalAmount: newTotalAmount,
+		}));
+
+		// totalAmount 상태 변수 업데이트
+		setTotalAmount(newTotalAmount);
 	};
 
 
@@ -441,7 +441,7 @@ function Exp4({ mode, data }) {
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
 							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
-					</div>
+						</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
 							<div className="column42">

@@ -38,46 +38,6 @@ function Exp4View() {
         fetchData();
     }, [apvNo, dispatch]);
     
-    useEffect(() => {
-        if (data && data.refApvNo) {
-            const fetchRefData = async () => {
-                try {
-                    const refData = await dispatch(callApvViewAPI({ apvNo: data.refApvNo }));
-                    console.log('refData : ', refData);
-    
-                    // Now you can use refData directly here for any processing on this page.
-                    // For example, you can access refData properties like refData.someProperty.
-                } catch (error) {
-                    console.error('Error fetching refData:', error);
-                }
-            };
-    
-            fetchRefData();
-        }
-    }, [data, dispatch]);
-    
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const data = await dispatch(callApvViewAPI({ apvNo }));
-    //             setData(data);
-    //             console.log('data : ', data);
-
-    //             if (data.refApvNo) {
-    //                 const refData = await dispatch(callApvViewAPI({ apvNo: data.refApvNo }));
-    //                 console.log('refData : ', refData);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [apvNo, dispatch]);
-
-
-
     const renderApvExpForm = (data) => {
         return (
             <>
@@ -145,24 +105,24 @@ function Exp4View() {
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장신청서 번호</div>
                             <div className="column2">
-                                <div>{refData? refData.apvNo : ''}</div>
+                                <div>{data? data.apvBusinessTrips[0].apvNo: ''}</div>
                             </div>
                             <div className="column3">출장기간</div>
                             <div className="column4">
-                                {refData ? `${refData.apvBusinessTrips[0].startDate}~${refData.apvBusinessTrips[0].endDate}` : ''}
+                                {data ? `${data?.apvBusinessTrips[0].startDate}~${data.apvBusinessTrips[0].endDate}` : ''}
                             </div>
                         </div>
                         <div className="apvContentTitleExp1-3">
                             <div className="column45">출장목적</div>
                             <div className="column46">
-                                <div>{refData? refData.apvBusinessTrips[0].purpose : ''}</div>
+                                <div>{data? data.apvBusinessTrips[0].purpose : ''}</div>
                             </div>
                         </div>
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장지</div>
-                            <div className="column2">{refData? refData.apvBusinessTrips[0].location : ''}</div>
+                            <div className="column2">{data? data.apvBusinessTrips[0].location : ''}</div>
                             <div className="column3">동반자</div>
-                            <div className="column4">{refData? refData.apvBusinessTrips[0].tripAttendees : ''}</div>
+                            <div className="column4">{data? data.apvBusinessTrips[0].tripAttendees : ''}</div>
                         </div>
                         <div className="apvContentDetail">내역</div>
                         <div className="apvContentDetailExp1Title">

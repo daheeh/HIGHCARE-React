@@ -158,7 +158,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 					action = `/approval/exp1`;
 					break;
 				case '출장경비정산서':
-					action = `/approval/exp3`;
+					action = `/approval/exp4`;
 					break;
 				case '경조금신청서':
 					action = `/approval/exp6`;
