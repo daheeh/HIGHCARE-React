@@ -10,12 +10,11 @@ import {
     PUT_APPROVAL,
 
     POST_APPROVAL_BIZ1,
-
     POST_APPROVAL_BIZ2,
     POST_APPROVAL_BIZ3,
+    POST_APPROVAL_BIZ4,
 
     POST_APPROVAL_EXP1,
-
     POST_APPROVAL_EXP2,
     GET_APPROVAL_EXP4,
     POST_APPROVAL_EXP4,
@@ -23,12 +22,7 @@ import {
     POST_APPROVAL_EXP7,
 
     POST_APPROVAL_HRM1,
-    PUT_APPROVAL_HRM1,
-
     POST_APPROVAL_HRM3,
-
-
-
 
 } from '../modules/ApprovalModule';
 
@@ -65,7 +59,7 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
 };
 
 
-
+/* 결재함 조회 */
 export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
@@ -99,7 +93,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
     };
 };
 
-
+/* 수신함 조회 */
 export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvReceiveBoxAPI Call');
@@ -409,6 +403,52 @@ export const callApvBiz3API = ({ requestData }) => {
 };
 
 
+/* 전자결재 - 업무 : biz4 공문*/
+export const callApvBiz4API = ({ requestData }) => {
+
+    console.log('[ApprovalAPICalls] callApvBiz3API Call');
+
+    const requestURL = `http://localhost:8080/api/approval/insert/biz4`;
+
+     // FormData 객체를 생성하여 데이터를 담기
+     const formData = new FormData();
+     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+ 
+     // Convert selectedEmployees to an array if it's not already
+     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
+         ? requestData.selectedEmployees
+         : [requestData.selectedEmployees];
+     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+     if (requestData.attachedFiles.length > 0) {
+        requestData.attachedFiles.forEach(file => {
+            formData.append('apvFileDTO', file);
+        });
+    }
+
+    return async (dispatch, getState) => {
+        try {
+            const result = await fetch(requestURL, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                },
+                body: formData, // 멀티파트 데이터를 전송합니다.
+            })
+                .then(response => response.json());
+
+            console.log('[ApprovalAPICalls] callApvBiz3API RESULT : ', result);
+
+            dispatch({ type: POST_APPROVAL_BIZ4, payload: result });
+            return result;
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callApvBiz3API: ', error);
+            throw error;
+        }
+    };
+};
+
+
 
 /* 전자결재 양식 - 지출 */
 
@@ -457,7 +497,6 @@ export const callApvExp1API = ({ requestData }) => {
         }
     };
 };
-
 
 
 /* 전자결재 - 지출 : exp2 지출결의서 */
@@ -702,43 +741,6 @@ export const callApvHrm1API = ({ requestData }) => {
 
     };
 };
-
-export const callApvHrm1UpdateAPI = ({ formData, selectedEmployees }) => {
-
-    console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI Call');
-
-    const requestURL = `http://localhost:8080/api/approval/put/hrm1`;
-
-    return async (dispatch, getState) => {
-
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI formData : ', formData);
-        console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI selectedEmployees : ', selectedEmployees);
-
-        try {
-            const result = await fetch(requestURL, {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
-                body: JSON.stringify({ apvFormDTO: formData, apvLineDTOs: selectedEmployees }),
-            })
-                .then(response => response.json());
-
-
-            console.log('[ApprovalAPICalls] hrm1 callApvHrm1UpdateAPI RESULT : ', result);
-
-            dispatch({ type: PUT_APPROVAL_HRM1, payload: result });
-            return result;
-        } catch (error) {
-            console.error('[ApprovalAPICalls] hrm1 Error in callApvHrm1UpdateAPI: ', error);
-            throw error;
-        }
-    };
-};
-
 
 
 /* 전자결재 - 인사 : hrm3 서류발급신청서 */

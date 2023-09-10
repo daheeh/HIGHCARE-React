@@ -69,7 +69,7 @@ function Biz1View() {
             <div className="apvContentDetail">상세내용</div>
             <div className="apvContentDetailComent">
               <textarea
-                rows="9"
+                className='apvTextarea'
                 value={data?.contents1 || ''}
                 readOnly
               />
@@ -77,7 +77,7 @@ function Biz1View() {
             <div className="apvContentDetail2">-아래-</div>
             <div className="apvContentDetailComent2">
               <textarea
-                rows="9"
+                className='apvTextarea'
                 value={data?.contents2 || ''}
                 readOnly
               />

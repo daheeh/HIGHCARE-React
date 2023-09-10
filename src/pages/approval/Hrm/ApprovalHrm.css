@@ -48,7 +48,7 @@
 .apvContentDetailComent{
     grid-column: 1 / span 8;
     padding: 30px;
-    min-height: 500px;
+    height: auto;
     /* width: 100%; */
 }
 .apvContentDetailComent2{

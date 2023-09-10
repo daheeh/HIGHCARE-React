@@ -12,7 +12,7 @@ function ApvFileList({ files, onRemoveFile, data }) {
                 <h3>첨부파일 목록 :</h3>
                 <ul>
                     {data?.apvFiles.map((file, index) => ( // data를 활용하여 파일 목록을 추출
-                        <li key={index}>
+                        <li className="fileList" key={index}>
                             <a href={file.url} target="_blank" rel="noopener noreferrer" download>
                                 {file.originalFileName}
                             </a>
@@ -28,7 +28,7 @@ function ApvFileList({ files, onRemoveFile, data }) {
                 <h3>첨부파일 목록 :</h3>
                 <ul>
                     {files.map((file, index) => (
-                        <li key={index}>
+                        <li className="fileList" key={index}>
                             {file.name}
                             <button className="apvBtn2" onClick={() => onRemoveFile(index)}>Remove</button>
                         </li>

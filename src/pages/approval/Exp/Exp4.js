@@ -12,20 +12,21 @@ import { handleSubmission } from '../ApvSubmit';
 import { GET_APPROVAL_EXP4, RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Exp4({ mode, data }) {
-
-	const dispatch = useDispatch();
+    
+    const dispatch = useDispatch();
     dispatch({ type: RESET_APPROVAL});
 
-	const authes = useSelector(state => state.authes);
-	const empNo = authes.empNo;
-	console.log("empNo : ", empNo);
-
-	const navigate = useNavigate();
-
-	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+    
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
+    const navigate = useNavigate();
+    
+    const approval = useSelector(state => state.approval);
+    
 	console.log('Exp4 first : ', approval.data);
 
 	const [resultData, setResultData] = useState([]);
@@ -83,10 +84,10 @@ function Exp4({ mode, data }) {
 
 	useEffect(() => {
 		setFormData(prevFormData => ({
-		  ...prevFormData,
-		  refApvNo: selectedApvNo ? selectedApvNo : '',
+			...prevFormData,
+			refApvNo: selectedApvNo ? selectedApvNo : '',
 		}));
-	  }, [selectedApvNo]);
+	}, [selectedApvNo]);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -101,7 +102,8 @@ function Exp4({ mode, data }) {
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
-		refApvNo: selectedApvNo? selectedApvNo: '',
+		refApvNo: selectedApvNo ? selectedApvNo : '',
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvExpForms: [{
 			requestDate: approval.requestDate ? approval.requestDate : new Date(),
 			payee: approval.payee ? approval.payee : authes.name,
@@ -115,8 +117,15 @@ function Exp4({ mode, data }) {
 		}]
 	});
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
+    
+    useEffect(() => {
+        if (!isEditMode) {
+            dispatch({ type: RESET_APPROVAL });
+        }
+    }, [isEditMode, dispatch]);
+    
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -307,61 +316,61 @@ function Exp4({ mode, data }) {
 
 
 	const [fileList, setFileList] = useState([]);
-    const handleFileUpload = (file) => {
-        if (file) {
-            // Create a copy of the current apvFiles array and add the new file to it
-            const updatedApvFiles = [...formData.apvFiles, file];
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                apvFiles: updatedApvFiles,
-            }));
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
 
-            // Update the fileList state for rendering in the component
-            setFileList([...fileList, file]);
-            console.log('ApvSummitBar에서 업로드한 파일:', file);
-        }
-    };
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
 
-    const updateFileList = (newFileList) => {
-        setFileList(newFileList);
-    };
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	};
 
-    useEffect(() => {
-        console.log('fileList : ', fileList);
-    }, [fileList])
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
 
-    const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp4API;
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp4API;
 
-    const handleSubmissionClick = () => {
-        const submissionData = {
-            empNo,
-            isEditMode,
-            formData,
-            selectedEmployees,
-            navigate,
-            fileList,
-            APIPoint,
-            dispatch,
-        };
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
 
-        console.log('submissionData', submissionData);
-        handleSubmission(null, submissionData);
-    };
-    console.log('Exp4 formData : ', formData);
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
+	};
+	console.log('Exp4 formData : ', formData);
 
 	return (
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar
-                    onSubmit={handleSubmissionClick}
-                    updateIsUrgency={updateIsUrgency}
-                    setSelectedEmployees={setSelectedEmployees}
-                    fileList={fileList}
-                    updateFileList={updateFileList}
-                    data={data}
-                />
-                <div className="containerApv">
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
+					data={data}
+				/>
+				<div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
 					<ApvSummitLine
 						mode="create"
@@ -437,10 +446,10 @@ function Exp4({ mode, data }) {
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
 					<ApvFileList files={fileList} />
-                </div>
-            </div>
-        </section>
-    );
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export default Exp4;

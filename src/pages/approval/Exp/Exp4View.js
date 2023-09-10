@@ -10,7 +10,7 @@ import ApvFileList from '../ApvFileList';
 import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 import { useReactToPrint } from 'react-to-print';
 
-function Exp1View() {
+function Exp4View() {
     const authes = useSelector((state) => state.authes);
     const empNo = authes.empNo;
     const ref = useRef();
@@ -22,15 +22,16 @@ function Exp1View() {
     const navigate = useNavigate();
 
     const { apvNo } = useParams();
-
     const [data, setData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await dispatch(callApvViewAPI({ apvNo }));
+                // const data2 = await dispatch(callApvViewAPI({ refApvNo }));
                 setData(data);
                 console.log('data : ', data);
+                console.log('data.refApvNo : ', data.refApvNo);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -38,6 +39,7 @@ function Exp1View() {
 
         fetchData();
     }, [apvNo, dispatch]);
+
 
     const renderApvExpForm = (data) => {
         return (
@@ -84,7 +86,7 @@ function Exp1View() {
             </>
         );
     };
-    
+
 
     return (
         <section>
@@ -95,7 +97,7 @@ function Exp1View() {
                     ref={ref}
                 />
                 <div className="containerApv" ref={ref}>
-                    <div className="apvApvTitle">지출결의서(단건)</div>
+                    <div className="apvApvTitle">출장경비정산서</div>
                     <ApvSummitLine
                         mode="view"
                         selectedEmployees={data?.apvLines || []}
@@ -104,17 +106,20 @@ function Exp1View() {
                     />
                     <div className="apvContent">
                         <div className="apvContentTitleExp1">
-                            <div className="column1">지급요청일자</div>
+                            <div className="column1">출장신청서 번호</div>
                             <div className="column2">
-                                <input className="input1" type="date" placeholder="날짜 입력"
-                                    name="sharedProperties.requestDate"
-                                    value={data?.apvExpForms[0].requestDate || ''} readOnly />
+                                {/* <div>{refApvNo}</div> */}
                             </div>
-                            <div className="column3">지급처</div>
+                            <div className="column3">출장기간</div>
                             <div className="column4">
-                                <input className="input1" placeholder="지급처 입력"
-                                    name='sharedProperties.payee' value={data?.apvExpForms[0].payee || ''} readOnly />
+                                {/* {selectedInfo ? `${selectedInfo.startDate}~${selectedInfo.endDate}` : ''} */}
                             </div>
+                        </div>
+                        <div className="apvContentTitleExp1">
+                            <div className="column1">출장지</div>
+                            {/* <div className="column2">{selectedInfo ? selectedInfo.location : ''}</div> */}
+                            <div className="column3">출장인원</div>
+                            <div className="column4"></div>
                         </div>
                         <div className="apvContentDetail">내역</div>
                         <div className="apvContentDetailExp1Title">
@@ -123,6 +128,7 @@ function Exp1View() {
                             <div className="column13">금액</div>
                             <div className="column14">적요</div>
                         </div>
+
                         <div className="apvContentDetailExp1Content">
                             {renderApvExpForm(data)}
                         </div>
@@ -134,19 +140,19 @@ function Exp1View() {
                             <div className="column41">예금주</div>
                             <div className="column42">
                                 <input className="input1" placeholder="예금주 입력"
-                                    name='sharedProperties.accountHolder' value={data?.apvExpForms[0].accountHolder || ''} readOnly />
+                                    name='sharedProperties.accountHolder' value={data?.apvExpForms[0].accountHolder} />
                             </div>
                             <div className="column43">은행</div>
                             <div className="column44">
                                 <input className="input1" placeholder="은행 입력"
-                                    name='sharedProperties.bank' value={data?.apvExpForms[0].bank || ''} readOnly />
+                                    name='sharedProperties.bank' value={data?.apvExpForms[0].bank} />
                             </div>
                         </div>
                         <div className="apvContentTitleExp1-3">
                             <div className="column45">계좌번호</div>
                             <div className="column46">
                                 <input className="input1" placeholder="계좌번호 입력"
-                                    name='sharedProperties.accountNumber' value={data?.apvExpForms[0].accountNumber || ''} readOnly />
+                                    name='sharedProperties.accountNumber' value={data?.apvExpForms[0].accountNumber} />
                             </div>
                         </div>
 
@@ -159,4 +165,4 @@ function Exp1View() {
     );
 }
 
-export default Exp1View;
+export default Exp4View;

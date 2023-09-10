@@ -38,6 +38,9 @@ function Exp1View() {
 
         fetchData();
     }, [apvNo, dispatch]);
+    
+    const [amounts, setAmounts] = useState([0]);
+    const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
     const renderApvExpForm = (data) => {
         return (
@@ -48,7 +51,7 @@ function Exp1View() {
                             <div className="column21">
                                 <input
                                     className="input1"
-                                    name={`apvExpForms[${index}].details`}
+                                    name={`apvCorpCards[${index}].details`}
                                     value={form.details || ''}
                                     readOnly
                                 />
@@ -56,7 +59,7 @@ function Exp1View() {
                             <div className="column22">
                                 <input
                                     className="input1"
-                                    name={`apvExpForms[${index}].account`}
+                                    name={`apvCorpCards[${index}].account`}
                                     value={form.account || ''}
                                     readOnly
                                 />
@@ -65,7 +68,7 @@ function Exp1View() {
                                 <input
                                     className="input1"
                                     type="number"
-                                    name={`apvExpForms[${index}].amount`}
+                                    name={`apvCorpCards[${index}].amount`}
                                     value={form.amount || ''}
                                     readOnly
                                 />
@@ -73,7 +76,7 @@ function Exp1View() {
                             <div className="column24">
                                 <input
                                     className="input1"
-                                    name={`apvExpForms[${index}].comment`}
+                                    name={`apvCorpCards[${index}].comment`}
                                     value={form.comment || ''}
                                     readOnly
                                 />
@@ -95,63 +98,42 @@ function Exp1View() {
                     ref={ref}
                 />
                 <div className="containerApv" ref={ref}>
-                    <div className="apvApvTitle">지출결의서(단건)</div>
+                    <div className="apvApvTitle">법인카드사용보고서</div>
                     <ApvSummitLine
                         mode="view"
                         selectedEmployees={data?.apvLines || []}
                         authes={authes}
                         data={data}
                     />
-                    <div className="apvContent">
-                        <div className="apvContentTitleExp1">
-                            <div className="column1">지급요청일자</div>
-                            <div className="column2">
-                                <input className="input1" type="date" placeholder="날짜 입력"
-                                    name="sharedProperties.requestDate"
-                                    value={data?.apvExpForms[0].requestDate || ''} readOnly />
-                            </div>
-                            <div className="column3">지급처</div>
-                            <div className="column4">
-                                <input className="input1" placeholder="지급처 입력"
-                                    name='sharedProperties.payee' value={data?.apvExpForms[0].payee || ''} readOnly />
-                            </div>
-                        </div>
-                        <div className="apvContentDetail">내역</div>
-                        <div className="apvContentDetailExp1Title">
-                            <div className="column11">내역</div>
-                            <div className="column12">계정과목</div>
-                            <div className="column13">금액</div>
-                            <div className="column14">적요</div>
-                        </div>
-                        <div className="apvContentDetailExp1Content">
-                            {renderApvExpForm(data)}
-                        </div>
-                        <div className="apvContentDetailExp1Total">
-                            <div className="column31">합계</div>
-                            <div className="column32">{data?.totalAmount || ''}</div>
-                        </div>
-                        <div className="apvContentTitleExp1-2">
-                            <div className="column41">예금주</div>
-                            <div className="column42">
-                                <input className="input1" placeholder="예금주 입력"
-                                    name='sharedProperties.accountHolder' value={data?.apvExpForms[0].accountHolder || ''} readOnly />
-                            </div>
-                            <div className="column43">은행</div>
-                            <div className="column44">
-                                <input className="input1" placeholder="은행 입력"
-                                    name='sharedProperties.bank' value={data?.apvExpForms[0].bank || ''} readOnly />
-                            </div>
-                        </div>
-                        <div className="apvContentTitleExp1-3">
-                            <div className="column45">계좌번호</div>
-                            <div className="column46">
-                                <input className="input1" placeholder="계좌번호 입력"
-                                    name='sharedProperties.accountNumber' value={data?.apvExpForms[0].accountNumber || ''} readOnly />
-                            </div>
-                        </div>
+					<div className="apvContent">
+						<div className="apvContentTitleExp1">
+							<div className="column1">카드번호</div>
+							<div className="column2">
+								<input className="input1" placeholder="카드번호 입력"
+									name='sharedProperties.cardNo' value={data?.apvCorpCards[0].cardNo}/>
+							</div>
+							<div className="column3">결제월</div>
+							<div className="column4">
+								<div></div>
+							</div>
+						</div>
+						<div className="apvContentDetail">내역</div>
+						<div className="apvContentDetailExp1Title">
+							<div className="column11">내역</div>
+							<div className="column12">계정과목</div>
+							<div className="column13">금액</div>
+							<div className="column14">적요</div>
+						</div>
 
-                        <div className="apvContentDetail3">위와 같이 지급을 요청합니다.</div>
-                    </div>
+						<div className="apvContentDetailExp1Content">
+                            {renderApvExpForm(data)}
+						</div>
+						<div className="apvContentDetailExp1Total">
+							<div className="column31">합계</div>
+							<div className="column32">{totalAmount}</div>
+						</div>
+						<div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
+					</div>
                     <ApvFileList files={data?.apvFiles || []} data={data} />
                 </div>
             </div>

@@ -295,6 +295,20 @@ section {
     border-bottom: 1px solid #7B7B7B;
 }
 
+.apvMainMy .dragList {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.apvMainMy .dragList .childDiv {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.apvMainMy .dragList:hover,
+.apvMainMy .dragList.active {
+    background-color: #FFC338;
+}
 
 .droppedItem {
     width: 300px;
@@ -635,6 +649,16 @@ section {
     border-radius: 6px;
 }
 
+.apvBtn3{
+    position: relative;
+    width: 80px;
+    height: 40px;
+    /* margin: 0px 20px 0px 0px; */
+    /* padding: 0px 12px; */
+    font-size: 14px;
+    border-radius: 6px;
+}
+
 
 
 .apvContent {
@@ -653,7 +677,7 @@ section {
 .apvTextarea {
     font-family: NanumGothic;
     background: #f4f4f4;
-    /* padding: 30px; */
+    padding: 10px;
     font-size: 24px;
     width: 100%;
     height: auto;
@@ -706,6 +730,10 @@ section {
 .apvMainListRList .dragList:hover,
 .apvMainListRList .dragList.active {
     background-color: #FFC338;
+}
+
+.fileList{
+display: flex;
 }
 
 footer {

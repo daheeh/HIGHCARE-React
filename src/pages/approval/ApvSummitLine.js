@@ -243,7 +243,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 							{index === 0 && authes.empNo === emp.empNo ? (
 								<>
 									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
-										data.apvStatus !== "결재진행중" ? (
+										data.apvStatus === "결재예정" || data.apvStatus === "결재반려"? (
 											<>
 												<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
 												<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>

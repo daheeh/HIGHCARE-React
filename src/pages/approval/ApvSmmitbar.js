@@ -125,7 +125,7 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
             const imgWidth = pageWidth;
             const imgHeight = imgWidth / aspectRatio;
         
-            pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+            pdf.addImage(imgData, 'JPEG', 0, 20, imgWidth, imgHeight);
             pdf.save(dynamicFileName);
         });
     }

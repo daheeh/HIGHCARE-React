@@ -18,6 +18,7 @@ function Hrm1({ mode, data }) {
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
+
 	const location = useLocation();
 	const initialData = location.state ? location.state.initialData : null;
 
@@ -353,7 +354,7 @@ function Hrm1({ mode, data }) {
 						</div>
 						<div className="apvContentDetail">- 사유 -</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="3일 이상인 경우만 작성" rows="20"
+							<textarea placeholder="3일 이상인 경우만 작성" rows="20" className='apvTextarea'
 								value={formData.apvVacations[0].comment}
 								onChange={onCommentChangeHandler}
 								onBlur={onCommentChangeHandler}></textarea>

@@ -9,10 +9,10 @@ function Biz4Offcial() {
 		<div>
 			<div className="container">
 				<div>
-					<div className="apv-apvtitle"><img src="/img/HIGH CARE.png"/></div>
-					<div className="apv-official-top">
-						<div className="apv-official1">(우) 12334 서울 종로구 인사동길 12 대일빌딩</div>
-						<div className="apv-official2">
+					<div className="apvApvTitle"><img src="/images/HIGH CARE.png"/></div>
+					<div className="apvOfficialTop">
+						<div className="apvOfficial1">(우) 12334 서울 종로구 인사동길 12 대일빌딩</div>
+						<div className="apvOfficial2">
 							<div>담당자 : </div>
 							<div>김나경 </div>
 							<div>/ 전화 : </div>
@@ -25,28 +25,28 @@ function Biz4Offcial() {
 					</div>
 				</div>
 
-				<div className="apv-content">
-					<div className="apv-official-bottom">
+				<div className="apvContent">
+					<div className="apvOfficialBottom">
 						<div className="column1">문서번호</div>
 						<div className="column2">123123123123</div>
 					</div>
-					<div className="apv-official-bottom">
+					<div className="apvOfficialBottom">
 						<div className="column1">수신처</div>
 						<div className="column2"></div>
 					</div>
-					<div className="apv-official-bottom">
+					<div className="apvOfficialBottom">
 						<div className="column1">제목</div>
 						<div className="column2"></div>
 					</div>
-					<div className="apv-official-bottom2">
+					<div className="apvOfficialBottom2">
 					</div>
-					<div className="apv-content-detail-coment"> sodyd</div>
-					<div className="apv-content-detail2">-아래-</div>
-					<div className="apv-content-detail-coment2">어쩌고저쩌고</div>
+					<div className="apvContentDetailComent"> sodyd</div>
+					<div className="apvContentDetail2">-아래-</div>
+					<div className="apvContentDetailComent2">어쩌고저쩌고</div>
 				</div>
-				<div className="highcare-stamp">
-					<div className="highcare-text">하이케어</div>
-					<div><img src="/img/HIGHCARE-stamp.png" alt="High Care" className="highcare-image"/></div>
+				<div className="highcareStamp">
+					<div className="highcareText">하이케어</div>
+					<div><img src="/images/HIGHCARE-stamp.png" alt="High Care" className="highcareImage"/></div>
 				</div>
 			</div>
 		</div>

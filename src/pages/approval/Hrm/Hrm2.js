@@ -6,7 +6,7 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
-import { callApvHrm1API, callApvHrm1UpdateAPI } from '../../../apis/ApprovalAPICalls';
+import { callApvHrm1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 
 function Hrm2({ mode, data }) {
 	const authes = useSelector(state => state.authes);
@@ -223,7 +223,7 @@ function Hrm2({ mode, data }) {
             try {
                 let response;
                 if ((isEditMode)) {
-                    response = await dispatch(callApvHrm1UpdateAPI({ formData, selectedEmployees }));
+                    response = await dispatch(callApvUpdateAPI({ formData, selectedEmployees }));
                 } else {
 				
                     response = await dispatch(callApvHrm1API({ formData, selectedEmployees }));
@@ -309,7 +309,7 @@ function Hrm2({ mode, data }) {
 						</div>
 						<div className="apvContentDetail">-사유-</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="사유 작성" rows="20"
+							<textarea placeholder="사유 작성" rows="20" className='apvTextarea'
 								value={formData.apvVacations[0].comment}
 								onChange={onCommentChangeHandler}
 								onBlur={onCommentChangeHandler}></textarea>

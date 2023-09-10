@@ -10,7 +10,7 @@ import ApvFileList from '../ApvFileList';
 import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 import { useReactToPrint } from 'react-to-print';
 
-function Exp1View() {
+function Exp2View() {
     const authes = useSelector((state) => state.authes);
     const empNo = authes.empNo;
     const ref = useRef();
@@ -159,4 +159,4 @@ function Exp1View() {
     );
 }
 
-export default Exp1View;
+export default Exp2View;

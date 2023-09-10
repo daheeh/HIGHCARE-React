@@ -1,48 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApvMenu from '../AprovalNav';
 import ApvSummitBar from '../ApvSmmitbar';
-import ApvSummitLine from '../ApvSummitLine'; 
+import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalExp.css';
 import '../Approval.css';
-import { callApvExp2API } from '../../../apis/ApprovalAPICalls';
+import { callApvExp2API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
+import ApvFileList from '../ApvFileList';
+import { handleSubmission } from '../ApvSubmit';
+import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 
 
-function Exp2() {
+function Exp2({ mode, data }) {
 
-	
-	const authes = useSelector(state => state.authes);
-	const empNo = authes.empNo;
-	console.log("empNo : ", empNo);
+    const dispatch = useDispatch();
+    
+    const authes = useSelector(state => state.authes);
+    const empNo = authes.empNo;
+    console.log("empNo : ", empNo);
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+    
+    const navigate = useNavigate();
+    
+    const approval = useSelector(state => state.approval);
+	console.log('Exp1 first : ', approval.data);
 
 	const [formCount, setFormCount] = useState(1);
-    const dispatch = useDispatch();
-	const navigate = useNavigate();
-    const exp2 = useSelector(state => state.approvalReducer);
-
-	console.log('exp2 first : ', exp2);
-
 	const [formData, setFormData] = useState({
 
+		apvNo: approval.apvNo?approval.apvNo:'',
 		title: '지출결의서',
-		writeDate:'',
-		apvStatus:'결재예정',
+		writeDate: '',
+		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
 		empNo: empNo,
-		apvExpForms:[{
-			requestDate : '',
-			payee: '',
-			bank: '',
-			accountHolder: '',
-			accountNumber: '',
-			details: '',
-			account: '',
-			amount: '',
-			comment: ''
+		empName: authes.name,
+		deptName: authes.dept,
+		jobName: authes.job,
+		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
+		apvExpForms: [{
+			requestDate: approval.requestDate ? approval.requestDate : '',
+			payee: approval.payee ? approval.payee : '',
+			bank: approval.bank ? approval.bank : '',
+			accountHolder: approval.accountHolder ? approval.accountHolder : '',
+			accountNumber: approval.accountNumber ? approval.accountNumber : '',
+			details: approval.details ? approval.details : '',
+			account: approval.account ? approval.account : '',
+			amount: approval.amount ? approval.amount : 0,
+			comment: approval.comment ? approval.comment : '',
 		}]
-	});	
+	});
+	const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
+    
+    useEffect(() => {
+        if (!isEditMode) {
+            dispatch({ type: RESET_APPROVAL });
+        }
+    }, [isEditMode, dispatch]);
+    
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -56,8 +76,12 @@ function Exp2() {
 	console.log('formData.apvExpForms : ', formData.apvExpForms);
 
 	const [sharedProperties, setSharedProperties] = useState({
-    	requestDate: ''
-    });
+		requestDate: approval.requestDate ? approval.requestDate : '',
+		payee: approval.payee ? approval.payee : '',
+		bank: approval.bank ? approval.bank : '',
+		accountHolder: approval.accountHolder ? approval.accountHolder : '',
+		accountNumber: approval.accountNumber ? approval.accountNumber : '',
+	});
 
 	const onChangeHandler = (e, index) => {
 		const { name, value } = e.target;
@@ -104,22 +128,51 @@ function Exp2() {
 	};
 
 
+
+
 	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
+	useEffect(() => {
+		const currentDate = new Date();
+		setFormData(prevFormData => ({
+			...prevFormData,
+			writeDate: currentDate,
+			...(initialData ? initialData : {}),
+		}));
+	}, [initialData]);
+
 	const updateIsUrgency = (newIsUrgency) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            isUrgency: newIsUrgency
-        }));
-    };
+		setFormData(prevFormData => ({
+			...prevFormData,
+			isUrgency: newIsUrgency
+		}));
+	};
+
+	const initialSelectedEmployees = [{
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
+
+	
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
 	useEffect(() => {
-        const currentDate = new Date();
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            writeDate: currentDate
-        }));
-    }, []);
+		console.log('Exp2 - selectedEmployees : ', selectedEmployees);
+		if (approval.apvLines) {
+			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
+				...line,
+				isApproval: 'F',
+				apvLineNo: line.apvLineNo,
+			}));
+
+			setSelectedEmployees(initialSelectedEmployees);
+		}
+	}, [approval, setSelectedEmployees]);
 
 
 	const handleAddForm = () => {
@@ -214,39 +267,70 @@ function Exp2() {
         );
     };
 
+	const [fileList, setFileList] = useState([]);
+    const handleFileUpload = (file) => {
+        if (file) {
+            // Create a copy of the current apvFiles array and add the new file to it
+            const updatedApvFiles = [...formData.apvFiles, file];
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                apvFiles: updatedApvFiles,
+            }));
+
+            // Update the fileList state for rendering in the component
+            setFileList([...fileList, file]);
+            console.log('ApvSummitBar에서 업로드한 파일:', file);
+        }
+    };
+
+    const updateFileList = (newFileList) => {
+        setFileList(newFileList);
+    };
+
+    useEffect(() => {
+        console.log('fileList : ', fileList);
+    }, [fileList])
+
+    const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp2API;
+
 	
-	
-    const handleSubmission = async () => {
-		if (empNo !== undefined) {
-			try {
-				const response = await dispatch(callApvExp2API({ formData }));
+    const handleSubmissionClick = () => {
+        const submissionData = {
+            empNo,
+            isEditMode,
+            formData,
+            selectedEmployees,
+            navigate,
+            fileList,
+            APIPoint,
+            dispatch,
+        };
 
-				if (response.status === 200) {
-					window.alert("결재 등록 성공");
-					navigate('/approval');
-				} else {
-					window.alert("결재 등록 중 오류가 발생했습니다.");
-				}
-			} catch (error) {
-				console.error("API error:", error);
-				window.alert("API 요청 중 오류가 발생했습니다.");
-			}
-		} else {
-			window.alert("재로그인 요청");
-			navigate('/');
-		}
-	};
+        console.log('submissionData', submissionData);
+        handleSubmission(null, submissionData);
+    };
+    console.log('Exp1 formData : ', formData);
 
-	console.log('formData : ', formData);
-
-    return (
+	return (
 		<section>
 			<ApvMenu />
 			<div>
-				<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency}/>
-				<div className="containerApv">
+			<ApvSummitBar
+                    onSubmit={handleSubmissionClick}
+                    updateIsUrgency={updateIsUrgency}
+                    setSelectedEmployees={setSelectedEmployees}
+                    fileList={fileList}
+                    updateFileList={updateFileList}
+                    data={data}
+                />
+                <div className="containerApv">
 					<div className="apvApvTitle">지출결의서(다건)</div>
-					<ApvSummitLine />	
+					<ApvSummitLine
+						mode="create"
+						selectedEmployees={selectedEmployees}
+						authes={authes}
+						approval={approval}
+					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 						<div className="column1">지급요청일자</div>
@@ -306,10 +390,10 @@ function Exp2() {
 							<button onClick={handleRemoveForm}>라인삭제</button>
 						</div>
 					</div>
-				</div>
-			</div>
-		</section>
-
+					<ApvFileList files={fileList} />
+                </div>
+            </div>
+        </section>
     );
 }
 
