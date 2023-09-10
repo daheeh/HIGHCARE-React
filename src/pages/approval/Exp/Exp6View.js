@@ -106,11 +106,13 @@ function Exp6View() {
 						<div className="apvContentTitleExp6">
 							<div className="column1">경조분류</div>
 							<div className="column2">
-								<div></div>
+                            <input className="input1" type="type"
+									name="familyDate"
+									value={data?.apvFamilyEvents[0].type} />
 							</div>
 							<div className="column3">경조일자</div>
 							<div className="column4">
-								<input className="input1" type="date" placeholder="날짜 입력"
+								<input className="input1" type="date"
 									name="familyDate"
 									value={data?.apvFamilyEvents[0].familyDate} />
 							</div>
@@ -123,13 +125,13 @@ function Exp6View() {
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
 							<div className="column42">
-								<input className="input1" placeholder="예금주 입력"
+								<input className="input1"
 									name='accountHolder' value={data?.apvFamilyEvents[0].accountHolder}
 									/>
 							</div>
 							<div className="column43">은행</div>
 							<div className="column44">
-								<input className="input1" placeholder="계좌번호 입력"
+								<input className="input1"
 									name='bank' value={data?.apvFamilyEvents[0].bank}
 									/>
 							</div>
@@ -137,7 +139,7 @@ function Exp6View() {
 						<div className="apvContentTitleExp1-3">
 							<div className="column45">계좌번호</div>
 							<div className="column46">
-								<input className="input1" placeholder="계좌번호 입력"
+								<input className="input1"
 									name='accountNumber' value={data?.apvFamilyEvents[0].accountNumber}
 									/>
 							</div>
@@ -146,20 +148,21 @@ function Exp6View() {
 						<div className="apvContentTitleExp1-4">
 							<div className="column45">화환여부 (150,000원 차감)</div>
 							<div className="column50">
-								<input className="checkbox" type='checkbox'/>
+								<input className="checkbox" type='checkbox'
+                                checked={data?.apvFamilyEvents[0].isSendingWreath === "T"} readOnly/>
 							</div>
 						</div>
 						<div className="apvContentDetail3">화환 수령 정보</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">수령자</div>
 							<div className="column42">
-								<input className="input1" placeholder="수령자 입력"
+								<input className="input1"
 									name='sendingName' value={data?.apvFamilyEvents[0].sendingName}
 									/>
 							</div>
 							<div className="column43">수령자 연락처</div>
 							<div className="column44">
-								<input className="input1" placeholder="수령자 연락처 입력"
+								<input className="input1"
 									name='sendingPhone' value={data?.apvFamilyEvents[0].sendingPhone}
 									/>
 							</div>
@@ -167,7 +170,7 @@ function Exp6View() {
 						<div className="apvContentTitleExp1-3">
 							<div className="column45">수령지</div>
 							<div className="column46">
-								<input className="input1" placeholder="수령지 입력"
+								<input className="input1"
 									name='sendingAddress' value={data?.apvFamilyEvents[0].sendingAddress}
 									/>
 							</div>
@@ -175,7 +178,7 @@ function Exp6View() {
 						<div className="apvContentTitleExp1-3">
 							<div className="column45">요청사항</div>
 							<div className="column46">
-								<input className="input1" placeholder="요청사항 입력"
+								<input className="input1"
 									name='requestsNote' value={data?.apvFamilyEvents[0].requestsNote}
 									/>
 							</div>

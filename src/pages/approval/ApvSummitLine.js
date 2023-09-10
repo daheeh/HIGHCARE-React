@@ -153,20 +153,29 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 				case '공문':
 					action = `/approval/biz4`;
 					break;
-					
+
 				case '지출결의서':
 					action = `/approval/exp1`;
 					break;
-				case '경조금신청서':
+				case '출장경비정산서':
 					action = `/approval/exp3`;
 					break;
+				case '경조금신청서':
+					action = `/approval/exp6`;
+					break;
+				case '법인카드사용보고서':
+					action = `/approval/exp7`;
+					break;
+
 				case '연차신청서':
 					action = `/approval/hrm1`;
 					break;
 				case '기타휴가신청서':
 					action = `/approval/hrm2`;
 					break;
-
+				case '서류발급신청서':
+					action = `/approval/hrm3`;
+					break;
 				default:
 					action = `/approval/biz1`;
 					break;
@@ -243,7 +252,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 							{index === 0 && authes.empNo === emp.empNo ? (
 								<>
 									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
-										data.apvStatus === "결재예정" || data.apvStatus === "결재반려"? (
+										data.apvStatus === "결재예정" || data.apvStatus === "결재반려" ? (
 											<>
 												<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
 												<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>

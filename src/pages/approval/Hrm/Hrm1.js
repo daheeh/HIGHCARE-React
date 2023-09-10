@@ -14,6 +14,7 @@ import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 function Hrm1({ mode, data }) {
 
 	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
 
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
@@ -354,7 +355,7 @@ function Hrm1({ mode, data }) {
 						</div>
 						<div className="apvContentDetail">- 사유 -</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="3일 이상인 경우만 작성" rows="20" className='apvTextarea'
+							<textarea placeholder="3일 이상인 경우만 작성" className='apvTextarea'
 								value={formData.apvVacations[0].comment}
 								onChange={onCommentChangeHandler}
 								onBlur={onCommentChangeHandler}></textarea>

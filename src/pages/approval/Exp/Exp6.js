@@ -39,6 +39,7 @@ function Exp6({ mode, data }) {
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
+		totalAmount: approval.totalAmount ? approval.totalAmount : 0,
 		empNo: empNo,
 		empName: authes.name,
 		deptName: authes.dept,

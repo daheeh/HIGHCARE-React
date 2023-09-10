@@ -42,10 +42,10 @@ function Exp1View() {
     const [amounts, setAmounts] = useState([0]);
     const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
-    const renderApvExpForm = (data) => {
+    const renderApvCorpCard = (data) => {
         return (
             <>
-                {data?.apvExpForms.map((form, index) => (
+                {data?.apvCorpCards.map((form, index) => (
                     <div className="apvContentDetailExp1Content" key={index}>
                         <div className="apvContentDetailExp1List">
                             <div className="column21">
@@ -76,8 +76,8 @@ function Exp1View() {
                             <div className="column24">
                                 <input
                                     className="input1"
-                                    name={`apvCorpCards[${index}].comment`}
-                                    value={form.comment || ''}
+                                    name={`apvCorpCards[${index}].cardComment`}
+                                    value={form.cardComment || ''}
                                     readOnly
                                 />
                             </div>
@@ -109,12 +109,13 @@ function Exp1View() {
 						<div className="apvContentTitleExp1">
 							<div className="column1">카드번호</div>
 							<div className="column2">
-								<input className="input1" placeholder="카드번호 입력"
-									name='sharedProperties.cardNo' value={data?.apvCorpCards[0].cardNo}/>
+								<input className="input1"
+									name='sharedProperties.cardNo' value={data?.apvCorpCards[0].cardNo} readOnly/>
 							</div>
 							<div className="column3">결제월</div>
 							<div className="column4">
-								<div></div>
+                            <input className="input1"
+									name='sharedProperties.paymentMonth' value={data?.apvCorpCards[0].paymentMonth} readOnly/>
 							</div>
 						</div>
 						<div className="apvContentDetail">내역</div>
@@ -126,11 +127,11 @@ function Exp1View() {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-                            {renderApvExpForm(data)}
+                            {renderApvCorpCard(data)}
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32">{totalAmount}</div>
+							<div className="column32">{data?.totalAmount || ''}</div>
 						</div>
 						<div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
 					</div>

@@ -7,25 +7,30 @@ import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
 import { callApvHrm1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
+import ApvFileList from '../ApvFileList';
+import { handleSubmission } from '../ApvSubmit';
+import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Hrm2({ mode, data }) {
+
+	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
+
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const dispatch = useDispatch();
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
+
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
-
 	console.log('hrm2 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
-		
-		apvNo: approval.apvNo?approval.apvNo:'',
+
+		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '기타휴가신청서',
 		writeDate: '',
 		apvStatus: '결재예정',
@@ -35,20 +40,28 @@ function Hrm2({ mode, data }) {
 		empName: authes.name,
 		deptName: authes.dept,
 		jobName: authes.job,
-		apvLines: approval.apvLines?approval.apvLines: [],
+		apvLines: approval.apvLines ? approval.apvLines : [],
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvVacations: [{
-			startDate: approval.startDate? approval.startDate : '',
-			endDate: approval.endDate? approval.endDate : '',
-			type: approval.type? approval.type : '',
-			comment: approval.comment? approval.comment : '',
-			amount: approval.amount? approval.amount : 0.0,
-			offType1: approval.offType1? approval.offType1 : '',
-			offType2: approval.offType2? approval.offType2 : '',
+			startDate: approval.startDate ? approval.startDate : '',
+			endDate: approval.endDate ? approval.endDate : '',
+			type: approval.type ? approval.type : '',
+			comment: approval.comment ? approval.comment : '',
+			amount: approval.amount ? approval.amount : 0.0,
+			offType1: approval.offType1 ? approval.offType1 : '',
+			offType2: approval.offType2 ? approval.offType2 : '',
 		}],
 	});
-	
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+
+
+	const isEditMode = formData.apvNo ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+
+	useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
 
 	const onSelectDateHandler = (selectedDate, field) => {
 		setFormData((prevFormData) => ({
@@ -61,6 +74,8 @@ function Hrm2({ mode, data }) {
 	};
 
 	const [dateRange, setDateRange] = useState("");
+	const [weekendDays, setWeekendDays] = useState(0);
+
 
 	useEffect(() => {
 		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
@@ -69,7 +84,6 @@ function Hrm2({ mode, data }) {
 			setDateRange(`${formattedStartDate} ~ ${formattedEndDate}`);
 		}
 	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate]);
-
 
 	useEffect(() => {
 		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
@@ -117,10 +131,24 @@ function Hrm2({ mode, data }) {
 				}],
 			}));
 		}
-	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate, formData.apvVacations[0].offType1, formData.apvVacations[0].offType2]);
+	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate,
+	formData.apvVacations[0].offType1, formData.apvVacations[0].offType2]);
 
+	function countWeekendDays(startDate, endDate) {
+		let currentDate = new Date(startDate);
+		const endDateObj = new Date(endDate);
+		let weekendDays = 0;
 
+		while (currentDate <= endDateObj) {
+			const dayOfWeek = currentDate.getDay(); // 0 일요일, 6 토요일
+			if (dayOfWeek === 0 || dayOfWeek === 6) {
+				weekendDays++;
+			}
+			currentDate.setDate(currentDate.getDate() + 1);
+		}
 
+		return weekendDays;
+	}
 
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
@@ -149,6 +177,16 @@ function Hrm2({ mode, data }) {
 		}
 	};
 
+	const onTypeChangeHandler = (e) => {
+		const { value } = e.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			apvVacations: [{
+				...prevFormData.apvVacations[0],
+				type: value,
+			}],
+		}));
+	};
 
 	const onCommentChangeHandler = (e) => {
 		const { value } = e.target;
@@ -176,86 +214,92 @@ function Hrm2({ mode, data }) {
 			isUrgency: newIsUrgency
 		}));
 	};
-	
+
 
 	const initialSelectedEmployees = [{
-        degree: 0,
-        isApproval: 'T',
-        apvDate: new Date(),
-        empNo: authes.empNo,
-        empName: authes.name,
-        jobName: authes.job,
-        deptName: authes.dept,
-    }];
+		degree: 0,
+		isApproval: 'T',
+		apvDate: new Date(),
+		empNo: authes.empNo,
+		empName: authes.name,
+		jobName: authes.job,
+		deptName: authes.dept,
+	}];
 
-    const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
+	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
-    useEffect(() => {
-		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+	useEffect(() => {
+		console.log('Hrm2 - selectedEmployees : ', selectedEmployees);
 		if (approval.apvLines) {
 			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
 				...line,
 				isApproval: 'F',
 				apvLineNo: line.apvLineNo,
 			}));
-	
+
 			setSelectedEmployees(initialSelectedEmployees);
 		}
 	}, [approval, setSelectedEmployees]);
 
-	const onTypeChangeHandler = (e) => {
-		const { value } = e.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			apvVacations: [{
-				...prevFormData.apvVacations[0],
-				type: value,
-			}],
-		}));
+
+	const [fileList, setFileList] = useState([]);
+
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
+
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
+
+
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	};
+
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
+
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvHrm1API;
+
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
+
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
 	};
 
 	console.log('formData : ', formData);
 
-
-	const handleSubmission = async () => {
-
-        if (empNo !== undefined) {
-            try {
-                let response;
-                if ((isEditMode)) {
-                    response = await dispatch(callApvUpdateAPI({ formData, selectedEmployees }));
-                } else {
-				
-                    response = await dispatch(callApvHrm1API({ formData, selectedEmployees }));
-                }
-                if (response.status === 200) {
-                    if (response.data === "기안 상신 실패") {
-                        window.alert("결재 등록 실패");
-                    } else {
-                        window.alert("결재 등록 성공");
-                        navigate('/approval');
-                    }
-                } else {
-                    window.alert("결재 등록 중 오류가 발생했습니다.");
-                }
-            } catch (error) {
-                console.error("API error:", error);
-                window.alert("API 요청 중 오류가 발생했습니다.");
-            }
-        } else {
-            window.alert("재로그인 요청");
-            navigate('/');
-        }
-    };
-
-	console.log('formData : ', formData);
-
 	return (
-
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar onsubmit={handleSubmission} updateIsUrgency={updateIsUrgency} setSelectedEmployees={setSelectedEmployees} />
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
+					data={data}
+				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">기타휴가신청서</div>
 					<ApvSummitLine
@@ -284,8 +328,10 @@ function Hrm2({ mode, data }) {
 									onChange={(e) => onSelectDateHandler(e.target.value, 'startDate')}
 								/>
 								<label className='labelName'> (반차) </label>
-								<label><input type="radio" name="offType1" value="09:00" onChange={onChangeHandler} />오전</label>
-								<label><input type="radio" name="offType1" value="14:00" onChange={onChangeHandler} />오후</label>
+								<label><input type="radio" name="offType1" value="09:00"
+								checked={formData.apvVacations[0].offType1 === "09:00"} onChange={onChangeHandler} />오전</label>
+								<label><input type="radio" name="offType1" value="14:00"
+								checked={formData.apvVacations[0].offType1 === "14:00"} onChange={onChangeHandler} />오후</label>
 								<label className='labelName'> - 미선택 시 전일 - </label>
 							</div>
 						</div>
@@ -298,23 +344,26 @@ function Hrm2({ mode, data }) {
 									onChange={(e) => onSelectDateHandler(e.target.value, 'endDate')}
 								/>
 								<label className='labelName'> (반차) </label>
-								<label><input type="radio" name="offType2" value="09:00" onChange={onChangeHandler} />오전</label>
-								<label><input type="radio" name="offType2" value="14:00" onChange={onChangeHandler} />오후</label>
+								<label><input type="radio" name="offType2" value="09:00"
+								checked={formData.apvVacations[0].offType2 === "09:00"} onChange={onChangeHandler} />오전</label>
+								<label><input type="radio" name="offType2" value="14:00"
+								checked={formData.apvVacations[0].offType2 === "14:00"} onChange={onChangeHandler} />오후</label>
 								<label className='labelName'> - 미선택 시 전일 - </label>
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">기간</div>
-							<div className="column2">{dateRange}</div>
+							<div className="column2">{dateRange}  (주말 {weekendDays}일)</div>
 						</div>
 						<div className="apvContentDetail">-사유-</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="사유 작성" rows="20" className='apvTextarea'
+							<textarea placeholder="사유 작성" className='apvTextarea'
 								value={formData.apvVacations[0].comment}
 								onChange={onCommentChangeHandler}
 								onBlur={onCommentChangeHandler}></textarea>
 						</div>
 					</div>
+					<ApvFileList files={fileList} />
 				</div>
 			</div>
 		</section>

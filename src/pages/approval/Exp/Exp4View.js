@@ -14,8 +14,7 @@ function Exp4View() {
     const authes = useSelector((state) => state.authes);
     const empNo = authes.empNo;
     const ref = useRef();
-
-    console.log("Exp1View empNo : ", empNo);
+    console.log("Exp4View empNo : ", empNo);
     console.log("ref = ", ref);
 
     const dispatch = useDispatch();
@@ -23,22 +22,60 @@ function Exp4View() {
 
     const { apvNo } = useParams();
     const [data, setData] = useState(null);
+    const [refData, setRefData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await dispatch(callApvViewAPI({ apvNo }));
-                // const data2 = await dispatch(callApvViewAPI({ refApvNo }));
                 setData(data);
                 console.log('data : ', data);
-                console.log('data.refApvNo : ', data.refApvNo);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
+    
         fetchData();
     }, [apvNo, dispatch]);
+    
+    useEffect(() => {
+        if (data && data.refApvNo) {
+            const fetchRefData = async () => {
+                try {
+                    const refData = await dispatch(callApvViewAPI({ apvNo: data.refApvNo }));
+                    console.log('refData : ', refData);
+    
+                    // Now you can use refData directly here for any processing on this page.
+                    // For example, you can access refData properties like refData.someProperty.
+                } catch (error) {
+                    console.error('Error fetching refData:', error);
+                }
+            };
+    
+            fetchRefData();
+        }
+    }, [data, dispatch]);
+    
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const data = await dispatch(callApvViewAPI({ apvNo }));
+    //             setData(data);
+    //             console.log('data : ', data);
+
+    //             if (data.refApvNo) {
+    //                 const refData = await dispatch(callApvViewAPI({ apvNo: data.refApvNo }));
+    //                 console.log('refData : ', refData);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, [apvNo, dispatch]);
+
 
 
     const renderApvExpForm = (data) => {
@@ -108,18 +145,24 @@ function Exp4View() {
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장신청서 번호</div>
                             <div className="column2">
-                                {/* <div>{refApvNo}</div> */}
+                                <div>{refData? refData.apvNo : ''}</div>
                             </div>
                             <div className="column3">출장기간</div>
                             <div className="column4">
-                                {/* {selectedInfo ? `${selectedInfo.startDate}~${selectedInfo.endDate}` : ''} */}
+                                {refData ? `${refData.apvBusinessTrips[0].startDate}~${refData.apvBusinessTrips[0].endDate}` : ''}
+                            </div>
+                        </div>
+                        <div className="apvContentTitleExp1-3">
+                            <div className="column45">출장목적</div>
+                            <div className="column46">
+                                <div>{refData? refData.apvBusinessTrips[0].purpose : ''}</div>
                             </div>
                         </div>
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장지</div>
-                            {/* <div className="column2">{selectedInfo ? selectedInfo.location : ''}</div> */}
-                            <div className="column3">출장인원</div>
-                            <div className="column4"></div>
+                            <div className="column2">{refData? refData.apvBusinessTrips[0].location : ''}</div>
+                            <div className="column3">동반자</div>
+                            <div className="column4">{refData? refData.apvBusinessTrips[0].tripAttendees : ''}</div>
                         </div>
                         <div className="apvContentDetail">내역</div>
                         <div className="apvContentDetailExp1Title">
