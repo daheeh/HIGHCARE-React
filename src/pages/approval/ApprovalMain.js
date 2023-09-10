@@ -61,7 +61,7 @@ function ApvMain() {
                 <div className="apvMainList">
                     <div className="apvMainListMy">
                         <div className="apvMainListLTitle">최근 결재 양식</div>
-                        <ApvMyList />
+                        <ApvMyList show={false}/>
                     </div>
                     <div className="apvMainListList">
                         <div className="apvMainListRTitle">탬플릿 양식</div>

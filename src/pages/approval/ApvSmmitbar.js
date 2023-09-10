@@ -1,11 +1,8 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import Modal from 'react-modal';
 import ApvLineTree from './ApvLineTree';
-import ApvFile from './ApvFile';
-import ApvFileList from './ApvFileList';
 import PdfDocument from './PdfDocument';
 import { useReactToPrint } from 'react-to-print';
-import { current } from 'immer';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -22,7 +19,6 @@ const modalStyles = {
         overflow: 'auto',
     },
 };
-
 
 
 const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, data }, ref) => {
@@ -54,7 +50,6 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
 
 
     const [selectedFile, setSelectedFile] = useState([]);
-    // const [attachedFiles, setAttachedFiles] = useState([]);
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -102,10 +97,6 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
         console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setSelectedEmployees);
     }, [setSelectedEmployees]);
 
-    // useEffect(() => {
-    //     console.log('ApvSummitBar - fileList (inside useEffect):', fileList);
-    // }, [setFileList]);
-
     const handleCompleteSelection = (selectedData) => {
         setSelectedEmployees(selectedData);
         console.log('ApvSummitBar - selectedData:', selectedData);
@@ -120,53 +111,24 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
 
     };
 
-    // const generatePdfData = () => {
-    //     return pdf(<PdfDocument data={data} currentPage={currentPage} />).toBlob();
-    // };
-
-
-
     const handleExportToPdf = (ref) => {
-        // const pdfBlob = pdf(currentPage).toBlob();
-
-        // // PDF Blob을 데이터 URL로 변환
-        // const pdfDataUrl = URL.createObjectURL(pdfBlob);
-
-        // // 새로운 탭에서 PDF 열기
-        // window.open(pdfDataUrl);
-
-        // // 새로운 탭이 열린 후 URL 객체 정리
-        // URL.revokeObjectURL(pdfDataUrl);
+        const dynamicFileName = `${data.title}_${data.apvNo}.pdf`;
 
         html2canvas(ref.current).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF();
-            pdf.addImage(imgData, 'JPEG', 0, 0, 200, 280);
-            pdf.save("download.pdf")
-        })
-    };
-
-    // const handleExportToPdf = () => {
-    //     if (generatePdfData) {
-    //       const pdfBlob = generatePdfData(); // Generate the PDF Blob using generatePdfData function
-    //       // Create a URL for the Blob
-    //       const pdfUrl = URL.createObjectURL(pdfBlob);
-
-    //       // Create a downloadable link
-    //       const downloadLink = document.createElement('a');
-    //       downloadLink.href = pdfUrl;
-    //       downloadLink.download = 'document.pdf'; // Specify the desired file name
-    //       downloadLink.click();
-
-    //       // Clean up the URL object after the download link is clicked
-    //       URL.revokeObjectURL(pdfUrl);
-    //     } else {
-    //       console.error('PDF 생성 콜백이 사용 가능하지 않습니다.');
-    //     }
-    //   };
-
-
-
+            const pdf = new jsPDF('p', 'mm', 'a4'); // 'p'는 세로 방향
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+        
+            // 수평 크기를 고정
+            const aspectRatio = canvas.width / canvas.height;
+            const imgWidth = pageWidth;
+            const imgHeight = imgWidth / aspectRatio;
+        
+            pdf.addImage(imgData, 'JPEG', 0, 20, imgWidth, imgHeight);
+            pdf.save(dynamicFileName);
+        });
+    }
 
     return (
         <div className="apvTopBar">

@@ -106,13 +106,13 @@ function Exp1View() {
                         <div className="apvContentTitleExp1">
                             <div className="column1">지급요청일자</div>
                             <div className="column2">
-                                <input className="input1" type="date" placeholder="날짜 입력"
+                                <input className="input1"
                                     name="sharedProperties.requestDate"
                                     value={data?.apvExpForms[0].requestDate || ''} readOnly />
                             </div>
                             <div className="column3">지급처</div>
                             <div className="column4">
-                                <input className="input1" placeholder="지급처 입력"
+                                <input className="input1"
                                     name='sharedProperties.payee' value={data?.apvExpForms[0].payee || ''} readOnly />
                             </div>
                         </div>
@@ -145,7 +145,7 @@ function Exp1View() {
                         <div className="apvContentTitleExp1-3">
                             <div className="column45">계좌번호</div>
                             <div className="column46">
-                                <input className="input1" placeholder="계좌번호 입력"
+                                <input className="input1"
                                     name='sharedProperties.accountNumber' value={data?.apvExpForms[0].accountNumber || ''} readOnly />
                             </div>
                         </div>

@@ -31,7 +31,7 @@ export const handleDocumentClick = (apvNo, results, navigate) => {
             case '지출결의서':
                 action = `/approval/exp1/${apvNo}`;
                 break;
-            case '출장정산서':
+            case '출장경비정산서':
                 action = `/approval/exp4/${apvNo}`;
                 break;
             case '경조금신청서':

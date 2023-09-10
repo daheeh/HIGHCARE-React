@@ -14,7 +14,6 @@ import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
 function Biz3({ mode, data }) {
 
     const dispatch = useDispatch();
-    dispatch({ type: RESET_APPROVAL});
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
@@ -51,11 +50,18 @@ function Biz3({ mode, data }) {
 			endDate: approval.endDate ? approval.endDate : '',
 			endTime: approval.endTime ? approval.endTime : '',
 			location: approval.location ? approval.location : '',
+			tripAttendees:approval.tripAttendees ? approval.tripAttendees : '',
 		}]
 	});
 
 	const isEditMode = formData.apvNo ? true : false;
     console.log('isEditMode 1 : ', isEditMode);
+
+		useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
 
 	const calculateTravelDuration = () => {
 		const startDate = new Date(
@@ -251,8 +257,8 @@ function Biz3({ mode, data }) {
 									value={formData.apvBusinessTrips[0].startDate} onChange={onChangeHandler} />
 							</div>
 							<div className="column2">
-								<select className="input1" name="endstartTimeTime"
-									value={formData.apvBusinessTrips[0].endTistartTimeme} onChange={onChangeHandler}>
+								<select className="input1" name="startTime"
+									value={formData.apvBusinessTrips[0].startTime} onChange={onChangeHandler}>
 									{generateTimeOptions()}
 								</select>
 							</div>
@@ -280,7 +286,9 @@ function Biz3({ mode, data }) {
 						<div className="apvContentTitle">
 							<div className="column1">동반자</div>
 							<div className="column2">
-								<input className="input1" placeholder="사번 입력" />
+								<input className="input1" placeholder="정보 입력"
+								name='tripAttendees' value={formData.apvBusinessTrips[0].tripAttendees}
+								onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentDetail">상세내용

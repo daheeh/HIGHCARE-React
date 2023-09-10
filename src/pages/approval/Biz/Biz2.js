@@ -10,30 +10,30 @@ import '../Approval.css';
 import { callApvBiz2API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
-import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
+import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Biz2({ mode, data }) {
 
-    const dispatch = useDispatch();
-    dispatch({ type: RESET_APPROVAL});
+	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
 
-    const authes = useSelector(state => state.authes);
-    const empNo = authes.empNo;
-    console.log("empNo : ", empNo);
-    
-    const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
-    
-    const navigate = useNavigate();
-    
-    const approval = useSelector(state => state.approval);
-    
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
+
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
+
+	const navigate = useNavigate();
+
+	const approval = useSelector(state => state.approval);
+
 	console.log('Biz2 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
 
 		apvNo: approval.apvNo ? approval.apvNo : '',
-		title : '회의록',
+		title: '회의록',
 		writeDate: '',
 		apvStatus: '결재예정',
 		isUrgency: 'F',
@@ -54,13 +54,19 @@ function Biz2({ mode, data }) {
 	});
 
 	const isEditMode = formData.apvNo ? true : false;
-    console.log('isEditMode 1 : ', isEditMode);
+	console.log('isEditMode 1 : ', isEditMode);
+
+	useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
 
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevFormData) => ({
 			...prevFormData,
-				[name]: value,
+			[name]: value,
 			apvMeetingLogs: [{
 				...prevFormData.apvMeetingLogs[0],
 				[name]: value,
@@ -112,61 +118,61 @@ function Biz2({ mode, data }) {
 
 
 	const [fileList, setFileList] = useState([]);
-    const handleFileUpload = (file) => {
-        if (file) {
-            // Create a copy of the current apvFiles array and add the new file to it
-            const updatedApvFiles = [...formData.apvFiles, file];
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                apvFiles: updatedApvFiles,
-            }));
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
 
-            // Update the fileList state for rendering in the component
-            setFileList([...fileList, file]);
-            console.log('ApvSummitBar에서 업로드한 파일:', file);
-        }
-    };
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
 
-    const updateFileList = (newFileList) => {
-        setFileList(newFileList);
-    };
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	};
 
-    useEffect(() => {
-        console.log('fileList : ', fileList);
-    }, [fileList])
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
 
-    const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz2API;
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz2API;
 
-    const handleSubmissionClick = () => {
-        const submissionData = {
-            empNo,
-            isEditMode,
-            formData,
-            selectedEmployees,
-            navigate,
-            fileList,
-            APIPoint,
-            dispatch,
-        };
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
 
-        console.log('submissionData', submissionData);
-        handleSubmission(null, submissionData);
-    };
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
+	};
 	console.log('Biz2 formData : ', formData);
 
 	return (
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar
-                    onSubmit={handleSubmissionClick}
-                    updateIsUrgency={updateIsUrgency}
-                    setSelectedEmployees={setSelectedEmployees}
-                    fileList={fileList}
-                    updateFileList={updateFileList}
-                    data={data}
-                />
-                <div className="containerApv">
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
+					data={data}
+				/>
+				<div className="containerApv">
 					<div className="apvApvTitle">회의록</div>
 					<ApvSummitLine
 						mode="create"
@@ -216,10 +222,10 @@ function Biz2({ mode, data }) {
 						</div>
 					</div>
 					<ApvFileList files={fileList} />
-                </div>
-            </div>
-        </section>
-    );
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export default Biz2;

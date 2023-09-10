@@ -14,18 +14,19 @@ import { GET_APPROVAL_EXP4, RESET_APPROVAL } from '../../../modules/ApprovalModu
 function Exp4({ mode, data }) {
 
 	const dispatch = useDispatch();
-    dispatch({ type: RESET_APPROVAL});
+	dispatch({ type: RESET_APPROVAL });
 
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
+
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
 
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
 	console.log('Exp4 first : ', approval.data);
 
 	const [resultData, setResultData] = useState([]);
@@ -61,32 +62,31 @@ function Exp4({ mode, data }) {
 		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
 	}, [empNo, dispatch]);
 
-	// result.data에서 apvNo만 추출하여 배열
-	const apvNoOptions = resultData.map(item => ({
-		value: item.apvNo,
-		label: `${item.apvNo} - ${item.purpose}`
-	}));
-
 	// 사용자가 apvNo를 선택했을 때 실행될 함수
 	const handleApvNoSelect = (selectedValue) => {
 		setSelectedApvNo(selectedValue);
 
-		console.log('=== selectedValue: ', selectedValue);
-
-		const selectedData = resultData.find(item => item.apvNo.toString() === selectedValue.toString());
-		console.log('=== selectedData : ', selectedData);
+		const selectedData = resultData.find(
+			(item) => item.apvNo.toString() === selectedValue.toString()
+		);
 
 		if (selectedData) {
 			setSelectedInfo(selectedData);
+
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				refApvNo: selectedValue,
+			}));
 		}
 	};
 
+
 	useEffect(() => {
 		setFormData(prevFormData => ({
-		  ...prevFormData,
-		  refApvNo: selectedApvNo ? selectedApvNo : '',
+			...prevFormData,
+			refApvNo: selectedApvNo ? selectedApvNo : '',
 		}));
-	  }, [selectedApvNo]);
+	}, [selectedApvNo]);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -96,12 +96,14 @@ function Exp4({ mode, data }) {
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
+		totalAmount: approval.totalAmount ? approval.totalAmount : 0,
 		empNo: empNo,
 		empName: authes.name,
 		deptName: authes.dept,
 		jobName: authes.job,
 		apvLines: approval.apvLines ? approval.apvLines : [],
-		refApvNo: selectedApvNo? selectedApvNo: '',
+		refApvNo: selectedApvNo ? selectedApvNo : '',
+		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvExpForms: [{
 			requestDate: approval.requestDate ? approval.requestDate : new Date(),
 			payee: approval.payee ? approval.payee : authes.name,
@@ -115,8 +117,15 @@ function Exp4({ mode, data }) {
 		}]
 	});
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	const isEditMode = formData.apvNo ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
+
+	useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
+
 
 	const [amounts, setAmounts] = useState([0]);
 
@@ -135,41 +144,61 @@ function Exp4({ mode, data }) {
 		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
+	const [totalAmount, setTotalAmount] = useState(0);
+
+	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
+	const updateTotalAmount = () => {
+	  const newTotalAmount = formData.apvExpForms.reduce((sum, form) => {
+		return sum + parseFloat(form.amount || 0);
+	  }, 0);
+
+	  setFormData((prevFormData) => ({
+		...prevFormData,
+		totalAmount: newTotalAmount,
+	  }));
+  
+	  // totalAmount 상태 변수 업데이트
+	  setTotalAmount(newTotalAmount);
+	};
+
+
 	const onChangeHandler = (e, index) => {
 		const { name, value } = e.target;
 		const nameParts = name.split('.');
 
 		if (nameParts[0] === 'apvExpForms') {
 			const field = nameParts[2];
-			const updatedFormData = { ...formData };
-			updatedFormData.apvExpForms[index][field] = value;
-			setFormData(updatedFormData);
+			setFormData((prevFormData) => {
+				const updatedFormData = { ...prevFormData };
+				updatedFormData.apvExpForms[index][field] = value;
+				return updatedFormData;
+			});
+			updateTotalAmount();
 		} else if (nameParts[0] === 'sharedProperties') {
 
 			const field = nameParts[1];
-			const updatedSharedProperties = {
-				...sharedProperties,
-				[field]: value
-			};
-
-			setSharedProperties(updatedSharedProperties);
-			setFormData(prevFormData => ({
+			setSharedProperties((prevSharedProps) => ({
+				...prevSharedProps,
+				[field]: value,
+			}));
+			// apvExpForms 배열 내의 해당 속성 업데이트
+			setFormData((prevFormData) => ({
 				...prevFormData,
 				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
 					...form,
-					...updatedSharedProperties
-				}))
+					[field]: value,
+				})),
 			}));
+			updateTotalAmount();
 		} else {
-
-			setFormData(prevFormData => ({
+			// 다른 폼 데이터 속성 업데이트
+			setFormData((prevFormData) => ({
 				...prevFormData,
-				[name]: value
+				[name]: value,
 			}));
+			updateTotalAmount();
 		}
 	};
-
-	const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
 	useEffect(() => {
 		const currentDate = new Date();
@@ -202,7 +231,7 @@ function Exp4({ mode, data }) {
 	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
 	useEffect(() => {
-		console.log('Hrm1 - selectedEmployees : ', selectedEmployees);
+		console.log('Exp4 - selectedEmployees : ', selectedEmployees);
 		if (approval.apvLines) {
 			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
 				...line,
@@ -217,24 +246,20 @@ function Exp4({ mode, data }) {
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
+		// 이전 라인의 sharedProperties 값을 복사하여 새로운 라인에 적용
+		const newLine = {
+			...formData.apvExpForms[0],
+			details: '',
+			account: '',
+			amount: '',
+			comment: '',
+		};
 		setFormData(prevFormData => ({
 			...prevFormData,
-			apvExpForms: [
-				...prevFormData.apvExpForms,
-				{
-					...prevFormData.apvExpForms[0],
-					details: '',
-					account: '',
-					amount: '',
-					comment: '',
-					...sharedProperties,
-				}
-			]
+			apvExpForms: [...prevFormData.apvExpForms, newLine]
 		}));
 		setAmounts(prevAmounts => [...prevAmounts, 0]);
 	};
-
-
 
 	const handleRemoveForm = () => {
 		if (formCount > 1) {
@@ -264,104 +289,109 @@ function Exp4({ mode, data }) {
 	};
 
 
-	const renderApvExpForm = (form, index) => {
+	const renderApvExpForm = () => {
 		return (
-			<div className="apvContentDetailExp1List" key={index}>
-				<div className="column21">
-					<input
-						className="input1"
-						name={`apvExpForms.${index}.details`}
-						onChange={e => onChangeHandler(e, index)}
-					/>
-				</div>
-				<div className="column22">
-					<input
-						className="input1"
-						name={`apvExpForms.${index}.account`}
-						onChange={e => onChangeHandler(e, index)}
-					/>
-				</div>
-				<div className="column23">
-					<input
-						className="input1"
-						type="number"
-						name={`apvExpForms.${index}.amount`}
-						value={formData.apvExpForms[index].amount || ''}
-						onChange={e => {
-							const { value } = e.target;
-							updateAmounts(index, value);
-							onChangeHandler(e, index);
-						}}
-					/>
-				</div>
-				<div className="column24">
-					<input
-						className="input1"
-						name={`apvExpForms.${index}.comment`}
-						onChange={e => onChangeHandler(e, index)}
-					/>
-				</div>
-			</div>
+			<>
+				{formData?.apvExpForms.map((form, index) => (
+					<div className="apvContentDetailExp1Content" key={index}>
+						<div className="apvContentDetailExp1List">
+							<div className="column21">
+								<input
+									className="input1"
+									name={`apvExpForms.${index}.details`}
+									value={form.details || ''}
+									onChange={e => onChangeHandler(e, index)}
+								/>
+							</div>
+							<div className="column22">
+								<input
+									className="input1"
+									name={`apvExpForms.${index}.account`}
+									value={form.account || ''}
+									onChange={e => onChangeHandler(e, index)}
+								/>
+							</div>
+							<div className="column23">
+								<input
+									className="input1"
+									type="number"
+									name={`apvExpForms.${index}.amount`}
+									value={form.amount || ''}
+									onChange={e => onChangeHandler(e, index)}
+								/>
+							</div>
+							<div className="column24">
+								<input
+									className="input1"
+									name={`apvExpForms.${index}.comment`}
+									value={form.comment || ''}
+									onChange={e => onChangeHandler(e, index)}
+								/>
+							</div>
+						</div>
+					</div>
+				))}
+			</>
 		);
 	};
 
 
 	const [fileList, setFileList] = useState([]);
-    const handleFileUpload = (file) => {
-        if (file) {
-            // Create a copy of the current apvFiles array and add the new file to it
-            const updatedApvFiles = [...formData.apvFiles, file];
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                apvFiles: updatedApvFiles,
-            }));
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
 
-            // Update the fileList state for rendering in the component
-            setFileList([...fileList, file]);
-            console.log('ApvSummitBar에서 업로드한 파일:', file);
-        }
-    };
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
 
-    const updateFileList = (newFileList) => {
-        setFileList(newFileList);
-    };
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	};
 
-    useEffect(() => {
-        console.log('fileList : ', fileList);
-    }, [fileList])
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
 
-    const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp4API;
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvExp4API;
 
-    const handleSubmissionClick = () => {
-        const submissionData = {
-            empNo,
-            isEditMode,
-            formData,
-            selectedEmployees,
-            navigate,
-            fileList,
-            APIPoint,
-            dispatch,
-        };
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
 
-        console.log('submissionData', submissionData);
-        handleSubmission(null, submissionData);
-    };
-    console.log('Exp4 formData : ', formData);
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
+	};
+	console.log('Exp4 formData : ', formData);
 
 	return (
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar
-                    onSubmit={handleSubmissionClick}
-                    updateIsUrgency={updateIsUrgency}
-                    setSelectedEmployees={setSelectedEmployees}
-                    fileList={fileList}
-                    updateFileList={updateFileList}
-                    data={data}
-                />
-                <div className="containerApv">
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
+					data={data}
+				/>
+				<div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
 					<ApvSummitLine
 						mode="create"
@@ -375,11 +405,12 @@ function Exp4({ mode, data }) {
 							<div className="column2">
 								<select onChange={(e) => handleApvNoSelect(e.target.value)}>
 									<option className="input1" value="">선택</option>
-									{apvNoOptions.map((option) => (
-										<option key={option.value} value={option.value}>
-											{option.label}
+									{resultData && resultData.map((item, index) => (
+										<option key={index} value={item.apvNo}>
+											{`${item.apvNo} - ${item.purpose}`}
 										</option>
 									))}
+
 								</select>
 							</div>
 							<div className="column3">출장기간</div>
@@ -390,8 +421,8 @@ function Exp4({ mode, data }) {
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장지</div>
 							<div className="column2">{selectedInfo ? selectedInfo.location : ''}</div>
-							<div className="column3">출장인원</div>
-							<div className="column4"></div>
+							<div className="column3">동반자</div>
+							<div className="column4">{selectedInfo ? selectedInfo.tripAttendees : ''}</div>
 						</div>
 						<div className="apvContentDetail">내역</div>
 						<div className="apvContentDetailExp1Title">
@@ -402,31 +433,32 @@ function Exp4({ mode, data }) {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-							{Array.from({ length: formCount }).map((_, index) =>
+							{/* {Array.from({ length: formCount }).map((_, index) =>
 								renderApvExpForm(formData.apvExpForms[index] || {}, index)
-							)}
+							)} */}
+							{renderApvExpForm(formData)}
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32">{totalAmount}</div>
-						</div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+					</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
 							<div className="column42">
 								<input className="input1" placeholder="예금주 입력"
-									name='sharedProperties.accountHolder' value={sharedProperties.accountHolder} onChange={onChangeHandler} />
+									name='sharedProperties.accountHolder' value={formData.apvExpForms[0].accountHolder} onChange={onChangeHandler} />
 							</div>
 							<div className="column43">은행</div>
 							<div className="column44">
 								<input className="input1" placeholder="은행 입력"
-									name='sharedProperties.bank' value={sharedProperties.bank} onChange={onChangeHandler} />
+									name='sharedProperties.bank' value={formData.apvExpForms[0].bank} onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentTitleExp1-3">
 							<div className="column45">계좌번호</div>
 							<div className="column46">
 								<input className="input1" placeholder="계좌번호 입력"
-									name='sharedProperties.accountNumber' value={sharedProperties.accountNumber} onChange={onChangeHandler} />
+									name='sharedProperties.accountNumber' value={formData.apvExpForms[0].accountNumber} onChange={onChangeHandler} />
 							</div>
 						</div>
 
@@ -437,10 +469,10 @@ function Exp4({ mode, data }) {
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
 					<ApvFileList files={fileList} />
-                </div>
-            </div>
-        </section>
-    );
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export default Exp4;

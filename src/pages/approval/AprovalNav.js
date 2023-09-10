@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ApvMyList from './ApvMyList';
 
 function ApvMenu() {
 
@@ -30,13 +31,9 @@ function ApvMenu() {
 							<Link to="/approval/ReceiveBox">수신함</Link>
 						</div>
 						<div className="apvNaviBoxEmp"></div>
-						<div className="apvNaviBoxMainTitle">MY 결재 양식</div>
+						<div className="apvNaviBoxMainTitle">최근 결재 양식</div>
 						<ul className="apvNaviBoxUl">    
-							<li><a href="/HTML/approval/hrm1.html">연차신청서</a></li>
-							<li><a href="/HTML/approval/exp1.html">지출결의서(단건)</a></li>
-							<li><a href="/HTML/approval/biz4.html">공문</a></li>
-							<li><a href="/HTML/approval/biz2.html">회의록</a></li>
-							<li><a href="/HTML/approval/biz1.html">기안서</a></li>
+							<ApvMyList show={true}/>
 						</ul>
 					</div>
 				</div>

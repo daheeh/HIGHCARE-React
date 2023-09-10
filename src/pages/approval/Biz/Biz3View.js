@@ -60,9 +60,6 @@ function Biz3View() {
     }
   }
 
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -105,47 +102,42 @@ function Biz3View() {
             <div className="apvContentTitleBiz3">
               <div className="column1">출장기간</div>
               <div className="column2">
-                <input className="input1" type="date" name="startDate"
+                <input className="input1" name="startDate"
                   value={data?.apvBusinessTrips[0].startDate || ''} />
               </div>
               <div className="column2">
-                <select className="input1" name="endstartTimeTime"
-                  value={data?.apvBusinessTrips[0].startTime || ''} >
-                  {generateTimeOptions()}
-                </select>
+                <input className="input1" name="startTime"
+                  value={data?.apvBusinessTrips[0].startTime || ''}/>
               </div>
               <div className="column3">~</div>
               <div className="column2">
-                <input className="input1" type="date" name="endDate"
-                  value={data?.apvBusinessTrips[0].endDate || ''} />
+                <input className="input1" name="endDate"
+                  value={data?.apvBusinessTrips[0].endDate || ''}/>
               </div>
               <div className="column2">
-                <select className="input1" name="endTime"
-                  value={data?.apvBusinessTrips[0].endTime || ''} >
-                  {generateTimeOptions()}
-                </select>
+                <input className="input1" name="endTime"
+                  value={data?.apvBusinessTrips[0].endTime || ''}/>
               </div>
               <div className="column2">({calculateTravelDuration()})</div>
             </div>
             <div className="apvContentTitle">
               <div className="column1">출장지</div>
               <div className="column2">
-                <input className="input1" placeholder="출장지 입력"
-                  name='location' value={data?.apvBusinessTrips[0].location || ''}
+                <input className="input1" name='location' value={data?.apvBusinessTrips[0].location || ''}
                 />
               </div>
             </div>
             <div className="apvContentTitle">
               <div className="column1">동반자</div>
               <div className="column2">
-                <input className="input1" placeholder="사번 입력" />
+              <input className="input1" name='location' value={data?.apvBusinessTrips[0].tripAttendees || ''}
+                />
               </div>
             </div>
             <div className="apvContentDetail">상세내용
             </div>
             <div className="apvContentDetailComent">
-              <textarea placeholder="내용 작성" rows="11" name='contents1'
-                value={data?.contents1}
+              <textarea name='contents1' className='apvTextarea'value={data?.contents1}
               />
             </div>
           </div>

@@ -105,7 +105,7 @@
     justify-content: space-around;
     background: #EEE; 
     border-top: 1px solid #7B7B7B;
-    /* border-bottom: 1px solid #7B7B7B; */
+    border-bottom: 1px solid #7B7B7B;
 }
 
 .apvContentDetailExp1Total > div {
