@@ -21,7 +21,7 @@ const modalStyles = {
 };
 
 
-const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, fileList, updateFileList, data }, ref) => {
+const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, setRefSelectedEmployees, fileList, updateFileList, data}, ref) => {
     const [isUrgency, setIsUrgency] = useState('F');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFileModalOpen, setIsFileModalOpen] = useState(false);
@@ -45,7 +45,8 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
 
     useEffect(() => {
         console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setSelectedEmployees);
-    }, [setSelectedEmployees]);
+        console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setRefSelectedEmployees);
+    }, [setSelectedEmployees, setRefSelectedEmployees]);
 
 
 
@@ -101,6 +102,13 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
         setSelectedEmployees(selectedData);
         console.log('ApvSummitBar - selectedData:', selectedData);
         console.log('ApvSummitBar - selectedEmployees:', setSelectedEmployees);
+        setIsModalOpen(false);
+    };
+
+    const handleRefSelection = (refSelectedData) => {
+        setRefSelectedEmployees(refSelectedData);
+        console.log('ApvSummitBar - selectedData:', refSelectedData);
+        console.log('ApvSummitBar - selectedEmployees:', setRefSelectedEmployees);
         setIsModalOpen(false);
     };
 
@@ -172,7 +180,15 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
                 >
                     <ApvLineTree onSelect={handleCompleteSelection} />
                 </Modal>
-                <button>설정</button>
+                <button onClick={handleModalOpen}>결재참조</button>
+                {isModalOpen && <div className="modalOverlay" />}
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={handleModalClose}
+                    style={modalStyles}
+                >
+                    <ApvLineTree onSelect={handleRefSelection} mode="결재참조" />
+                </Modal>
                 <button onClick={() => handleExportToPdf(ref)}>PDF로 내보내기</button>
                 
             </div>

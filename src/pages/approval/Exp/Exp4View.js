@@ -34,10 +34,14 @@ function Exp4View() {
                 console.error('Error fetching data:', error);
             }
         };
-    
+
         fetchData();
     }, [apvNo, dispatch]);
-    
+
+    if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+        return <div className='apvNoUser'>권한이 없습니다</div>;
+    }
+
     const renderApvExpForm = (data) => {
         return (
             <>
@@ -105,7 +109,7 @@ function Exp4View() {
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장신청서 번호</div>
                             <div className="column2">
-                                <div>{data? data.apvBusinessTrips[0].apvNo: ''}</div>
+                                <div>{data ? data.apvBusinessTrips[0].apvNo : ''}</div>
                             </div>
                             <div className="column3">출장기간</div>
                             <div className="column4">
@@ -115,14 +119,14 @@ function Exp4View() {
                         <div className="apvContentTitleExp1-3">
                             <div className="column45">출장목적</div>
                             <div className="column46">
-                                <div>{data? data.apvBusinessTrips[0].purpose : ''}</div>
+                                <div>{data ? data.apvBusinessTrips[0].purpose : ''}</div>
                             </div>
                         </div>
                         <div className="apvContentTitleExp1">
                             <div className="column1">출장지</div>
-                            <div className="column2">{data? data.apvBusinessTrips[0].location : ''}</div>
+                            <div className="column2">{data ? data.apvBusinessTrips[0].location : ''}</div>
                             <div className="column3">동반자</div>
-                            <div className="column4">{data? data.apvBusinessTrips[0].tripAttendees : ''}</div>
+                            <div className="column4">{data ? data.apvBusinessTrips[0].tripAttendees : ''}</div>
                         </div>
                         <div className="apvContentDetail">내역</div>
                         <div className="apvContentDetailExp1Title">

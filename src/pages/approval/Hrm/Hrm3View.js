@@ -41,6 +41,9 @@ function Hrm3View() {
 
 	const [dateRange, setDateRange] = useState("");
 
+	if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+		return <div className='apvNoUser'>권한이 없습니다</div>;
+	}
 
 	return (
 		<section>
@@ -63,25 +66,25 @@ function Hrm3View() {
 							<div className="column1">서류 종류</div>
 							<div name="type">{data?.apvIssuances[0].type}</div>
 							<div className="column2">
-								<input className="input1" name='subType' value={data?.apvIssuances[0].subType}/>
+								<input className="input1" name='subType' value={data?.apvIssuances[0].subType} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">제출처</div>
 							<div className="column2">
-								<input className="input1" name='submission' value={data?.apvIssuances[0].submission}/>
+								<input className="input1" name='submission' value={data?.apvIssuances[0].submission} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">용도</div>
 							<div className="column2">
-								<input className="input1" name='uses' value={data?.apvIssuances[0].uses}/>
+								<input className="input1" name='uses' value={data?.apvIssuances[0].uses} />
 							</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">요청사항</div>
 							<div className="column2">
-								<input className="input1" name='requests' value={data?.apvIssuances[0].requests}/>
+								<input className="input1" name='requests' value={data?.apvIssuances[0].requests} />
 							</div>
 						</div>
 					</div>
