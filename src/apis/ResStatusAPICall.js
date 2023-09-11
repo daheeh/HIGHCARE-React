@@ -28,6 +28,8 @@ export const callResInsertAPI = ({form}) => {
             alert(result.message);
         }else{
         dispatch({type: POST_RESULT, payload: result});
+        alert(result.message);
+
         }    
     }
 
