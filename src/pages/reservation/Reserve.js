@@ -56,7 +56,8 @@ function Reserve(){
                             Array.isArray(daterese) && daterese.length === 0 &&
                             <span style={{fontSize:'16px'}}>예약자가 없습니다</span>
                         }
-                            <button onClick={openModal} style={{marginTop:"30px",fontSize:'16px',height:'30px'}}>예약하기</button>
+                            <br></br>
+                            <button onClick={openModal} style={{marginTop:"30px",fontSize:'16px',height:'30px'}}>예약</button>
                         </div>
                     </div>
                           <div className={BoardStyle.content_main_main} dangerouslySetInnerHTML={{__html:content.serviceGuide}}></div>

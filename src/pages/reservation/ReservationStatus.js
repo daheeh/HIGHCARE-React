@@ -24,7 +24,7 @@ function ReservationStatus(){
     const status = useSelector(state => state.resStatusReducer);
 
     if(pageInfo){
-        for(let i = 1; i<=pageInfo.pageEnd; i++){
+        for(let i = pageInfo.pageStart; i<=pageInfo.pageEnd; i++){
             pageNumber.push(i);
         }
     }
@@ -102,7 +102,7 @@ function ReservationStatus(){
             { Array.isArray(resList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.realEnd  || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
             >
                 &gt;

@@ -12,9 +12,7 @@ function BulletinBoard(){
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     const boards = useSelector(state => state.boardtest);
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
      const boardList = boards.data;
     const pageInfo = boards.pageInfo;
@@ -22,14 +20,13 @@ function BulletinBoard(){
 
     const pageNumber = [];
     if(pageInfo) {
-        for(let i = 1; i<= pageInfo.pageEnd; i++){
+        for(let i = pageInfo.pageStart; i<= pageInfo.pageEnd; i++){
             pageNumber.push(i);
         }
     }
 
     useEffect(
         () =>{
-            setStart((currentPage - 1) * 5);
             dispatch(callBulletinAPI({
                 categoryCode: categoryCode,
                 currentPage: currentPage,
@@ -118,11 +115,9 @@ function BulletinBoard(){
             { Array.isArray(boardList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.realEnd || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
-
-
-            >
+           >
                 &gt;
             </button>
             }
