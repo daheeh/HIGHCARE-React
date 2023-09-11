@@ -86,13 +86,19 @@ function ResourceMod(){
     };
 
     const onClickDeleteHandler = ()=>{
+        if(window.confirm("시설을 삭제 하시겠습니까?")){
         dispatch(callDeleteAPI({
             resourceCode:content.resourceCode
         }));
-        // navigate("/reservation",{replace:true})
+              navigate(`/reservation`, { replace: false });
+        window.location.reload()
+    }
     }
 
     const onClickResourceModHandler = () => {
+          if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+            alert('시간을 다시입력해주세여');
+        }else{
         const formData = new FormData();
         formData.append("resourceCode", form.resourceCode);
         formData.append("resourceName", form.resourceName);
@@ -105,9 +111,19 @@ function ResourceMod(){
         if(image){
             formData.append("image", image);
         }
+        
+        if(form.categoryCode == 0 || form.resourceName == '' || form.area == '' || form.location == '' || form.serviceGuide == '' || form.startTime == ''|| form.endTime == ''){
+            alert('공백이 있습니다')
+            console.log('form ', form)
+        }else{
         dispatch(callResModAPI({
             form: formData
-        }));
+            
+        })); 
+        navigate(`/reservation`, { replace: false });
+        window.location.reload()
+    }
+    }
     }
 
     return (
@@ -141,17 +157,18 @@ function ResourceMod(){
                 <span>위치</span>
                 <input type="text" name='location' defaultValue={content.location} onChange={onChangeHandler}/>
             </div>
-            <div>
+            <div className={BoardStyle.content_time}> 
                 <span>사용시간</span>
-                <input type="text" name='startTime' defaultValue={content.startTime} onChange={onChangeHandler}/>
-                -
-                <input type="text" name='endTime' defaultValue={content.endTime} onChange={onChangeHandler}/>
+                <input type="text" name='startTime' defaultValue={content.startTime} onChange={onChangeHandler} style={{marginRight:"2px"}}/>
+                시-
+                <input type="text" name='endTime' defaultValue={content.endTime} onChange={onChangeHandler} style={{marginRight:"2px"}}/>시
             </div>
             <div>
             { imageUrl && <img 
                            src={ imageUrl } 
                            className={BoardStyle.Image}
                             alt="preview"
+                            style={{width:"400px", height:"200px"}}
                         />}
                           <input                
                             style={ { display: 'none' }}
@@ -161,11 +178,13 @@ function ResourceMod(){
                             onChange={ onChangeImageUpload }
                             ref={ imageInput }
                         />
-                        <button 
+                               <div 
                             onClick={ onClickImageUpload } 
+                            className={BoardStyle.comment_ok}
+                            style={{width:"100px", fontSize:"16px"}} 
                         >
-                            이미지 업로드
-                            </button>
+                            이미지 선택
+                            </div>
             </div>
             <span>이용안내</span>
             <Editor value={value}  getValue={getValue}/>

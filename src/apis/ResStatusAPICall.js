@@ -24,8 +24,11 @@ export const callResInsertAPI = ({form}) => {
             })
         })
         .then(Response => Response.json());
-
+        if(result.status == 500){
+            alert(result.message);
+        }else{
         dispatch({type: POST_RESULT, payload: result});
+        }    
     }
 
 }

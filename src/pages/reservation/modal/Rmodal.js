@@ -18,7 +18,9 @@ function Rmodal(props) {
     const dispatch = useDispatch();
 
     const status = useSelector(state => state.resStatusReducer);
-
+    if(daterese == null){
+        alert('날짜를 입력해주세요');
+    }
     const [form, setForm] = useState({
         startTime: '',
         endTime: '',
@@ -28,14 +30,20 @@ function Rmodal(props) {
     });
 
     const onChangeHandler = (e) => {
+        if(e.target.value >24){
+            document.getElementById(`endTime`).value = '';
+            document.getElementById(`startTime`).value = '';
+            alert("시간을 확인해주세요.")
+        }else{
             setForm({
             ...form,
             [e.target.name]: e.target.value
         });
+    }
     };
 
     const onClickResHandler = () => {
-        if(form.endTime > content.endTime || form.endTime < content.startTime || form.endTime <= form.startTime || form.startTime > content.endTime || form.startTime < content.startTime){
+        if(form.endTime > content.endTime || form.endTime < content.startTime || form.endTime <= form.startTime || form.startTime > content.endTime || form.startTime < content.startTime || form.startTime > content.endTime){
             document.getElementById(`endTime`).value = '';
             document.getElementById(`startTime`).value = '';
             alert("예약시간을 확인해주시기 바랍니다")

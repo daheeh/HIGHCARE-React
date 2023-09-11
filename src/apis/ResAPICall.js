@@ -57,9 +57,15 @@ export const callResRegistAPI = ({form}) => {
             body: form
         })
         .then(response => response.json());
-
-        dispatch({type: POST_RESR, payload: result});
-    }
+        
+  
+    if(result.status == 500){
+        alert(result.message);
+    }else{
+        alert(result.message);
+    dispatch({type: POST_RESR, payload: result});
+    }    
+}
     
 }
 
@@ -72,12 +78,12 @@ export const callResModAPI = ({form})=> {
                 "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 "Accept": "*/*" ,
                 "Access-Control-Allow-Origin": "*" ,
-                "Content-Type": "application/json"
             },
             body: form
         })
         .then(response => response.json());
 
+        alert(result.message);
         dispatch({type: PUT_RES, payload: result});
     }
 
@@ -102,7 +108,9 @@ export const callDeleteAPI = ({resourceCode})=>{
         })
         .then(response => response.json());
 
+        alert(result.message);
         dispatch({type: PUT_RES, payload: result});
+
     }
 
 }

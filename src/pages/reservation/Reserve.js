@@ -26,6 +26,7 @@ function Reserve(){
 		setModal(false);
   
 	};
+    console.log('daterese',daterese);
     return (
         <div class={BoardStyle.content_bullentin_main}>
             <h1 class={BoardStyle.content_title}>신청하기</h1>
@@ -52,7 +53,7 @@ function Reserve(){
                                 ))
         
                         }{
-                            daterese == null &&
+                            Array.isArray(daterese) && daterese.length === 0 &&
                             <span style={{fontSize:'16px'}}>예약자가 없습니다</span>
                         }
                             <button onClick={openModal} style={{marginTop:"30px",fontSize:'16px',height:'30px'}}>예약하기</button>

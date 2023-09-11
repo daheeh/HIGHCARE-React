@@ -42,7 +42,6 @@ function MyReservationStatus(){
                         <th>예약날짜</th>
                         <th>예약시간</th>
                         <th>신청상태</th>
-                        <th>사유</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +53,6 @@ function MyReservationStatus(){
                         <td>{res.reservationDate!==null?res.reservationDate.substring(0,10):res.reservationDate}</td>
                         <td>{res.startTime}:00 - {res.endTime}:00</td>
                         <td>{res.reservationStatus=='SCREENING'?'대기':(res.reservationStatus=='APPROVAL'?'승인':'취소')}</td>
-                        <td>{res.reason}</td>
                     </tr>)
                    ) }
                 </tbody>

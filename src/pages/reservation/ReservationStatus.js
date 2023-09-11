@@ -37,14 +37,18 @@ function ReservationStatus(){
     );
 
     const onClickApprova = (statusCode) => {
+        if(window.confirm("승인 하시겠습니까?")){
         dispatch(callApprovalAPI({
             statusCode : statusCode
         }));
     }
+    }
     const onClickRejected = (statusCode) => {
+        if(window.confirm("거절 하시겠습니까?")){
         dispatch(callRejectedAPI({
             statusCode : statusCode
         }));
+        }
     }
     return (
         <div className={BoardStyle.content_bullentin_main}>

@@ -87,6 +87,9 @@ function ResourceAdd(){
     };
 
     const onClickResourceRegistHandler = () => {
+        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+            alert('시간을 다시입력해주세여');
+        }else{
         const formData = new FormData();
 
         formData.append("resourceName", form.resourceName);
@@ -99,9 +102,17 @@ function ResourceAdd(){
         if(image){
             formData.append("image", image);
         }
-        dispatch(callResRegistAPI({
-            form: formData
-        }));
+        if(form.categoryCode == 0 || form.resourceName == '' || form.area == '' || form.location == '' || form.serviceGuide == '' || form.startTime == ''|| form.endTime == ''){
+            alert('공백이 있습니다')
+            console.log('form ', form)
+        }else{
+            dispatch(callResRegistAPI({
+                form: formData
+            }));
+            navigate(`/reservation`, { replace: false });
+            window.location.reload()
+        }
+    }
     }
 
     return (
@@ -139,9 +150,9 @@ function ResourceAdd(){
             </div>
             <div  className={BoardStyle.content_time} >
                 <span>사용시간</span>
-                <input type="text" name='startTime' onChange={onChangeHandler}/>
-                -
-                <input type="text" name='endTime' onChange={onChangeHandler}/>
+                <input type="text" name='startTime' onChange={onChangeHandler} style={{marginRight:"2px"}}/>
+                시-
+                <input type="text" name='endTime' onChange={onChangeHandler} style={{marginRight:"2px"}}/>시
             </div>
             <div>
             { imageUrl && <img 
