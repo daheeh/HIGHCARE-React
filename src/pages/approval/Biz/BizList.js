@@ -12,7 +12,7 @@ function BizList() {
         'approval/biz2',
         'approval/biz3',
         'approval/biz4',
-        'approval/biz5',
+        // 'approval/biz5',
     ]);
 
     const linkTextMapping = {
@@ -20,7 +20,7 @@ function BizList() {
         'approval/biz2': '회의록',
         'approval/biz3': '출장신청서',
         'approval/biz4': '공문',
-        'approval/biz5': 'custom',
+        // 'approval/biz5': 'custom',
     };
 
     const dragStart = (e, position) => {

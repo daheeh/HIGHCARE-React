@@ -74,6 +74,10 @@ function Biz3View() {
     fetchData();
   }, [apvNo, dispatch]);
 
+  if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+    return <div className='apvNoUser'>권한이 없습니다</div>;
+  }
+  
   return (
     <section>
       <ApvMenu />

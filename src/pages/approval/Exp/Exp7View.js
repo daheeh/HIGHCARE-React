@@ -38,7 +38,7 @@ function Exp1View() {
 
         fetchData();
     }, [apvNo, dispatch]);
-    
+
     const [amounts, setAmounts] = useState([0]);
     const totalAmount = amounts.reduce((sum, amount) => sum + amount, 0);
 
@@ -87,7 +87,10 @@ function Exp1View() {
             </>
         );
     };
-    
+
+    if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+        return <div className='apvNoUser'>권한이 없습니다</div>;
+    }
 
     return (
         <section>
@@ -105,36 +108,36 @@ function Exp1View() {
                         authes={authes}
                         data={data}
                     />
-					<div className="apvContent">
-						<div className="apvContentTitleExp1">
-							<div className="column1">카드번호</div>
-							<div className="column2">
-								<input className="input1"
-									name='sharedProperties.cardNo' value={data?.apvCorpCards[0].cardNo} readOnly/>
-							</div>
-							<div className="column3">결제월</div>
-							<div className="column4">
-                            <input className="input1"
-									name='sharedProperties.paymentMonth' value={data?.apvCorpCards[0].paymentMonth} readOnly/>
-							</div>
-						</div>
-						<div className="apvContentDetail">내역</div>
-						<div className="apvContentDetailExp1Title">
-							<div className="column11">내역</div>
-							<div className="column12">계정과목</div>
-							<div className="column13">금액</div>
-							<div className="column14">적요</div>
-						</div>
+                    <div className="apvContent">
+                        <div className="apvContentTitleExp1">
+                            <div className="column1">카드번호</div>
+                            <div className="column2">
+                                <input className="input1"
+                                    name='sharedProperties.cardNo' value={data?.apvCorpCards[0].cardNo} readOnly />
+                            </div>
+                            <div className="column3">결제월</div>
+                            <div className="column4">
+                                <input className="input1"
+                                    name='sharedProperties.paymentMonth' value={data?.apvCorpCards[0].paymentMonth} readOnly />
+                            </div>
+                        </div>
+                        <div className="apvContentDetail">내역</div>
+                        <div className="apvContentDetailExp1Title">
+                            <div className="column11">내역</div>
+                            <div className="column12">계정과목</div>
+                            <div className="column13">금액</div>
+                            <div className="column14">적요</div>
+                        </div>
 
-						<div className="apvContentDetailExp1Content">
+                        <div className="apvContentDetailExp1Content">
                             {renderApvCorpCard(data)}
-						</div>
-						<div className="apvContentDetailExp1Total">
-							<div className="column31">합계</div>
-							<div className="column32">{data?.totalAmount || ''}</div>
-						</div>
-						<div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
-					</div>
+                        </div>
+                        <div className="apvContentDetailExp1Total">
+                            <div className="column31">합계</div>
+                            <div className="column32">{data?.totalAmount || ''}</div>
+                        </div>
+                        <div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
+                    </div>
                     <ApvFileList files={data?.apvFiles || []} data={data} />
                 </div>
             </div>
