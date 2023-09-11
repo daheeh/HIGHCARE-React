@@ -215,7 +215,7 @@ export const callMgEndAPI = ({ formData }) => {
             // });
             .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callMgEndAPI RESULT : ', result.data);
+            console.log('[ApprovalAPICalls] callMgEndAPI RESULT : ', result);
 
             dispatch({ type: POST_PM_END, payload: result });
             return result;
@@ -336,7 +336,7 @@ export const callAnnualAPI = () => {
 export const callPmAnnualAPI = (empNo) => {
     console.log('[PmAPICalls] callPmAnnualAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/annual/${empNo}`;
+    const requestURL = `http://localhost:8080/api/pm/annual/detail/${empNo}`;
     
 
     console.log('[PmAPICalls] callPmAnnualAPI Call empNo', empNo);

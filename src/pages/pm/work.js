@@ -93,6 +93,7 @@ function PmWork() {
 				} else {
 					window.alert("다시 시도해 주세요.");
 				}
+                window.location.reload();
 			} catch (error) {
 				console.error("API error:", error);
 				window.alert("API 요청 중 오류가 발생했습니다.");
@@ -123,6 +124,7 @@ function PmWork() {
 				} else {
 					window.alert("다시 시도해 주세요.");
 				}
+                window.location.reload();
 			} catch (error) {
 				console.error("API error:", error);
 				window.alert("API 요청 중 오류가 발생했습니다.");

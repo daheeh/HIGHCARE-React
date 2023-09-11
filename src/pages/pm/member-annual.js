@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './pm-member.css'
 import PmNav from './pmNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { callAnnualAPI } from '../../apis/PmAPICalls';
+import { callPmAnnualAPI } from '../../apis/PmAPICalls';
 
 
 function PmMemberAnnual() {
@@ -16,7 +16,7 @@ function PmMemberAnnual() {
     
 
     useEffect(() => {
-        dispatch(callAnnualAPI(empNo));
+        dispatch(callPmAnnualAPI(empNo));
       },[]);
 
 	return (
@@ -30,12 +30,12 @@ function PmMemberAnnual() {
                 <div className='div3'></div>
                 <div className="pm-ma-box2">
                     <div className="pm-ma-font">총연차</div>
-                    <div className="pm-ma-number">{pmresult[0].totalAnnual || '00'}</div>
+                    {/* <div className="pm-ma-number">{pmresult[0].totalAnnual && pmresult[0].totalAnnual}</div> */}
                 </div>
                 <div className="pm-line"></div>
                 <div className="pm-ma-box">
                     <div>발생 연차</div>
-                    <div className="pm-ma-number">{pmresult[0].addAnnual || '00'}</div>
+                    {/* <div className="pm-ma-number">{pmresult[0].addAnnual || '00'}</div> */}
                 </div>
                 <div className="pm-line"></div>
                 <div className="pm-ma-box">
