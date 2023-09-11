@@ -83,13 +83,18 @@ import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import { ErrorComponent } from "./errors/ErrorBoundary";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "./errors/PrivateRoute";
-import MypageAnnual from "./pages/mypage/annual";
+
+import LoginVerify from "./utils/LoginVerify";
+
+import MypageAnnual from "./pages/mypage/myannual";
+import MyManegement from "./pages/mypage/mymanegement";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 import { TokenVerification } from "./pages/admin/auth/TokenVerification";
 import { AdminNav } from "./pages/admin/AdminNav";
 import { AuthVarification } from "./pages/admin/auth/AuthVerification";
 import ResourceMod from "./pages/reservation/ResourceMod";
+
 
 
 
@@ -200,7 +205,7 @@ function App() {
             <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
             <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
             <Route path="/mypage/profile" element={<Profile />} />
-            <Route path="/mypage/annual" element={<MypageAnnual />} />
+            <Route path="/mypage/myannual" element={<MypageAnnual />} />
 
 
             <Route path="/socket/chatting" element={<ChattingPage />} />
@@ -213,19 +218,54 @@ function App() {
 
             {/* ****************************** 여기부터 관리자 권한 필요 ******************************* */}
 
-            <Route element={<AuthVarification />}>
 
-              <Route path="/admin">
-                <Route index element={<AdminPage />} />
+          <Route path="/bulletin" element={<BulletinMain />}>
+            {/* <Route index element={<Bulletin />} /> */}
 
-                <Route path="member" element={<MemberList />} />
-                <Route path="member/modify/:empNo" element={<MemberModify />} />
-                <Route path="member/log" element={<MemberLog />} />
-                <Route path="member/auth" element={<AuthManager />} />
-              </Route>
+            <Route path="board/:categoryCode" element={<BulletinBoard />} />
 
-            </Route>
-            {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
+            <Route path="thread" element={<Thread />} />
+
+            <Route path="thread/:bulletinCode" element={<Thread />} />
+            <Route path="mod/:bulletinCode" element={<BullentinMod />} />
+
+            <Route path="bulletinWrite" element={<BullentinWrite />} />
+          </Route>
+
+
+          <Route path="/reservation" element={<ReservationMain />}>
+            <Route index element={<Reservation />} />
+            <Route path="status" element={<ReservationStatus />} />
+            <Route path="mystatus" element={<MyReservationStatus />} />
+            <Route path="add" element={<ResourceAdd />} />
+            <Route path="reserve" element={<Reserve />} />
+          </Route>
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage/list/regist" element={<Businesscardregist />} />
+          <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
+          <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
+
+          <Route path="/mypage/profile" element={<Profile />} />
+          <Route path="/mypage/annual" element={<MypageAnnual />} />
+          <Route path="/mypage/mymanegement" element={<MyManegement />} />
+        </Route>
+
+
+        {/* 여기부터 관리자 권한 필요  */}
+
+        <Route element={<AuthVarification />}>
+
+          <Route path="/admin">
+            <Route index element={<AdminPage />} />
+
+            <Route path="member" element={<MemberList />} />
+            <Route path="member/modify/:empNo" element={<MemberModify />} />
+            <Route path="member/log" element={<MemberLog />} />
+            <Route path="member/auth" element={<AuthManager />} />
+          </Route>
+
+          {/* 여기까지 관리자 권한 필요  */}
+>>>>>>> hr
 
         </Route>
 
