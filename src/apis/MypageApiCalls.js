@@ -102,9 +102,9 @@ export const callAnnSelectAPI = (empNo) => {
     }
 };
 
-export const callManSlectAPI = (empNo) => {
+export const CallManSelectAPI = (empNo) => {
 
-    console.log('callManSlectAPI Call');
+    console.log('CallManSelectAPI Call');
 
     const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}`;
 
@@ -122,12 +122,12 @@ export const callManSlectAPI = (empNo) => {
             })
             .then(response => response.json());
 
-            console.log('[callManSlectAPI] callManSlectAPI Result : ', result);
+            console.log('[CallManSelectAPI] CallManSelectAPI Result : ', result);
 
             dispatch({ type: GET_MYPAGE_MANSELECT, payload: result });
 
         } catch(error) {
-            console.log('[callManSlectAPI Call] Error in', error)
+            console.log('[CallManSelectAPI Call] Error in', error)
         }
         
     }

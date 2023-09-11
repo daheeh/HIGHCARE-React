@@ -59,7 +59,8 @@ section {
     height: 768px;
     padding: 12px;
     border-right : #000;
-    box-sizing: border-box
+    box-sizing: border-box;
+    /* margin-top: 10px; */
 }
 
 .apv-navibox-top{
