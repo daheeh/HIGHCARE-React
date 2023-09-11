@@ -1007,13 +1007,18 @@ h1, p {
   }
 
 .orgchart{
-    width: 2000px;
-    height: 800px;
+    width: auto;
+    height: auto; 
+    background-color:#d9d4d4;
     background-image: none !important;
+    
 }
 .orgchart ul li .oc-node .oc-heading{
+    width: 150px;
+    font-size: 2rem;
     background-color: #10479A !important;
 }
+
 
 .orgchart ul li .oc-node .oc-content{
     border: 1px solid #10479A !important;
@@ -1028,6 +1033,10 @@ h1, p {
 
 .orgchart > ul > li > ul li > .oc-node::before{
     background-color:  #10479A !important;
+}
+
+.orgchart-container{
+    background-color: #d9d4d4 !important;
 }
 
 /* modal */
@@ -1243,4 +1252,34 @@ display: flex;
 .selectButton {
     width: 150px;
     height: 30px;
+}
+
+.pmmain{
+    display: flex;
+    width: 197px;
+    height: 50px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background:#10479A;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    margin: 100px;
+}
+
+.pmmainbox{
+    margin: 70px;
+    width: 330px;
+    height: 300px;
+    border: 2.5px solid #10479A;
+    border-radius: 6px;
+}
+
+.pmmainbox-font{
+    text-align: center;
+    color: #000;
+    padding: 70px;
 }
