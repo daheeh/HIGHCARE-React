@@ -46,9 +46,14 @@ function BullentinWrite(){
         });
     };   
     const onClickWrite = () =>{
-        dispatch(callRegisterAPI({
-            form:form
-        }));
+        if(form.title ==='' || form.content ==='' || form.allowComments ===''){
+            alert('내용을 입력해주세요!')
+        }else{
+
+            dispatch(callRegisterAPI({
+                form:form
+            }));
+        }
 
     }
     const onClickBackHandler = () => {
@@ -65,6 +70,8 @@ function BullentinWrite(){
 	};
     return (
         <div className={BoardStyle.bullentin_main}>
+            <h1 className={BoardStyle.content_title}>글쓰기</h1>
+            <div style={{marginLeft:"20px",width:"70vw"}}>
             <div className={BoardStyle.bullentin_category}>
                 <span>
                     게시판 선택
@@ -76,20 +83,21 @@ function BullentinWrite(){
                 </select>
        
             </div>
-            <div style={{width: '96%'}} className={BoardStyle.write_title}>
+            <div style={{width: '80%'}} className={BoardStyle.write_title}>
                 <span>제목</span>
                 <input type="text" onChange={onChangeHandler} style={{width: '70%'}} name='title' />
             </div>
             {/* <EditorA/> */}
-            <Editor value={value} getValue={getValue}/>
+            <Editor value={value} getValue={getValue} />
             <div className={BoardStyle.permit}>
                 <span>댓글허용</span>
-                <input type="radio" name="allowComments" value="Y" onClick={onChangeHandler}/>예
-                <input type="radio" name="allowComments" value="N" onClick={onChangeHandler}/>아니오
+                <label><input type="radio" name="allowComments" value="Y" onClick={onChangeHandler}/>예</label>
+                <label><input type="radio" name="allowComments" value="N" onClick={onChangeHandler}/>아니오</label>
             </div>
             <div className={BoardStyle.registration}>
                 <button onClick={onClickWrite}>등록</button>
                 <button onClick={onClickBackHandler}>취소</button>
+            </div>
             </div>
         </div>
     )

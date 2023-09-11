@@ -37,14 +37,18 @@ function ReservationStatus(){
     );
 
     const onClickApprova = (statusCode) => {
+        if(window.confirm("승인 하시겠습니까?")){
         dispatch(callApprovalAPI({
             statusCode : statusCode
         }));
     }
+    }
     const onClickRejected = (statusCode) => {
+        if(window.confirm("거절 하시겠습니까?")){
         dispatch(callRejectedAPI({
             statusCode : statusCode
         }));
+        }
     }
     return (
         <div className={BoardStyle.content_bullentin_main}>
@@ -76,18 +80,18 @@ function ReservationStatus(){
                    ) }
             </tbody>
         </table>
-        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
             { Array.isArray(resList) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
                 disabled={currentPage === 1}
-       
+                className={BoardStyle.pagingButtona}
             >
                 &lt;
             </button>
             }
             {pageNumber.map((num) => (
-            <li key={num} onClick={() => setCurrentPage(num)}>
+            <li key={num} onClick={() => setCurrentPage(num)} className={BoardStyle.pagingButton}>
                 <button
                     style={ currentPage === num ? {backgroundColor : 'orange' } : null}
                 >
@@ -99,6 +103,7 @@ function ReservationStatus(){
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+                className={BoardStyle.pagingButtona}
             >
                 &gt;
             </button>

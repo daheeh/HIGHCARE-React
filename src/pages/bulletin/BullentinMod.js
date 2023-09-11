@@ -50,17 +50,23 @@ function BullentinMod(){
         });
     };   
     const onClickUpdate = () =>{
+        if(window.confirm("글을 수정 하시겠습니까?")){
+            if(form.title == '' ||value == ''){
+                alert('내용을 입력해주세요!');
+            }else{
         dispatch(callUpdateAPI({
             form:form
         }));
             navigate("/bulletin/board/1",{replace: true})
-        
+        }}
     }
     const onClickDelete = () =>{
+        if(window.confirm("글을 삭제 하시겠습니까?")){
         dispatch(callDeleteAPI({
             form:form
         }));
         navigate("/bulletin/board/1",{replace: true})
+    }
     }
 
 
@@ -71,17 +77,19 @@ function BullentinMod(){
 
     return (
         <div className={BoardStyle.bullentin_main}>
-           
+             <h1 className={BoardStyle.content_title}>글관리</h1>  
+             <div style={{marginLeft:"20px",width:"70vw"}}>
             <div style={{width: '96%'}} className={BoardStyle.write_title}>
                 <span>제목</span>
                 <input type="text" onChange={onChangeHandler} style={{width: '70%'}} name='title' defaultValue={boardDetail.title}/>
             </div>
             
             <Editor value={value} getValue={getValue}/>
-            <div className={BoardStyle.registration}>
+            <div className={BoardStyle.registration} style={{marginTop:"50px"}}>
                  <button onClick={onClickUpdate}>수정</button>
                 <button onClick={onClickDelete}>삭제</button> 
                 <button onClick={onClickBackHandler}>취소</button>
+            </div>
             </div>
         </div>
     )

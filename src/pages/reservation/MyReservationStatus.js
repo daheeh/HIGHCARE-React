@@ -42,7 +42,6 @@ function MyReservationStatus(){
                         <th>예약날짜</th>
                         <th>예약시간</th>
                         <th>신청상태</th>
-                        <th>사유</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,23 +53,22 @@ function MyReservationStatus(){
                         <td>{res.reservationDate!==null?res.reservationDate.substring(0,10):res.reservationDate}</td>
                         <td>{res.startTime}:00 - {res.endTime}:00</td>
                         <td>{res.reservationStatus=='SCREENING'?'대기':(res.reservationStatus=='APPROVAL'?'승인':'취소')}</td>
-                        <td>{res.reason}</td>
                     </tr>)
                    ) }
                 </tbody>
             </table>
-            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
             { Array.isArray(resList) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
                 disabled={currentPage === 1}
-       
+                className={BoardStyle.pagingButtona}
             >
                 &lt;
             </button>
             }
             {pageNumber.map((num) => (
-            <li key={num} onClick={() => setCurrentPage(num)}>
+            <li key={num} onClick={() => setCurrentPage(num)} className={BoardStyle.pagingButton}>
                 <button
                     style={ currentPage === num ? {backgroundColor : 'orange' } : null}
                 >
@@ -82,7 +80,8 @@ function MyReservationStatus(){
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
-            >
+                className={BoardStyle.pagingButtona}
+          >
                 &gt;
             </button>
             }
