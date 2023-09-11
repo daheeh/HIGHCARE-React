@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './pm-member.css'
 import PmNav from './pmNav';
+import { useDispatch, useSelector } from 'react-redux';
+import { callAnnualAPI } from '../../apis/PmAPICalls';
 
 function PmAnnual() {
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    const dispatch = useDispatch();
+    const result = useSelector(state => state.pmannual);
+
+  const empinfo = useSelector(state => state.authes);
+  const name = empinfo.name;
+  const dept = empinfo.dept;
+  const job = empinfo.job; 
+
+
+
+    console.log('----------',result);
+  
+    // const empinfo = useSelector(state => state.authes);
+    // const empNum = empinfo.empNo;
+    // const department = empinfo.dept;
+    // const empName = empinfo.empName;
+  
+    // console.log('================================================empnNum>>>>',empNum);
+  
+    useEffect(() => {
+      dispatch(callAnnualAPI());
+    },[]);
+  
 	return (
 <section>
 <PmNav/> 
@@ -20,6 +49,7 @@ function PmAnnual() {
                 <div className="pm-topmenu"></div>
                 <div className="pm-de">
                     <table className="pm-department-table">
+                        <tbody>
                     <tr>
                         <th className="columnpm1">이름</th>
                         <th className="columnpm2">입사날짜</th>
@@ -30,146 +60,21 @@ function PmAnnual() {
                         <th className="columnpm7">연차사용기간</th>
                         <th className="columnpm7">비고</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
+                    {Array.isArray(result) && result
+                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                        .map((result) => (
+                            <tr key={result.empNo}>
+                                <td>{result.anEmployee[0].empName}</td>
+                                <td>{result.anEmployee[0].startDate}</td>
+                                <td>{result.anEmployee[0].job.name}</td>
+                                <td>{result.anEmployee[0].dt.name}</td>
+                                <td>{result.totalAnnual}</td>
+                                <td>{result.useAnnual}</td>
+                                <td>{result.reason}</td>
+                            </tr>
+                        ))
+                    }
+                    </tbody>
                 </table>
             </div>
             

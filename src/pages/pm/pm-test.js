@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import PmNav from './pmNav';
 
 function PmTest(){
-    
     return(
         <div>
+            <PmNav/>
             <nav style={{display:"flex"}}>
             <br></br>
             <Link to="/pm/search">사원조회</Link><br></br>

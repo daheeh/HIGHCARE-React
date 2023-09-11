@@ -12,6 +12,7 @@ import mypageReducer from './modules/MypageModule';
 import secondReduccer from './modules/SecondTreeModule';
 import ManagementReduccer from './modules/ManageMentModule';
 import pmMemberReduccer from './modules/PmMemberModule';
+import pmAnnualReduccer from './modules/AnnualModule';
 
 
 
@@ -33,6 +34,7 @@ const store = configureStore({
         second: secondReduccer,
         manage: ManagementReduccer,
         pmmem : pmMemberReduccer,
+        pmannual : pmAnnualReduccer,
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
 

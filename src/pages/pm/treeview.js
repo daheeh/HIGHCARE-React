@@ -5,6 +5,7 @@ import './pm-member.css'
 import { useDispatch, useSelector } from "react-redux";
 import { callTreeviewOneAPI } from '../../apis/PmAPICalls';
 
+
 function TreeView({setEmpInfo}) {
 
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ function TreeView({setEmpInfo}) {
         <div className="selectedNodeInfo">
           <h2>선택한 사원 정보</h2>
           <pre>{JSON.stringify(selectedNode, null, 2)}</pre>
-          <button onClick={employeeSelect}> 사원 선택</button>
+          <button className="selectButton" onClick={employeeSelect}> 사원 선택</button>
         </div>
       )}
       

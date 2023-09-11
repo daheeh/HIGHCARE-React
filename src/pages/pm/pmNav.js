@@ -7,14 +7,13 @@ function PmNav() {
 			<div className="leftMenu">
 				<div className="leftMenu2">
 					<div className="mainLogo">
-						<img src="/img/highcareLogo.png" alt="High Care Logo" />
 					</div>
-					<div className="mainTitle">
+					<div className="pm-mainTitle">
 						<Link to="/pm/">인사관리</Link>
 					</div>
 					<div className="apvNaviBox">
 						<div className="apvNaviBoxTop">
-							<Link to="/pm/de-resist">사원 등록</Link>
+						<Link to="/pm/pm-resist-insert">사원등록</Link>
 						</div>
 						<div className="apvNaviBoxEmp"></div>
 						<div className="apvNaviBoxMainTitle">
@@ -22,10 +21,13 @@ function PmNav() {
 						</div>
 						<ul className="apvNaviBoxUl">   
 							<li><Link to="/pm/search">사원 조회</Link></li>
-							<li>사원 수정</li>
-							<li>사원 삭제</li>
-							<li>조직도</li>
-							<li>업무 일정 관리</li>
+							<li><Link to="/pm/department">부서 조회</Link></li>
+							<li><Link to="/pm/annual">연차 조회</Link></li>
+							<li><Link to="/pm/member-annual">개인 연차 조회</Link></li>
+							<li><Link to="/pm/secondTree">조직도</Link></li>
+							<li><Link to="/pm/cal">업무 일정 관리</Link></li>
+							<li><Link to="/pm/pm-resist">사원상세조회</Link></li>
+							
 						</ul>
 						<div className="apvNaviBoxEmp"></div>
 					</div>

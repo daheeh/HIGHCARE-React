@@ -12,18 +12,21 @@ import {
 } from '../modules/ManageMentModule';
 import{
     GET_PM_MEMBER,
-    POST_PM_INSERT
+    POST_PM_INSERT,
 } from '../modules/PmMemberModule';
-
+import{
+    GET_ANNUAL,
+    GET_PM_ANNUAL
+} from '../modules/AnnualModule';
 import jwt_Decode from 'jwt-decode';
 
 import { async } from '@dabeng/react-orgchart';
 
-export const callEmployeeAPI = ({ empNo= 1, pmStatus }) => {
+export const callEmployeeAPI = ({ currentPage  }) => {
 
     console.log('[PmAPICalls] callEmployeeAPI Call');
 
-    const requestURL = `http://localhost:8080/api/pm/all?offset=${empNo}`;
+    const requestURL = `http://localhost:8080/api/pm/all?offset=${currentPage}`;
     
     
     return async (dispatch, getState) => {
@@ -117,8 +120,10 @@ export const callManagementAPI = () => {
         console.log('[PmAPICalls] callManagementAPI Call');
         
         const token = jwt_Decode(window.localStorage.getItem("accessToken"));
+        console.log('============token=>', token);
 
         const empNo = token.sub;
+
    
         const requestURL = `http://localhost:8080/api/pm/management/${empNo}`;
         
@@ -257,39 +262,6 @@ export const callPmMemberAPI = (empNo) => {
         };
     };
 
-// export const callPmMemberAPI = (empNo) => {
-
-//     console.log('[PmAPICalls] callPmMemberAPI Call   {} ', empNo);
-
-//     const requestURL = `http://localhost:8080/api/pm/member/${empNo}`;
-    
-//     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
-//     return async (dispatch, getState) => {
-
-//         try{
-//         const result = await fetch(requestURL, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "*/*"
-//             }
-//         })
-//         .then(response => {
-//             console.log('-----------------> \n', response);
-//             return response.json()
-//         });
-
-//         console.log('[PmAPICalls] callPmMemberAPI RESULT : ', result.data);
-
-//         dispatch({ type: GET_PM_MEMBER,  payload: result.data});
-//     } catch (error) {
-//         console.error('[PmAPICalls] Error in callPmMemberAPI: ', error);
-//     }
-        
-//     };    
-// };
-
-
 export const callPmInsertAPI = ({ formData }) => {
     console.log('[PmAPICalls] callPmInsertAPI Call');
     
@@ -327,5 +299,71 @@ export const callPmInsertAPI = ({ formData }) => {
 };
 
 
+
+export const callAnnualAPI = () => {
+    console.log('[PmAPICalls] callAnnualAPI Call');
+    
+    const requestURL = `http://localhost:8080/api/pm/annual`;
+ 
+    return async (dispatch, getState) => {
+
+        try{
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"
+                }
+            })
+            .then(response => {
+                console.log(response);
+                return response.json()
+            });
+    
+            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_ANNUAL, payload: result.data });
+            return result;
+
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callAnnualAPI: ', error);
+            throw error;
+        }
+
+    };
+};
+export const callPmAnnualAPI = (empNo) => {
+    console.log('[PmAPICalls] callPmAnnualAPI Call');
+    
+    const requestURL = `http://localhost:8080/api/pm/annual/${empNo}`;
+    
+
+    console.log('[PmAPICalls] callPmAnnualAPI Call empNo', empNo);
+    
+    return async (dispatch, getState) => {
+    
+        try{
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"
+                }
+            })
+            .then(response => {
+                console.log('-----------------> \n', response);
+                return response.json()
+            });
+    
+            console.log('[PmAPICalls] callPmAnnualAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
+    
+            dispatch({type: GET_PM_ANNUAL, payload: result.data});
+        } catch(error) {
+            console.error('[PmAPICalls] Error in callPmAnnualAPI: ', error);
+        }
+        };
+    };
 
 
