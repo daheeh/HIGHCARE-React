@@ -294,7 +294,7 @@ function Biz3({ mode, data }) {
 						<div className="apvContentDetail">상세내용
 						</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="내용 작성" rows="11" name='contents1' className='apvTextarea'
+							<textarea placeholder="내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
 								onChange={onChangeHandler} />
 						</div>

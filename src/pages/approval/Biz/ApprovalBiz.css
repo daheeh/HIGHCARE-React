@@ -161,7 +161,7 @@
 
 
 .apvOfficialTop{
-    margin-top: 150px;
+    margin-top: 280px;
     font-size: 20px;
 }
 
@@ -234,6 +234,11 @@
     justify-content: center;
     align-items: center;
     border: none;
+}
+
+.apvLogo{
+    position: absolute;
+    transform: translate(-30%, 100%);
 }
 
 

@@ -8,6 +8,7 @@ import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz4API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
+import {GET_PM_MEMBER} from '../../../modules/PmMemberModule';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
 import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
@@ -30,7 +31,6 @@ const modalStyles = {
 function Biz4({ mode, data }) {
 
 	const dispatch = useDispatch();
-	dispatch({ type: RESET_APPROVAL });
 
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
@@ -44,6 +44,40 @@ function Biz4({ mode, data }) {
 	const approval = useSelector(state => state.approval);
 
 	console.log('Biz4 first : ', approval.data);
+	const [empData, setEmpData] = useState([]);
+
+	useEffect(() => {
+		const fetchRequest = async () => {
+			try {
+				const requestURL = `http://localhost:8080/api/pm/member/detail/${empNo}`;
+
+				const result = await fetch(requestURL, {
+					method: "GET",
+					headers: {
+						"Accept": "*/*",
+						"Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+						'Content-Type': 'application/json',
+						"Access-Control-Allow-Origin": "*",
+					},
+				}).then(response => response.json());
+
+				console.log('[ApprovalAPICalls] Biz4 callApvBiz4ViewAPI RESULT : ', result.data);
+
+				dispatch({ type: GET_PM_MEMBER, payload: result.data });
+				console.log('신청서 조회 결과: ', result.data);
+				setEmpData(result.data);
+				console.log('empData: ', empData);
+				
+			} catch (error) {
+				console.error('[ApprovalAPICalls] Biz4 Error in callApvBiz4ViewAPI: ', error);
+				throw error;
+			}
+		};
+
+		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
+	}, [empNo, dispatch]);
+
+	
 
 	const [formData, setFormData] = useState({
 
@@ -59,17 +93,34 @@ function Biz4({ mode, data }) {
 		empName: authes.name,
 		deptName: authes.dept,
 		jobName: authes.job,
+		empPhone: '',
+		empEmail: '',
 		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvOfficials: [{
-			officilTitle: '',
+			officialTitle: '',
 			reception: '',
 		}]
 	});
 
-
 	const isEditMode = formData.apvNo ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
+    console.log('isEditMode 1 : ', isEditMode);
+
+	useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
+
+	useEffect(()=>{
+		setFormData(prevFormData => ({
+			...prevFormData,
+			empPhone : empData.phone ,
+			empEmail : empData.empEmail,
+		}))	
+		console.log("empData.phone", empData.phone);
+		console.log("empData.empEmail", empData.empEmail);
+	}, [empData])
 
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
@@ -81,7 +132,6 @@ function Biz4({ mode, data }) {
 				[name]: value,
 			}]
 		}));
-
 	}
 
 	useEffect(() => {
@@ -113,7 +163,7 @@ function Biz4({ mode, data }) {
 	const [selectedEmployees, setSelectedEmployees] = useState(initialSelectedEmployees);
 
 	useEffect(() => {
-		console.log('Biz2 - selectedEmployees : ', selectedEmployees);
+		console.log('Biz4 - selectedEmployees : ', selectedEmployees);
 		if (approval.apvLines) {
 			const initialSelectedEmployees = approval.apvLines.map((line, index) => ({
 				...line,
@@ -207,7 +257,7 @@ function Biz4({ mode, data }) {
 						onClose={() => setPreviewOpen(false)}
 						formData={formData}
 						style={modalStyles}>
-						<Biz4Offcial />
+						<Biz4Offcial formData={formData} mode='preView' />
 
 						<button className="apvBtn2" onClick={handleModalClose}>닫기</button>
 					</Modal>
@@ -216,7 +266,7 @@ function Biz4({ mode, data }) {
 							<div className="column1">제목</div>
 							<div className="column2">
 								<input className="input2" placeholder="제목 입력"
-									name='officilTitle' value={formData.apvOfficials[0].officilTitle}
+									name='officialTitle' value={formData.apvOfficials[0].officialTitle}
 									onChange={onChangeHandler} />
 							</div>
 						</div>
@@ -241,10 +291,11 @@ function Biz4({ mode, data }) {
 								onChange={onChangeHandler} />
 						</div>
 					</div>
-				</div>
-			</div>
-		</section>
-	);
+					<ApvFileList files={fileList} />
+                </div>
+            </div>
+        </section>
+    );
 }
 
 export default Biz4;
