@@ -265,7 +265,7 @@ function App() {
           </Route>
 
           {/* 여기까지 관리자 권한 필요  */}
->>>>>>> hr
+
 
         </Route>
 
