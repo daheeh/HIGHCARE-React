@@ -30,6 +30,16 @@ function MyReservationStatus(){
             }));
         },[currentPage]
     );
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
+    }
     return (
  <div className={BoardStyle.content_bullentin_main}>
             <h1 className={BoardStyle.content_title}>나의 신청현황</h1>
@@ -50,7 +60,7 @@ function MyReservationStatus(){
                     <tr>
                         
                         <td>{res.resource.resourceName}</td>
-                        <td>{res.reservationDate!==null?res.reservationDate.substring(0,10):res.reservationDate}</td>
+                        <td>{dataRe(res.reservationDate)}</td>
                         <td>{res.startTime}:00 - {res.endTime}:00</td>
                         <td>{res.reservationStatus=='SCREENING'?'대기':(res.reservationStatus=='APPROVAL'?'승인':'취소')}</td>
                     </tr>)
@@ -79,7 +89,7 @@ function MyReservationStatus(){
             { Array.isArray(resList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.realEnd || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
           >
                 &gt;

@@ -21,7 +21,7 @@ function Board3() {
         }
     
     return (
-        <table>
+        <table style={{cursor:'pointer'}}>
             <thead>
                 <tr>
                     <th>제목</th>

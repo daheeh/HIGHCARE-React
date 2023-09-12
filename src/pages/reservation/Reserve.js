@@ -6,12 +6,14 @@ import Calendar from './Calendar/Calendar';
 import Rmodal from './modal/Rmodal';
 import { NavLink } from 'react-router-dom';
 function Reserve(){
-
+    const navigate = useNavigate();
     const resContent = useSelector(state => state.resContentReducer);
     const content = resContent.data;
     const dateres = useSelector(state => state.dateReducer);
     const [modal,setModal] = useState(false);
     const daterese = dateres.data;
+    const authes = useSelector(state => state.authes);
+    const role = authes.role;
     const [data, setData] = useState('');
     const openModal = () =>{
 
@@ -26,6 +28,25 @@ function Reserve(){
 		setModal(false);
   
 	};
+    const onClickMod = () =>{
+        if(role.includes('ROLE_ADMIN')){
+        navigate("/reservation/mod",{replace: true})
+
+        }else{
+            alert('권한이 없습니다.');
+        }
+    }
+
+    function dateRe(data){
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
+    }
     console.log('daterese',daterese);
     return (
         <div class={BoardStyle.content_bullentin_main}>
@@ -39,7 +60,7 @@ function Reserve(){
                             <div>지역 : <span>{content.area}</span></div>
                             <div>위치 : <span>{content.location}</span></div>
                             <div>사용시간 : <span>{content.startTime}:00 - {content.endTime}:00</span></div>
-                            <div className={BoardStyle.comment_ok} style={{width:"30px",height:"30px",fontSize:"14px",paddingBottom:"0px"}}><NavLink to="/reservation/mod">관리</NavLink></div>
+                            <div className={BoardStyle.comment_ok} style={{width:"30px",height:"30px",fontSize:"14px",paddingBottom:"0px"}} onClick={onClickMod}>관리</div>
                         </div>
                   </div>
                     <div style={{display: 'flex'}}>
@@ -47,7 +68,8 @@ function Reserve(){
                             <Calendar setData={setData}/>
                         </div>
                         <div className={BoardStyle.reservation_status}>
-                            <h3>예약현황</h3>{ Array.isArray(daterese) && daterese.map(
+                            <h3>예약현황</h3>
+                            <div>{data != '' && dateRe(data)}</div>{ Array.isArray(daterese) && daterese.map(
                                 (res)=>(
                             <div>{res.startTime}:00-{res.endTime}:00</div>
                                 ))

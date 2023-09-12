@@ -13,16 +13,19 @@ import{
 } from '../../apis/ResStatusAPICall';
 
 function ReservationStatus(){
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
-    const dispatch = useDispatch();
     const reser = useSelector(state => state.reserReducer);
     const resList = reser.data;
     const pageInfo = reser.pageInfo;
     const [currentPage, setCurrentPage] = useState(1);
     const pageNumber = [];
-    const status = useSelector(state => state.resStatusReducer);
+    const role = authes.role;
 
+    const status = useSelector(state => state.resStatusReducer);
     if(pageInfo){
         for(let i = pageInfo.pageStart; i<=pageInfo.pageEnd; i++){
             pageNumber.push(i);
@@ -30,6 +33,12 @@ function ReservationStatus(){
     }
     useEffect(
         ()=>{
+            if(role.includes('ROLE_ADMIN')){
+            }else{
+                alert('권한이 없습니다.');
+                navigate("/",{replace: true})
+        
+            }
             dispatch(callAllResAPI({
                 currentPage: currentPage
             }));
@@ -49,6 +58,16 @@ function ReservationStatus(){
             statusCode : statusCode
         }));
         }
+    }
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
     }
     return (
         <div className={BoardStyle.content_bullentin_main}>
@@ -71,7 +90,7 @@ function ReservationStatus(){
                 <tr>
                     <td>{res.resource.area}</td>
                     <td>{res.resource.resourceName}</td>
-                    <td>{res.reservationDate!==null?res.reservationDate.substring(0,10):res.reservationDate}</td>
+                    <td>{dataRe(res.reservationDate)}</td>
                     <td>{res.startTime}:00 - {res.endTime}:00</td>
                     <td>{res.bulletinEmployee.empName}</td>
                     <td>{res.reservationStatus=='SCREENING'?'대기':(res.reservationStatus=='APPROVAL'?'승인':'취소')}</td>
@@ -102,7 +121,7 @@ function ReservationStatus(){
             { Array.isArray(resList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.realEnd  || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
             >
                 &gt;

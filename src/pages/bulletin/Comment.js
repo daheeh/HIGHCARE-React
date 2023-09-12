@@ -103,6 +103,16 @@ function Comment({bulletinCode}){
             alert('권한이 없습니다.')
         }
 }
+const dataRe = (data) => {
+    var dateObj = new Date(data);
+
+    var year = dateObj.getFullYear(); 
+    var month = dateObj.getMonth() + 1;
+    var day = dateObj.getDate();
+    var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+    return formattedDate;
+}
 
 return (
     <>
@@ -120,7 +130,7 @@ return (
                 (boards) =>(
                     <div className={BoardStyle.comment} >
                             <span>{boards.bulletinEmployee.empName } </span>
-                    <span>{ boards.modifiedDate} </span>
+                    <span>{dataRe( boards.modifiedDate)} </span>
                     <span onClick={() => onClickCommentUpdate (boards.commentCode ,boards.bulletinEmployee.empNo) } id={`update${boards.commentCode}`}> 수정</span>
                     <span key={boards.commentCode} onClick={() => onCLickDelete(boards.commentCode ,boards.bulletinEmployee.empNo)}> 삭제</span>
                     <br></br>
@@ -153,7 +163,7 @@ return (
                                     { Array.isArray(boardList) && pageInfo != null &&
                                     <button 
                                         onClick={() => setCurrentPage(currentPage + 1)} 
-                                        disabled={currentPage === pageInfo.realEnd || pageInfo.total == 0}
+                                        disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}>
                                         &gt;
                                     </button>

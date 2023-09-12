@@ -51,6 +51,17 @@ function BulletinBoard(){
     const buttonOnClick = () =>{
         setContent(document.getElementById('inputValue').value);
     }
+
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
+    }
    return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
@@ -86,7 +97,7 @@ function BulletinBoard(){
                     <td className={BoardStyle.name}>{board.bulletinEmployee.empName}</td>
                     <td className={BoardStyle.view}>{board.views}</td>
                   
-                    <td className={BoardStyle.date}>{board.modifiedDate}</td>
+                    <td className={BoardStyle.date}>{dataRe(board.modifiedDate)}</td>
                 </tr>)
                 )}
             </tbody>
@@ -115,7 +126,7 @@ function BulletinBoard(){
             { Array.isArray(boardList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.realEnd || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
            >
                 &gt;
