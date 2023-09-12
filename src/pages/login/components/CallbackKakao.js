@@ -15,6 +15,8 @@ export const CallbackKakao = () => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get("code");
     const id = url.searchParams.get("state");
+    const browser = browser();
+    const device = device();
 
     console.log("code : ", code);
 
@@ -22,7 +24,7 @@ export const CallbackKakao = () => {
     console.log("callback 페이지에서 넘겨줄 id : ", id);
 
     const props = {
-        code, id
+        code, id, browser, device
     }
 
     useEffect( () => {

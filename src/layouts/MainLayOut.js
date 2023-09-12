@@ -11,12 +11,12 @@ function MainLayOut() {
                 <div className={MainLayOutCss.box}>
                     <h2>업무일정</h2>
                     <p>달력?</p>
-                    <a href="#">더 보기</a>
+                    <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
                 <div className={MainLayOutCss.box}>
                     <h2>결재문서</h2>
                     <ApvMainBox showCounts={true} />
-                    <Link to="/approval">더보기</Link>
+                    <Link to="/approval" style={{color:'gray'}}>더보기</Link>
                 </div>
                 <div className={MainLayOutCss.box}>
                     <h2>공지사항</h2>
@@ -25,12 +25,13 @@ function MainLayOut() {
                             <Board3 />
                         </Link>
                     </div>
+                    <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
 
                 <div className={MainLayOutCss.box}>
                     <h2>시설예약</h2>
                     <p>테스트</p>
-                    <a href="#">더 보기</a>
+                    <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
             </div>
         </>

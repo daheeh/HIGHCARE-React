@@ -7,6 +7,7 @@ import { decodeJwt } from "../../utils/decodeJwt";
 
 import { callMypageProfileSelectAPI } from '../../apis/MypageApiCalls';
 import { callProfileInsertAPI } from '../../apis/MypageApiCalls'
+import ModifyInfo from "../admin/member/ModifyInfo";
 
 // 
 
@@ -41,6 +42,7 @@ function Profile() {
     console.log("기본이미지유알엘", imageUrl);
 
 
+    const memberId = decodeJwt(window.localStorage.getItem("accessToken"))?.sub;
 
     // employee empNo로 조횐
     useEffect(
@@ -225,6 +227,7 @@ function Profile() {
                     </div>
                 </div>
 
+                <ModifyInfo memberId={memberId}/>
             </section>
         </>
     )

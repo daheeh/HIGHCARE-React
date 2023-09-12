@@ -45,7 +45,8 @@ export const requestMember = createAsyncThunk(
 
       alert(response.data.data);
       console.log(response.data);
-
+      
+      // window.location.reload();
 
       return response.data;
     } catch (error) {

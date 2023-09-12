@@ -2,7 +2,6 @@ import Layout from "./layouts/Layout";
 import MainLayOut from "./layouts/MainLayOut";
 import AdminPage from "./pages/admin/AdminPage";
 import { Step1, Step2, Step2pass } from "./pages/login/findaccount"
-
 import ReceiveBox from './pages/approval/Box/Receivebox';
 import WriteBox from './pages/approval/Box/Writebox';
 import Biz1 from './pages/approval/Biz/Biz1';
@@ -63,7 +62,6 @@ import Thread from "./pages/bulletin/Thread";
 import BullentinWrite from "./pages/bulletin/BullentinWrite";
 import BullentinMod from "./pages/bulletin/BullentinMod";
 
-
 import ReservationMain from "./pages/reservation/ReservationMain";
 import Reservation from "./pages/reservation/Reservation";
 import ReservationStatus from "./pages/reservation/ReservationStatus";
@@ -75,28 +73,26 @@ import Reserve from "./pages/reservation/Reserve";
 import MemberModify from "./pages/admin/member/MemberModify";
 import AuthManager from "./pages/admin/auth/AuthManager";
 import MemberList from "./pages/admin/member/MemberList";
-import MemberLog from "./pages/admin/member/MemberLog";
+import MemberLog from "./pages/admin/log/MemberLog";
 import MemberRequest from "./pages/admin/member/MemberRequest";
 
 import Profile from "./pages/mypage/profile";
 
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
-import { ErrorComponent } from "./errors/ErrorBoundary";
-import { ErrorBoundary } from "react-error-boundary";
-import PrivateRoute from "./errors/PrivateRoute";
+import { ErrorComponent } from "./errors/etc/ErrorBoundary";
 import MypageAnnual from "./pages/mypage/annual";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 import { TokenVerification } from "./pages/admin/auth/TokenVerification";
-import { AdminNav } from "./pages/admin/AdminNav";
 import { AuthVarification } from "./pages/admin/auth/AuthVerification";
 import ResourceMod from "./pages/reservation/ResourceMod";
-
-
+import { BadRequestErrorPage, ForbiddenErrorPage, ServerErrorPage, UnauthorizedErrorPage } from "./errors/ErrorPages";
+import { PageNotFound } from "./errors/pageNotFound";
+import { ModifyPass } from "./pages/admin/member/ModifyPass";
 
 
 function App() {
-
+  
 
   return (
 
@@ -160,20 +156,21 @@ function App() {
 
 
             <Route path="/modifyinfo" element={<ModifyInfo />} />
+            <Route path="/modifyinfo/password" element={<ModifyPass/>}/>
             <Route path="myinfo" element={<Myinfo />} />
 
-          <Route path="/pm" element={<PmTest />} />
-          <Route path="/pm/search" element={<PmMenu />} />
-          <Route path="/pm/annual" element={<PmAnnual />} />
-          <Route path="/pm/cal" element={<PmCalender />} />
-          <Route path="/pm/de-resist" element={<PmResist />} />
-          <Route path="/pm/department" element={<PmDepartment />} />
-          <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
-          <Route path="/pm/pm-resist" element={<PmMemberResist />} />
-          <Route path="/pm/work" element={<PmWork />} />
-          <Route path="/pm/treeview" element={<TreeView />} />
-          <Route path="/pm/secondTree" element={<SecondTree />} />
-          <Route path="/pm/pm-resist-insert" element={<PmMemberInsert />} />
+            <Route path="/pm" element={<PmTest />} />
+            <Route path="/pm/search" element={<PmMenu />} />
+            <Route path="/pm/annual" element={<PmAnnual />} />
+            <Route path="/pm/cal" element={<PmCalender />} />
+            <Route path="/pm/de-resist" element={<PmResist />} />
+            <Route path="/pm/department" element={<PmDepartment />} />
+            <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
+            <Route path="/pm/pm-resist" element={<PmMemberResist />} />
+            <Route path="/pm/work" element={<PmWork />} />
+            <Route path="/pm/treeview" element={<TreeView />} />
+            <Route path="/pm/secondTree" element={<SecondTree />} />
+            <Route path="/pm/pm-resist-insert" element={<PmMemberInsert />} />
 
             <Route path="/bulletin" element={<BulletinMain />}>
               {/* <Route index element={<Bulletin />} /> */}
@@ -195,7 +192,7 @@ function App() {
               <Route path="mystatus" element={<MyReservationStatus />} />
               <Route path="add" element={<ResourceAdd />} />
               <Route path="reserve" element={<Reserve />} />
-              <Route path="mod" element={<ResourceMod />}/>
+              <Route path="mod" element={<ResourceMod />} />
             </Route>
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/mypage/list/regist" element={<Businesscardregist />} />
@@ -213,29 +210,35 @@ function App() {
 
 
 
-            {/* ****************************** 여기부터 관리자 권한 필요 ******************************* */}
+          {/* ****************************** 여기부터 관리자 권한 필요 ******************************* */}
 
-            <Route element={<AuthVarification />}>
+          <Route element={<AuthVarification />}>
 
-              <Route path="/admin">
-                <Route index element={<AdminPage />} />
+            <Route path="/admin">
+              <Route index element={<AdminPage />} />
 
-                <Route path="member" element={<MemberList />} />
-                <Route path="member/modify/:empNo" element={<MemberModify />} />
-                <Route path="member/log" element={<MemberLog />} />
-                <Route path="member/auth" element={<AuthManager />} />
-              </Route>
-
+              <Route path="member" element={<MemberList />} />
+              <Route path="member/modify/:empNo" element={<MemberModify />} />
+              <Route path="member/log" element={<MemberLog />} />
+              <Route path="member/log/:name" element={<MemberLog />} />
+              <Route path="member/auth" element={<AuthManager />} />
             </Route>
-            {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
+
+          </Route>
+          {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
+
+          <Route path="/error/400" element={<BadRequestErrorPage/>}/>
+          <Route path="/error/401" element={<UnauthorizedErrorPage/>}/>
+          <Route path="/error/403" element={<ForbiddenErrorPage/>}/>
+          <Route path="/error/404" element={<PageNotFound/>}/>
+          <Route path="/error/500" element={<ServerErrorPage/>}/>
 
         </Route>
 
       </Routes>
-
-      <ErrorBoundary
+      {/* <ErrorBoundary
         FallbackComponent={ErrorComponent}
-      ></ErrorBoundary>
+      ></ErrorBoundary> */}
 
     </BrowserRouter >
 
