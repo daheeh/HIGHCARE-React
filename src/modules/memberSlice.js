@@ -20,6 +20,10 @@ const memberSlice = createSlice({
     resetMemberAction: (state, action) => {
       state.treeviewMember = [];
   },
+  resetRequestMemberAction: (state, action) => {
+    state.data = {};
+  }
+  
 
    
   },
@@ -49,6 +53,6 @@ const memberSlice = createSlice({
 
 
 // 액션 생성자 내보내기 
-export const { selectAction, accountStatus, resetMemberAction, memberByTreeview } = memberSlice.actions;
+export const { selectAction, accountStatus, resetMemberAction, resetRequestMemberAction, memberByTreeview } = memberSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

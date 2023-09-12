@@ -22,8 +22,8 @@ import dateReducer from './modules/DateModule';
 import resStatusReducer from './modules/resultStatusModule';
 import reserReducer from './modules/reserModule';
 import commentReducer from './modules/commentModule';
-
 import conversationlistReducer from './modules/ConversationList';
+import AccessesSlice from './modules/AccessesSlice';
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
@@ -52,10 +52,9 @@ const store = configureStore({
         reserReducer : reserReducer,
         commentReducer : commentReducer,
         conversationlist: conversationlistReducer,
-
+        accesses : AccessesSlice,
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
-
     },
     preloadedState: persistedState, // Set initial state from localStorage
     middleware: [thunkMiddleware]

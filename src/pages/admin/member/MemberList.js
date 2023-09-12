@@ -20,15 +20,14 @@ function MemberList() {
 
     }, [])
 
-    const memberList = useSelector(state => state.members.data);
+    const mem = useSelector(state => state.members);
+    const memberList = mem.data;
 
     const [normalMember, setNormalMember] = useState(0);
     const [preMember, setPreMember] = useState(0);
     const [drawMember, setDrawMember] = useState(0);
 
     const [inactiveMember, setInactiveMember] = useState(0);
-
-    const role = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER', 'ROLE_PRE_USER', 'ROLE_WITHDRAW'];
 
     const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스의 상태
 
