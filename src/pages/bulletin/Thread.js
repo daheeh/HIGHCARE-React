@@ -34,6 +34,16 @@ function Thread(){
         }
         ,[]
     );
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
+    }
     return (
         <>
             {  boardDetail &&
@@ -43,7 +53,7 @@ function Thread(){
                     <div style={{display : "flex"}}>
                     <div className={BoardStyle.content_info}>
                         <span>{boardDetail.empName}</span>
-                        <span>{boardDetail.modifiedDate}</span>
+                        <span>{dataRe(boardDetail.modifiedDate)}</span>
                         조회수<span>{boardDetail.views}</span>
                     </div>
                     <div onClick={onClickUpdate} style={{marginLeft: "auto", marginRight:"20px", fontSize:"14px", padding:"3px", height:"20px"}} className={BoardStyle.comment_ok}>수정</div>

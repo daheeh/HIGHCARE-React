@@ -12,9 +12,7 @@ function BulletinBoard(){
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     const boards = useSelector(state => state.boardtest);
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
      const boardList = boards.data;
     const pageInfo = boards.pageInfo;
@@ -22,14 +20,13 @@ function BulletinBoard(){
 
     const pageNumber = [];
     if(pageInfo) {
-        for(let i = 1; i<= pageInfo.pageEnd; i++){
+        for(let i = pageInfo.pageStart; i<= pageInfo.pageEnd; i++){
             pageNumber.push(i);
         }
     }
 
     useEffect(
         () =>{
-            setStart((currentPage - 1) * 5);
             dispatch(callBulletinAPI({
                 categoryCode: categoryCode,
                 currentPage: currentPage,
@@ -53,6 +50,17 @@ function BulletinBoard(){
 
     const buttonOnClick = () =>{
         setContent(document.getElementById('inputValue').value);
+    }
+
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
     }
    return (
         <div className={BoardStyle.content_bullentin_main}>
@@ -89,7 +97,7 @@ function BulletinBoard(){
                     <td className={BoardStyle.name}>{board.bulletinEmployee.empName}</td>
                     <td className={BoardStyle.view}>{board.views}</td>
                   
-                    <td className={BoardStyle.date}>{board.modifiedDate}</td>
+                    <td className={BoardStyle.date}>{dataRe(board.modifiedDate)}</td>
                 </tr>)
                 )}
             </tbody>
@@ -120,9 +128,7 @@ function BulletinBoard(){
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
                 className={BoardStyle.pagingButtona}
-
-
-            >
+           >
                 &gt;
             </button>
             }

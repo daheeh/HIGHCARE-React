@@ -21,17 +21,21 @@ function MainLayOut() {
                 <div className={MainLayOutCss.box}>
                     <h2>공지사항</h2>
                     <div>
-                        <Link to="/bulletin/board/4">
                             <Board3 />
-                        </Link>
                     </div>
                     <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
 
                 <div className={MainLayOutCss.box}>
                     <h2>시설예약</h2>
+<<<<<<< HEAD
                     <p>테스트</p>
                     <a href="#" style={{color:'gray'}}>더 보기</a>
+=======
+                    <br/><br/>
+                    <Link to="/reservation">예약하러 가기</Link>
+
+>>>>>>> heo
                 </div>
             </div>
         </>
