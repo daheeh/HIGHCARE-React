@@ -42,6 +42,8 @@ h1 {
     cursor: pointer;
 }
 
+/* ============================ 채팅부분 버튼 css 추가 ===============================*/
+
 .addPartnerButton {
     background-color: white !important;
     margin-left: 7px;
@@ -50,6 +52,27 @@ h1 {
     height: 40px;
     cursor: pointer;
 }
+
+.toolbar-button {
+    background-color: white !important;
+    color: #007aff ;
+    font-size: 28px;
+    transition: all 0.1s;
+  }
+  
+  .toolbar-button:hover {
+    background-color: white !important;
+    cursor: pointer;
+    color: #0063ce;
+  }
+  
+  .toolbar-button:active {
+    background-color: white !important;
+    color: #007aff;
+    opacity: 0.25;
+  }
+
+/* ============================ 채팅부분 버튼 css 추가 ===============================*/
 
 
 button {

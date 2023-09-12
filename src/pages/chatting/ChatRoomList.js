@@ -12,18 +12,26 @@ import '../login/login.css';
 
 
 
-function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
+function ChatRoomList({userId, empName, selectedEmployee}, ref) {
 
     // Redux 상태에서 conversationlist 가져오기
     const conversationList = useSelector(state => state.conversationlist);
     console.log("conversationList =========> " + conversationList);
     const $websocket = useRef(null); 
-    let topics = ['/topic/'+userId];
+    let topics = [`/topic/${userId}`];
     const dispatch = useDispatch();
+    
 
     useEffect(() => {
         getConversations()
-      },[])
+      },[]);
+
+
+    useEffect(() => {
+      if (selectedEmployee) {
+        handleAddPartner(selectedEmployee.empName);
+      }
+    }, [selectedEmployee]);
 
 
     // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
@@ -55,37 +63,42 @@ function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
       }
     
       const recevieMessage = (msg) => {
+        console.log('ChatroomList receiveMessage ===============>', recevieMessage);
         dispatch(receive(msg));    
       }
 
 
-      // const handleAddPartner = (name)=> {
-      //   dispatch(insertPartner({
-      //     photo:process.env.REACT_APP_USER_BASE_IMAGE,
-      //     partner:name,
-      //     list:[]
-      //   }))
-      // }
+        
 
-      
-      // useImperativeHandle(ref, () => ({
-      //   handleAddPartner
-      // }));
+      const handleAddPartner = (name)=> {
 
-
-      useImperativeHandle(ref, () => ({
-        handleAddPartner: (name) => {
-          dispatch(
-            insertPartner({
-              photo: process.env.REACT_APP_USER_BASE_IMAGE,
-              partner: name,
-              list: [],
+        // 이미 대화상대 있는 지 확인
+        const existingPartner = conversationList[name];
+        if(existingPartner) {
+        // 이미 대화상대랑 채팅방 있으면 업데이트
+            dispatch(insertPartner({
+              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
+              partner:name,
+              list: existingPartner.list, // 기존 대화 기록 유지
             })
           );
-        },
-      }));
+        } else {
+          // 상대랑 채팅방 없을 경우 추가
+            dispatch(insertPartner({
+              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
+              partner:name,
+              list: [], // 기존 대화 기록 유지
+            })
+          );
+        }
+      };
 
+      
+      useImperativeHandle(ref, () => ({
+        handleAddPartner
+      }),[]);
 
+        
 
       return (
         <>
@@ -98,8 +111,8 @@ function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
                     </div>
                 </div>                
                     <div className={ChattingRoomListCSS.chattingRoomLists} id="chattingList1">
-                        {/* <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}> */}
-                            {/* <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/> */}
+                        <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}>
+                            
                         </div>
                         <div className={ChattingRoomListCSS.chattingRoomInfo}>
                             {/* <div className={ChattingRoomListCSS.roomInfoText}> */}
@@ -108,9 +121,7 @@ function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
                             Object.keys(conversationList).map((key) => 
                             <ConversationListItem             
                                 key={key}
-                                //photo={conversation.photo}
                                 partner={key}
-                                //list={conversationList[key]}
                                 host={userId}
                                 sendToMessage={sendToMessage}
                             />
@@ -119,8 +130,9 @@ function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
 
                         <SockJsClient
                         url={process.env.REACT_APP_CHAT_BASE_URL}
-                        topics={topics}
+                        topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
+                            console.log('[SocketJsClientf rendering...] Received message ==============> ', msg);
                             recevieMessage(msg);
                         }}
                         ref={$websocket}
@@ -129,21 +141,13 @@ function WebSocketTestRoomList({userId, empName, selectedEmployee}, ref) {
                                
                             </div>
                         </div>
-                    {/* </div> */}
+                    </div>
                 {/* </div> */}
             {/* </div> */}
         </>
     );
 
 
-
-
-
-
-
-
 }
 
-
-
-    export default forwardRef(WebSocketTestRoomList);
+export default forwardRef(ChatRoomList);

@@ -9,7 +9,7 @@ export const receive = (msg) => ({type:RECEIVED, payload:msg});
 export const leaveChat = (partner) => ({type:LEAVECHAT, payload:partner})
 
 
-const initialState = [];
+const initialState = []; // 초기값 빈 배열!!!!
 
 const ConversationList = (state=initialState, action) => {
     switch (action.type) {

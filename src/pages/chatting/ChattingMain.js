@@ -8,7 +8,7 @@ import Draggable from 'react-draggable';
 import ChattingFooter from '../../component/ChattingFooter';
 import { Link } from 'react-router-dom';
 import TreeViewChatting from '../pm/treeview-chatting';
-import WebSocketTestRoomList from './WebSocketTestRoomList';
+import ChatRoomList from './ChatRoomList';
 import { decodeJwt } from "../../utils/decodeJwt";
 
 
@@ -53,12 +53,11 @@ import { decodeJwt } from "../../utils/decodeJwt";
           };
 
 
-        const handleAddPartnerInWebSocket = () => {
+          const handleAddPartnerInWebSocket = () => {
             if (selectedEmployee) {
                 webSocketRef.current.handleAddPartner(selectedEmployee.empName);
               }
         };
-
 
 
         return (
@@ -123,7 +122,7 @@ import { decodeJwt } from "../../utils/decodeJwt";
 
                         {/* 트리뷰에서 받아온 사원정보를  WebSocketTestRoomList에 전달하고, 그 정보로 WebSocketTestRoomList에서 채팅방 생성함 */}
                         {activeTab === 'comment' && (
-                            <WebSocketTestRoomList 
+                            <ChatRoomList 
                                 userId={userId} 
                                 empName={empName} 
                                 selectedEmployee={selectedEmployee}

@@ -17,7 +17,7 @@ import resListReducer from './modules/resLIstModule';
 import resContentReducer from './modules/resContentModule';
 import dateReducer from './modules/DateModule';
 import resStatusReducer from './modules/resultStatusModule';
-
+import conversationlistReducer from './modules/ConversationList';
 
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
@@ -42,7 +42,8 @@ const store = configureStore({
         resListReducer : resListReducer,
         resContentReducer : resContentReducer,
         dateReducer : dateReducer,
-        resStatusReducer : resStatusReducer
+        resStatusReducer : resStatusReducer,
+        conversationlist: conversationlistReducer,
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
 
