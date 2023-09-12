@@ -12,9 +12,7 @@ function BulletinBoard(){
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     const boards = useSelector(state => state.boardtest);
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
     const categoryCode = useParams().categoryCode;
      const boardList = boards.data;
     const pageInfo = boards.pageInfo;
@@ -22,14 +20,13 @@ function BulletinBoard(){
 
     const pageNumber = [];
     if(pageInfo) {
-        for(let i = 1; i<= pageInfo.pageEnd; i++){
+        for(let i = pageInfo.pageStart; i<= pageInfo.pageEnd; i++){
             pageNumber.push(i);
         }
     }
 
     useEffect(
         () =>{
-            setStart((currentPage - 1) * 5);
             dispatch(callBulletinAPI({
                 categoryCode: categoryCode,
                 currentPage: currentPage,
@@ -54,6 +51,17 @@ function BulletinBoard(){
     const buttonOnClick = () =>{
         setContent(document.getElementById('inputValue').value);
     }
+
+    const dataRe = (data) => {
+        var dateObj = new Date(data);
+
+        var year = dateObj.getFullYear(); 
+        var month = dateObj.getMonth() + 1;
+        var day = dateObj.getDate();
+        var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+        return formattedDate;
+    }
    return (
         <div className={BoardStyle.content_bullentin_main}>
         <h1 className={BoardStyle.content_title}>{title}</h1>
@@ -65,10 +73,10 @@ function BulletinBoard(){
                 </button>
             </div>
         </div>
-        <table>
+        <table className={BoardStyle.tbodye}>
         <thead>
                 <tr>
-                    <th>번호</th>
+                    <th>No</th>
                     <th className={BoardStyle.title_head}>제목</th>
                     <th>이름</th>
                     <th>조회수</th>
@@ -79,47 +87,48 @@ function BulletinBoard(){
     
                 {Array.isArray(boardList)&& boardList.map(
                     (board) => (
-                <tr
+                <tr className={BoardStyle.trtr}
                         key={board.bulletinCode}
                         onClick={ () => onClickTableTr(board.bulletinCode) }
+
                 >
                     <td className={BoardStyle.no}>{board.bulletinCode}</td>
                     <td className={BoardStyle.title}>{board.title}</td>
                     <td className={BoardStyle.name}>{board.bulletinEmployee.empName}</td>
                     <td className={BoardStyle.view}>{board.views}</td>
                   
-                    <td className={BoardStyle.date}>{board.modifiedDate}</td>
+                    <td className={BoardStyle.date}>{dataRe(board.modifiedDate)}</td>
                 </tr>)
                 )}
             </tbody>
         </table>
-            {/* <div className={BoardStyle.write_bulletin}>
-            글쓰기
-        </div> */}
-        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
-            { Array.isArray(boards) &&
+
+        <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }} className={BoardStyle.pagingButton}>
+            { Array.isArray(boardList) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
                 disabled={currentPage === 1}
-       
+                
+                className={BoardStyle.pagingButtona}
             >
                 &lt;
             </button>
             }
             {pageNumber.map((num) => (
-            <li key={num} onClick={() => setCurrentPage(num)}>
+            <li key={num} onClick={() => setCurrentPage(num)} className={BoardStyle.pagingButton}>
                 <button
-                    style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                    style={ currentPage === num ? {backgroundColor : '#10479A' } : {backgroundColor : '#f4f4f4',color : 'black' } }
                 >
                     {num}
                 </button>
             </li>
             ))}
-            { Array.isArray(boards) && pageInfo != null &&
+            { Array.isArray(boardList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
                 disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
-            >
+                className={BoardStyle.pagingButtona}
+           >
                 &gt;
             </button>
             }

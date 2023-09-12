@@ -18,7 +18,9 @@ function Rmodal(props) {
     const dispatch = useDispatch();
 
     const status = useSelector(state => state.resStatusReducer);
-
+    if(daterese == null){
+        alert('날짜를 입력해주세요');
+    }
     const [form, setForm] = useState({
         startTime: '',
         endTime: '',
@@ -28,37 +30,36 @@ function Rmodal(props) {
     });
 
     const onChangeHandler = (e) => {
-            if(e.target.name == 'startTime'){
-                if(e.target.value > content.endTime || e.target.value <content.startTime){
-                    alert('예약할 수 없는 시간대 입니다');
-                    document.getElementById(`startTime`).value = '';
-                    setForm({
-                        ...form,
-                        [e.target.name]: ''
-                    });
-                }
-            }else{
-                if(e.target.value > content.endTime || e.target.value <content.startTime || e.target.value <= form.startTime ){
-                    alert('예약할 수 없는 시간대 입니다');
-                    document.getElementById(`endTime`).value = '';
-                    setForm({
-                        ...form,
-                        [e.target.name]: ''
-                    });
-
-                }
-            }
-    
-        setForm({
+        if(e.target.value >24){
+            document.getElementById(`endTime`).value = '';
+            document.getElementById(`startTime`).value = '';
+            alert("시간을 확인해주세요.")
+        }else{
+            setForm({
             ...form,
             [e.target.name]: e.target.value
         });
+    }
     };
 
     const onClickResHandler = () => {
-        dispatch(callResInsertAPI({
-            form: form
-        }));
+        if(form.endTime > content.endTime || form.endTime < content.startTime || form.endTime <= form.startTime || form.startTime > content.endTime || form.startTime < content.startTime || form.startTime > content.endTime){
+            document.getElementById(`endTime`).value = '';
+            document.getElementById(`startTime`).value = '';
+            alert("예약시간을 확인해주시기 바랍니다")
+            setForm({
+                endTime: '',
+                startTime: '',
+            });
+        }else if(form.endTime == '' || form.startTime == ''){
+            alert('시간을 입력바랍니다.')
+        }
+        else{
+            dispatch(callResInsertAPI({
+                form: form
+            }));
+        }
+      
     }
 
     return (

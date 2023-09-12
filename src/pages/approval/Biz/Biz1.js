@@ -9,24 +9,24 @@ import '../Approval.css';
 import { callApvBiz1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
-import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
+import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Biz1({ mode, data }) {
 
     const dispatch = useDispatch();
-
-    dispatch({ type: RESET_APPROVAL});
+    dispatch({ type: RESET_APPROVAL });
 
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     console.log("empNo : ", empNo);
 
+    const location = useLocation();
+    const initialData = location.state ? location.state.initialData : null;
+
     const navigate = useNavigate();
 
     const approval = useSelector(state => state.approval);
 
-    const isEditMode = approval.apvNo ? true : false;
-    console.log('isEditMode 1 : ', isEditMode);
     console.log('biz1 first : ', approval.data);
 
     const [formData, setFormData] = useState({
@@ -46,9 +46,14 @@ function Biz1({ mode, data }) {
         apvFiles: approval.apvFiles ? approval.apvFiles : [],
     });
 
+    const isEditMode = formData.apvNo ? true : false;
+    console.log('isEditMode 1 : ', isEditMode);
 
-    const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
+    useEffect(() => {
+        if (!isEditMode) {
+            dispatch({ type: RESET_APPROVAL });
+        }
+    }, [isEditMode, dispatch]);
 
     useEffect(() => {
         console.log('isEditMode 2 : ', isEditMode);
@@ -180,8 +185,8 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail">상세내용</div>
                         <div className="apvContentDetailComent">
                             <textarea
+                                className='apvTextarea'
                                 placeholder="내용 작성"
-                                rows="9"
                                 name="contents1"
                                 value={formData.contents1}
                                 onChange={onChangeHandler}
@@ -190,8 +195,8 @@ function Biz1({ mode, data }) {
                         <div className="apvContentDetail2">-아래-</div>
                         <div className="apvContentDetailComent2">
                             <textarea
+                                className='apvTextarea'
                                 placeholder="내용 작성"
-                                rows="9"
                                 name="contents2"
                                 value={formData.contents2}
                                 onChange={onChangeHandler}

@@ -6,22 +6,26 @@ import ApvSummitBar from '../ApvSmmitbar';
 import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalHrm.css';
 import '../Approval.css';
-import { callApvHrm1API, callApvHrm1UpdateAPI } from '../../../apis/ApprovalAPICalls';
+import { callApvHrm1API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
+import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Hrm1({ mode, data }) {
+
+	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
+
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
 	console.log("empNo : ", empNo);
 
-	const dispatch = useDispatch();
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
+
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
-	const isEditMode = approval.apvLines ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
 	console.log('hrm1 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
@@ -49,11 +53,16 @@ function Hrm1({ mode, data }) {
 		}],
 	});
 
-	
 
+	const isEditMode = formData.apvNo ? true : false;
+	console.log('isEditMode 1 : ', isEditMode);
 
-	const location = useLocation();
-	const initialData = location.state ? location.state.initialData : null;
+	useEffect(() => {
+		if (!isEditMode) {
+			dispatch({ type: RESET_APPROVAL });
+		}
+	}, [isEditMode, dispatch]);
+
 
 	const onSelectDateHandler = (selectedDate, field) => {
 		setFormData((prevFormData) => ({
@@ -66,6 +75,8 @@ function Hrm1({ mode, data }) {
 	};
 
 	const [dateRange, setDateRange] = useState("");
+	const [weekendDays, setWeekendDays] = useState(0);
+
 
 	useEffect(() => {
 		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
@@ -114,6 +125,8 @@ function Hrm1({ mode, data }) {
 				totalDays -= 0.5;
 			}
 
+			totalDays -= weekendDays;
+
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				apvVacations: [{
@@ -122,9 +135,33 @@ function Hrm1({ mode, data }) {
 				}],
 			}));
 		}
-	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate, formData.apvVacations[0].offType1, formData.apvVacations[0].offType2]);
+	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate,
+	formData.apvVacations[0].offType1, formData.apvVacations[0].offType2, weekendDays]);
 
+	function countWeekendDays(startDate, endDate) {
+		let currentDate = new Date(startDate);
+		const endDateObj = new Date(endDate);
+		let weekendDays = 0;
 
+		while (currentDate <= endDateObj) {
+			const dayOfWeek = currentDate.getDay(); // 0 일요일, 6 토요일
+			if (dayOfWeek === 0 || dayOfWeek === 6) {
+				weekendDays++;
+			}
+			currentDate.setDate(currentDate.getDate() + 1);
+		}
+
+		return weekendDays;
+	}
+
+	useEffect(() => {
+		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
+			const startDate = formData.apvVacations[0].startDate.split(' ')[0];
+			const endDate = formData.apvVacations[0].endDate.split(' ')[0];
+			const daysBetween = countWeekendDays(startDate, endDate);
+			setWeekendDays(daysBetween);
+		}
+	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate]);
 
 
 	const onChangeHandler = (e) => {
@@ -207,7 +244,7 @@ function Hrm1({ mode, data }) {
 			setSelectedEmployees(initialSelectedEmployees);
 		}
 	}, [approval, setSelectedEmployees]);
-	
+
 
 	const [fileList, setFileList] = useState([]);
 
@@ -229,13 +266,13 @@ function Hrm1({ mode, data }) {
 
 	const updateFileList = (newFileList) => {
 		setFileList(newFileList);
-	  };
+	};
 
 	useEffect(() => {
 		console.log('fileList : ', fileList);
 	}, [fileList])
 
-	const APIPoint = isEditMode ? callApvHrm1UpdateAPI : callApvHrm1API;
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvHrm1API;
 
 	const handleSubmissionClick = () => {
 		const submissionData = {
@@ -265,6 +302,7 @@ function Hrm1({ mode, data }) {
 					setSelectedEmployees={setSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
+					data={data}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">연차신청서</div>
@@ -309,7 +347,7 @@ function Hrm1({ mode, data }) {
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">기간</div>
-							<div className="column2">{dateRange}</div>
+							<div className="column2">{dateRange} (주말 {weekendDays}일 연차 미차감)</div>
 						</div>
 						<div className="apvContentHrm1">
 							<div className="column1">연차 사용 개수</div>
@@ -317,7 +355,7 @@ function Hrm1({ mode, data }) {
 						</div>
 						<div className="apvContentDetail">- 사유 -</div>
 						<div className="apvContentDetailComent">
-							<textarea placeholder="3일 이상인 경우만 작성" rows="20"
+							<textarea placeholder="3일 이상인 경우만 작성" className='apvTextarea'
 								value={formData.apvVacations[0].comment}
 								onChange={onCommentChangeHandler}
 								onBlur={onCommentChangeHandler}></textarea>

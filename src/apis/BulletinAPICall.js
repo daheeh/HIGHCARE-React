@@ -7,12 +7,41 @@ import {
     ,GET_THREAD
     ,POST_BOARD
     ,POST_REGISTER
-    ,POST_REGISTERS
     ,PUT_BOARD
     ,PUT_BOARDS
-    ,PUT_COMMENT
-    ,PUT_COMMENTS
 } from '../modules/BoardModule';
+
+import{
+     GET_COMMENT
+    ,PUT_COMMENT
+    ,PUT_COMMENTS,
+    POST_REGISTERS
+
+} from '../modules/commentModule';
+
+import{
+    GET_NOTICE
+} from '../modules/NoticeModule';
+
+export const callNoticeAPI = () => {
+    const requestURL = `http://localhost:8080/bulletin/notice`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+            console.log('result.data', result.data);
+            dispatch({ type: GET_NOTICE,  payload: result});
+        }
+       };
+}
+
 
 export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 //    export const callBulletinAPI = () => {
@@ -53,8 +82,8 @@ export const callBoardDetailSAPI = ({bulletinCode})=>{
         }
     };
 }
-export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
-    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
+export const callBoardDetailAPI = ({bulletinCode})=>{
+    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -67,12 +96,30 @@ export const callBoardDetailAPI = ({bulletinCode, currentPage})=>{
         })
         .then(response => response.json());
         if(result.status === 200){
-        dispatch({ type: GET_BOARDD,  payload: result.data});
+        dispatch({ type: GET_BOARDD,  payload: result});
         }
     };
-
-
 }
+
+export const callCommentDetailAPI = ({bulletinCode, currentPage})=>{
+    const requestURL = `http://localhost:8080/bulletin/comment?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
+
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+        dispatch({ type: GET_COMMENT,  payload: result.data});
+        }
+    };
+}
+
 
 export const callBulletinNavAPI= ()=>{
     const requestURL = `http://localhost:8080/bulletin/boardTitle`;
@@ -120,7 +167,8 @@ export const callRegisterAPI = ({form}) => {
     const requestURL = `http://localhost:8080/bulletin/insertBoard`;
     console.log("form : " , form)
     return async (dispatch, getState) => {
-
+        
+   
         const result = await fetch(requestURL, {
             method: "POST",
             headers: {
@@ -139,9 +187,10 @@ export const callRegisterAPI = ({form}) => {
         .then(response => response.json());
 
         if(result.status === 201){
+            alert('글작성에 성공했습니다')
             dispatch({ type: POST_REGISTER, payload: result});
-        }
-    }
+        } 
+    };
 }
 
 export const callCommentAPI = ({form}) =>{
@@ -216,6 +265,8 @@ export const callDeleteAPI = ({form}) =>{
         }
     }
 }
+
+
 export const callCommentDeleteAPI = ({commentCode}) =>{
     const requestURL = `http://localhost:8080/bulletin/deleteComment`;
 

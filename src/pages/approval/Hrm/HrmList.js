@@ -9,20 +9,20 @@ function HrmList() {
         'approval/hrm1',
         'approval/hrm2',
         'approval/hrm3',
-        'approval/hrm4',
-        'approval/hrm5',
-        'approval/hrm6',
-        'approval/hrm7',
+        // 'approval/hrm4',
+        // 'approval/hrm5',
+        // 'approval/hrm6',
+        // 'approval/hrm7',
     ]);
 
     const linkTextMapping = {
         'approval/hrm1': '연차신청서',
         'approval/hrm2': '기타휴가신청서',
         'approval/hrm3': '서류발급신청서',
-        'approval/hrm4': '시말서xx',
-        'approval/hrm5': '연장근무신청서',
-        'approval/hrm6': '사직서xx',
-        'approval/hrm7': '기안서',
+        // 'approval/hrm4': '시말서xx',
+        // 'approval/hrm5': '연장근무신청서',
+        // 'approval/hrm6': '사직서xx',
+        // 'approval/hrm7': '기안서',
     };
 
     const dragStart = (e, position) => {

@@ -54,8 +54,9 @@
 .pm-ma-table{
     border-collapse: collapse;
     margin: 30px;
-    width: 1550px;
-    height: 690px;
+    /* 마진 고쳐보기 테이블 사이 간격 많아 */
+    width: 1400px;
+    height: auto;
     border: #7B7B7B solid 1px;
     text-align: center;
 

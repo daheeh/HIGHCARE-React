@@ -1,4 +1,3 @@
-import { uploadFiles } from './ApvFileUpload';
 
 // 프론트엔드 코드
 

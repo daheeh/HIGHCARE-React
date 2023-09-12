@@ -7,6 +7,7 @@ import { OauthLoginAPI, kakaoAuth } from '../../apis/OAuthApiCalls';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { callLogoutAPI } from '../../apis/AuthAPICalls';
 import { useNavigate } from 'react-router-dom';
+import { browser, device } from './logininfo';
 
 
 
@@ -42,6 +43,8 @@ function SocialLogin() {
     provider: '',
     email: '',
     name: '',
+    browser: browser(),
+    device: device(), 
 
     id: id,
   }
@@ -136,11 +139,9 @@ function SocialLogin() {
 
 
 
-        <input type="checkbox" hidden id="naver" />
-
-
-        <div htmlFor="naver" id="naverlabel">
-        </div>
+        {/* <input type="checkbox" hidden id="naver" /> */}
+        {/* <div htmlFor="naver" id="naverlabel"> */}
+        {/* </div> */}
       </div>
     </div>
   )

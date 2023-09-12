@@ -46,9 +46,9 @@
 .apvContentDetailComent{
     padding: 30px;
     grid-column: 1 / span 8;
-    min-height: 300px;
+    min-height: 100px;
     max-width: 2000px;
-    border-bottom: 1px solid #7B7B7B;
+    /* border-bottom: 1px solid #7B7B7B; */
     overflow: hidden;
 }
 
@@ -69,7 +69,7 @@
 .apvContentDetailComent2{
     grid-column: 1 / span 8;
     padding: 30px;
-    min-height: 600px;
+    height: auto;
 }
 
 
@@ -160,22 +160,22 @@
 
 
 
-.apv-official-top{
-    margin-top: 150px;
+.apvOfficialTop{
+    margin-top: 280px;
     font-size: 20px;
 }
 
-.apv-official2{
+.apvOfficial2{
     margin-top: 20px;
     display: flex;
     align-items: center;
 }
 
-.apv-official2 > div{
+.apvOfficial2 > div{
     margin-right: 30px;
 }
 
-.apv-official-bottom{
+.apvOfficialBottom{
     grid-column: 1 / span 8;
     display: grid;
     grid-template-columns: 180px 1320px;
@@ -183,7 +183,7 @@
     justify-content: space-around;
     border-bottom: 1px solid #7B7B7B;
 }
-.apv-official-bottom > div{
+.apvOfficialBottom > div{
     padding: 0px 30px;
     display: flex;
     align-items: flex-start;
@@ -193,23 +193,23 @@
     justify-content: center;
 }
 
-.apv-official-bottom .column1{
+.apvOfficialBottom .column1{
     display: flex;
     align-items: stretch;
 
 }
 
-.apv-official-bottom > div:nth-child(2n) {
+.apvOfficialBottom > div:nth-child(2n) {
     border-right: none;
     background: none;
 }
 
-.apv-official-bottom :last-child{
+.apvOfficialBottom :last-child{
     border-bottom: none;
 }
 
 
-.apv-official-bottom2{
+.apvOfficialBottom2{
     grid-column: 1 / span 8;
     display: flex;
     height: 20px;
@@ -236,8 +236,13 @@
     border: none;
 }
 
+.apvLogo{
+    position: absolute;
+    transform: translate(-30%, 100%);
+}
 
-.highcare-stamp{
+
+.highcareStamp{
     transform: translate(220%, 30%);
     justify-content: center;
     align-items: center;
@@ -245,17 +250,17 @@
     display: inline-block;
 }
 
-.highcare-text{
-position: absolute;
+.highcareText{
+    position: absolute;
     top: 50%;
     transform: translate(-70%, -50%);
     font-size: 70px;
     text-align: center;
-    padding: 8px 12px;
+    /* padding: 8px 12px; */
     z-index: 2; 
 }
 
-.highcare-image {
+.highcareImage {
     width: 300px;
     height: 300px;
     position: relative;

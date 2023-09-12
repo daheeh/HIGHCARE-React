@@ -12,7 +12,8 @@ function MemberModify() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const memberlist = useSelector(state => state.members.data);
+    const mem = useSelector(state => state.members);
+    const memberlist = mem.data;
 
     const { empNo } = useParams();
 

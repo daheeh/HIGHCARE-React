@@ -39,49 +39,57 @@ function Exp1View() {
         fetchData();
     }, [apvNo, dispatch]);
 
+    if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+        <div className='apvNoUser'>권한이 없습니다</div>;
+        return navigate('/approval');
+    }
+
     const renderApvExpForm = (data) => {
         return (
-            <div className="apvContentDetailExp1Content">
+            <>
                 {data?.apvExpForms.map((form, index) => (
-                    <div className="apvContentDetailExp1List" key={index}>
-                        <div className="column21">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].details`}
-                                value={form.details || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column22">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].account`}
-                                value={form.account || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column23">
-                            <input
-                                className="input1"
-                                type="number"
-                                name={`apvExpForms[${index}].amount`}
-                                value={form.amount || ''}
-                                readOnly
-                            />
-                        </div>
-                        <div className="column24">
-                            <input
-                                className="input1"
-                                name={`apvExpForms[${index}].comment`}
-                                value={form.comment || ''}
-                                readOnly
-                            />
+                    <div className="apvContentDetailExp1Content" key={index}>
+                        <div className="apvContentDetailExp1List">
+                            <div className="column21">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].details`}
+                                    value={form.details || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column22">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].account`}
+                                    value={form.account || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column23">
+                                <input
+                                    className="input1"
+                                    type="number"
+                                    name={`apvExpForms[${index}].amount`}
+                                    value={form.amount || ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="column24">
+                                <input
+                                    className="input1"
+                                    name={`apvExpForms[${index}].comment`}
+                                    value={form.comment || ''}
+                                    readOnly
+                                />
+                            </div>
                         </div>
                     </div>
                 ))}
-            </div>
+            </>
         );
     };
+
 
     return (
         <section>
@@ -103,13 +111,13 @@ function Exp1View() {
                         <div className="apvContentTitleExp1">
                             <div className="column1">지급요청일자</div>
                             <div className="column2">
-                                <input className="input1" type="date" placeholder="날짜 입력"
+                                <input className="input1"
                                     name="sharedProperties.requestDate"
                                     value={data?.apvExpForms[0].requestDate || ''} readOnly />
                             </div>
                             <div className="column3">지급처</div>
                             <div className="column4">
-                                <input className="input1" placeholder="지급처 입력"
+                                <input className="input1"
                                     name='sharedProperties.payee' value={data?.apvExpForms[0].payee || ''} readOnly />
                             </div>
                         </div>
@@ -142,7 +150,7 @@ function Exp1View() {
                         <div className="apvContentTitleExp1-3">
                             <div className="column45">계좌번호</div>
                             <div className="column46">
-                                <input className="input1" placeholder="계좌번호 입력"
+                                <input className="input1"
                                     name='sharedProperties.accountNumber' value={data?.apvExpForms[0].accountNumber || ''} readOnly />
                             </div>
                         </div>

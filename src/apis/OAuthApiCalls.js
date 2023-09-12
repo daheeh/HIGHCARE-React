@@ -19,7 +19,11 @@ export const OauthLoginAPI = createAsyncThunk(
             console.log(response.data);
             window.localStorage.setItem('accessToken', response.data.data.accessToken);
 
-            return response.data;
+            if(response.status == 200) {
+                return response.data; 
+            } else {
+                throw new Error("로그인 실패"); 
+            }
         } catch (error) {
             throw error.response.data;
         }
@@ -35,13 +39,16 @@ export const kakaoAuth = createAsyncThunk(
 
         try {
             const response =
-                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}`);
+                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}&browser=${props.browser}&device=${props.device}`);
             console.log(response.data);
             console.log(response.data.data.accessToken);
             window.localStorage.setItem('accessToken', response.data.data.accessToken);
 
-            return response.data;
-
+            if(response.status == 200) {
+                return response.data; 
+            } else {
+                throw new Error("로그인 실패"); 
+            }
         } catch (error) {
             console.log(error.response.data);
             throw error.response.data;

@@ -16,19 +16,18 @@ function MemberList() {
     const navigate = useNavigate();
     useEffect(() => {
 
-        dispatch(allMemberListApi)
+        dispatch(allMemberListApi());
 
     }, [])
 
-    const memberList = useSelector(state => state.members.data);
+    const mem = useSelector(state => state.members);
+    const memberList = mem.data;
 
     const [normalMember, setNormalMember] = useState(0);
     const [preMember, setPreMember] = useState(0);
     const [drawMember, setDrawMember] = useState(0);
 
     const [inactiveMember, setInactiveMember] = useState(0);
-
-    const role = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER', 'ROLE_PRE_USER', 'ROLE_WITHDRAW'];
 
     const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스의 상태
 
@@ -137,7 +136,7 @@ function MemberList() {
         <section>
             <AdminNav />
             <div style={{ marginTop: 20 }}>
-                <div className={MemberListCss.title}>회원 통합관리
+                <div className={MemberListCss.title}>회원목록
                     <div>
                         <div>현재 멤버 수: {memberList.length}명 </div>
                         <div>정상: {normalMember}명 / 임시: {preMember}명 / 차단: {inactiveMember}명 / 탈퇴(예정): {drawMember}명 </div>
@@ -154,7 +153,8 @@ function MemberList() {
                     </div>
                 </div>
                 <div className={MemberListCss.category}>
-                    <input type="checkbox" name="allCheck" checked={allChecked} onChange={allCheckbox} />
+                    <input type="checkbox" name="allCheck"
+                        checked={allChecked} onChange={allCheckbox} />
 
                     <div>사원번호</div>
                     <div>이름</div>
@@ -203,7 +203,9 @@ function MemberList() {
                             key={member.empNo} className={MemberListCss.category}
 
                         >
-                            <input type="checkbox" value={member.empNo} checked={selectedItems.some(memNo => memNo == member.empNo)} onChange={checkBox} />
+                            <input type="checkbox" value={member.empNo}
+                                checked={selectedItems.some(memNo => memNo == member.empNo)}
+                                onChange={checkBox} />
                             <div onClick={() => memberClick(member)} >{member.empNo}</div>
                             <div onClick={() => memberClick(member)} >{member.employee.name}</div>
                             <div onClick={() => memberClick(member)} >{member.employee.jobCode.jobName}</div>
@@ -271,7 +273,7 @@ export const roleCode = (roleCode) => {
         case 'ROLE_WITHDRAW':
             return '탈퇴회원';
         default:
-            return '없음';
+            return 'none';
     }
 
 }

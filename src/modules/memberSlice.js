@@ -3,6 +3,7 @@ import { allMemberListApi, selectMember } from "../apis/MemberAPICalls";
 
 const initialState = {
   data: {},
+  treeviewMember: [],
 }
 
 
@@ -12,7 +13,18 @@ const memberSlice = createSlice({
   reducers: {
     selectAction: (state, { payload }) => {
       return payload;
+    }, 
+    memberByTreeview: (state, {payload}) => {
+      state.treeviewMember = payload; 
     },
+    resetMemberAction: (state, action) => {
+      state.treeviewMember = [];
+  },
+  resetRequestMemberAction: (state, action) => {
+    state.data = {};
+  }
+  
+
    
   },
   extraReducers: (builder) => {
@@ -41,6 +53,6 @@ const memberSlice = createSlice({
 
 
 // 액션 생성자 내보내기 
-export const { selectAction, accountStatus } = memberSlice.actions;
+export const { selectAction, accountStatus, resetMemberAction, resetRequestMemberAction, memberByTreeview } = memberSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

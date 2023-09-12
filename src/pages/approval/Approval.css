@@ -166,6 +166,47 @@ section {
     border: solid 1px;
 }
 
+.apvMainBox1 {
+    display: flex;
+    /* margin-left: 40px; */
+    justify-content: space-around
+}
+
+.apvMainBox2 {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 6px;
+    border: 3px solid #10479A;
+    width: 150px;
+    height: 150px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.apvMainBox2 .row1 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 80px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 2px solid #10479A;
+}
+
+.apvMainBox2 .row2 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100px;
+    width: 150px;
+    font-size: 20px;
+}
+
 .apvMainBoxRightBox {
     display: flex;
 }
@@ -254,6 +295,20 @@ section {
     border-bottom: 1px solid #7B7B7B;
 }
 
+.apvMainMy .dragList {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.apvMainMy .dragList .childDiv {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.apvMainMy .dragList:hover,
+.apvMainMy .dragList.active {
+    background-color: #FFC338;
+}
 
 .droppedItem {
     width: 300px;
@@ -508,7 +563,7 @@ section {
 
 .apvLineTreeContainer {
     display: flex;
-    
+
 }
 
 .apvLineTree1 {
@@ -527,22 +582,25 @@ section {
     text-align: center;
     align-items: center
 }
-.apvLineTreeBoxTitle{
+
+.apvLineTreeBoxTitle {
     margin-top: 10px;
 }
-.apvLineTreeSelected{
+
+.apvLineTreeSelected {
     display: flex;
     margin: 10px;
     height: 50px;
     cursor: pointer;
     transition: background-color 0.1s ease-in-out;
 }
+
 /* .apvLineTreeSelected2:hover,
 .apvLineTreeSelected2.active {
     background-color: #FFC338; */
 /* } */
 
-.apvLineTreeSelected1{
+.apvLineTreeSelected1 {
     display: flex;
     width: 100px;
     margin-right: 10px;
@@ -551,7 +609,8 @@ section {
     justify-content: center;
     align-items: center
 }
-.apvLineTreeSelected2{
+
+.apvLineTreeSelected2 {
     display: flex;
     width: 150px;
     margin-right: 10px;
@@ -573,7 +632,7 @@ section {
     border-radius: 6px;
 }
 
-.apvBtn1{
+.apvBtn1 {
     position: relative;
     width: 5px;
     height: 5px;
@@ -584,9 +643,19 @@ section {
     border-radius: 6px;
 }
 
-.apvBtn2{
+.apvBtn2 {
     position: relative;
     width: 60px;
+    height: 40px;
+    /* margin: 0px 20px 0px 0px; */
+    /* padding: 0px 12px; */
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.apvBtn3 {
+    position: relative;
+    width: 80px;
     height: 40px;
     /* margin: 0px 20px 0px 0px; */
     /* padding: 0px 12px; */
@@ -609,9 +678,10 @@ section {
 
 
 
-textarea {
+.apvTextarea {
     font-family: NanumGothic;
-    /* padding: 30px; */
+    background: #f4f4f4;
+    padding: 10px;
     font-size: 24px;
     width: 100%;
     height: auto;
@@ -623,6 +693,7 @@ textarea {
 
 .input1 {
     font-family: NanumGothic;
+    background: #f4f4f4;
     font-size: 24px;
     border: none;
     outline: none;
@@ -632,6 +703,7 @@ textarea {
 
 .input2 {
     font-family: NanumGothic;
+    background: #f4f4f4;
     font-size: 24px;
     border: none;
     outline: none;
@@ -662,6 +734,15 @@ textarea {
 .apvMainListRList .dragList:hover,
 .apvMainListRList .dragList.active {
     background-color: #FFC338;
+}
+
+.fileList {
+    display: flex;
+}
+
+.apvNoUser {
+    font-size: 50px;
+    display: flex;
 }
 
 footer {

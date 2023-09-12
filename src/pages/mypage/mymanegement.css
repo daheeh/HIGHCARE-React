@@ -1,0 +1,73 @@
+.title{
+
+    /* text-align: justify; */
+    margin-right: 500px;
+    padding: 20px;
+}
+
+
+.task-table {
+    /* background-color: white; */
+    /* border-collapse: collapse; */
+    width: 1520px;
+    margin-top: 20px;
+    margin-left: 80px;
+}
+
+.task-table th, .task-table td {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: auto;
+}
+
+.task-table th  {
+    background-color: lightgray;
+    font-weight: bold;
+}
+
+
+/* 달력, 토글 아웃라인  */
+.input1, .categorystate, .workinput {
+    border: none;
+    outline: none;
+    text-align: center;
+
+}
+
+/*페이징*/
+.pagingmypage{
+    display: flex;
+    /* position: fixed; */
+    bottom: 320px;
+    left: 50%;
+    /* transform: translateX(-50%); */
+    justify-content: center;
+    align-items: center;
+    margin-top: 550px;
+}
+
+.pagingmypage>span{
+    width: 34px;
+    height: 34px;
+    color: #FFF;
+    background: #10479A;
+    text-align: center;
+    font-size: 24px;
+    text-align: center;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.pagingmypage>span:hover{
+    color: #000;
+    background: #FFC338;
+}
+.pagingmypage > .pagingBtn.active {
+    color: #000;
+    background: #FFC338; 
+}
+
+

@@ -14,13 +14,15 @@ function ResourceAdd(){
     const dispatch =useDispatch();
     const [value, setValue] = useState('');
     const res = useSelector(state => state.resReducer);
+    const authes = useSelector(state => state.authes);
+    const navigate = useNavigate();
     const resCategory = res.data;
+    const role = authes.role;
     const [start, setStart] = useState(0);
     const [modal,setModal] = useState(false);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
-    const navigate = useNavigate();
     const [form, setForm] = useState({
         resourceName: '',
         area: '',
@@ -32,6 +34,12 @@ function ResourceAdd(){
     });
     useEffect(
         () => {
+            if(role.includes('ROLE_ADMIN')){
+            }else{
+                alert('권한이 없습니다.');
+                navigate("/",{replace: true})
+        
+            }
             dispatch(callResAPI());
             setStart(0);
         },[start]
@@ -49,7 +57,6 @@ function ResourceAdd(){
         }
     },
     [image]);
-
     const onChangeImageUpload = (e) => {
 
         const image = e.target.files[0];
@@ -87,6 +94,9 @@ function ResourceAdd(){
     };
 
     const onClickResourceRegistHandler = () => {
+        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+            alert('시간을 다시입력해주세여');
+        }else{
         const formData = new FormData();
 
         formData.append("resourceName", form.resourceName);
@@ -99,9 +109,17 @@ function ResourceAdd(){
         if(image){
             formData.append("image", image);
         }
-        dispatch(callResRegistAPI({
-            form: formData
-        }));
+        if(form.categoryCode == 0 || form.resourceName == '' || form.area == '' || form.location == '' || form.serviceGuide == '' || form.startTime == ''|| form.endTime == ''){
+            alert('공백이 있습니다')
+            console.log('form ', form)
+        }else{
+            dispatch(callResRegistAPI({
+                form: formData
+            }));
+            navigate("/",{replace: true})
+
+        }
+    }
     }
 
     return (
@@ -119,7 +137,7 @@ function ResourceAdd(){
                         )
                     )}
                 </select>
-                <span onClick={openModal}>추가하기</span>
+                <span onClick={openModal}style={{width:'45px', marginLeft:'20px',fontSize:'16px',padding:'2px',textAlign:'center'}}  className={BoardStyle.comment_ok}>추가</span>
             </div>
             <div>
                 <span>지역</span>
@@ -137,17 +155,19 @@ function ResourceAdd(){
                 <span>위치</span>
                 <input type="text" name='location' onChange={onChangeHandler}/>
             </div>
-            <div>
+            <div  className={BoardStyle.content_time} >
                 <span>사용시간</span>
-                <input type="text" name='startTime' onChange={onChangeHandler}/>
-                ~
-                <input type="text" name='endTime' onChange={onChangeHandler}/>
+                <input type="text" name='startTime' onChange={onChangeHandler} style={{marginRight:"2px"}}/>
+                시-
+                <input type="text" name='endTime' onChange={onChangeHandler} style={{marginRight:"2px"}}/>시
             </div>
             <div>
             { imageUrl && <img 
                            src={ imageUrl } 
                            className={BoardStyle.Image}
                             alt="preview"
+                            style={{width:"400px", height:"200px"}}
+                            
                         />}
                           <input                
                             style={ { display: 'none' }}
@@ -157,11 +177,13 @@ function ResourceAdd(){
                             onChange={ onChangeImageUpload }
                             ref={ imageInput }
                         />
-                        <button 
+                        <div 
                             onClick={ onClickImageUpload } 
+                            className={BoardStyle.comment_ok}
+                            style={{width:"100px", fontSize:"16px"}} 
                         >
-                            이미지 업로드
-                            </button>
+                            이미지 선택
+                            </div>
             </div>
             <span>이용안내</span>
             <Editor value={value} getValue={getValue}/>

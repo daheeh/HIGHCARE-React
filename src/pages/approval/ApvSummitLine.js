@@ -4,23 +4,29 @@ import { useNavigate } from 'react-router-dom';
 
 function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 
+	
+
 
 	const currentDate = new Date();
 	const currentDateString = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
 	const results = useSelector(state => state.approval);
 	const navigate = useNavigate();
+	const [isEditMode, setIsEditMode] = useState(false);
 
 
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
 		console.log('ApvSummitLine - data : ', data);
-		console.log('results : ', results.data);
+		// console.log('results : ', results.data);
 		console.log('approval : ', approval);
 
 
 	}, [selectedEmployees, authes, data, results, approval]);
 
+	// if (!selectedEmployees || !authes || !mode || !data || !approval || !results )  {
+	// 	return null;
+	// }
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
@@ -127,10 +133,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 		}
 	};
 
-	const [isEditMode, setIsEditMode] = useState(false);
-
-
-	const title = results.title;
+	const title = results.title ? results.title : '';
 
 
 	const handleEdit = (apvNo) => {
@@ -144,24 +147,49 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 
 			let action = '';
 			switch (title) {
+				case '회의록':
+					action = `/approval/biz2`;
+					break;
+				case '출장신청서':
+					action = `/approval/biz3`;
+					break;
+				case '공문':
+					action = `/approval/biz4`;
+					break;
+
 				case '지출결의서':
 					action = `/approval/exp1`;
 					break;
+				case '출장경비정산서':
+					action = `/approval/exp4`;
+					break;
 				case '경조금신청서':
-					action = `/approval/exp3`;
+					action = `/approval/exp6`;
+					break;
+				case '법인카드사용보고서':
+					action = `/approval/exp7`;
+					break;
+
+				case '연차신청서':
+					action = `/approval/hrm1`;
+					break;
+				case '기타휴가신청서':
+					action = `/approval/hrm2`;
+					break;
+				case '서류발급신청서':
+					action = `/approval/hrm3`;
 					break;
 				default:
 					action = `/approval/biz1`;
 					break;
 			}
 			console.log('Action:', action);
-			navigate(action, { state: { initialData: data } });
+			navigate(action, { state: { initialData: data, isEditMode: true } });
 		} else {
 			console.error(`No result found for apvNo: ${apvNo}`);
 		}
 
 	};
-
 
 	if (mode === 'create') {
 
@@ -205,64 +233,71 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 							</div>
 						))}
 					</div>
-
 				</>
-
-
-
 		);
 
 
 	} else if (mode === 'view') {
 
 		return (
-			<div className="apvApvLine">
-				{selectedEmployees.map((emp, index) => (
-					<div className="apvApvLineBox" key={index}>
-						<div className="row1">{index === 0 ? '기안자' : index}</div>
-						<div className="row2">{emp.empName} {emp.jobName}</div>
-						<div className="row3">{emp.deptName}</div>
-						<div className="row4">
-							{index === 0 && authes.empNo === emp.empNo ? (
-								<>
-									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ? (
-										<>
-											<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
-											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
-										</>
-									) :
-										<>
-											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
-										</>}
-								</>
-							) : index !== 0 && authes.empNo === emp.empNo ? (
-								selectedEmployees[index - 1].isApproval === 'T' ? (
-									selectedEmployees[index].isApproval === 'T' ? (
+			data.apvLines.every(emp => emp.empNo !== authes.empNo) ?
+				<>
+					<div className="warning">해당 기안에 권한이 없습니다</div>;
+				</>
+				:
+				<div className="apvApvLine">
+					{selectedEmployees.map((emp, index) => (
+						<div className="apvApvLineBox" key={index}>
+							<div className="row1">{index === 0 ? '기안자' : index}</div>
+							<div className="row2">{emp.empName} {emp.jobName}</div>
+							<div className="row3">{emp.deptName}</div>
+							<div className="row4">
+								{index === 0 && authes.empNo === emp.empNo ? (
+									<>
+										{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
+											data.apvStatus === "결재예정" || data.apvStatus === "결재반려" ? (
+												<>
+													<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
+													<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+												</>
+											) :
+												<>
+													{emp.apvDate && <span>{emp.apvDate}</span>}
+												</>
+											:
+											<>
+												<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+											</>}
+									</>
+								) : index !== 0 && authes.empNo === emp.empNo ? (
+									selectedEmployees[index - 1].isApproval === 'T' ? (
+										selectedEmployees[index].isApproval === 'T' ? (
+											<>
+												{emp.apvDate && <span>{emp.apvDate}</span>}
+											</>
+										) : (
+											<>
+												<button className='apvBtn2' onClick={() => handleApprove(index)}>승인</button>
+												<button className='apvBtn2' onClick={() => handleReject(index)}>반려</button>
+											</>
+										)
+									) : (
 										<>
 											{emp.apvDate && <span>{emp.apvDate}</span>}
 										</>
-									) : (
-										<>
-											<button className='apvBtn2' onClick={() => handleApprove(index)}>승인</button>
-											<button className='apvBtn2' onClick={() => handleReject(index)}>반려</button>
-										</>
 									)
-								) : (
-									<>
-										{emp.apvDate && <span>{emp.apvDate}</span>}
-									</>
-								)
-							) : <>
-								{emp.apvDate && <span>{emp.apvDate}</span>}
-							</>}
+								) : <>
+									{emp.apvDate && <span>{emp.apvDate}</span>}
+								</>}
+							</div>
 						</div>
-					</div>
-				))}
-			</div>
+					))}
+				</div>
 		);
+	}
 
-	};
-}
+};
+
 export default ApvSummitLine;
 
 

@@ -39,6 +39,10 @@ function Biz1View() {
     fetchData();
   }, [apvNo, dispatch]);
 
+  if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+    return <div className='apvNoUser'>권한이 없습니다</div>;
+  }
+
   return (
     <section>
       <ApvMenu />
@@ -69,7 +73,7 @@ function Biz1View() {
             <div className="apvContentDetail">상세내용</div>
             <div className="apvContentDetailComent">
               <textarea
-                rows="9"
+                className='apvTextarea'
                 value={data?.contents1 || ''}
                 readOnly
               />
@@ -77,7 +81,7 @@ function Biz1View() {
             <div className="apvContentDetail2">-아래-</div>
             <div className="apvContentDetailComent2">
               <textarea
-                rows="9"
+                className='apvTextarea'
                 value={data?.contents2 || ''}
                 readOnly
               />

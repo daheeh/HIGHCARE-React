@@ -99,7 +99,8 @@ export const callTreeviewTwoAPI = () => {
                 headers: {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
-                    "Accept": "*/*"
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 }
             })
             .then(response => {
