@@ -1,7 +1,25 @@
+.conversation-list {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  width: 350px;
+}
+
+.ChattingRoomList_chattingRoomInfo__4uP3t {
+  display: flex;
+  height: 85px;
+  padding-top: 3px;
+  padding-left: 15px;
+  font-size: small;
+  text-align: center;
+  flex-direction: column;
+}
+
 .conversation-list-item {
     display: flex;
     align-items: center;
     padding: 10px;
+    width: 350px;
   }
   
   .conversation-list-item:hover {
@@ -31,3 +49,10 @@
     margin: 0;
   }
   
+  .ChattingRoomList_profileIcon__6EIgj {
+    width: 87px;
+    height: 87px;
+    float: left;
+    padding-top: 10px;
+
+  }

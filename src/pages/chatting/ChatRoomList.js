@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, forwardRef, useImperativeHandle} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -8,25 +8,33 @@ import axios from 'axios';
 import { insertPartner, insertMessage, receive } from '../../modules/ConversationList'
 import ConversationListItem from "./ConversationListItem";
 import SockJsClient from 'react-stomp';
-import AddPartner from './AddPartner';
+import '../login/login.css';
 
 
 
-function WebSocketTestRoomList({userId}) {
+function ChatRoomList({userId, empName, selectedEmployee}, ref) {
 
+    // Redux 상태에서 conversationlist 가져오기
     const conversationList = useSelector(state => state.conversationlist);
     console.log("conversationList =========> " + conversationList);
-    // const [conversations, setConversations] = useState([]);
-    const [addPartner, setAddPartner] = useState(false);
     const $websocket = useRef(null); 
-    let topics = ['/topic/'+userId];
+    let topics = [`/topic/${userId}`];
     const dispatch = useDispatch();
+    
 
     useEffect(() => {
         getConversations()
-      },[])
+      },[]);
 
 
+    useEffect(() => {
+      if (selectedEmployee) {
+        handleAddPartner(selectedEmployee.empName);
+      }
+    }, [selectedEmployee]);
+
+
+    // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
     const getConversations = () => {
         axios({
           method:"get",
@@ -55,27 +63,42 @@ function WebSocketTestRoomList({userId}) {
       }
     
       const recevieMessage = (msg) => {
+        console.log('ChatroomList receiveMessage ===============>', recevieMessage);
         dispatch(receive(msg));    
       }
-      
-      const handleAddPartner = (name)=> {
-        dispatch(insertPartner({
-          photo:process.env.REACT_APP_USER_BASE_IMAGE,
-          partner:name,
-          list:[]
-        }))
-      }
-    
-      const handleOpenAddPartner = () => {
-        setAddPartner(true);
-      }
-    
-      const handleLogOut = () => {
-        window.sessionStorage.removeItem("login");
-        window.sessionStorage.removeItem("userId");
-        window.location.reload();
-      }
 
+
+        
+
+      const handleAddPartner = (name)=> {
+
+        // 이미 대화상대 있는 지 확인
+        const existingPartner = conversationList[name];
+        if(existingPartner) {
+        // 이미 대화상대랑 채팅방 있으면 업데이트
+            dispatch(insertPartner({
+              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
+              partner:name,
+              list: existingPartner.list, // 기존 대화 기록 유지
+            })
+          );
+        } else {
+          // 상대랑 채팅방 없을 경우 추가
+            dispatch(insertPartner({
+              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
+              partner:name,
+              list: [], // 기존 대화 기록 유지
+            })
+          );
+        }
+      };
+
+      
+      useImperativeHandle(ref, () => ({
+        handleAddPartner
+      }),[]);
+
+        
 
       return (
         <>
@@ -86,33 +109,30 @@ function WebSocketTestRoomList({userId}) {
                         <FontAwesomeIcon icon={faMagnifyingGlass} style={{cursor: 'pointer'}} />
                         <input type="search" className={ChattingMainCSS.searchBox} placeholder="이름, 부서명, 전화번호 검색"/>
                     </div>
-                </div>
-                <button onClick={handleOpenAddPartner} key="add" icon="ion-ios-add-circle-outline" />
+                </div>                
                     <div className={ChattingRoomListCSS.chattingRoomLists} id="chattingList1">
-                        {/* <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}> */}
-                            {/* <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/> */}
+                        <div className={ChattingRoomListCSS.profileIcon} style={{width: '70px'}}>
+                            
                         </div>
                         <div className={ChattingRoomListCSS.chattingRoomInfo}>
                             {/* <div className={ChattingRoomListCSS.roomInfoText}> */}
+
                         { 
-                            //데이터가 정의되었을때 Object.keys(conversationList)에 할당하고, 
-                            // 정의되지 않았을때는 빈 배열을 반환하도록 조건걸기
-                            Object.keys(conversationList || {}).map((key) => 
+                            Object.keys(conversationList).map((key) => 
                             <ConversationListItem             
                                 key={key}
-                                //photo={conversation.photo}
                                 partner={key}
-                                //list={conversationList[key]}
                                 host={userId}
                                 sendToMessage={sendToMessage}
                             />
                             )
                         }
-                        <AddPartner userId={userId} open={addPartner} setOpen={setAddPartner} handleAddPartner={handleAddPartner}/>
+
                         <SockJsClient
                         url={process.env.REACT_APP_CHAT_BASE_URL}
-                        topics={topics}
+                        topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
+                            console.log('[SocketJsClientf rendering...] Received message ==============> ', msg);
                             recevieMessage(msg);
                         }}
                         ref={$websocket}
@@ -121,21 +141,13 @@ function WebSocketTestRoomList({userId}) {
                                
                             </div>
                         </div>
-                    {/* </div> */}
+                    </div>
                 {/* </div> */}
             {/* </div> */}
         </>
     );
 
 
-
-
-
-
-
-
 }
 
-
-
-    export default WebSocketTestRoomList;
+export default forwardRef(ChatRoomList);

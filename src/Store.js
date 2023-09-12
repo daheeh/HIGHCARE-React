@@ -22,6 +22,9 @@ import dateReducer from './modules/DateModule';
 import resStatusReducer from './modules/resultStatusModule';
 import reserReducer from './modules/reserModule';
 import commentReducer from './modules/commentModule';
+
+import conversationlistReducer from './modules/ConversationList';
+
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
@@ -47,7 +50,8 @@ const store = configureStore({
         dateReducer : dateReducer,
         resStatusReducer : resStatusReducer,
         reserReducer : reserReducer,
-        commentReducer : commentReducer
+        commentReducer : commentReducer,
+        conversationlist: conversationlistReducer,
 
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
