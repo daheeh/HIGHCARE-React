@@ -1,6 +1,7 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import Modal from 'react-modal';
 import ApvLineTree from './ApvLineTree';
+import ApvRefLineTree from './ApvRefLineTree';
 import PdfDocument from './PdfDocument';
 import { useReactToPrint } from 'react-to-print';
 import html2canvas from 'html2canvas';
@@ -21,10 +22,17 @@ const modalStyles = {
 };
 
 
-const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, setRefSelectedEmployees, fileList, updateFileList, data}, ref) => {
+const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmployees, setRefSelectedEmployees, fileList, updateFileList, data }, ref) => {
     const [isUrgency, setIsUrgency] = useState('F');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFileModalOpen, setIsFileModalOpen] = useState(false);
+    const [isLineModalOpen, setIsLineModalOpen] = useState(false);
+    const [isRefModalOpen, setIsRefModalOpen] = useState(false);
+    const [selectedLine, setSelectedLine] = useState([]);
+    // const [refSelectedLine, setRefSelectedLine] = useState([]);
+
+
+
     const htmlCode = ref?.current;
     console.log("htmlCode" + htmlCode);
 
@@ -35,20 +43,21 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
         console.log('isUrgency:', isUrgency);
     };
 
-    const handleModalOpen = () => {
-        setIsModalOpen(true);
+    const handleModalOpen = (modalType) => {
+        if (modalType === 'line') {
+            setIsLineModalOpen(true);
+        } else if (modalType === 'ref') {
+            setIsRefModalOpen(true);
+        }
     };
 
-    const handleModalClose = () => {
-        setIsModalOpen(false);
+    const handleModalClose = (modalType) => {
+        if (modalType === 'line') {
+            setIsLineModalOpen(false);
+        } else if (modalType === 'ref') {
+            setIsRefModalOpen(false);
+        }
     };
-
-    useEffect(() => {
-        console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setSelectedEmployees);
-        console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setRefSelectedEmployees);
-    }, [setSelectedEmployees, setRefSelectedEmployees]);
-
-
 
     const [selectedFile, setSelectedFile] = useState([]);
 
@@ -94,23 +103,21 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
         setIsFileModalOpen(false);
     };
 
-    useEffect(() => {
-        console.log('ApvSummitBar - selectedEmployees (inside useEffect):', setSelectedEmployees);
-    }, [setSelectedEmployees]);
+
 
     const handleCompleteSelection = (selectedData) => {
         setSelectedEmployees(selectedData);
-        console.log('ApvSummitBar - selectedData:', selectedData);
-        console.log('ApvSummitBar - selectedEmployees:', setSelectedEmployees);
-        setIsModalOpen(false);
+        console.log('ApvSummitBar111 - selectedData:', selectedData);
+        setIsLineModalOpen(false);
     };
 
     const handleRefSelection = (refSelectedData) => {
-        setRefSelectedEmployees(refSelectedData);
-        console.log('ApvSummitBar - selectedData:', refSelectedData);
-        console.log('ApvSummitBar - selectedEmployees:', setRefSelectedEmployees);
-        setIsModalOpen(false);
+        setRefSelectedEmployees(refSelectedData)
+
+        console.log('ApvSummitBar222 - refSelectedData:', refSelectedData);
+        setIsRefModalOpen(false);
     };
+
 
 
     const handleClick = async () => {
@@ -127,18 +134,18 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
             const pdf = new jsPDF('p', 'mm', 'a4'); // 'p'는 세로 방향
             const pageWidth = pdf.internal.pageSize.getWidth();
             const pageHeight = pdf.internal.pageSize.getHeight();
-        
+
             // 수평 크기를 고정
             const aspectRatio = canvas.width / canvas.height;
             const imgWidth = pageWidth;
             const imgHeight = imgWidth / aspectRatio;
-        
+
             if (data.title === '공문') {
                 pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
             } else {
                 pdf.addImage(imgData, 'JPEG', 0, 20, imgWidth, imgHeight);
             }
-    
+
             pdf.save(dynamicFileName);
         });
     }
@@ -171,26 +178,36 @@ const ApvSummitBar = forwardRef(({ onSubmit, updateIsUrgency, setSelectedEmploye
                         </div>
                     </Modal>
                 )}
-                <button onClick={handleModalOpen}>결재선</button>
-                {isModalOpen && <div className="modalOverlay" />}
-                <Modal
-                    isOpen={isModalOpen}
-                    onRequestClose={handleModalClose}
-                    style={modalStyles}
-                >
-                    <ApvLineTree onSelect={handleCompleteSelection} />
-                </Modal>
-                <button onClick={handleModalOpen}>결재참조</button>
-                {isModalOpen && <div className="modalOverlay" />}
-                <Modal
-                    isOpen={isModalOpen}
-                    onRequestClose={handleModalClose}
-                    style={modalStyles}
-                >
-                    <ApvLineTree onSelect={handleRefSelection} mode="결재참조" />
-                </Modal>
+                {/* Button to open "결재선" modal */}
+                <button onClick={() => handleModalOpen('line')}>결재선</button>
+                {/* "결재선" modal */}
+                {isLineModalOpen && (
+                    <Modal
+                        isOpen={isLineModalOpen}
+                        onRequestClose={handleModalClose}
+                        style={modalStyles}
+                    >
+                        <ApvLineTree onSelect={handleCompleteSelection} />
+                        <button onClick={() => handleModalClose('line')}>닫기</button>
+                    </Modal>
+                )}
+
+                {/* Button to open "결재참조" modal */}
+                <button onClick={() => handleModalOpen('ref')}>결재참조</button>
+                {/* "결재참조" modal */}
+                {isRefModalOpen && (
+                    <Modal
+                        isOpen={isRefModalOpen}
+                        onRequestClose={() => handleModalClose('ref')}
+                        style={modalStyles}
+                    >
+                        {/* ApvRefLineTree 컴포넌트에 handleRefSelection 콜백 함수와 setRefSelectedEmployees 함수 전달 */}
+                        <ApvRefLineTree onSelect={handleRefSelection} />
+                        <button onClick={() => handleModalClose('ref')}>닫기</button>
+                    </Modal>
+                )}
                 <button onClick={() => handleExportToPdf(ref)}>PDF로 내보내기</button>
-                
+
             </div>
         </div >
     );

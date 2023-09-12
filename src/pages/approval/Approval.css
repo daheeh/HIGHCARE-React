@@ -456,12 +456,22 @@ section {
 }
 
 /* 결재라인 */
+
+.apvLine {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .apvApvLine {
 
-    float: right;
-    margin-right: 20px;
+    /* float: right; */
+    /* margin-right: 20px; */
     width: 600px;
     height: 175px;
+    margin-bottom: 20px;
     /* border: 1px solid #7B7B7B; */
     display: flex;
     align-items: center;
@@ -559,6 +569,19 @@ section {
     border-bottom: 1px solid #7B7B7B;
 }
 
+
+.apvRefBox {
+    display: flex;
+    margin-top: 20px;
+    /* float: right; */
+    /* margin-right: 20px; */
+    text-align: right;
+
+}
+
+
+
+
 /* 결재라인 트리뷰 */
 
 .apvLineTreeContainer {
@@ -577,8 +600,8 @@ section {
     display: flex;
     border: 1px solid #7B7B7B;
     border-radius: 6px;
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: auto;
     text-align: center;
     align-items: center
 }
@@ -612,7 +635,7 @@ section {
 
 .apvLineTreeSelected2 {
     display: flex;
-    width: 150px;
+    width: 200px;
     margin-right: 10px;
     border: 1px solid #7B7B7B;
     border-radius: 6px;
@@ -680,7 +703,8 @@ section {
 
 .apvTextarea {
     font-family: NanumGothic;
-    background: #f4f4f4;
+    /* background: #f4f4f4; */
+    background: none;
     padding: 10px;
     font-size: 24px;
     width: 100%;
@@ -689,11 +713,13 @@ section {
     outline: none;
     resize: none;
     overflow: hidden;
+    margin-top: 10px;
 }
 
 .input1 {
     font-family: NanumGothic;
-    background: #f4f4f4;
+    /* background: #f4f4f4; */
+    background: none;
     font-size: 24px;
     border: none;
     outline: none;
@@ -703,7 +729,8 @@ section {
 
 .input2 {
     font-family: NanumGothic;
-    background: #f4f4f4;
+    /* background: #f4f4f4; */
+    background: none;
     font-size: 24px;
     border: none;
     outline: none;

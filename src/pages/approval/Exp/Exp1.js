@@ -84,8 +84,6 @@ function Exp1({ mode, data }) {
 		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
-
-
 	const [totalAmount, setTotalAmount] = useState(0);
 
 	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
@@ -198,7 +196,7 @@ function Exp1({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
 
 	const handleAddForm = () => {
@@ -292,6 +290,7 @@ function Exp1({ mode, data }) {
 		);
 	};
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -324,6 +323,7 @@ function Exp1({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -343,17 +343,19 @@ function Exp1({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">지출결의서(단건)</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
@@ -378,9 +380,6 @@ function Exp1({ mode, data }) {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-							{/* {Array.from({ length: formCount }).map((_, index) =>
-								renderApvExpForm(formData.apvExpForms[index] || {}, index)
-							)} */}
 							{renderApvExpForm(formData)}
 						</div>
 						<div className="apvContentDetailExp1Total">
@@ -413,7 +412,7 @@ function Exp1({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData} />
 				</div>
 			</div>
 		</section>

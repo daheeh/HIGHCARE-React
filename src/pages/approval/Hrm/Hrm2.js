@@ -89,8 +89,8 @@ function Hrm2({ mode, data }) {
 		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
 
 			console.log('formData.apvVacations[0].startDate && formData.apvVacations[0].endDate');
-			let startDate = new Date(formData.apvVacations[0].startDate);
-			let endDate = new Date(formData.apvVacations[0].endDate);
+			let startDate = new Date(formData.apvVacations[0].startDate.split(' ')[0]);
+			let endDate = new Date(formData.apvVacations[0].endDate.split(' ')[0]);
 			let offType1 = formData.apvVacations[0].offType1;
 			let offType2 = formData.apvVacations[0].offType2;
 
@@ -123,6 +123,8 @@ function Hrm2({ mode, data }) {
 				totalDays -= 0.5;
 			}
 
+			totalDays -= weekendDays;
+
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				apvVacations: [{
@@ -132,7 +134,7 @@ function Hrm2({ mode, data }) {
 			}));
 		}
 	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate,
-	formData.apvVacations[0].offType1, formData.apvVacations[0].offType2]);
+	formData.apvVacations[0].offType1, formData.apvVacations[0].offType2, weekendDays]);
 
 	function countWeekendDays(startDate, endDate) {
 		let currentDate = new Date(startDate);
@@ -150,6 +152,15 @@ function Hrm2({ mode, data }) {
 		return weekendDays;
 	}
 
+	useEffect(() => {
+		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
+			const startDate = formData.apvVacations[0].startDate.split(' ')[0];
+			const endDate = formData.apvVacations[0].endDate.split(' ')[0];
+			const daysBetween = countWeekendDays(startDate, endDate);
+			setWeekendDays(daysBetween);
+		}
+	}, [formData.apvVacations[0].startDate, formData.apvVacations[0].endDate]);
+	
 	const onChangeHandler = (e) => {
 		const { name, value } = e.target;
 		if (name === 'offType1') {
@@ -215,7 +226,6 @@ function Hrm2({ mode, data }) {
 		}));
 	};
 
-
 	const initialSelectedEmployees = [{
 		degree: 0,
 		isApproval: 'T',
@@ -242,8 +252,8 @@ function Hrm2({ mode, data }) {
 	}, [approval, setSelectedEmployees]);
 
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
-
 	const handleFileUpload = (file) => {
 		if (file) {
 			// Create a copy of the current apvFiles array and add the new file to it
@@ -258,7 +268,6 @@ function Hrm2({ mode, data }) {
 			console.log('ApvSummitBar에서 업로드한 파일:', file);
 		}
 	};
-
 
 	const updateFileList = (newFileList) => {
 		setFileList(newFileList);
@@ -276,6 +285,7 @@ function Hrm2({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -285,7 +295,6 @@ function Hrm2({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
-
 	console.log('formData : ', formData);
 
 	return (
@@ -296,17 +305,19 @@ function Hrm2({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">기타휴가신청서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentHrm2">
@@ -363,7 +374,7 @@ function Hrm2({ mode, data }) {
 								onBlur={onCommentChangeHandler}></textarea>
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData}/>
 				</div>
 			</div>
 		</section>

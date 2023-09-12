@@ -113,14 +113,13 @@
 }
 
 .apvContentBiz2Last > div{
-    padding: 30px;
+    padding: 20px;
     display: flex;
     border-right: 1px solid #7B7B7B;
     height: auto;
     flex-direction: column;
     justify-content: center;
     background: #EEE;
-    padding: 30px;
 }
 .apvContentBiz2Last > div:nth-child(2n) {
     border-right: none;

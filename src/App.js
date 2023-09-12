@@ -15,8 +15,6 @@ import Biz4 from './pages/approval/Biz/Biz4';
 import Biz4Offcial from './pages/approval/Biz/Biz4Offcial';
 import Exp1 from './pages/approval/Exp/Exp1';
 import Exp1View from './pages/approval/Exp/Exp1View';
-import Exp2 from './pages/approval/Exp/Exp2';
-import Exp2View from './pages/approval/Exp/Exp2View';
 import Exp4 from './pages/approval/Exp/Exp4';
 import Exp4View from './pages/approval/Exp/Exp4View';
 import Exp6 from './pages/approval/Exp/Exp6';
@@ -143,8 +141,6 @@ function App() {
 
               <Route path="exp1" element={<Exp1 />} />
               <Route path="exp1/:apvNo" element={<Exp1View />} />
-              <Route path="exp2" element={<Exp2 />} />
-              <Route path="exp2/:apvNo" element={<Exp2View />} />
               <Route path="exp4" element={<Exp4 />} />
               <Route path="exp4/:apvNo" element={<Exp4View />} />
               <Route path="exp6" element={<Exp6 />} />

@@ -39,9 +39,13 @@ function Exp6View() {
         fetchData();
     }, [apvNo, dispatch]);
 
-    if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+    if (!data) {
+        return ;
+      }
+    
+        if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
         return <div className='apvNoUser'>권한이 없습니다</div>;
-    }
+      }
 
     const renderApvExpForm = (data) => {
         return (
@@ -189,7 +193,7 @@ function Exp6View() {
                         </div>
                         <div className="apvContentDetail3">위와 같이 지급을 요청합니다.</div>
                     </div>
-                    <ApvFileList files={data?.apvFiles || []} data={data} />
+                    <ApvFileList files={data?.apvFiles || []} data={data} isEditMode={false} />
                 </div>
             </div>
         </section>
