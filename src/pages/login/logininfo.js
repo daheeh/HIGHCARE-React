@@ -4,6 +4,68 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { callLoginAPI } from "../../apis/AuthAPICalls";
 
+export function device () {
+
+    let agent = navigator.userAgent.toLowerCase(); 
+
+    if(agent.indexOf('mac') >= 0 ){
+        return 'Mac OS'
+    }
+    else if(agent.indexOf('win') >= 0 ){
+        return 'Window'
+    }
+    else if(agent.indexOf('linux') >= 0 ){
+        return 'Linux'
+    }
+    else if(agent.indexOf('android') >= 0 ){
+        return 'Android'
+    }
+    else if(agent.indexOf('iphone') >= 0 ){
+        return 'iPhone'
+    }
+    else if(agent.indexOf('iPad') >= 0 ){
+        return 'iPad'
+    }
+    else if(agent.indexOf('android') >= 0 ){
+        return 'Android'
+    }
+    else if(agent.indexOf('opera') >= 0 ){
+        return 'Opera'
+    }
+    else if(agent.indexOf('iemobile') >= 0 ){
+        return 'IEMobile'
+    }
+    else if(agent.indexOf('webos') >= 0 ){
+        return 'webOS'
+    } else {
+        return 'none';
+    }
+}
+
+export const browser = () => {
+
+    let agent = navigator.userAgent.toLowerCase(); 
+
+    if(agent.indexOf('trident') >= 0 ){
+        return 'IE';
+    } 
+    else if(agent.indexOf('firefox') >= 0 ){
+        return 'Firefox';
+    } 
+    else if(agent.indexOf('edg') >= 0 ){
+        return 'Edge';
+    }
+    else if(agent.indexOf('chrome') >= 0 ){
+        return 'Chrome';
+    } 
+    else if(agent.indexOf('safari') >= 0 ){
+        return 'Safari';
+    }
+    else {
+        return 'none';
+    }
+
+}
 
 function Logininfo() {
 
@@ -14,9 +76,15 @@ function Logininfo() {
     const loginMember = useSelector(state => state.authes);
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
+    
+
     const [form, setForm] = useState({
         id: '',
-        password: ''
+        password: '',
+        device: device(),
+        browser: browser(),
+
+
     });
 
     useEffect(() => {
@@ -39,9 +107,15 @@ function Logininfo() {
 
     }
 
+    
+
+    console.log(browser());
+    console.log(device());
+
 
     return (
         <div  style={{marginTop:100}}>
+           
             <div className="login-container">
                 <div className="input-group">
                     <div className="id-group">

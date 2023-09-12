@@ -6,6 +6,7 @@ export const GET_BOARD = 'board/GET_BOARD';
 export const POST_BOARD = 'board/POST_BOARD';
 export const GET_BOARDS = 'board/GET_BOARDS';
 export const GET_BOARDD = 'board/GET_BOARDD';
+export const GET_NOTICE = 'board/GET_NOTICE';
 export const POST_REGISTER = 'board/POST_REGISTER';
 
 export const PUT_BOARD = 'board/PUT_BOARD';
@@ -17,6 +18,7 @@ const actions = createActions({
     [POST_BOARD]: () => {},
     [GET_BOARDS]: () => {},
     [GET_BOARDD]: () => {},
+    [GET_NOTICE]: () => {},
     [POST_REGISTER]: () => {},
     [PUT_BOARD]: () => {},
     [PUT_BOARDS]: () => {},
@@ -47,6 +49,9 @@ const boardReducer = handleActions(
             return payload;
         },
         [GET_THREAD]:(state, {payload})=>{
+            return payload;
+        },
+        [GET_NOTICE]:(state, {payload}) =>{
             return payload;
         },
     },

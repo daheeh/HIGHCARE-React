@@ -10,8 +10,17 @@
     background-color: white;
     border: 1px solid #ddd;
     padding: 20px;
-    height: 300px;
-    width: 800px;
+    max-height: 500px;
+    max-width: 1200px;
+    /* overflow: auto; */
+
+}
+
+.innerbox {
+    overflow: auto;
+    min-height: 200px;
+    max-height: 400px;
+    max-width: 1100px;
 }
 
 

@@ -19,6 +19,30 @@ import{
 
 } from '../modules/commentModule';
 
+import{
+    GET_NOTICE
+} from '../modules/NoticeModule';
+
+export const callNoticeAPI = () => {
+    const requestURL = `http://localhost:8080/bulletin/notice`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                "Content-Type": "application/json",
+                "Accept": "*/*"
+            }
+        })
+        .then(response => response.json());
+        if(result.status === 200){
+            console.log('result.data', result.data);
+            dispatch({ type: GET_NOTICE,  payload: result});
+        }
+       };
+}
+
+
 export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 //    export const callBulletinAPI = () => {
    const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}&empNo=${empNo}`;
