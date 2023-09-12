@@ -39,6 +39,7 @@ function PmMenu() {
 
 
 	return (
+        <div>
 <section>
 <PmNav/>
 <div className="apv-navibox">
@@ -83,7 +84,7 @@ function PmMenu() {
                 </div>
 
             {/* 페이징 처리를 위한 버튼  */}
-            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center" }}>
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center", marginLeft: "780px" }}>
             { Array.isArray(results) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 
@@ -111,16 +112,10 @@ function PmMenu() {
             }
         </div>
         </div>
-
-                {/* <div className="paging">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                </div> */}
     </section>
-        
+        <br></br>
+        <br></br>
+        </div>
 	);
 }
 

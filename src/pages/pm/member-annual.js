@@ -10,9 +10,9 @@ function PmMemberAnnual() {
     const pmresult = useSelector(state => state.pmannual);
     // const total = pmresult.
 
-    const empinfo = useSelector(state => state.authes);
-    const empNo = empinfo.empNo;
-    const depart = empinfo.dept;
+    const pminfo = useSelector(state => state.authes);
+    const empNo = pminfo.empNo;
+    const depart = pminfo.dept;
     
 
     useEffect(() => {

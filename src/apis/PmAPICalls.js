@@ -301,10 +301,10 @@ export const callPmInsertAPI = ({ formData }) => {
 
 
 
-export const callAnnualAPI = () => {
+export const callAnnualAPI = ({currentPage}) => {
     console.log('[PmAPICalls] callAnnualAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/annual`;
+    const requestURL = `http://localhost:8080/api/pm/annual?offset=${currentPage}`;
  
     return async (dispatch, getState) => {
 

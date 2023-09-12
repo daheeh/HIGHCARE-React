@@ -319,9 +319,9 @@ font-size: 16px;
     box-shadow:none !important;}
 
 .pm-work-button{
-    margin: 10px 30px 10px 10px;
+    margin: 20px 30px 10px 1200px;
     width: 150px;
-    height: 30px;
+    height: 50px;
     border-radius: 6px;
     color: white;
     font-size: 20px;
@@ -439,7 +439,7 @@ font-size: 16px;
     background-color: #10479A;
     color: white;
     text-align: center;
-    margin-left: 1220px;
+    margin-left: 1380px;
 }
 
 .pm-de-add:hover{
@@ -536,7 +536,7 @@ font-size: 16px;
 
 .label-font{
     font-size: 14px;
-    margin-left: 850px;
+    margin-left: 830px;
 }
 
 .label-font2{
@@ -1181,7 +1181,7 @@ display: flex;
 
 .pm-tests{
     width: 205px;
-    height: 20px;
+    height: 26px;
     text-align: center;
     border-right: 1px solid black;
     /* border-bottom: 1px solid black; */
@@ -1203,6 +1203,13 @@ display: flex;
     /* border-bottom: 1px solid black; */
 }
 
+.pm-test10{
+    width: 205px;
+    height: 26px;
+    text-align: center;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
 /* 왼쪽 제목 */
 .pm-titleboxs{
     display: flex;
@@ -1282,4 +1289,8 @@ display: flex;
     text-align: center;
     color: #000;
     padding: 70px;
+}
+
+.marginbox {
+    margin-bottom: 650px;
 }

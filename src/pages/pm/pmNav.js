@@ -21,12 +21,12 @@ function PmNav() {
 						</div>
 						<ul className="apvNaviBoxUl">   
 							<li><Link to="/pm/search">사원 조회</Link></li>
-							<li><Link to="/pm/department">부서 조회</Link></li>
+							<li><Link to="/pm/pm-resist">사원상세조회</Link></li>
+							{/* <li><Link to="/pm/department">부서 조회</Link></li> */}
 							<li><Link to="/pm/annual">연차 조회</Link></li>
 							<li><Link to="/pm/member-annual">개인 연차 조회</Link></li>
 							<li><Link to="/pm/secondTree">조직도</Link></li>
-							<li><Link to="/pm/cal">업무 일정 관리</Link></li>
-							<li><Link to="/pm/pm-resist">사원상세조회</Link></li>
+							{/* <li><Link to="/pm/cal">업무 일정 관리</Link></li> */}
 							
 						</ul>
 						<div className="apvNaviBoxEmp"></div>

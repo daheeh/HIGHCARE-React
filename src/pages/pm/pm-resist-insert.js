@@ -72,6 +72,7 @@ function PmMemberInsert() {
   const authSubmission = async () => {};
 
   return (
+    <div className="marginbox">
     <section>
       <PmNav />
       <div className="apv-navibox">
@@ -295,6 +296,7 @@ function PmMemberInsert() {
       </div>
       <br></br>
     </section>
+    </div>
   );
 }
 

@@ -12,12 +12,20 @@ function PmAnnual() {
     const dispatch = useDispatch();
     const result = useSelector(state => state.pmannual);
 
-  const empinfo = useSelector(state => state.authes);
-  const name = empinfo.name;
-  const dept = empinfo.dept;
-  const job = empinfo.job; 
+    const empinfo = useSelector(state => state.authes);
+    const name = empinfo.name;
+    const dept = empinfo.dept;
+    const job = empinfo.job; 
 
+    const [pageEnd, setPageEnd] = useState(1);
+    const pageInfo = result.pageInfo;
 
+    const pageNumber = [];
+    if(pageInfo) {
+        for(let i = 1; i<= pageInfo.pageEnd; i++){
+            pageNumber.push(i);
+        }
+    }
 
     console.log('----------',result);
   
@@ -29,10 +37,12 @@ function PmAnnual() {
     // console.log('================================================empnNum>>>>',empNum);
   
     useEffect(() => {
-      dispatch(callAnnualAPI());
-    },[]);
+        console.log('--------------------->>>>>>>>>', currentPage);
+      dispatch(callAnnualAPI({currentPage}));
+    },[currentPage]);
   
 	return (
+        <div>
 <section>
 <PmNav/> 
         <div display="flex">
@@ -46,7 +56,6 @@ function PmAnnual() {
                     <input className="pm-an-search2" type="text" name="name" placeholder="사원이름을 입력하세요."/></label>
                     <button className="pm-department-button">검색</button>
                 </div>
-                <div className="pm-topmenu"></div>
                 <div className="pm-de">
                     <table className="pm-department-table">
                         <tbody>
@@ -61,7 +70,6 @@ function PmAnnual() {
                         <th className="columnpm7">비고</th>
                     </tr>
                     {Array.isArray(result) && result
-                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((result) => (
                             <tr key={result.empNo}>
                                 <td>{result.anEmployee[0].empName}</td>
@@ -79,19 +87,44 @@ function PmAnnual() {
             </div>
             
             <button className="pm-de-add">연차 신청 하기</button>
-                <div className="paging">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                </div>
+            
+            {/* 페이징 처리를 위한 버튼  */}
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center", marginLeft: "780px" }}>
+            { Array.isArray(result) &&
+            <button 
+                onClick={() => setCurrentPage(currentPage - 1)} 
+                disabled={currentPage === 1}
+            >
+                &lt;
+            </button>
+            }
+            {pageNumber.map((num) => (
+            <li key={num} onClick={() => setCurrentPage(num)}>
+                <button
+                    style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                >
+                    {num}
+                </button>
+            </li>
+            ))}
+            { Array.isArray(result) && pageInfo != null &&
+            <button 
+                onClick={() => setCurrentPage(currentPage + 1)} 
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+            >
+                &gt;
+            </button>
+            }
+        </div>
             </div>
         </div>
         </div>
             
         
     </section>
+    <br></br>
+    <br></br>
+    </div>
 	);
 }
 

@@ -21,6 +21,7 @@ function PmMemberResist() {
   },[]);
 
   return (
+    <div className='marginbox'>
     <section>
       <PmNav/>
       <div className="apv-navibox">
@@ -201,11 +202,11 @@ function PmMemberResist() {
                       <tbody>
                       {resist.certification && [...resist.certification, null, null, null].slice(0, 3).map((item, index) => (
                           <tr key={index}>
-                            <td className="pm-tests">{item?.name || ''}</td>
-                            <td className="pm-tests">{item?.institution || ''}</td>
-                            <td className="pm-tests">{item?.startDate || ''}</td>
-                            <td className="pm-tests">{item?.startDate || ''}</td>
-                            <td className="pm-test9">{item?.status || ''}</td>
+                            <td className="pm-test10">{item?.name || ''}</td>
+                            <td className="pm-test10">{item?.institution || ''}</td>
+                            <td className="pm-test10">{item?.startDate || ''}</td>
+                            <td className="pm-test10">{item?.startDate || ''}</td>
+                            <td className="pm-test10">{item?.status || ''}</td>
                           </tr>
                         ))}
                       {/* {Array.isArray(resist.certification) ? (
@@ -255,21 +256,15 @@ function PmMemberResist() {
               </div>
 
             <h6 className="pm-font"> 상기 내용은 사실과 다름없음을 확인합니다.</h6>
-            <h6 className="pm-font">년      월      일</h6>
+            <h6 className="pm-font">2023년      09월      17일</h6>
             <h6 className="pm-font2">작성자:     (인)</h6>
             </div>
           </div>
         </div>
         <br></br>
-        <div className="paging">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-        </div>
       </div>
     </section>
+    </div>
   );
 }
 
