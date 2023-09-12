@@ -45,7 +45,8 @@ function Profile() {
 
     console.log("myInfo", myInfo);
     console.log("업데이트 사진", picture?.chName);
-    console.log("기본이미지유알엘", imageUrl);      // useEffect 위로 올리면 null로 들어옴
+    console.log("기본이미지유알엘", imageLink);      // useEffect 위로 올리면 null로 들어옴
+    console.log("이미지유알엘", imageUrl);
     // //이미지
     useEffect(
         () => {

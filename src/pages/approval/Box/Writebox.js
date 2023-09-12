@@ -112,8 +112,6 @@ function WriteBox() {
                         </span>
                     ))}
                 </div>
-
-
             </div>
         </section >
     );

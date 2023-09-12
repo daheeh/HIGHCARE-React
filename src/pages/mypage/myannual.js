@@ -8,42 +8,58 @@ import MypageNav from './MypageNav';
 
 function MypageAnnual() {
 
-    // const navigate= useNavigate();
     const dispatch = useDispatch();
-
-    const mypageAnn = useSelector(state => state.authes) // authes
-    // const [numAnn, setNumAnn] = useState(null);
+    const employee = useSelector(state => state.authes) // authes
     // const [numAnn, setNumAnn] = useState(null);
 
-    console.log("mypageAnn====", mypageAnn);    // authes의 로그인정보로 가지고옴***, 마이페이지의 값을 들고 오면 안됨
+    console.log("employee====", employee);    // authes의 로그인정보로 가지고옴***, 마이페이지의 값을 들고 오면 안됨
 
-    useEffect(() => {
-        dispatch(callAnnSelectAPI(mypageAnn.empNo));
-        // console.log("ann test ------", ann);
-    },
-        []);
+    // 로그인한 정보를 받아오기 위해 authes로 접근,  mypage에 담긴 값을 불러오려면 mypage에 담긴 값을 불러와야함
+    const mypage = useSelector(state => state?.mypage?.data);
+    // const numAnnData = useSelector(state => state.mypage.data.myEmployee.myAnnual[0]);
+    const numAnnData = useSelector(state => state?.mypage?.data[0]);
+    const pageInfo = useSelector(state => state?.mypage?.pageInfo);
 
-    // 리듀서에서 받는다고 처리하고 있기때문에 async await 자체가 필요가 없음
-    //         useEffect(() => {
 
-    //             const fetchAnnData = async () => {
-    //                 try {
-    //                     const response = await dispatch(callAnnSelectAPI(mypageAnn.empNo));
-    //                     if (response && response.data) {
-    //                         setNumAnn(response.data);
-    //                         console.log("response check: ",response);
-    //                         console.log("response.data", response.data);
-    //                     } else {
-    //                         console.error('API 호출 결과에 데이터가 없음');
-    //                     }
-    //                 } catch (error) {
-    //                     console.error('API 호출중 오류 발생 : ', error);
-    //                 }
-    //             };
+    console.log("numAnnData Check : ", numAnnData);
+    console.log("ann----", mypage);
 
-    //             fetchAnnData();
-    // },  [dispatch, mypageAnn.empNo]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemPerpage = 10;
 
+    const totalPages = Math.ceil(pageInfo?.total / itemPerpage);
+    console.log("totalPages=====", totalPages);
+
+
+    // const apvVa = ann[0].myApvVation;   // myApvVacation 연차, 사유,...
+    // 여기서 가지고 올 수 가 없음
+    // const useAn = ann.empNo; 
+
+    // console.log("apvVa=====",apvVa);
+
+    console.log("in reducer/mypage/myAnnual  ====== ", mypage);
+    // console.log("myAnuual.addAn", ann[0]);  // 연차안에 있는 값 출력
+    // console.log('연차개수',empNo);
+    // console.log("empNo=====", empNo);
+    // console.log("mypageAnn", mypageAnn);
+
+    useEffect(
+
+        () => {
+            dispatch(callAnnSelectAPI(employee.empNo, currentPage));
+            // effect에서 currentPage를 API에 넘겨줘서 API에서 받아야함 
+            // offset=2를 넘겨받아서 서버에 보내야되는데 그걸 하는 방법을 몰랐음
+            console.log('=============><><><>', currentPage)
+            console.log('=============><><><>', totalPages)
+            console.log('=============><><><>', itemPerpage)
+        }
+        , [currentPage]);
+
+    // useEffect(() => {
+    //     dispatch(callAnnSelectAPI(employee.empNo));
+    //     // console.log("ann test ------", ann);
+    // },
+    //     []);
 
     // 방법
     // const annemp = mypageAnn.empNo; // authes안에 empNo
@@ -56,94 +72,62 @@ function MypageAnnual() {
     //     }
     //     , []);
 
-    // 로그인한 정보를 받아오기 위해 authes로 접근,  mypage에 담긴 값을 불러오려면 mypage에 담긴 값을 불러와야함
-    const ann = useSelector(state => state.mypage);
-    // const numAnnData = useSelector(state => state.mypage.data.myEmployee.myAnnual[0]);
-    const numAnnData = useSelector(state => state.mypage[0])
+    const handlePageChange = (pageNumber) => {
+        console.log('pageNumber :', pageNumber)
+        setCurrentPage(pageNumber);
+    };
 
-
-    console.log("ban확인 : ", numAnnData);
-
-    console.log("ann----", ann);
-    // console.log("총연차 check :", ann[0].ban);  
-
-    // const apvVa = ann[0].myApvVation;   // myApvVacation 연차, 사유,...
-    // 여기서 가지고 올 수 가 없음
-    // const useAn = ann.empNo; 
-
-    // console.log("apvVa=====",apvVa);
-
-    console.log("in reducer/mypage/myAnnual  ====== ", ann);
-    // console.log("myAnuual.addAn", ann[0]);  // 연차안에 있는 값 출력
-    // console.log('연차개수',empNo);
-    // console.log("empNo=====", empNo);
-    // console.log("mypageAnn", mypageAnn);
 
     return (
 
-      
-        <section>
-        <MypageNav />
-          
-            <div className="apv-navibox">
-                {/* <div className="pm-de-top">
-                    <div className="pm-div-font">개인 연차 조회</div>
-                </div> */}
-                <div className="pm-ma-top">
-                    <div className='div3'></div>
-                    <div className="pm-ma-box2">
-                        <div className="pm-ma-font">총연차</div>
-                        <div className="pm-ma-number" >{numAnnData?.ban}</div>
-                        <div className="pm-ma-number" ></div>
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div> 총 월차</div>
-                        <div className="pm-ma-number">00</div>
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div>잔여 연차</div>
-                        <div className="pm-ma-number">{numAnnData?.totalAn}</div>
-                        <div className="pm-ma-number" > </div>
-                        {/* 잔여연차는 최신으로 들어간 DB값을 불러와야 하는 로직 필요 */}
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div>조정 연차</div>
-                        <div className="pm-ma-number">{numAnnData?.addAn}</div>
-                        {/* <div className="pm-ma-number" >{ ann.ban }</div> */}
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div>이월 연차</div>
-                        <div className="pm-ma-number">00</div>
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div>사용 연차</div>
-                        <div className="pm-ma-number">{numAnnData?.useAn}</div>
-                        {/* <div className="pm-ma-number" >{ ann.ban }</div> */}
-                    </div>
-                    <div className="pm-line"></div>
-                    <div className="pm-ma-box">
-                        <div>잔여 연차</div>
-                        <div className="pm-ma-number">00</div>
-                    </div>
 
+        <section>
+            <MypageNav />
+
+            <div className="packingmy">
+
+
+                <div className="apvMainBox">
+                    <div className="apvMainBoxRightBox">
+                        <div className="apvMainBoxRight">
+                            <div className="row1">
+                                총연차
+                                <div className="annRow">{numAnnData?.ban}</div>
+                            </div>
+                        </div>
+                        <div className="apvMainBoxRight">
+                            <div className="row1">
+                                잔여연차
+                                <div className="annRow">{numAnnData?.totalAn}</div>
+                            </div>
+                        </div>
+                        <div className="apvMainBoxRight">
+                            <div className="row1">
+                                조정연차
+                                <div className="annRow">{numAnnData?.addAn}</div>
+                            </div>
+                        </div>
+                        <div className="apvMainBoxRight">
+                            <div className="row1">
+                                사용연차
+                                <div className="annRow">{numAnnData?.useAn}</div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <table className="pm-ma-table">
-                    <tbody>
+                <table className="task-table">
+                    <thead>
                         <tr>
                             <th className="columnpm1">시작일</th>
                             <th className="columnpm2">종료일</th>
                             <th className="columnpm3">휴가 종류</th>
                             <th className="columnpm4">사유</th>
-                            {/* <th className="columnpm5">사용 연차 </th>
-                        <th className="columnpm7">연차 사용 기간</th>
-                        <th className="columnpm7">비고</th> */}
                         </tr>
-                        {Array.isArray(ann) && ann
+                    </thead>
+
+                    <tbody>
+                        {Array.isArray(mypage) && mypage
                             .map((item) => (
                                 <tr className="myanntrsize" key={item?.annNo}>
                                     {/* pk 인덱스 */}
@@ -154,19 +138,23 @@ function MypageAnnual() {
                                 </tr>
                             ))
                         }
+
                     </tbody>
                 </table>
-                <div className="paging">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
+                <div className="pagingmypageAnn">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <span
+                            key={index + 1}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`pagingBtn ${currentPage === index + 1 ? 'active' : ''}`}
+                        >
+                            {index + 1}
+                        </span>
+                    ))}
                 </div>
             </div>
         </section>
-        
-    
+
     )
 }
 
