@@ -8,8 +8,6 @@ import { decodeJwt } from "../../utils/decodeJwt";
 import { logoutAction } from '../../modules/authSlice';
 import { ReduxReset } from '../../utils/ReduxReset';
 import { GET_RESET_MANSELECT } from '../../modules/MypageModule';
-
-
 function Header() {
 
     const navigate = useNavigate();
@@ -30,11 +28,9 @@ function Header() {
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const onClickLogoutHandler = () => {
-        // dispatch(logoutap());
+
         dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
-        // ReduxReset("mypage");
-        // navigate("/login", { replace: true });
         window.location.href="/";
 
     }
