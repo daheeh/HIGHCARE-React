@@ -94,7 +94,7 @@ function ResourceAdd(){
     };
 
     const onClickResourceRegistHandler = () => {
-        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime ){
             alert('시간을 다시입력해주세여');
         }else{
         const formData = new FormData();
