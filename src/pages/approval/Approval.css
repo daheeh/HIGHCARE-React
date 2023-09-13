@@ -156,13 +156,13 @@ section {
     border-right: #10479A solid 4px;
 }
 
-.apvMainBox {
+.apvMainBox10 {
     width: 900px;
     height: 160px;
     margin-left: 180px;
 }
 
-.apvMainBox>span {
+.apvMainBox10>span {
     border: solid 1px;
 }
 
@@ -207,8 +207,8 @@ section {
     font-size: 20px;
 }
 
-.apvMainBoxRightBox {
-    display: flex;
+.apvMainBoxRightBox10 {
+    display: flex !important;
 }
 
 .apvMainBoxRight {
@@ -709,7 +709,6 @@ section {
     width: 100%;
     height: auto;
     min-height: 50px;
-    max-height: 300px;
     border: none;
     outline: none;
     resize: none;
