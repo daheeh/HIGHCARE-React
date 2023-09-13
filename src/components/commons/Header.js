@@ -28,15 +28,15 @@ function Header() {
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-    const onClickLogoutHandler =  () => {
+    const onClickLogoutHandler = () => {
         dispatch(logoutAction());
-        dispatch({ type: GET_RESET_MANSELECT, payload:''  });
+        // dispatch({ type: GET_RESET_MANSELECT, payload: '' });
 
         localStorage.setItem('reduxState', '');
-ReduxReset("mypage");
-       navigate("/", { replace: true });
+        // ReduxReset("mypage");
+        // navigate("/", { replace: true });
 
-   }
+    }
 
     function BeforeLogin() {
 
