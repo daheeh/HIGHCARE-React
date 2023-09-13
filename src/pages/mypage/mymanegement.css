@@ -7,10 +7,9 @@
 
 
 .task-table {
-    /* background-color: white; */
-    /* border-collapse: collapse; */
+    border-collapse: collapse;
     width: 1520px;
-    margin-top: 20px;
+    /* margin-top: 120px; */
     margin-left: 80px;
 }
 
@@ -44,7 +43,7 @@
     /* transform: translateX(-50%); */
     justify-content: center;
     align-items: center;
-    margin-top: 550px;
+    margin-top: 100px;
 }
 
 .pagingmypage>span{
@@ -70,4 +69,7 @@
     background: #FFC338; 
 }
 
+.packing {
+    margin-top: 100px;
+}
 

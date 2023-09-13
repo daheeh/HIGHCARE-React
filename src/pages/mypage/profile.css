@@ -2,7 +2,7 @@ body {
     margin: 0;
   }
   
-  /* 회원가입 CSS*/
+  /* 프로필 틀*/
   .profile-form {
     width: 900px;
     background-color: #10479A;
@@ -10,9 +10,9 @@ body {
     margin-right: auto;
     margin-top: 50px;
     margin-bottom: 180px;
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 30px;
-    height: 780px;
+    height: 540px;
     /* display: flex; */
     /* 프로필사진 칸 가운데 */
 
