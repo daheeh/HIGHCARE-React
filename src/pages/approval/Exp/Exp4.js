@@ -170,31 +170,27 @@ function Exp4({ mode, data }) {
 				updatedFormData.apvExpForms[index][field] = value;
 				return updatedFormData;
 			});
-			updateTotalAmount();
 		} else if (nameParts[0] === 'sharedProperties') {
-
+			
 			const field = nameParts[1];
 			setSharedProperties((prevSharedProps) => ({
 				...prevSharedProps,
 				[field]: value,
 			}));
-			// apvExpForms 배열 내의 해당 속성 업데이트
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
-					...form,
-					[field]: value,
-				})),
-			}));
-			updateTotalAmount();
 		} else {
-			// 다른 폼 데이터 속성 업데이트
+			
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
 			}));
-			updateTotalAmount();
 		}
+
+		const updatedAmounts = [...amounts];
+		updatedAmounts[index] = parseFloat(value || 0);
+		setAmounts(updatedAmounts);
+
+		const newTotalAmount = updatedAmounts.reduce((sum, amount) => sum + amount, 0);
+		setTotalAmount(newTotalAmount);
 	};
 
 	function numberWithCommas(x) {
@@ -406,7 +402,7 @@ function Exp4({ mode, data }) {
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장신청서 번호</div>
 							<div className="column2">
-								<select onChange={(e) => handleApvNoSelect(e.target.value)}>
+								<select className="option1" onChange={(e) => handleApvNoSelect(e.target.value)}>
 									<option className="input1" value="">선택</option>
 									{resultData && resultData.map((item, index) => (
 										<option key={index} value={item.apvNo}>
