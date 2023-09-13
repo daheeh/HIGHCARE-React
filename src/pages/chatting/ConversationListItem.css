@@ -15,6 +15,25 @@
   flex-direction: column;
 }
 
+.ChattingRoomList_chattingRoomLists__I-ZUi{
+  display: flex;
+  height: 85px;
+  padding-left: 15px;
+  font-size: small;
+  text-align: center;
+  flex-direction: column;
+}
+
+.ChattingRoomList_chattingRoomInfo__juBNs {
+  display: flex;
+  height: 85px;
+  padding-top: 3px;
+  padding-left: 15px;
+  font-size: small;
+  text-align: center;
+  flex-direction: column;
+}
+
 .conversation-list-item {
     display: flex;
     align-items: center;
@@ -41,12 +60,17 @@
     text-transform: capitalize;
     margin: 0;
     color: black;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    text-align: left;
   }
   
   .conversation-snippet {
     font-size: 14px;
     color: #888;
     margin: 0;
+    text-align: left;
+    padding-left: 15px;
   }
   
   .ChattingRoomList_profileIcon__6EIgj {
