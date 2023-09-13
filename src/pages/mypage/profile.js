@@ -74,7 +74,7 @@ function Profile() {
 
     const onChangeImageUpload = (e) => {
 
-        const image2 = e.target.files[0];
+        const image2 = e.target?.files[0];
         console.log('image check ', image2)
         if (image2) {
 
