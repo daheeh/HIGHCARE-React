@@ -18,7 +18,7 @@ export function AdminNav() {
                     <ul className="apvNaviBoxUl">
                         <Link to="/admin/member"><li>회원목록</li></Link>
                         <Link to="/admin/member/auth"><li>권한설정</li></Link>
-                        <Link to="/manager/member/request"><li>가입신청</li></Link>
+                        <Link to="/admin/manager/member/request"><li>가입신청</li></Link>
 
                     </ul>
                     <div className="apvNaviBoxEmp"></div>

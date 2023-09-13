@@ -13,8 +13,8 @@ import secondReduccer from './modules/SecondTreeModule';
 import ManagementReduccer from './modules/ManageMentModule';
 
 import pmMemberReduccer from './modules/PmMemberModule';
-import pmAnnualReduccer from './modules/AnnualModule';
 
+import PmReduccer from './modules/PmMeModule';
 import resReducer from './modules/reservationModule';
 import resListReducer from './modules/resLIstModule';
 import resContentReducer from './modules/resContentModule';
@@ -28,19 +28,12 @@ import AccessesSlice from './modules/AccessesSlice';
 
 import noticeReducer from './modules/NoticeModule';
 
-
-
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   // ? (localStorage.getItem('reduxState'))
   : {};
 
-  const initialState = {
-    // 초기 상태 내용
-  };
-
-  
 const store = configureStore({
     reducer: {
         members: memberReducer,
@@ -53,7 +46,7 @@ const store = configureStore({
         second: secondReduccer,
         manage: ManagementReduccer,
         pmmem : pmMemberReduccer,
-        pmannual : pmAnnualReduccer,
+        pmreduccer : PmReduccer,
         resReducer : resReducer,
         resListReducer : resListReducer,
         resContentReducer : resContentReducer,
@@ -74,12 +67,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-  const stateToSave = store.getState();
-
     localStorage.setItem('reduxState', JSON.stringify(store.getState())); 
   });
-
-  // Redux 상태를 초기화하려면 다음과 같이 액션을 디스패치합니다.
-store.dispatch({ type: 'RESET_STATE' });
 
 export default store;

@@ -74,6 +74,7 @@ import { BadRequestErrorPage, ForbiddenErrorPage, ServerErrorPage, UnauthorizedE
 import { PageNotFound } from "./errors/pageNotFound";
 import { ModifyPass } from "./pages/admin/member/ModifyPass";
 import { AccountStatusVerify } from "./pages/admin/auth/AccountStatusVerify";
+import OAuthPage from "./pages/login/components/OAuthPage";
 
 
 
@@ -99,12 +100,11 @@ function App() {
           <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
           <Route path="/logout" element={<MainLayOut />} />
 
-          <Route path="/manager/member/request" element={<MemberRequest />} />
+          
 
 
           {/* 여기부터 토큰(로그인 권한 인증) 유효성 체크 적용됨  */}
           <Route element={<AccountStatusVerify><TokenVerification /></AccountStatusVerify>} >
-          
 
             <Route path="approval">
               <Route index element={<ApvMain />} />
@@ -138,10 +138,6 @@ function App() {
             </Route>
 
 
-
-            <Route path="/modifyinfo" element={<ModifyInfo />} />
-            <Route path="/modifyinfo/password" element={<ModifyPass/>}/>
-            <Route path="myinfo" element={<Myinfo />} />
 
             <Route path="/pm" element={<PmTest />} />
             <Route path="/pm/search" element={<PmMenu />} />
@@ -185,6 +181,10 @@ function App() {
             <Route path="/mypage/profile" element={<Profile />} />
             <Route path="/mypage/myannual" element={<MypageAnnual />} />
 
+
+          <Route path="/modifyinfo" element={<OAuthPage />} />
+            <Route path="/modifyinfo/password" element={<ModifyPass />}/>
+            <Route path="myinfo" element={<OAuthPage />} />
 
           </Route>
           {/* <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} /> */}
@@ -233,7 +233,9 @@ function App() {
               <Route path="member/log" element={<MemberLog />} />
               <Route path="member/log/:name" element={<MemberLog />} />
               <Route path="member/auth" element={<AuthManager />} />
+            <Route path="manager/member/request" element={<MemberRequest />} />
             </Route>
+
 
           </Route>
           {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
