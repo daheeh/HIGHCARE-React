@@ -29,12 +29,8 @@ function Header() {
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const onClickLogoutHandler = () => {
-
-        // dispatch(logoutap());
         dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
-        // ReduxReset("mypage");
-        // navigate("/login", { replace: true });
         window.location.href="/";
 
     }

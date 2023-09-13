@@ -25,7 +25,7 @@ function ModifyInfo() {
   return (
 
     <div style={{ textAlign: 'center' }}>
-      <OAuthPage />
+      {/* <OAuthPage /> */}
       <button style={{ width: 150, height: 50 }}
         onClick={resetPasswordClick}
 
