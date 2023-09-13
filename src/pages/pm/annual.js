@@ -6,11 +6,11 @@ import { callAnnualAPI } from '../../apis/PmAPICalls';
 
 function PmAnnual() {
 
-    const [currentPage, setCurrentPage] = useState(1);
+    let [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const dispatch = useDispatch();
-    const result = useSelector(state => state.pmannual);
+    let result = useSelector(state => state.pmannual);
 
     const empinfo = useSelector(state => state.authes);
     const name = empinfo.name;
@@ -18,7 +18,7 @@ function PmAnnual() {
     const job = empinfo.job; 
 
     const [pageEnd, setPageEnd] = useState(1);
-    const pageInfo = result.pageInfo;
+    let pageInfo = result.pageInfo;
     console.log(pageInfo);
     const pageNumber = [];
     if(pageInfo) {
@@ -69,16 +69,16 @@ function PmAnnual() {
                         <th className="columnpm7">연차사용일</th>
                         <th className="columnpm7">비고</th>
                     </tr>
-                    {Array.isArray(result.data) && result.data
+                    {Array.isArray(result?.data) && result?.data
                         .map((result) => (
-                            <tr key={result.empNo}>
-                                <td>{result.anEmployee[0].empName}</td>
-                                <td>{result.anEmployee[0].startDate}</td>
-                                <td>{result.anEmployee[0].job.name}</td>
-                                <td>{result.anEmployee[0].dt.name}</td>
-                                <td>{result.vacation[0].type}</td>
-                                <td>{result.vacation[0].amount}</td>
-                                <td>{result.vacation[0].startDate}</td>
+                            <tr key={result?.empNo}>
+                                <td>{result?.anEmployee[0]?.empName}</td>
+                                <td>{result?.anEmployee[0]?.startDate}</td>
+                                <td>{result?.anEmployee[0]?.job.name}</td>
+                                <td>{result?.anEmployee[0]?.dt.name}</td>
+                                <td>{result?.vacation?.type}</td>
+                                <td>{result?.vacation?.amount}</td>
+                                <td>{result?.vacation?.startDate}</td>
                                 <td></td>
                             </tr>
                         ))
@@ -99,7 +99,7 @@ function PmAnnual() {
                 &lt;
             </button>
             }
-            {pageNumber.map((num) => (
+            {pageNumber && pageNumber.map((num) => (
             <li key={num} onClick={() => setCurrentPage(num)}>
                 <button
                     style={ currentPage === num ? {backgroundColor : 'orange' } : null}

@@ -42,8 +42,6 @@ import TreeView from "./pages/pm/treeview";
 import SecondTree from "./pages/pm/secondTree";
 import PmMemberInsert from "./pages/pm/pm-resist-insert"
 import Mypage from "./pages/mypage/mypage";
-import Worklog from "./pages/mypage/Worklog";
-import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
@@ -175,9 +173,7 @@ function App() {
               <Route path="mod" element={<ResourceMod />} />
             </Route>
             <Route path="/mypage" element={<Mypage />} />
-            <Route path="/mypage/list/regist" element={<Businesscardregist />} />
             <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-            <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
             <Route path="/mypage/profile" element={<Profile />} />
             <Route path="/mypage/myannual" element={<MypageAnnual />} />
 
@@ -212,9 +208,7 @@ function App() {
             <Route path="reserve" element={<Reserve />} />
           </Route>
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage/list/regist" element={<Businesscardregist />} />
           <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-          <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
 
           <Route path="/mypage/profile" element={<Profile />} />
           <Route path="/mypage/annual" element={<MypageAnnual />} />
