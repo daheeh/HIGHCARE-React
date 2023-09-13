@@ -14,7 +14,6 @@ import ManagementReduccer from './modules/ManageMentModule';
 
 import pmMemberReduccer from './modules/PmMemberModule';
 
-import PmReduccer from './modules/PmMeModule';
 import resReducer from './modules/reservationModule';
 import resListReducer from './modules/resLIstModule';
 import resContentReducer from './modules/resContentModule';
@@ -43,7 +42,6 @@ const store = configureStore({
         second: secondReduccer,
         manage: ManagementReduccer,
         pmmem : pmMemberReduccer,
-        pmreduccer : PmReduccer,
         resReducer : resReducer,
         resListReducer : resListReducer,
         resContentReducer : resContentReducer,

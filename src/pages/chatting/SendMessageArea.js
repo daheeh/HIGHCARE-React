@@ -1,4 +1,5 @@
 import React from 'react';
+import './SendMessageArea.css';
 
 export default function SendMessageArea(props) {
   const {setInputMessage, sendMessages, inputMessage} = props;

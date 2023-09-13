@@ -9,6 +9,8 @@ import { insertPartner, insertMessage, receive } from '../../modules/Conversatio
 import ConversationListItem from "./ConversationListItem";
 import SockJsClient from 'react-stomp';
 import '../login/login.css';
+import { getChatRoomId } from './CreateChatRoom';
+import { resetChat } from '../../modules/ConversationList';
 
 
 
@@ -18,8 +20,10 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
     const conversationList = useSelector(state => state.conversationlist);
     console.log("conversationList =========> " + conversationList);
     const $websocket = useRef(null); 
-    let topics = [`/topic/${userId}`];
+    let topics = [`/topic/${empName}`];  // 로그인된 회원의 이름이면 
     const dispatch = useDispatch();
+    dispatch(resetChat);
+
     
 
     useEffect(() => {
@@ -38,13 +42,12 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
     const getConversations = () => {
         axios({
           method:"get",
-          url: 'http://localhost:8080/user/fetchAllUsers/'+ userId
+          url: 'http://localhost:8080/user/fetchAllUsers/'+ userId  // userid: 로그인된 회원의 아이디
         })
         .then((response) => {
           for (const key in response.data) {
             dispatch(insertPartner(
               {
-                photo:process.env.REACT_APP_USER_BASE_IMAGE,
                 partner: response.data[key].partner,
                 list:[...response.data[key].messageList]
               }
@@ -56,19 +59,22 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
         })    
       }
 
+
       const sendToMessage = (from, to, msg) =>{
-        const m = {message:msg, author:from, to:to, timestamp: new Date().getTime()};
+        const m = { message:msg, 
+                    author:from, // 1111   //3333
+                    to:to,       // 가을   // 1111
+                    timestamp: new Date().getTime()
+                  };
         $websocket.current.sendMessage("/app/send", JSON.stringify(m));
         dispatch(insertMessage(m));
       }
     
       const recevieMessage = (msg) => {
-        console.log('ChatroomList receiveMessage ===============>', recevieMessage);
+        console.log('ChatroomList receiveMessage ===============>', msg);
         dispatch(receive(msg));    
       }
 
-
-        
 
       const handleAddPartner = (name)=> {
 
@@ -91,14 +97,17 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
             })
           );
         }
+
+
       };
 
       
       useImperativeHandle(ref, () => ({
-        handleAddPartner
+        handleAddPartner,
       }),[]);
 
-        
+      
+      
 
       return (
         <>
@@ -115,25 +124,32 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
                             
                         </div>
                         <div className={ChattingRoomListCSS.chattingRoomInfo}>
-                            {/* <div className={ChattingRoomListCSS.roomInfoText}> */}
 
                         { 
-                            Object.keys(conversationList).map((key) => 
-                            <ConversationListItem             
-                                key={key}
-                                partner={key}
-                                host={userId}
-                                sendToMessage={sendToMessage}
-                            />
-                            )
-                        }
+                            Object.keys(conversationList).map((key) => {
+                            console.log('Key:', key);
+
+                              return (
+                                  <ConversationListItem             
+                                    key={key}
+                                    partner={key}
+                                    host={empName}
+                                    sendToMessage={sendToMessage}
+                                  />
+                                );
+                                  
+                          })
+                        } 
 
                         <SockJsClient
-                        url={process.env.REACT_APP_CHAT_BASE_URL}
+                        url="http://localhost:8080/chat"
                         topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
-                            console.log('[SocketJsClientf rendering...] Received message ==============> ', msg);
-                            recevieMessage(msg);
+                          recevieMessage(msg);
+                          console.log('[SocketJsClient rendering...] Received message ==============> ', msg);
+                        }}
+                        onConnect={() => {
+                          console.log('WebSocket connected successfully.');
                         }}
                         ref={$websocket}
                         />

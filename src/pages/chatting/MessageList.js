@@ -8,6 +8,8 @@ import 'moment/locale/ko'
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Draggable from 'react-draggable';
+import ChattingRoomListCSS from "../chatting/ChattingRoomList.module.css";
 import { faChevronLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './MessageList.css';
@@ -42,6 +44,7 @@ export default function MessageList(props) {
   const sendMessages = () => {
     if(inputMessage.length===0 || inputMessage===undefined)return;
     sendToMessage(host, partner, inputMessage)
+    console.log('MessageList host ===========> ' , host);
     setInputMessage("")
   }
 
@@ -132,7 +135,19 @@ export default function MessageList(props) {
   //Dialog 컴포넌트 사용해서 채팅방 화면 표시 (메세지 목록, 메세지 입력하는 영역, 툴바같은거 포함)
   // ChatRoomToolBar버튼 클릭하면 뒤로가기(handleClose), 채팅방 아예 나가기(handleExit)
     return(
-      <Dialog fullScreen open={showMessage} TransitionComponent={Transition}>
+      <Dialog open={showMessage} TransitionComponent={Transition}
+        PaperProps={{
+          style: {
+            width: '390px', 
+            height: '510px', 
+          },
+        }}
+        BackdropProps={{
+          style: {
+            backgroundColor: 'rgba(0, 0, 0, 0)', 
+          },
+        }}
+      >
         <div className="message-list">
           <ChatRoomToolbar
             title={partner}
@@ -150,7 +165,7 @@ export default function MessageList(props) {
 
           <SendMessageArea 
             rightItems={[
-              <ChatToolbarButton icon={faPaperPlane} action={sendMessages} key="send"/>
+              <ChatToolbarButton icon={faPaperPlane} style={{ fontSize: '20px' }} action={sendMessages} key="send"/>
             ]}
             host={host}
             name={partner}

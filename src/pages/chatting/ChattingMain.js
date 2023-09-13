@@ -27,24 +27,26 @@ import { decodeJwt } from "../../utils/decodeJwt";
         
         // 채팅 모달 열었을 때, 로그인된 회원 정보 가져오기
             const authes = useSelector(state => state.authes);
+            console.log('auth=============================>', authes);
             const empNo = authes.empNo;
-            const empName = authes.name;
+            const empName = authes?.name;
             const empDept = authes.dept;
             const empJob = authes.job;
-            const userId = decodeJwt(window.localStorage.getItem("accessToken")).sub;
+            const userId = decodeJwt(window.localStorage.getItem("accessToken")).sub;            
             console.log("empNo : ", empNo);
             console.log("empName : ", empName);
             console.log("empDept : ", empDept);
             console.log("empJob : ", empJob);
+            console.log("userId : ", userId);
 
 
-            useEffect(() => {
-                // 모달이 열릴 때 API 요청 보내기
-                if (!isOpen) {
-                    const userId = decodeJwt(window.localStorage.getItem("accessToken")).sub;
-                    console.log("loginEmpId: ", userId);
-                }
-              }, [isOpen, userId]);
+            // useEffect(() => {
+            //     // 모달이 열릴 때 API 요청 보내기
+            //     if (!isOpen) {
+            //         const userId = decodeJwt(window.localStorage.getItem("accessToken")).sub;
+            //         console.log("loginEmpId: ", userId);
+            //     }
+            //   }, [isOpen, userId]);
 
 
         // TreeviewChatting컴포넌트에서 선택한 사원정보 전달 받는 함수
@@ -123,9 +125,9 @@ import { decodeJwt } from "../../utils/decodeJwt";
                         {/* 트리뷰에서 받아온 사원정보를  WebSocketTestRoomList에 전달하고, 그 정보로 WebSocketTestRoomList에서 채팅방 생성함 */}
                         {activeTab === 'comment' && (
                             <ChatRoomList 
-                                userId={userId} 
-                                empName={empName} 
-                                selectedEmployee={selectedEmployee}
+                                userId={userId} // 로그인된 유저의 id
+                                empName={empName}  // 로그인 된 유저의 name
+                                selectedEmployee={selectedEmployee} // 채팅상대로 선택된 사원
                                 ref={webSocketRef}
                                 />
                         )}
