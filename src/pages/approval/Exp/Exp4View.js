@@ -38,9 +38,13 @@ function Exp4View() {
         fetchData();
     }, [apvNo, dispatch]);
 
-    if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+    if (!data) {
+        return ;
+      }
+    
+        if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
         return <div className='apvNoUser'>권한이 없습니다</div>;
-    }
+      }
 
     const renderApvExpForm = (data) => {
         return (

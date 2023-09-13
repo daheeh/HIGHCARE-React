@@ -11,28 +11,28 @@ import MypageNav from './MypageNav';
 
 
 function Profile() {
-   
+
 
     <MypageNav />
     const dispatch = useDispatch();
     const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
-    const [image, setImage] = useState(null);   
+    const [image, setImage] = useState(null);
     // const [imageUrl, setImageUrl] = useState(`{http://localhost:8080/images/basic.jpg}`);
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState('http://localhost:8080/images/basicprofile.png');
     const imageInput = useRef();    // 이미지 업 데이트 
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
-    const [imageLink, setImageLink] = useState('');
-    
+    const [imageLink, setImageLink] = useState('http://localhost:8080/images/basicprofile.png');
+
     console.log("아이디 : ", id);
     console.log("마이페이지에 담긴 정보 : ", mypage);
     // {`${image}`? `${imageUrl?.chName }` !== undefined ? `http://localhost:8080/images/${imageUrl?.chName}` : `${imageUrl}`:''}
     //  employee empNo로 조회
     useEffect(
         () => {
-            dispatch(callMypageProfileSelectAPI(employee.empNo));       
+            dispatch(callMypageProfileSelectAPI(employee.empNo));
             /// empNo로 불러오기
-            
+
         }
         , []); // 빈배열이면 랜더링 한번 되고 Apicalls를 준다.  
 
@@ -45,7 +45,8 @@ function Profile() {
 
     console.log("myInfo", myInfo);
     console.log("업데이트 사진", picture?.chName);
-    console.log("기본이미지유알엘", imageUrl);      // useEffect 위로 올리면 null로 들어옴
+    console.log("기본이미지유알엘", imageLink);      // useEffect 위로 올리면 null로 들어옴
+    console.log("이미지유알엘", imageUrl);
     // //이미지
     useEffect(
         () => {
@@ -63,13 +64,13 @@ function Profile() {
                 }
                 fileReader.readAsDataURL(image)
             }
-            console.log('check------->',mypage);
+            console.log('check------->', mypage);
             setImageUrl(mypage?.data?.myProfileFile);
             console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)
-            if(!imageLink){
-                    // 바꿀때만 상태값 바꿔주고 아니면 그대로 둔다.
+            if (!imageLink) {
+                // 바꿀때만 상태값 바꿔주고 아니면 그대로 둔다.
                 setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
-            } 
+            }
         },
         [image]);
 
@@ -80,11 +81,11 @@ function Profile() {
         const image2 = e.target.files[0];
         console.log('image check ', image2)
         if (image2) {
-         
+
             // setImageUrl(image2);
             setImage(image2);
             console.log('Img URL:', image2);
-            
+
         }
         // setImage(imageUrl);
     };
@@ -93,7 +94,7 @@ function Profile() {
     const onClickImageUpload = (e) => {
 
         imageInput.current.click();
-        
+
     };
 
     // 사진 등록
@@ -111,12 +112,12 @@ function Profile() {
         console.log('formData check : ', image);
         // 넘길 값 추가해보기
         dispatch(callProfileInsertAPI({
-            form : formData
+            form: formData
         }));
 
     };
 
-        console.log();
+    console.log();
     return (
 
         <>
@@ -131,7 +132,7 @@ function Profile() {
                             <div className="profileRegistration"
                             >
                                 {/* { console.log('check ==============> ',picture.chName)} */}
-                                { console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
+                                {console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
                                 {/* {
                                     // d이미지유알엘이 빈값이라 진입못함
                                   <img
@@ -145,18 +146,18 @@ function Profile() {
                                     style={{ width: 180, height: 120 }}
                                 />} */}
 
-{
+                                {
                                     // d이미지유알엘이 빈값이라 진입못함
-                                  <img
-                                    className=""
-                                    src={imageLink}
-                                    // src={imageUrl ? imageUrl :  `file:C:/dev/profileImages/${picture?.chName}`}
-                                    // src={picture.chName !== undefiend? `http://localhost:8080/images/${picture.chName}` : imageUrl}
-                                    // src = {imageUrl}
-                                    alt="preview"
+                                    <img
+                                        className=""
+                                        src={imageLink}
+                                        // src={imageUrl ? imageUrl :  `file:C:/dev/profileImages/${picture?.chName}`}
+                                        // src={picture.chName !== undefiend? `http://localhost:8080/images/${picture.chName}` : imageUrl}
+                                        // src = {imageUrl}
+                                        alt="preview"
 
-                                    style={{ width: 180, height: 120 }}
-                                />}
+                                        style={{ width: 180, height: 120 }}
+                                    />}
                                 <input
                                     style={{ display: 'none' }}
                                     type="file"

@@ -27,11 +27,9 @@ function Biz2({ mode, data }) {
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
-	console.log('Biz2 first : ', approval.data);
+	console.log('Biz2 first : ', approval);
 
 	const [formData, setFormData] = useState({
-
 		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '회의록',
 		writeDate: '',
@@ -39,6 +37,7 @@ function Biz2({ mode, data }) {
 		isUrgency: 'F',
 		category: '업무',
 		contents1: approval.contents1 ? approval.contents1 : '',
+		contents2: approval.contents2 ? approval.contents2 : '',
 		empNo: empNo,
 		empName: authes.name,
 		deptName: authes.dept,
@@ -72,7 +71,6 @@ function Biz2({ mode, data }) {
 				[name]: value,
 			}]
 		}));
-
 	}
 
 	useEffect(() => {
@@ -114,9 +112,9 @@ function Biz2({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
-
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -149,6 +147,7 @@ function Biz2({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -158,6 +157,12 @@ function Biz2({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
+
+	const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
 	console.log('Biz2 formData : ', formData);
 
 	return (
@@ -168,17 +173,19 @@ function Biz2({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">회의록</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentBiz2">
@@ -215,13 +222,14 @@ function Biz2({ mode, data }) {
 						</div>
 						<div className="apvContentBiz2Last">
 							<div className="column1">회의내용</div>
-							<div><textarea placeholder="회의 내용 작성" rows="30" name='contents1' className='apvTextarea'
+							<div><textarea placeholder="회의 내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 							</div>
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData}/>
 				</div>
 			</div>
 		</section>

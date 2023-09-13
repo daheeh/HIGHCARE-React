@@ -91,8 +91,8 @@ function Hrm1({ mode, data }) {
 		if (formData.apvVacations[0].startDate && formData.apvVacations[0].endDate) {
 
 			console.log('formData.apvVacations[0].startDate && formData.apvVacations[0].endDate');
-			let startDate = new Date(formData.apvVacations[0].startDate);
-			let endDate = new Date(formData.apvVacations[0].endDate);
+			let startDate = new Date(formData.apvVacations[0].startDate.split(' ')[0]);
+			let endDate = new Date(formData.apvVacations[0].endDate.split(' ')[0]);
 			let offType1 = formData.apvVacations[0].offType1;
 			let offType2 = formData.apvVacations[0].offType2;
 
@@ -243,11 +243,11 @@ function Hrm1({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
-
 	const handleFileUpload = (file) => {
 		if (file) {
 			// Create a copy of the current apvFiles array and add the new file to it
@@ -262,7 +262,6 @@ function Hrm1({ mode, data }) {
 			console.log('ApvSummitBar에서 업로드한 파일:', file);
 		}
 	};
-
 
 	const updateFileList = (newFileList) => {
 		setFileList(newFileList);
@@ -280,6 +279,7 @@ function Hrm1({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -300,17 +300,19 @@ function Hrm1({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">연차신청서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentHrm1">
@@ -361,7 +363,7 @@ function Hrm1({ mode, data }) {
 								onBlur={onCommentChangeHandler}></textarea>
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData} />
 				</div>
 			</div>
 		</section>

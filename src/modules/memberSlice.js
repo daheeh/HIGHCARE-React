@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { allMemberListApi, selectMember } from "../apis/MemberAPICalls";
+import { ModifyInfoAPI, WithDrawInfoAPI, allMemberListApi, selectMember } from "../apis/MemberAPICalls";
+import { modifyMemberAPI } from "../apis/AuthAPICalls";
 
 const initialState = {
   data: {},
   treeviewMember: [],
+  message: '',
 }
 
 
@@ -20,6 +22,10 @@ const memberSlice = createSlice({
     resetMemberAction: (state, action) => {
       state.treeviewMember = [];
   },
+  resetRequestMemberAction: (state, action) => {
+    // state.data = {};
+  }
+  
 
    
   },
@@ -43,12 +49,20 @@ const memberSlice = createSlice({
       .addCase(allMemberListApi.fulfilled, (state, { payload }) => {
         state.data = payload;
       })
+      .addCase(ModifyInfoAPI.fulfilled, ModifyInfoAPI.rejected, (state,  {payload} ) => {
+        state.message = payload;
+        alert(payload);
+      })
+      .addCase(WithDrawInfoAPI.fulfilled, WithDrawInfoAPI.rejected, (state,  {payload} ) => {
+        state.message = payload;
+        alert(payload);
 
+      })
   }
 })
 
 
 // 액션 생성자 내보내기 
-export const { selectAction, accountStatus, resetMemberAction, memberByTreeview } = memberSlice.actions;
+export const { selectAction, accountStatus, resetMemberAction, resetRequestMemberAction, memberByTreeview } = memberSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

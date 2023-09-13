@@ -16,11 +16,11 @@ export const selectMember = createAsyncThunk(
         }
       }
       );
-   
+
       console.log("response", response);
-      if(typeof response.data.data === "string" )
-      alert(response.data.data);
-      
+      if (typeof response.data.data === "string")
+        alert(response.data.data);
+
       return response.data;
     } catch (error) {
       throw error.response.data;
@@ -46,6 +46,7 @@ export const requestMember = createAsyncThunk(
       alert(response.data.data);
       console.log(response.data);
 
+      // window.location.reload();
 
       return response.data;
     } catch (error) {
@@ -54,6 +55,32 @@ export const requestMember = createAsyncThunk(
   }
 );
 
+export const requestAllMember = createAsyncThunk(
+  'requestAll/members',
+  async (ids,) => {   // post요청은 url, data, header순 
+    console.log('ids', ids);
+    try {
+      const response = await axios.post(`http://localhost:8080/api/admin/allmemberjoin`, ids,
+        {
+          headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          }
+        }
+      );
+
+      alert(response.data.data);
+      console.log(response.data);
+
+      // window.location.reload();
+      alert(response.data.data);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+);
 
 
 
@@ -86,33 +113,20 @@ export const ModifyInfoAPI = createAsyncThunk(
       const response = '';
       console.log('data :', data);
 
-      if (data.status === 'isWithDraw') {
-        response = await axios.delete(`http://localhost:8080/api/admin/member/${data.id}`
+        response = await axios.put(`http://localhost:8080/api/admin/member/${data.id}`
+          , data
           , {
             headers: {
               "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+              "Content-Type": "application/json", // JSON 형식으로 보냄
             }
           }
         )
-      } else {
-        if (data.method === 'put') {
-          response = await axios.put(`http://localhost:8080/api/admin/member/${data.id}`
-            , data
-            , {
-              headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                "Content-Type": "application/json", // JSON 형식으로 보냄
-              }
-            }
-          )
-        }
-      }
-
-      console.log("응답 : ", response.data);
-
-      const result = response.data.data;
-      return result;
-
+        console.log("응답 : ", response.data);
+        alert(response.data.data);
+        const result = response.data.data;
+        return result;
+      
     } catch (error) {
       throw error.response.data;
     }
@@ -120,8 +134,31 @@ export const ModifyInfoAPI = createAsyncThunk(
 )
 
 
+export const WithDrawInfoAPI = createAsyncThunk(
+  'delete/members',
+  async (data) => {
+    try {
+      const response = '';
+      console.log('data :', data);
 
+      response = await axios.delete(`http://localhost:8080/api/admin/member/${data.id}`
+        , {
+          headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+          }
+        }
+      )
 
+      console.log("응답 : ", response.data);
+      alert(response.data.data);
+      const result = response.data.data;
+      return result;
+    }
 
+    catch (error) {
+      throw error.response.data;
+    }
+  }
+)
 
 

@@ -13,6 +13,7 @@ import secondReduccer from './modules/SecondTreeModule';
 import ManagementReduccer from './modules/ManageMentModule';
 
 import pmMemberReduccer from './modules/PmMemberModule';
+import pmAnnualReduccer from './modules/AnnualModule';
 
 import resReducer from './modules/reservationModule';
 import resListReducer from './modules/resLIstModule';
@@ -23,6 +24,9 @@ import reserReducer from './modules/reserModule';
 import commentReducer from './modules/commentModule';
 
 import conversationlistReducer from './modules/ConversationList';
+import AccessesSlice from './modules/AccessesSlice';
+
+import noticeReducer from './modules/NoticeModule';
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
@@ -42,6 +46,7 @@ const store = configureStore({
         second: secondReduccer,
         manage: ManagementReduccer,
         pmmem : pmMemberReduccer,
+        pmannual : pmAnnualReduccer,
         resReducer : resReducer,
         resListReducer : resListReducer,
         resContentReducer : resContentReducer,
@@ -49,11 +54,13 @@ const store = configureStore({
         resStatusReducer : resStatusReducer,
         reserReducer : reserReducer,
         commentReducer : commentReducer,
-        conversationlist: conversationlistReducer,
 
+        conversationlist: conversationlistReducer,
+        accesses : AccessesSlice,
+
+        noticeReducer : noticeReducer
 
         // 마이페이지리듀서에서 마이페이지로 간다는 뜻, 선생님 파일에선 콤바인
-
     },
     preloadedState: persistedState, // Set initial state from localStorage
     middleware: [thunkMiddleware]

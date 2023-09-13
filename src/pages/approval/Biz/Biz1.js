@@ -11,8 +11,10 @@ import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
 import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
+
 function Biz1({ mode, data }) {
 
+    
     const dispatch = useDispatch();
     dispatch({ type: RESET_APPROVAL });
 
@@ -27,7 +29,7 @@ function Biz1({ mode, data }) {
 
     const approval = useSelector(state => state.approval);
 
-    console.log('biz1 first : ', approval.data);
+    console.log('biz1 first : ', approval);
 
     const [formData, setFormData] = useState({
         apvNo: approval.apvNo ? approval.apvNo : '',
@@ -55,8 +57,15 @@ function Biz1({ mode, data }) {
         }
     }, [isEditMode, dispatch]);
 
+    const onChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+        }));
+    }
+
     useEffect(() => {
-        console.log('isEditMode 2 : ', isEditMode);
         const currentDate = new Date();
         setFormData(prevFormData => ({
             ...prevFormData,
@@ -96,16 +105,9 @@ function Biz1({ mode, data }) {
 
             setSelectedEmployees(initialSelectedEmployees);
         }
-    }, [approval, setSelectedEmployees]);
+    }, [approval]);
 
-    const onChangeHandler = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    }
-
+    const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
     const [fileList, setFileList] = useState([]);
     const handleFileUpload = (file) => {
         if (file) {
@@ -138,6 +140,7 @@ function Biz1({ mode, data }) {
             isEditMode,
             formData,
             selectedEmployees,
+            refSelectedEmployees,
             navigate,
             fileList,
             APIPoint,
@@ -147,6 +150,14 @@ function Biz1({ mode, data }) {
         console.log('submissionData', submissionData);
         handleSubmission(null, submissionData);
     };
+
+    const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+    
+
     console.log('Biz formData : ', formData);
 
     return (
@@ -157,17 +168,19 @@ function Biz1({ mode, data }) {
                     onSubmit={handleSubmissionClick}
                     updateIsUrgency={updateIsUrgency}
                     setSelectedEmployees={setSelectedEmployees}
+                    setRefSelectedEmployees={setRefSelectedEmployees}
                     fileList={fileList}
                     updateFileList={updateFileList}
-                    data={data}
+                    data={formData}
                 />
                 <div className="containerApv">
                     <div className="apvApvTitle">기안서</div>
                     <ApvSummitLine
-                        mode="create"
-                        selectedEmployees={selectedEmployees}
-                        authes={authes}
-                        approval={approval}
+						mode="create"
+						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
+						authes={authes}
+						data={formData}
                     />
                     <div className="apvContent">
                         <div className="apvContentTitle">
@@ -190,6 +203,7 @@ function Biz1({ mode, data }) {
                                 name="contents1"
                                 value={formData.contents1}
                                 onChange={onChangeHandler}
+                                onInput={autoExpandTextarea}
                             />
                         </div>
                         <div className="apvContentDetail2">-아래-</div>
@@ -200,10 +214,11 @@ function Biz1({ mode, data }) {
                                 name="contents2"
                                 value={formData.contents2}
                                 onChange={onChangeHandler}
+                                onInput={autoExpandTextarea}
                             />
                         </div>
                     </div>
-                    <ApvFileList files={fileList} />
+                    <ApvFileList files={fileList} data={formData} />
                 </div>
             </div>
         </section>

@@ -12,18 +12,21 @@ import {
 } from '../modules/ManageMentModule';
 import{
     GET_PM_MEMBER,
-    POST_PM_INSERT
+    POST_PM_INSERT,
 } from '../modules/PmMemberModule';
-
+import{
+    GET_ANNUAL,
+    GET_PM_ANNUAL
+} from '../modules/AnnualModule';
 import jwt_Decode from 'jwt-decode';
 
 import { async } from '@dabeng/react-orgchart';
 
-export const callEmployeeAPI = ({ empNo= 1, pmStatus }) => {
+export const callEmployeeAPI = ({ currentPage  }) => {
 
     console.log('[PmAPICalls] callEmployeeAPI Call');
 
-    const requestURL = `http://localhost:8080/api/pm/all?offset=${empNo}`;
+    const requestURL = `http://localhost:8080/api/pm/all?offset=${currentPage}`;
     
     
     return async (dispatch, getState) => {
@@ -114,14 +117,16 @@ export const callTreeviewTwoAPI = () => {
         };
     };
 
-export const callManagementAPI = () => {
+export const callManagementAPI = ({ currentPage }) => {
         console.log('[PmAPICalls] callManagementAPI Call');
         
         const token = jwt_Decode(window.localStorage.getItem("accessToken"));
+        console.log('============token=>', token);
 
         const empNo = token.sub;
+
    
-        const requestURL = `http://localhost:8080/api/pm/management/${empNo}`;
+        const requestURL = `http://localhost:8080/api/pm/management/${empNo}?offset=${currentPage}`;
         
         return async (dispatch, getState) => {
         
@@ -211,7 +216,7 @@ export const callMgEndAPI = ({ formData }) => {
             // });
             .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callMgEndAPI RESULT : ', result.data);
+            console.log('[ApprovalAPICalls] callMgEndAPI RESULT : ', result);
 
             dispatch({ type: POST_PM_END, payload: result });
             return result;
@@ -258,39 +263,6 @@ export const callPmMemberAPI = (empNo) => {
         };
     };
 
-// export const callPmMemberAPI = (empNo) => {
-
-//     console.log('[PmAPICalls] callPmMemberAPI Call   {} ', empNo);
-
-//     const requestURL = `http://localhost:8080/api/pm/member/${empNo}`;
-    
-//     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
-//     return async (dispatch, getState) => {
-
-//         try{
-//         const result = await fetch(requestURL, {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Accept": "*/*"
-//             }
-//         })
-//         .then(response => {
-//             console.log('-----------------> \n', response);
-//             return response.json()
-//         });
-
-//         console.log('[PmAPICalls] callPmMemberAPI RESULT : ', result.data);
-
-//         dispatch({ type: GET_PM_MEMBER,  payload: result.data});
-//     } catch (error) {
-//         console.error('[PmAPICalls] Error in callPmMemberAPI: ', error);
-//     }
-        
-//     };    
-// };
-
-
 export const callPmInsertAPI = ({ formData }) => {
     console.log('[PmAPICalls] callPmInsertAPI Call');
     
@@ -305,10 +277,8 @@ export const callPmInsertAPI = ({ formData }) => {
                 headers: {
                     "Accept": "*/*",
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                    'Content-Type': 'application/json; boundary=WebAppBoundary',
-                    "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(formData),
+                body: formData,
             })
             // .then(response => {
             //     console.log('-----------------> \n', response);
@@ -330,5 +300,71 @@ export const callPmInsertAPI = ({ formData }) => {
 };
 
 
+
+export const callAnnualAPI = ({currentPage}) => {
+    console.log('[PmAPICalls] callAnnualAPI Call');
+    
+    const requestURL = `http://localhost:8080/api/pm/annual?offset=${currentPage}`;
+ 
+    return async (dispatch, getState) => {
+
+        try{
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"
+                }
+            })
+            .then(response => {
+                console.log(response);
+                return response.json()
+            });
+    
+            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result.data);
+
+            dispatch({ type: GET_ANNUAL, payload: result.data });
+            return result;
+
+        } catch (error) {
+            console.error('[ApprovalAPICalls] Error in callAnnualAPI: ', error);
+            throw error;
+        }
+
+    };
+};
+export const callPmAnnualAPI = (empNo) => {
+    console.log('[PmAPICalls] callPmAnnualAPI Call');
+    
+    const requestURL = `http://localhost:8080/api/pm/annual/detail/${empNo}`;
+    
+
+    console.log('[PmAPICalls] callPmAnnualAPI Call empNo', empNo);
+    
+    return async (dispatch, getState) => {
+    
+        try{
+            const result = await fetch(requestURL, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json",
+                    "Accept": "*/*"
+                }
+            })
+            .then(response => {
+                console.log('-----------------> \n', response);
+                return response.json()
+            });
+    
+            console.log('[PmAPICalls] callPmAnnualAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
+    
+            dispatch({type: GET_PM_ANNUAL, payload: result.data});
+        } catch(error) {
+            console.error('[PmAPICalls] Error in callPmAnnualAPI: ', error);
+        }
+        };
+    };
 
 

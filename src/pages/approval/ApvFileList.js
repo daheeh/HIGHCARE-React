@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function ApvFileList({ files, onRemoveFile, data }) {
+function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
 
     const approval = useSelector(state => state.approval);
-    const isEditMode = approval && approval.apvLines ? true : false;
+    // const isEditMode = approval && approval.apvLines ? true : false;
 
     const handleFileDownload = (fileName) => {
         // 파일 다운로드 API를 호출하는 코드
@@ -21,10 +21,12 @@ function ApvFileList({ files, onRemoveFile, data }) {
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = fileName;
+                    a.target = '_blank';
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
                 });
+
             })
             .catch((error) => {
                 // 에러 처리
@@ -32,29 +34,35 @@ function ApvFileList({ files, onRemoveFile, data }) {
             });
     };
 
-    if (isEditMode) {
+    console.log("ApvFileList : : : : data", data);
+    console.log("ApvFileList : : : : files", files);
+
+    if (!isEditMode) {
         return (
             <div>
                 <h3>첨부파일 목록 :</h3>
                 <ul>
-                    {data?.apvFiles.map((file, index) => (
+                    {data?.apvFiles?.map((file, index) => (
                         <li className="fileList" key={index}>
                             <a
                                 href={`/download/${file.originalFileName}`}
-                                onClick={() => handleFileDownload(file.originalFileName)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleFileDownload(file.originalFileName);
+                                }}
                             >{file.originalFileName}</a>
                         </li>
                     ))}
                 </ul>
             </div>
-        );
 
+        );
     } else {
         return (
             <div>
                 <h3>첨부파일 목록 :</h3>
                 <ul>
-                    {files.map((file, index) => (
+                    {files?.map((file, index) => (
                         <li className="fileList" key={index}>
                             {file.name}
                             <button className="apvBtn2" onClick={() => onRemoveFile(index)}>

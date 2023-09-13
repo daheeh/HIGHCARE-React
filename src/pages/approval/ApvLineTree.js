@@ -6,6 +6,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     const treeview = useSelector((state) => state.treeview);
 
     const [empNoArray, setEmpNoArray] = useState([]);
+    const [selectedLine, setSelectedLine] = useState([]);
 
     const [activeIndex, setActiveIndex] = useState(null);
     const [empInfo, setEmpInfo] = useState([]);
@@ -14,7 +15,6 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
     console.log("authes.empNo : ", authes.empNo);
 
 
-    const [selectedLine, setSelectedLine] = useState([]);
     const currentDate = new Date();
 
 
@@ -191,7 +191,7 @@ function ApvLineTree({ onSelect, selectedEmployees }) {
                         onDrop={drop}
                     >
                         <div className="apvLineTreeSelected1">{`결재라인 ${index + 1}`}</div>
-                        <div className="apvLineTreeSelected2">{`${emp.empNo}`}</div>
+                        <div className="apvLineTreeSelected2">{`${emp.deptName} ${emp.empName} ${emp.jobName}`}</div>
                     </div>
                 ))}
             </div>

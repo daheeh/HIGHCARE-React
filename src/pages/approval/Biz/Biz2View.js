@@ -39,10 +39,14 @@ function Biz2View() {
     fetchData();
   }, [apvNo, dispatch]);
 
-  if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
-    return <div className='apvNoUser'>권한이 없습니다</div>;
+  if (!data) {
+    return ;
   }
 
+    if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+    return <div className='apvNoUser'>권한이 없습니다</div>;
+  }
+  
   return (
     <section>
       <ApvMenu />
@@ -96,13 +100,13 @@ function Biz2View() {
             </div>
             <div className="apvContentBiz2Last">
               <div className="column1">회의내용</div>
-              <div><textarea placeholder="회의 내용 작성" rows="30" name='contents1' className='apvTextarea'
+              <div><textarea placeholder="회의 내용 작성" name='contents1' className='apvTextarea'
                 value={data?.contents1}
               />
               </div>
             </div>
           </div>
-          <ApvFileList files={data?.apvFiles || []} data={data} />
+          <ApvFileList files={data?.apvFiles || []} data={data} isEditMode={false} />
         </div>
       </div>
     </section>

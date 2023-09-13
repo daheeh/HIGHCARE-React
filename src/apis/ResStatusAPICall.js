@@ -24,11 +24,11 @@ export const callResInsertAPI = ({form}) => {
             })
         })
         .then(Response => Response.json());
-        if(result.status == 500){
+        if(result.status == 200){
             alert(result.message);
+            dispatch({type: POST_RESULT, payload: result});
         }else{
-        dispatch({type: POST_RESULT, payload: result});
-        alert(result.message);
+            alert('예약에 실패하셨습니다. 시간을 다시 확인 바랍니다');
 
         }    
     }

@@ -41,9 +41,13 @@ function Hrm3View() {
 
 	const [dateRange, setDateRange] = useState("");
 
-	if (!authes || !data || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+	if (!data) {
+		return ;
+	  }
+	
+		if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
 		return <div className='apvNoUser'>권한이 없습니다</div>;
-	}
+	  }
 
 	return (
 		<section>
@@ -88,7 +92,7 @@ function Hrm3View() {
 							</div>
 						</div>
 					</div>
-					<ApvFileList files={data?.apvFiles || []} data={data} />
+					<ApvFileList files={data?.apvFiles || []} data={data} isEditMode={false} />
 				</div>
 			</div>
 		</section>

@@ -26,7 +26,6 @@ function Hrm3({ mode, data }) {
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
 	console.log('Hrm3 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
@@ -85,8 +84,6 @@ function Hrm3({ mode, data }) {
 		console.log('formData : ', formData);
 	}
 
-
-
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -102,7 +99,6 @@ function Hrm3({ mode, data }) {
 			isUrgency: newIsUrgency
 		}));
 	};
-
 
 	const initialSelectedEmployees = [{
 		degree: 0,
@@ -127,11 +123,11 @@ function Hrm3({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
-
 	const handleFileUpload = (file) => {
 		if (file) {
 			// Create a copy of the current apvFiles array and add the new file to it
@@ -146,7 +142,6 @@ function Hrm3({ mode, data }) {
 			console.log('ApvSummitBar에서 업로드한 파일:', file);
 		}
 	};
-
 
 	const updateFileList = (newFileList) => {
 		setFileList(newFileList);
@@ -164,6 +159,7 @@ function Hrm3({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -173,7 +169,6 @@ function Hrm3({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
-
 	console.log('Hrm3 formData : ', formData);
 
 	return (
@@ -184,17 +179,19 @@ function Hrm3({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">서류발급신청서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentHrm2">
@@ -236,7 +233,7 @@ function Hrm3({ mode, data }) {
 							</div>
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData} />
 				</div>
 			</div>
 		</section>
