@@ -93,7 +93,7 @@ function Modal({ isOpen, onClose, accountList }) {
         onClose();
         // console.log('empinfo : ', empInfo);
 
-        accountList.forEach(member => {
+        accountList.map(member => {
             if (empInfo.empNo == member.empNo) {
                 // 선택한 사원번호를 통해 회원정보에서 정보를 추출하여 트리뷰멤버 리듀서에 저장한다. 
                 dispatch(memberByTreeview(member));

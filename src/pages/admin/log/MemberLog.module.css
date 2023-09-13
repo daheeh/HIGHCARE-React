@@ -53,3 +53,13 @@
     
 }
 
+.loglist-redBackground {
+    color: red;
+    /* background: rgba(255, 112, 112, 0.49); */
+}
+
+.loglist-greenBackground {
+    color: green;
+    /* background: rgba(68, 196, 68, 0.677); */
+}
+

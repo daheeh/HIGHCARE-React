@@ -47,6 +47,9 @@ axios.interceptors.response.use(
             // 403 에러 처리
         } else if (responseError.status === 404) {
             window.location.href = "/error/404"
+        } else if (responseError.status === 1001) {
+            alert("해당 요청에 대한 권한이 없습니다.")
+            window.location.href = "/"
 
 
         } else if (responseError.status === 500) {
@@ -61,12 +64,12 @@ axios.interceptors.response.use(
                 alert("인증되지 않은 사용자입니다.");
 
             }
-            else if (responseError.data.message.includes("JWT")) {
+            else if (responseError.data.message.includes("401")) {
                 alert("권한이 없습니다.");
 
                 // window.location.href="/error/401"
             }
-            else if (responseError.data.message.includes("JWT")) {
+            else if (responseError.data.message.includes("1001")) {
                 // window.location.href="/error/1001"            }
                 // window.location.href="/error/500"
                 alert("해당 요청에 대한 권한이 없습니다.")

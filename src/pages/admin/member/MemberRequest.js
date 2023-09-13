@@ -62,7 +62,7 @@ function MemberRequest() {
 
   const requestClick = async () => {
     await dispatch(requestMember(form));
-    resetRequestMemberAction();
+    // resetRequestMemberAction();
   }
 
 

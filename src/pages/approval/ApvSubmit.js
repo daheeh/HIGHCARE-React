@@ -8,16 +8,20 @@ export const handleSubmission = async (event, submissionData) => {
 
     // event.preventDefault();
 
-    const { formData, selectedEmployees, navigate, fileList, APIPoint, dispatch } = submissionData;
+    const { formData, selectedEmployees, refSelectedEmployees, navigate, fileList, APIPoint, dispatch } = submissionData;
 
     if (formData.empNo) {
         try {
+            const combinedSelectedEmployees = {
+                selectedEmployees,
+                refSelectedEmployees,
+            }
             
             // formData 및 selectedEmployees를 단일 객체로 결합
             const attachedFiles = fileList;
             const requestData = {
                 formData,
-                selectedEmployees,
+                combinedSelectedEmployees,
                 attachedFiles,
             };
 

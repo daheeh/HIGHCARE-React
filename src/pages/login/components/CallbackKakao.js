@@ -4,6 +4,7 @@ import axios from "axios";
 import { kakaoAuth } from "../../../apis/OAuthApiCalls";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { browserInfo, deviceInfo } from "../logininfo";
 
 export const CallbackKakao = () => {
 
@@ -15,8 +16,8 @@ export const CallbackKakao = () => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get("code");
     const id = url.searchParams.get("state");
-    const browser = browser();
-    const device = device();
+    let br = browserInfo();
+    let dv = deviceInfo();
 
     console.log("code : ", code);
 
@@ -24,7 +25,10 @@ export const CallbackKakao = () => {
     console.log("callback 페이지에서 넘겨줄 id : ", id);
 
     const props = {
-        code, id, browser, device
+        code:code, 
+        id:id, 
+        browser: br, 
+        device: dv,
     }
 
     useEffect( () => {

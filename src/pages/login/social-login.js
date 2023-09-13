@@ -7,7 +7,7 @@ import { OauthLoginAPI, kakaoAuth } from '../../apis/OAuthApiCalls';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { callLogoutAPI } from '../../apis/AuthAPICalls';
 import { useNavigate } from 'react-router-dom';
-import { browser, device } from './logininfo';
+import { browserInfo, deviceInfo } from './logininfo';
 
 
 
@@ -35,7 +35,6 @@ function SocialLogin() {
   // const accessToken = gapi.auth.getToken().access_token;
   // console.log(accessToken);
 
-
   const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub;
 
   const data = {
@@ -43,8 +42,8 @@ function SocialLogin() {
     provider: '',
     email: '',
     name: '',
-    browser: browser(),
-    device: device(), 
+    browser: browserInfo(),
+    device: deviceInfo(), 
 
     id: id,
   }
@@ -64,8 +63,8 @@ function SocialLogin() {
 
 
 
-    await dispatch(OauthLoginAPI(data));
-    await navigate("/", { replace: true }); 
+     dispatch(OauthLoginAPI(data));
+    // await navigate("/", { replace: true }); 
 
 
   };
@@ -75,7 +74,7 @@ function SocialLogin() {
 
   const onLogoutSuccess = async () => {
     console.log('SUCESS LOG OUT');
-    await dispatch(callLogoutAPI());
+    dispatch(callLogoutAPI());
     await navigate("/", { replace: true }); 
 
   };

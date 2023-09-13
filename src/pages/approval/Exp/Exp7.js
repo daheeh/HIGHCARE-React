@@ -26,8 +26,7 @@ function Exp7({ mode, data }) {
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
-	console.log('Exp7 first : ', approval.data);
+	console.log('Exp7 first : ', approval);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -186,7 +185,7 @@ function Exp7({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
 
 	const handleAddForm = () => {
@@ -285,6 +284,7 @@ function Exp7({ mode, data }) {
 		);
 	};
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -317,6 +317,7 @@ function Exp7({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -326,7 +327,6 @@ function Exp7({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
-
 	console.log('Exp7 formData : ', formData);
 
 	return (
@@ -338,17 +338,19 @@ function Exp7({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">법인카드사용보고서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
@@ -386,9 +388,6 @@ function Exp7({ mode, data }) {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-							{/* {Array.from({ length: formCount }).map((_, index) =>
-								renderApvCorpCard(formData.apvCorpCards[index] || {}, index)
-							)} */}
 							{renderApvCorpCard(formData)}
 						</div>
 						<div className="apvContentDetailExp1Total">
@@ -401,7 +400,7 @@ function Exp7({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData} />
 				</div>
 			</div>
 		</section>

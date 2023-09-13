@@ -93,6 +93,7 @@ export const insertMenuManagers = createAsyncThunk(
                     }
                 });
             console.log(response);
+            alert(response.data.data);
             return response.data;
 
         } catch (error) {
@@ -112,6 +113,7 @@ export const deleteManager = createAsyncThunk(
                 },
             });
             console.log(response);
+            alert(response.data.data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -121,14 +123,15 @@ export const deleteManager = createAsyncThunk(
 
 export const selectAccess = createAsyncThunk(
     'select/access',
-    async () => {
+    async (paging) => {
+        console.log("paging===========> ",paging);
         try {
-            const response = await axios.get(`http://localhost:8080/api/admin/access`, {
+            const response = await axios.get(`http://localhost:8080/api/admin/access?page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
             });
-            console.log(response);
+            console.log("[selectAccess]",response);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -140,7 +143,7 @@ export const selectAccessByDateRange = createAsyncThunk(
     'selectDateRange/access',
     async (days) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/admin/access?start=${days.startdate}&end=${days.enddate}`, {
+            const response = await axios.get(`http://localhost:8080/api/admin/access/date?start=${days.startdate}&end=${days.enddate}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
@@ -153,9 +156,12 @@ export const selectAccessByDateRange = createAsyncThunk(
     }
 )
 
+
+
 export const selectSearchMemberLog = createAsyncThunk(
     'selectSearchMemberLog/access',
     async (searchKeyword) => {
+        console.log("searchKeyword : ", searchKeyword);
         try {
             // 검색어를 사용하여 새로운 API 요청
             const response = await axios.get(`http://localhost:8080/api/admin/access/search?keyword=${searchKeyword}`, {
@@ -165,6 +171,7 @@ export const selectSearchMemberLog = createAsyncThunk(
             });
 
             // 검색 결과를 상태에 저장
+            console.log("search response : ", response.data);
             return response.data;
 
         } catch (error) {

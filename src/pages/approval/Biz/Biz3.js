@@ -9,27 +9,26 @@ import '../Approval.css';
 import { callApvBiz3API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
-import {RESET_APPROVAL} from '../../../modules/ApprovalModule';
+import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
 function Biz3({ mode, data }) {
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
 
-    const authes = useSelector(state => state.authes);
-    const empNo = authes.empNo;
-    console.log("empNo : ", empNo);
-    
-    const location = useLocation();
-    const initialData = location.state ? location.state.initialData : null;
-    
-    const navigate = useNavigate();
-    
-    const approval = useSelector(state => state.approval);
-    
+	const authes = useSelector(state => state.authes);
+	const empNo = authes.empNo;
+	console.log("empNo : ", empNo);
+
+	const location = useLocation();
+	const initialData = location.state ? location.state.initialData : null;
+
+	const navigate = useNavigate();
+
+	const approval = useSelector(state => state.approval);
 	console.log('Biz3 first : ', approval.data);
 
 	const [formData, setFormData] = useState({
-
 		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '출장신청서',
 		writeDate: '',
@@ -50,18 +49,40 @@ function Biz3({ mode, data }) {
 			endDate: approval.endDate ? approval.endDate : '',
 			endTime: approval.endTime ? approval.endTime : '',
 			location: approval.location ? approval.location : '',
-			tripAttendees:approval.tripAttendees ? approval.tripAttendees : '',
+			tripAttendees: approval.tripAttendees ? approval.tripAttendees : '',
 		}]
 	});
 
 	const isEditMode = formData.apvNo ? true : false;
-    console.log('isEditMode 1 : ', isEditMode);
+	console.log('isEditMode 1 : ', isEditMode);
 
-		useEffect(() => {
+	useEffect(() => {
 		if (!isEditMode) {
 			dispatch({ type: RESET_APPROVAL });
 		}
 	}, [isEditMode, dispatch]);
+
+	const onChangeHandler = (e) => {
+		const { name, value } = e.target;
+		if (name === 'contents1') {
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				contents1: value,
+			}));
+		} else {
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvBusinessTrips: [
+					{
+						...prevFormData.apvBusinessTrips[0],
+						[name]: value,
+					},
+				],
+			}));
+		}
+
+		console.log('Biz3 formData : ', formData);
+	}
 
 	const calculateTravelDuration = () => {
 		const startDate = new Date(
@@ -113,28 +134,6 @@ function Biz3({ mode, data }) {
 		return options;
 	}
 
-	const onChangeHandler = (e) => {
-		const { name, value } = e.target;
-		if (name === 'contents1') {
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				contents1: value,
-			}));
-		} else {
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvBusinessTrips: [
-					{
-						...prevFormData.apvBusinessTrips[0],
-						[name]: value,
-					},
-				],
-			}));
-		}
-
-		console.log('Biz3 formData : ', formData);
-	}
-
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -174,72 +173,81 @@ function Biz3({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
-
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
-    const handleFileUpload = (file) => {
-        if (file) {
-            // Create a copy of the current apvFiles array and add the new file to it
-            const updatedApvFiles = [...formData.apvFiles, file];
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                apvFiles: updatedApvFiles,
-            }));
+	const handleFileUpload = (file) => {
+		if (file) {
+			// Create a copy of the current apvFiles array and add the new file to it
+			const updatedApvFiles = [...formData.apvFiles, file];
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvFiles: updatedApvFiles,
+			}));
 
-            // Update the fileList state for rendering in the component
-            setFileList([...fileList, file]);
-            console.log('ApvSummitBar에서 업로드한 파일:', file);
-        }
+			// Update the fileList state for rendering in the component
+			setFileList([...fileList, file]);
+			console.log('ApvSummitBar에서 업로드한 파일:', file);
+		}
+	};
+
+	const updateFileList = (newFileList) => {
+		setFileList(newFileList);
+	};
+
+	useEffect(() => {
+		console.log('fileList : ', fileList);
+	}, [fileList])
+
+	const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz3API;
+
+	const handleSubmissionClick = () => {
+		const submissionData = {
+			empNo,
+			isEditMode,
+			formData,
+			selectedEmployees,
+			refSelectedEmployees,
+			navigate,
+			fileList,
+			APIPoint,
+			dispatch,
+		};
+
+		console.log('submissionData', submissionData);
+		handleSubmission(null, submissionData);
+	};
+
+	const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
     };
-
-    const updateFileList = (newFileList) => {
-        setFileList(newFileList);
-    };
-
-    useEffect(() => {
-        console.log('fileList : ', fileList);
-    }, [fileList])
-
-    const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz3API;
-
-    const handleSubmissionClick = () => {
-        const submissionData = {
-            empNo,
-            isEditMode,
-            formData,
-            selectedEmployees,
-            navigate,
-            fileList,
-            APIPoint,
-            dispatch,
-        };
-
-        console.log('submissionData', submissionData);
-        handleSubmission(null, submissionData);
-    };
-
+	
 	console.log('Biz3 formData : ', formData);
 
 	return (
 		<section>
 			<ApvMenu />
 			<div>
-			<ApvSummitBar
-                    onSubmit={handleSubmissionClick}
-                    updateIsUrgency={updateIsUrgency}
-                    setSelectedEmployees={setSelectedEmployees}
-                    fileList={fileList}
-                    updateFileList={updateFileList}
-                    data={data}
-                />
-                <div className="containerApv">
+				<ApvSummitBar
+					onSubmit={handleSubmissionClick}
+					updateIsUrgency={updateIsUrgency}
+					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
+					fileList={fileList}
+					updateFileList={updateFileList}
+					data={formData}
+				/>
+				<div className="containerApv">
 					<div className="apvApvTitle">출장신청서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitle">
@@ -262,7 +270,7 @@ function Biz3({ mode, data }) {
 									{generateTimeOptions()}
 								</select>
 							</div>
-							<div className="column3">~</div>
+							<div className="column3"> ~</div>
 							<div className="column2">
 								<input className="input1" type="date" name="endDate"
 									value={formData.apvBusinessTrips[0].endDate} onChange={onChangeHandler} />
@@ -287,8 +295,8 @@ function Biz3({ mode, data }) {
 							<div className="column1">동반자</div>
 							<div className="column2">
 								<input className="input1" placeholder="정보 입력"
-								name='tripAttendees' value={formData.apvBusinessTrips[0].tripAttendees}
-								onChange={onChangeHandler} />
+									name='tripAttendees' value={formData.apvBusinessTrips[0].tripAttendees}
+									onChange={onChangeHandler} />
 							</div>
 						</div>
 						<div className="apvContentDetail">상세내용
@@ -296,14 +304,15 @@ function Biz3({ mode, data }) {
 						<div className="apvContentDetailComent">
 							<textarea placeholder="내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler} 
+								onInput={autoExpandTextarea}/>
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
-                </div>
-            </div>
-        </section>
-    );
+					<ApvFileList files={fileList} data={formData} />
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export default Biz3;
