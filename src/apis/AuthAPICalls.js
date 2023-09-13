@@ -62,7 +62,7 @@ export const callLogoutAPI = () => {
             console.log(error);
         } finally {
             // 로그아웃시 로컬에 있는 리덕스, 토큰 초기화하기 
-            // localStorage.setItem('reduxState', '');
+            localStorage.setItem('reduxState', '');
             ReduxReset('authes');
 
             localStorage.removeItem('accessToken');

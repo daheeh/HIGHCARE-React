@@ -46,8 +46,9 @@ const authSlice = createSlice({
         },
         logoutAction: (state, { payload }) => {
             Object.assign(state, initialState);  // state 초기 initialState로 변경 
-            ReduxReset('authes');
             localStorage.setItem('reduxState', '');
+            // ReduxReset('authes');
+            // ReduxReset('mypage');
             localStorage.removeItem('accessToken');
             document.cookie = 'RefreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=localhost; path=/;';
             window.location.href="/";

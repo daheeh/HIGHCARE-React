@@ -6,6 +6,7 @@ import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
 import LoginVerify from '../../utils/LoginVerify';
 import { decodeJwt } from "../../utils/decodeJwt";
 import { logoutAction } from '../../modules/authSlice';
+import { ReduxReset } from '../../utils/ReduxReset';
 
 function Header() {
 
@@ -26,9 +27,13 @@ function Header() {
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-    const onClickLogoutHandler =  () => {
-         dispatch(logoutAction());
-        navigate("/", { replace: true });
+    const onClickLogoutHandler = () => {
+        // dispatch(logoutap());
+        dispatch(callLogoutAPI());
+        localStorage.setItem('reduxState', '');
+        // ReduxReset("mypage");
+        // navigate("/login", { replace: true });
+        window.location.href="/";
 
     }
 

@@ -73,6 +73,7 @@ import ResourceMod from "./pages/reservation/ResourceMod";
 import { BadRequestErrorPage, ForbiddenErrorPage, ServerErrorPage, UnauthorizedErrorPage } from "./errors/ErrorPages";
 import { PageNotFound } from "./errors/pageNotFound";
 import { ModifyPass } from "./pages/admin/member/ModifyPass";
+import { AccountStatusVerify } from "./pages/admin/auth/AccountStatusVerify";
 
 
 
@@ -102,7 +103,8 @@ function App() {
 
 
           {/* 여기부터 토큰(로그인 권한 인증) 유효성 체크 적용됨  */}
-          <Route element={<TokenVerification />} >
+          <Route element={<AccountStatusVerify><TokenVerification /></AccountStatusVerify>} >
+          
 
             <Route path="approval">
               <Route index element={<ApvMain />} />
