@@ -145,6 +145,10 @@ function Exp7({ mode, data }) {
 		}
 	};
 
+		function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	  }
+
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -392,7 +396,7 @@ function Exp7({ mode, data }) {
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(totalAmount)}</div></div>
 						</div>
 						<div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
 					</div>
