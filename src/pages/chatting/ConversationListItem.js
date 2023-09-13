@@ -56,10 +56,10 @@ function ConversationListItem ({ partner, host, sendToMessage}){
       <div className="conversation-list">
         <div onClick={openMessage} className="conversation-list-item">
           <FontAwesomeIcon icon={faCircleUser} style={{ color: '#CBDDFF', fontSize: '70px'}}/>
-          {/* <div className="conversation-info"> */}
+          <div className="conversation-info">
             <h1 className="conversation-title">{ partner }</h1>
             <p className="conversation-snippet">{ conversationList[partner].length === 0 ? "" : conversationList[partner][conversationList[partner].length-1].message }</p>
-          {/* </div>         */}
+          </div>        
         {/* </div> */}
         <MessageList 
           showMessage={showMessage} 
