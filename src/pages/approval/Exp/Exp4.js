@@ -197,6 +197,10 @@ function Exp4({ mode, data }) {
 		}
 	};
 
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	  }
+
 	useEffect(() => {
 		const currentDate = new Date();
 		setFormData(prevFormData => ({
@@ -436,7 +440,7 @@ function Exp4({ mode, data }) {
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(totalAmount)}</div></div>
 						</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
