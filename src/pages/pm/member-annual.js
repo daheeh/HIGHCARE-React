@@ -28,6 +28,7 @@ function PmMemberAnnual() {
         </div>
                 <div className="pm-ma-top">
                 <div className='div3'></div>
+                    <div className="pm-ma-plus">
                 <div className="pm-ma-box2">
                     <div className="pm-ma-font">총연차</div>
                     {/* <div className="pm-ma-number">{pmresult[0].totalAnnual && pmresult[0].totalAnnual}</div> */}
@@ -35,14 +36,24 @@ function PmMemberAnnual() {
                 <div className="pm-line"></div>
                 <div className="pm-ma-box">
                     <div>발생 연차</div>
-                    {/* <div className="pm-ma-number">{pmresult[0].addAnnual || '00'}</div> */}
+                    {pmresult[0].basicAnnual > 1 && (
+                        <div className="pm-ma-number">{pmresult[0].basicAnnual}</div>
+                    )}
+                    {pmresult[0].basicAnnual <= 1 && (
+                        <div className="pm-ma-number">00</div>
+                    )}
                 </div>
                 <div className="pm-line"></div>
                 <div className="pm-ma-box">
                     <div>발생 월차</div>
-                    <div className="pm-ma-number">00</div>
+                    {pmresult[0].basicAnnual < 2 && (
+                        <div className="pm-ma-number">{pmresult[0].basicAnnual}</div>
+                    )}
+                    {pmresult[0].basicAnnual >= 1 && (
+                        <div className="pm-ma-number"></div>
+                    )}
                 </div>
-                <div className="pm-line"></div>
+                {/* <div className="pm-line"></div>
                 <div className="pm-ma-box">
                     <div>조정 연차</div>
                     <div className="pm-ma-number">00</div>
@@ -51,7 +62,7 @@ function PmMemberAnnual() {
                 <div className="pm-ma-box">
                     <div>이월 연차</div>
                     <div className="pm-ma-number">00</div>
-                </div>
+                </div> */}
                 <div className="pm-line"></div>
                 <div className="pm-ma-box">
                     <div>사용 연차</div>
@@ -62,9 +73,10 @@ function PmMemberAnnual() {
                     <div>잔여 연차</div>
                     <div className="pm-ma-number">00</div>
                 </div>
-                
+                </div>
                 </div>
                     <table className="pm-ma-table">
+                        <tbody>
                     <tr>
                         <th className="columnpm1">이름</th>
                         <th className="columnpm2">부서명</th>
@@ -79,14 +91,15 @@ function PmMemberAnnual() {
                             <tr key={result.empNo}>
                                 <td>{result.anEmployee[0].empName}</td>
                                 <td>{result.anEmployee[0].dt.name}</td>
-                                <td>{result.anEmployee[0].job.name}</td>
-                                <td>{result.useAnnual}</td>
+                                <td>{result.vacation[0].type}</td>
+                                <td>{result.vacation[0].amount}</td>
                                 <td>{result.vacation[0].startDate}</td>
                                 <td>{result.vacation[0].endDate}</td>
                                 <td>{result.reason}</td>
                             </tr>
                         ))
                     }
+                    </tbody>
                 </table>
             </div>
     </section>

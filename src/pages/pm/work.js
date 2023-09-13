@@ -13,7 +13,6 @@ function PmWork() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    
 
     const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
@@ -29,6 +28,17 @@ function PmWork() {
 
     const result = useSelector(state => state.manage);
     console.log("------------------------}}>",result);
+
+        
+    const [pageEnd, setPageEnd] = useState(1);
+    const pageInfo = result.pageInfo;
+
+    const pageNumber = [];
+    if(pageInfo) {
+        for(let i = 1; i<= pageInfo.pageEnd; i++){
+            pageNumber.push(i);
+        }
+    }
 
     const [type, setType] = useState('');
     const [formData, setFormData] = useState({
@@ -47,7 +57,7 @@ function PmWork() {
 
     useEffect(() => {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
-        dispatch(callManagementAPI());
+        dispatch(callManagementAPI({currentPage}));
         // 여기 result.data로 변경한것을 result로 다시변경
         if (result.manage) {
             console.log("result >>>>>222: ", result.manage);
@@ -70,7 +80,7 @@ function PmWork() {
           console.log("form ==============================: ", formData);
 
         
-    }, []);
+    }, [currentPage]);
     
 
 
@@ -93,7 +103,7 @@ function PmWork() {
 				} else {
 					window.alert("다시 시도해 주세요.");
 				}
-                window.location.reload();
+            
 			} catch (error) {
 				console.error("API error:", error);
 				window.alert("API 요청 중 오류가 발생했습니다.");
@@ -124,7 +134,7 @@ function PmWork() {
 				} else {
 					window.alert("다시 시도해 주세요.");
 				}
-                window.location.reload();
+            
 			} catch (error) {
 				console.error("API error:", error);
 				window.alert("API 요청 중 오류가 발생했습니다.");
@@ -135,6 +145,7 @@ function PmWork() {
     };
 
 	return (
+        <div>
 <section>
 <PmNav/>
 <div className="apv-navibox">
@@ -145,15 +156,11 @@ function PmWork() {
 
                     <div className="pm-workbox">
                         <div className="pm-workin-box">
-                            <input onClick={pmSubmission} type="button" value="출근" className="pm-work-button"></input>
-                            <input  onClick={endSubmission} type="button" value="퇴근" className="pm-work-button"></input>
+                            <input onClick={pmSubmission} type="button" value="출근" className="pm-work-button2"></input>
+                            <input  onClick={endSubmission} type="button" value="퇴근" className="pm-work-button2"></input>
                             {/* <input type="button" value="자리 비움" className="pm-work-button"></input> */}
                             {/* <button className="pm-work-button">퇴근</button>
                             <button className="pm-work-button">자리 비움</button> */}
-                        </div>
-                        <div className="pm-workin-box">
-                            <h2>누적 근무시간</h2>
-                            <h2>00:00:00</h2>
                         </div>
                         <div className="pm-workin-box2">
                             <h2>출근시간</h2>
@@ -175,12 +182,11 @@ function PmWork() {
                         <th className="columnpm0">출근시간 </th>
                         <th className="columnpm0">퇴근시간</th>
                         <th className="columnpm0">상태</th>
-                        <th className="columnpm0">근무시간</th>
-                        <th className="columnpm0">총 근무시간</th>
+                        {/* <th className="columnpm0">근무시간</th>
+                        <th className="columnpm0">총 근무시간</th> */}
                     </tr>{/* {Array.isArray(result) && result */}
                     { console.log('======1> ' ,result.data)}
                     {result.manage !== undefined && Array.isArray(result.manage) && result.manage
-                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((res) => (
                             <tr key={res.manNo}>
                                 <td>{res.manNo}</td>
@@ -191,8 +197,8 @@ function PmWork() {
                                 <td>{res.startTime}</td>
                                 <td>{res.endTime}</td>
                                 <td>{res.status}</td>
-                                <td>{res.workTime}</td>
-                                <td>{res.totalWorkTime}</td>
+                                {/* <td>{res.workTime}</td>
+                                <td>{res.totalWorkTime}</td> */}
                             </tr>
                         ))
                     }
@@ -200,15 +206,43 @@ function PmWork() {
                     </tbody>
                 </table>
                 <br></br>
-                    <div className="paging">
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>5</span>
-                    </div>
+            {/* 페이징 처리를 위한 버튼  */}
+            {/* <div style={{ listStyleType: "none", display: "flex", justifyContent: "center"}}>
+            { Array.isArray(result.manage) &&
+            <button 
+                onClick={() => setCurrentPage(currentPage - 1)} 
+                disabled={currentPage === 1}
+            >
+                &lt;
+            </button>
+            }
+            {pageNumber.map((num) => (
+            <li key={num} onClick={() => setCurrentPage(num)}>
+                <button
+                    style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                >
+                    {num}
+                </button>
+            </li>
+            ))}
+            { Array.isArray(result.manage) && pageInfo != null &&
+            <button 
+                onClick={() => setCurrentPage(currentPage + 1)} 
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+            >
+                &gt;
+            </button>
+            }
+        </div> */}
                 </div>
     </section>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    </div>
 	);
 }
 

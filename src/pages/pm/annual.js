@@ -19,7 +19,7 @@ function PmAnnual() {
 
     const [pageEnd, setPageEnd] = useState(1);
     const pageInfo = result.pageInfo;
-
+    console.log(pageInfo);
     const pageNumber = [];
     if(pageInfo) {
         for(let i = 1; i<= pageInfo.pageEnd; i++){
@@ -66,19 +66,20 @@ function PmAnnual() {
                         <th className="columnpm4">부서</th>
                         <th className="columnpm5">휴가종류</th>
                         <th className="columnpm6">사용연차</th>
-                        <th className="columnpm7">연차사용기간</th>
+                        <th className="columnpm7">연차사용일</th>
                         <th className="columnpm7">비고</th>
                     </tr>
-                    {Array.isArray(result) && result
+                    {Array.isArray(result.data) && result.data
                         .map((result) => (
                             <tr key={result.empNo}>
                                 <td>{result.anEmployee[0].empName}</td>
                                 <td>{result.anEmployee[0].startDate}</td>
                                 <td>{result.anEmployee[0].job.name}</td>
                                 <td>{result.anEmployee[0].dt.name}</td>
-                                <td>{result.totalAnnual}</td>
-                                <td>{result.useAnnual}</td>
-                                <td>{result.reason}</td>
+                                <td>{result.vacation[0].type}</td>
+                                <td>{result.vacation[0].amount}</td>
+                                <td>{result.vacation[0].startDate}</td>
+                                <td></td>
                             </tr>
                         ))
                     }
@@ -89,7 +90,7 @@ function PmAnnual() {
             <button className="pm-de-add">연차 신청 하기</button>
             
             {/* 페이징 처리를 위한 버튼  */}
-            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center", marginLeft: "780px" }}>
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center"}}>
             { Array.isArray(result) &&
             <button 
                 onClick={() => setCurrentPage(currentPage - 1)} 

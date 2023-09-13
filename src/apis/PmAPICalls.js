@@ -117,7 +117,7 @@ export const callTreeviewTwoAPI = () => {
         };
     };
 
-export const callManagementAPI = () => {
+export const callManagementAPI = ({ currentPage }) => {
         console.log('[PmAPICalls] callManagementAPI Call');
         
         const token = jwt_Decode(window.localStorage.getItem("accessToken"));
@@ -126,7 +126,7 @@ export const callManagementAPI = () => {
         const empNo = token.sub;
 
    
-        const requestURL = `http://localhost:8080/api/pm/management/${empNo}`;
+        const requestURL = `http://localhost:8080/api/pm/management/${empNo}?offset=${currentPage}`;
         
         return async (dispatch, getState) => {
         
