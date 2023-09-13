@@ -92,10 +92,10 @@ function Exp1({ mode, data }) {
 			return sum + parseFloat(form.amount || 0);
 		}, 0);
 
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			totalAmount: newTotalAmount,
-		}));
+		// setFormData((prevFormData) => ({
+		// 	...prevFormData,
+		// 	totalAmount: newTotalAmount,
+		// }));
 
 		// totalAmount 상태 변수 업데이트
 		setTotalAmount(newTotalAmount);
@@ -112,16 +112,14 @@ function Exp1({ mode, data }) {
 				updatedFormData.apvExpForms[index][field] = value;
 				return updatedFormData;
 			});
-			updateTotalAmount();
 		} else if (nameParts[0] === 'sharedProperties') {
-
 			if (name === 'sharedProperties.requestDate') {
 				const currentDate = new Date().toISOString().split('T')[0];
 				if (value < currentDate) {
 					window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
-					setSharedProperties(prevSharedProps => ({
+					setSharedProperties((prevSharedProps) => ({
 						...prevSharedProps,
-						requestDate: currentDate
+						requestDate: currentDate,
 					}));
 					return;
 				}
@@ -131,30 +129,22 @@ function Exp1({ mode, data }) {
 			setSharedProperties((prevSharedProps) => ({
 				...prevSharedProps,
 				[field]: value,
-
-
 			}));
-			// apvExpForms 배열 내의 해당 속성 업데이트
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
-					...form,
-					[field]: value,
-				})),
-			}));
-
-			updateTotalAmount();
 		} else {
-			// 다른 폼 데이터 속성 업데이트
+
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
 			}));
-
-			updateTotalAmount();
 		}
-	};
 
+		const updatedAmounts = [...amounts];
+		updatedAmounts[index] = parseFloat(value || 0);
+		setAmounts(updatedAmounts);
+
+		const newTotalAmount = updatedAmounts.reduce((sum, amount) => sum + amount, 0);
+		setTotalAmount(newTotalAmount);
+	};
 
 	useEffect(() => {
 		const currentDate = new Date();

@@ -8,6 +8,8 @@ import 'moment/locale/ko'
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Draggable from 'react-draggable';
+import ChattingRoomListCSS from "../chatting/ChattingRoomList.module.css";
 import { faChevronLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './MessageList.css';
@@ -18,20 +20,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function MessageList(props) {
-
+  
   // 채팅방 구성하는 데이터 및 함수들 추출
-  const {showMessage, setShowMessage, partner, list, host, sendToMessage, handleLeaveChat} = props;
+  const {showMessage, setShowMessage, partner, list, host, sendToMessage, handleLeaveChat, handleClose} = props;
   // inputMessage : 사용자가 입력한 메세지 저장
   const [inputMessage, setInputMessage] = useState("");
-
+  
   // 컴포넌트 처음 렌더링 될 때 아무 동작도 수행 안하게
   useEffect(() => {
   },[])
 
+
+
+
   // 채팅방 닫기
-  const handleClose = () => {
-    setShowMessage(false);
-  };    
+  const handleClose2  = () => {
+    console.log('afsgdfgdgsdfgsdfgsdfgsdgsdfg');
+       console.log('11111111111111afsgdfgdgsdfgsdfgsdfgsdgsdfg');
+    
+    handleClose(); // 부모 컴포넌트에서 전달받은 handleClose 함수 호출
+  };
+
 
   // 채팅방 나가기
   const handleExit = () => {
@@ -42,6 +51,7 @@ export default function MessageList(props) {
   const sendMessages = () => {
     if(inputMessage.length===0 || inputMessage===undefined)return;
     sendToMessage(host, partner, inputMessage)
+    console.log('MessageList host ===========> ' , host);
     setInputMessage("")
   }
 
@@ -129,15 +139,29 @@ export default function MessageList(props) {
     return tempMessages;
   }
 
+  
+
   //Dialog 컴포넌트 사용해서 채팅방 화면 표시 (메세지 목록, 메세지 입력하는 영역, 툴바같은거 포함)
   // ChatRoomToolBar버튼 클릭하면 뒤로가기(handleClose), 채팅방 아예 나가기(handleExit)
     return(
-      <Dialog fullScreen open={showMessage} TransitionComponent={Transition}>
+      <Dialog open={showMessage} TransitionComponent={Transition}
+        PaperProps={{
+          style: {
+            width: '390px', 
+            height: '510px', 
+          },
+        }}
+        BackdropProps={{
+          style: {
+            backgroundColor: 'rgba(0, 0, 0, 0)', 
+          },
+        }}
+      >
         <div className="message-list">
           <ChatRoomToolbar
             title={partner}
             leftItems={[
-              <ChatToolbarButton icon={faChevronLeft} action={handleClose} key="back">
+              <ChatToolbarButton icon={faChevronLeft} action={handleClose2} key="back">
                 </ChatToolbarButton>
             ]}
             rightItems={[
@@ -150,7 +174,7 @@ export default function MessageList(props) {
 
           <SendMessageArea 
             rightItems={[
-              <ChatToolbarButton icon={faPaperPlane} action={sendMessages} key="send"/>
+              <ChatToolbarButton icon={faPaperPlane} style={{ fontSize: '20px' }} action={sendMessages} key="send"/>
             ]}
             host={host}
             name={partner}

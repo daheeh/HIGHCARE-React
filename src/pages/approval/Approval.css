@@ -741,6 +741,13 @@ section {
     margin-right: 30px;
 }
 
+.option1{
+    background: none;
+    height: 50px;
+    border: none;
+    font-size: 20px;
+}
+
 .labelName {
     margin-left: 50px;
 }

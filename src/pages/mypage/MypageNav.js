@@ -13,9 +13,9 @@ function MypageNav() {
                         <Link to="/mypage">마이페이지</Link>
                     </div>
                     <div className="apvNaviBox">
-                        <div className="apvNaviBoxTop">
+                        {/* <div className="apvNaviBoxTop">
                             <Link to="/approval/biz1"></Link>
-                        </div>
+                        </div> */}
                         <div className="apvNaviBoxEmp"></div>
                         <div className="apvNaviBoxMainTitle">
                             <Link to="/mypage/profile">프로필</Link>
@@ -28,6 +28,14 @@ function MypageNav() {
                         <div className="apvNaviBoxMainTitle">
                             <Link to="/mypage/mymanegement">나의 근태조회</Link>
                         </div>
+                        {/* <div className="apvNaviBoxEmp"></div>
+                        <div className="apvNaviBoxMainTitle">
+                            <Link to="/mypage/mymanegement">소셜로그인연동</Link>
+                        </div>
+                        <div className="apvNaviBoxEmp"></div>
+                        <div className="apvNaviBoxMainTitle">
+                            <Link to="/mypage/mymanegement">비밀정보수정</Link>
+                        </div> */}
                     </div>
                 </div>
             </div>

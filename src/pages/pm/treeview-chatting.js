@@ -46,8 +46,8 @@ function TreeViewChatting({setEmpInfo, handleAddPartnerInWebSocket}) {
         deptName: node.deptName,
       };
       setselectedTreeviewEmployee(selectedEmployee); 
-      handleAddPartnerInWebSocket(selectedEmployee.empNo);  // ChatRoomList에 있는 handleAddPartner 호출해서 클릭한 사원 대화상대로 등록
-      console.log('[TreeviewChatting] call handleAddPartner ===================> ', selectedEmployee.empNo);
+      handleAddPartnerInWebSocket(selectedEmployee.empName);  // ChatRoomList에 있는 handleAddPartner 호출해서 클릭한 사원 대화상대로 등록
+      console.log('[TreeviewChatting] call handleAddPartner ===================> ', selectedEmployee.empName);
       console.log("selectedEmployee ====================> " ,selectedEmployee);
     }
   };

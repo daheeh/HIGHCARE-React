@@ -14,7 +14,6 @@ function ConversationListItem ({ partner, host, sendToMessage}){
   const [showMessage, setShowMessage] = useState(false);  
   const conversationList = useSelector(state => state.conversationlist);
   const dispatch = useDispatch();
-  // dispatch({ type: RESETLIST});
 
 
   useEffect(() => {
@@ -32,25 +31,7 @@ function ConversationListItem ({ partner, host, sendToMessage}){
     setShowMessage(true);
   }
 
-  // const handleLeaveChat = () => {
-  //   const isOk = window.confirm('채팅방에서 나가시겠습니까?\n나가면 대화내용이 모두 삭제되고 채팅목록에서도 삭제됩니다.');
-  //   if(isOk){
-  //     dispatch(leaveChat(partner));
-  //     setShowMessage(false);
-  //     axios(
-  //       {          
-  //         method:'DELETE',
-  //         url:process.env.REACT_APP_USER_BASE_URL+'/leaveChat',
-  //         data:{
-  //           author:host,
-  //           to:partner,
-  //         }
-  //       }
-  //     )
-  //   }
-  // }
-
-
+  
   const handleLeaveChat = () => {
     const isOk = window.confirm('채팅방에서 나가시겠습니까?\n나가면 대화내용이 모두 삭제되고 채팅목록에서도 삭제됩니다.');
     if (isOk) {
@@ -69,7 +50,6 @@ function ConversationListItem ({ partner, host, sendToMessage}){
     }
   };
 
-  
 
   return (
     <>

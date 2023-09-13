@@ -9,6 +9,8 @@ import { insertPartner, insertMessage, receive } from '../../modules/Conversatio
 import ConversationListItem from "./ConversationListItem";
 import SockJsClient from 'react-stomp';
 import '../login/login.css';
+import { getChatRoomId } from './CreateChatRoom';
+import { resetChat } from '../../modules/ConversationList';
 
 
 
@@ -18,8 +20,10 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
     const conversationList = useSelector(state => state.conversationlist);
     console.log("conversationList =========> " + conversationList);
     const $websocket = useRef(null); 
-    let topics = [`/topic/${userId}`];
+    let topics = [`/topic/${empName}`];  // 로그인된 회원의 이름이면 
     const dispatch = useDispatch();
+    dispatch(resetChat);
+
     
 
     useEffect(() => {
@@ -35,40 +39,69 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
 
 
     // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
+    // const getConversations = () => {
+    //     axios({
+    //       method:"get",
+    //       url: 'http://localhost:8080/user/fetchAllUsers/'+ userId  // userid: 로그인된 회원의 아이디
+    //     })
+    //     .then((response) => {
+    //       for (const key in response.data) {
+    //         dispatch(insertPartner(
+    //           {
+    //             partner: response.data[key].partner,
+    //             list:[...response.data[key].messageList]
+    //           }
+    //         ))
+    //       }           
+    //     })
+    //     .catch((error) => {
+    //       console.log("사용자 채팅방 로딩 실패");
+    //     })    
+    //   }
+
+
+
     const getConversations = () => {
-        axios({
-          method:"get",
-          url: 'http://localhost:8080/user/fetchAllUsers/'+ userId
-        })
-        .then((response) => {
-          for (const key in response.data) {
-            dispatch(insertPartner(
-              {
-                photo:process.env.REACT_APP_USER_BASE_IMAGE,
-                partner: response.data[key].partner,
-                list:[...response.data[key].messageList]
-              }
-            ))
-          }           
-        })
-        .catch((error) => {
-          
-        })    
-      }
+      axios({
+          method: "get",
+          url: 'http://localhost:8080/user/fetchAllUsers/' + userId  // userid: 로그인된 회원의 아이디
+      })
+      .then((response) => {
+          // 현재 로그인한 사용자와 관련된 채팅방만 필터링하여 저장
+          const filteredConversations = response.data.filter(conversation => conversation.startsWith(userId + ":"));
+          for (const key in filteredConversations) {
+              dispatch(insertPartner(
+                  {
+                      partner: filteredConversations[key].partner,
+                      list: [...filteredConversations[key].messageList]
+                  }
+              ))
+          }
+      })
+      .catch((error) => {
+  
+      })    
+  }
+
+
+
+
 
       const sendToMessage = (from, to, msg) =>{
-        const m = {message:msg, author:from, to:to, timestamp: new Date().getTime()};
+        const m = { message:msg, 
+                    author:from, 
+                    to:to,      
+                    timestamp: new Date().getTime()
+                  };
         $websocket.current.sendMessage("/app/send", JSON.stringify(m));
         dispatch(insertMessage(m));
       }
     
       const recevieMessage = (msg) => {
-        console.log('ChatroomList receiveMessage ===============>', recevieMessage);
+        console.log('ChatroomList receiveMessage ===============>', msg);
         dispatch(receive(msg));    
       }
 
-
-        
 
       const handleAddPartner = (name)=> {
 
@@ -91,14 +124,17 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
             })
           );
         }
+
+
       };
 
       
       useImperativeHandle(ref, () => ({
-        handleAddPartner
+        handleAddPartner,
       }),[]);
 
-        
+      
+      
 
       return (
         <>
@@ -115,25 +151,32 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
                             
                         </div>
                         <div className={ChattingRoomListCSS.chattingRoomInfo}>
-                            {/* <div className={ChattingRoomListCSS.roomInfoText}> */}
 
                         { 
-                            Object.keys(conversationList).map((key) => 
-                            <ConversationListItem             
-                                key={key}
-                                partner={key}
-                                host={userId}
-                                sendToMessage={sendToMessage}
-                            />
-                            )
-                        }
+                            Object.keys(conversationList).map((key) => {
+                            console.log('Key:', key);
+
+                              return (
+                                  <ConversationListItem             
+                                    key={key}
+                                    partner={key}
+                                    host={empName}
+                                    sendToMessage={sendToMessage}
+                                  />
+                                );
+                                  
+                          })
+                        } 
 
                         <SockJsClient
-                        url={process.env.REACT_APP_CHAT_BASE_URL}
+                        url="http://localhost:8080/chat"
                         topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
-                            console.log('[SocketJsClientf rendering...] Received message ==============> ', msg);
-                            recevieMessage(msg);
+                          recevieMessage(msg);
+                          console.log('[SocketJsClient rendering...] Received message ==============> ', msg);
+                        }}
+                        onConnect={() => {
+                          console.log('WebSocket connected successfully.');
                         }}
                         ref={$websocket}
                         />

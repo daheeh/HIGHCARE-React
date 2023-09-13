@@ -28,7 +28,7 @@ function MyReservationStatus(){
                 empNo: empNo,
                 currentPage: currentPage
             }));
-        },[currentPage]
+        },[]
     );
     const dataRe = (data) => {
         var dateObj = new Date(data);
@@ -89,7 +89,7 @@ function MyReservationStatus(){
             { Array.isArray(resList) && pageInfo != null &&
             <button 
                 onClick={() => setCurrentPage(currentPage + 1)} 
-                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total === 0}
                 className={BoardStyle.pagingButtona}
           >
                 &gt;

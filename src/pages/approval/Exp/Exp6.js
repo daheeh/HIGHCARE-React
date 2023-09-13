@@ -278,7 +278,7 @@ function Exp6({ mode, data }) {
 						</div>
 						<div className="apvContentTitleExp1-3">
 							<div className="column45">지급액</div>
-							<div className="column46">{formData.apvFamilyEvents[0].payment} 원</div>
+							<div className="column46">{formData.apvFamilyEvents[0].payment.toLocaleString()} 원</div>
 
 						</div>
 						<div className="apvContentTitleExp1-2">
