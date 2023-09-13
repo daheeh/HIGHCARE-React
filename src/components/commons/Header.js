@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
 import LoginVerify from '../../utils/LoginVerify';
 import { decodeJwt } from "../../utils/decodeJwt";
+import { logoutAction } from '../../modules/authSlice';
 
 function Header() {
 
@@ -25,8 +26,8 @@ function Header() {
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-    const onClickLogoutHandler = async () => {
-        await dispatch(callLogoutAPI());
+    const onClickLogoutHandler =  () => {
+         dispatch(logoutAction());
         navigate("/", { replace: true });
 
     }
