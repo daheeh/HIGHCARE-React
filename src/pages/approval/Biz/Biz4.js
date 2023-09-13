@@ -116,10 +116,10 @@ function Biz4({ mode, data }) {
 	useEffect(() => {
 		setFormData(prevFormData => ({
 			...prevFormData,
-			empPhone: empData.phone,
+			empPhone: empData.empPhone,
 			empEmail: empData.empEmail,
 		}))
-		console.log("empData.phone", empData.phone);
+		console.log("empData.empPhone", empData.empPhone);
 		console.log("empData.empEmail", empData.empEmail);
 	}, [empData])
 
@@ -231,6 +231,13 @@ function Biz4({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
+
+	    const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+
 	console.log('Biz4 formData : ', formData);
 
 
@@ -289,13 +296,15 @@ function Biz4({ mode, data }) {
 						<div className="apvContentDetailComent">
 							<textarea placeholder="내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 						</div>
 						<div className="apvContentDetail2">-아래-</div>
 						<div className="apvContentDetailComent2">
 							<textarea placeholder="상세 내용 작성" name='contents2' className='apvTextarea'
 								value={formData.contents2}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 						</div>
 					</div>
 					<ApvFileList files={fileList} data={formData} />

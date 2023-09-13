@@ -218,6 +218,13 @@ function Biz3({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
+
+	const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+	
 	console.log('Biz3 formData : ', formData);
 
 	return (
@@ -263,7 +270,7 @@ function Biz3({ mode, data }) {
 									{generateTimeOptions()}
 								</select>
 							</div>
-							<div className="column3">~</div>
+							<div className="column3"> ~</div>
 							<div className="column2">
 								<input className="input1" type="date" name="endDate"
 									value={formData.apvBusinessTrips[0].endDate} onChange={onChangeHandler} />
@@ -297,7 +304,8 @@ function Biz3({ mode, data }) {
 						<div className="apvContentDetailComent">
 							<textarea placeholder="내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler} 
+								onInput={autoExpandTextarea}/>
 						</div>
 					</div>
 					<ApvFileList files={fileList} data={formData} />

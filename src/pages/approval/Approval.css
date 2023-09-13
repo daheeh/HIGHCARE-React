@@ -703,17 +703,19 @@ section {
 
 .apvTextarea {
     font-family: NanumGothic;
-    /* background: #f4f4f4; */
     background: none;
     padding: 10px;
     font-size: 24px;
     width: 100%;
     height: auto;
+    min-height: 50px;
+    max-height: 300px;
     border: none;
     outline: none;
     resize: none;
     overflow: hidden;
     margin-top: 10px;
+    transition: height 0.3s ease;
 }
 
 .input1 {

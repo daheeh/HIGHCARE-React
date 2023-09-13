@@ -53,7 +53,6 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
         }
-
     };
 };
 

@@ -11,8 +11,10 @@ import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
 import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 
+
 function Biz1({ mode, data }) {
 
+    
     const dispatch = useDispatch();
     dispatch({ type: RESET_APPROVAL });
 
@@ -148,6 +150,14 @@ function Biz1({ mode, data }) {
         console.log('submissionData', submissionData);
         handleSubmission(null, submissionData);
     };
+
+    const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+    
+
     console.log('Biz formData : ', formData);
 
     return (
@@ -193,6 +203,7 @@ function Biz1({ mode, data }) {
                                 name="contents1"
                                 value={formData.contents1}
                                 onChange={onChangeHandler}
+                                onInput={autoExpandTextarea}
                             />
                         </div>
                         <div className="apvContentDetail2">-아래-</div>
@@ -203,6 +214,7 @@ function Biz1({ mode, data }) {
                                 name="contents2"
                                 value={formData.contents2}
                                 onChange={onChangeHandler}
+                                onInput={autoExpandTextarea}
                             />
                         </div>
                     </div>

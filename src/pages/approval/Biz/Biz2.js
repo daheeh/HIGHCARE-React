@@ -157,6 +157,12 @@ function Biz2({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
+
+	const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
 	console.log('Biz2 formData : ', formData);
 
 	return (
@@ -218,7 +224,8 @@ function Biz2({ mode, data }) {
 							<div className="column1">회의내용</div>
 							<div><textarea placeholder="회의 내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 							</div>
 						</div>
 					</div>

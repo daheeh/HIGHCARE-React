@@ -69,7 +69,8 @@
 .apvContentDetailComent2{
     grid-column: 1 / span 8;
     padding: 30px;
-    height: auto;
+    /* height: auto;/// */
+    min-height: 100px;
 }
 
 
@@ -150,6 +151,9 @@
 }
 .apvContentTitleBiz3 .column1{
     background: #EEE; 
+}
+.apvContentTitleBiz3 .column3{
+    background: none; 
 }
 
 .apvContentTitleBiz3 > div:nth-child(1){
