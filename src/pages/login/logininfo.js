@@ -133,7 +133,7 @@ function Logininfo() {
                     </div>
                 </div>
                 <div className="button-group">
-                    <button type="button"
+                    <button type="button" style={{width:120, height:70}}
                         onClick={onClickLoginHandler}
                     >로그인</button>
                 </div>
