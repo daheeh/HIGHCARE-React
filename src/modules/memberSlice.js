@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { allMemberListApi, selectMember } from "../apis/MemberAPICalls";
+import { ModifyInfoAPI, WithDrawInfoAPI, allMemberListApi, selectMember } from "../apis/MemberAPICalls";
+import { modifyMemberAPI } from "../apis/AuthAPICalls";
 
 const initialState = {
   data: {},
   treeviewMember: [],
+  message: '',
 }
 
 
@@ -21,7 +23,7 @@ const memberSlice = createSlice({
       state.treeviewMember = [];
   },
   resetRequestMemberAction: (state, action) => {
-    state.data = {};
+    // state.data = {};
   }
   
 
@@ -47,7 +49,15 @@ const memberSlice = createSlice({
       .addCase(allMemberListApi.fulfilled, (state, { payload }) => {
         state.data = payload;
       })
+      .addCase(ModifyInfoAPI.fulfilled, ModifyInfoAPI.rejected, (state,  {payload} ) => {
+        state.message = payload;
+        alert(payload);
+      })
+      .addCase(WithDrawInfoAPI.fulfilled, WithDrawInfoAPI.rejected, (state,  {payload} ) => {
+        state.message = payload;
+        alert(payload);
 
+      })
   }
 })
 

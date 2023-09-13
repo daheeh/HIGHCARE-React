@@ -5,7 +5,7 @@ import conversationlist from './ConversationList'
 require('dotenv').config();
 
 const rootReducer = combineReducers({
-    authes ,
+    // authes ,
     conversationlist
 });
 

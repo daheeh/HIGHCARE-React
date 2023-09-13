@@ -13,7 +13,7 @@ function AdminPage() {
 
 
 	TokenVerification();
-	AuthVarification();
+	// AuthVarification();
 
 	const dispatch = useDispatch();
 

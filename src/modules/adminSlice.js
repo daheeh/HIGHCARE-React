@@ -25,9 +25,9 @@ const adminSlice = createSlice({
             state.departmentList = payload.data.departmentList;
         })
         .addCase(selectMenuGroupList.fulfilled, (state, {payload}) => {
+            console.log("state ====", state);
             state.menuGroupList = payload.data; 
         })
-        
 
     }
 })

@@ -17,6 +17,8 @@ function ApvMainBox({ showCounts }) {
     });
 
     useEffect(() => {
+        if(empNo){
+
         async function fetchcounts() {
             try {
                 const response = await fetch(`http://localhost:8080/api/approval/main?empNo=${empNo}`, {
@@ -37,8 +39,10 @@ function ApvMainBox({ showCounts }) {
                 console.error('Error fetching counts:', error);
             }
         }
-
+        
+        
         fetchcounts();
+    }
     }, [empNo]);
 
     return (

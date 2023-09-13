@@ -8,20 +8,18 @@ import { accountStatus, roleCode } from "./member/MemberList";
 export function AdminMain1() {
 
     const dispatch = useDispatch();
-    const mem = useSelector(state => state.members);
-    const memberList = mem.data;
+    let memberList = useSelector(state => state.members.data);
     let [membercount, setMemberCount] = useState(0);
 
     // dispatch(allMemberListApi());
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            if (Array.isArray(memberList)) {
-                await dispatch(allMemberListApi()); // 비동기 액션 실행
+        const fetchData = () => {
+                dispatch(allMemberListApi()); // 비동기 액션 실행
 
                 let preCount = 0;
-                memberList.forEach((member) => {
+                memberList.map((member) => {
                     member.roleList.some(role => {
                         if (roleCode(role.authCode).includes('임시회원')) {
                             preCount++;
@@ -30,7 +28,6 @@ export function AdminMain1() {
                 });
                 // 데이터 처리 완료 후 상태 업데이트
                 setMemberCount(preCount);
-            }
         }
         fetchData();
 
@@ -70,7 +67,7 @@ export function AdminMain2() {
 
 
     const dispatch = useDispatch();
-    const mem = useSelector(state => state.members);
+    let mem = useSelector(state => state.members);
     const memberList = mem.data;
     let [membercount, setMemberCount] = useState(0);
 
@@ -80,10 +77,10 @@ export function AdminMain2() {
 
         const fetchData = async () => {
             if (Array.isArray(memberList)) {
-                await dispatch(allMemberListApi()); // 비동기 액션 실행
+                // await dispatch(allMemberListApi()); // 비동기 액션 실행
 
                 let preCount = 0;
-                memberList.forEach((member) => {
+                memberList.map((member) => {
                     if (member.accessManager?.isInActive == 'Y') {
                         preCount++;
                     }
