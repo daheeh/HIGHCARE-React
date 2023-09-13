@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { callLoginAPI } from "../../apis/AuthAPICalls";
 
-export function device () {
+export function deviceInfo () {
 
     let agent = navigator.userAgent.toLowerCase(); 
 
@@ -42,7 +42,7 @@ export function device () {
     }
 }
 
-export const browser = () => {
+export const browserInfo = () => {
 
     let agent = navigator.userAgent.toLowerCase(); 
 
@@ -81,8 +81,8 @@ function Logininfo() {
     const [form, setForm] = useState({
         id: '',
         password: '',
-        device: device(),
-        browser: browser(),
+        device: deviceInfo(),
+        browser: browserInfo(),
 
 
     });
@@ -109,8 +109,8 @@ function Logininfo() {
 
     
 
-    console.log(browser());
-    console.log(device());
+    console.log(browserInfo());
+    console.log(deviceInfo());
 
 
     return (
@@ -149,10 +149,10 @@ function Logininfo() {
                             <input type="checkbox" hidden id="findpass" />
                             <label htmlFor="findpass">비밀번호 찾기</label>
                         </Link>
-                        <Link to="/login/member/request">
+                        {/* <Link to="/login/member/request">
                             <input type="checkbox" hidden id="reqmember" />
                             <label htmlFor="reqmember">가입요청</label>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

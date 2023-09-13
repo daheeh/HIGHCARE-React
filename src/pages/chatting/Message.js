@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import './Message.css';
 
-export default function Message(props) {
+export default function message(props) {
     const {
       data,
       isMine,

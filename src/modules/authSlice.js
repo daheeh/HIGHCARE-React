@@ -49,6 +49,7 @@ const authSlice = createSlice({
             ReduxReset('authes');
             localStorage.removeItem('accessToken');
             document.cookie = 'RefreshToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=localhost; path=/;';
+            window.location.href="/";
 
         },
         reissueAction: (state, { payload }) => {

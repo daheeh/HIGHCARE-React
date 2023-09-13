@@ -57,8 +57,8 @@ function OAuthPage() {
 
 
 
-    await dispatch(OauthLoginAPI(data));
-    await navigate("/", { replace: true });
+     dispatch(OauthLoginAPI(data));
+     navigate("/", { replace: true });
 
 
   };
@@ -108,10 +108,10 @@ function OAuthPage() {
           render={renderGoogleCustomButton}
 
         />
-        {/* <GoogleLogout
+        <GoogleLogout
         clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
         onLogoutSuccess={onLogoutSuccess}
-      /> */}
+      />
 
 
         {/* <input type="checkbox" hidden id="kakaolabel" /> */}
