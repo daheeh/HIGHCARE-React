@@ -15,11 +15,11 @@ function Profile() {
 
     <MypageNav />
     const dispatch = useDispatch();
-    const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
+    const employee = useSelector(state => state.authes); 
     const [image, setImage] = useState(null);   
     
     const [imageUrl, setImageUrl] = useState(null);
-    const imageInput = useRef();    // 이미지 업 데이트 
+    const imageInput = useRef();    
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
     const [imageLink, setImageLink] = useState('');
