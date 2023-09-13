@@ -23,7 +23,6 @@ export const callMypageProfileSelectAPI = (empNo) => {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
 
                 },
-                // body: JSON.stringify(),
 
             })
             .then(response => response.json());

@@ -12,7 +12,6 @@ import MypageNav from './MypageNav';
 
 function Profile() {
    
-
     <MypageNav />
     const dispatch = useDispatch();
     const employee = useSelector(state => state.authes); 
@@ -136,7 +135,7 @@ function Profile() {
                                     alt="preview"
 
                                     style={{ width: 180, height: 120 }}
-                                />}
+                                />
                                 <input
                                     style={{ display: 'none' }}
                                     type="file"
@@ -196,8 +195,5 @@ function Profile() {
         </>
     )
 }
-
-
-// }
 
 export default Profile;
