@@ -7,10 +7,9 @@ import LoginVerify from '../../utils/LoginVerify';
 import { decodeJwt } from "../../utils/decodeJwt";
 import { logoutAction } from '../../modules/authSlice';
 import { ReduxReset } from '../../utils/ReduxReset';
-<<<<<<< HEAD
+
 import { GET_RESET_MANSELECT } from '../../modules/MypageModule';
-=======
->>>>>>> hdhye
+
 
 function Header() {
 
@@ -32,21 +31,14 @@ function Header() {
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const onClickLogoutHandler = () => {
-<<<<<<< HEAD
-        dispatch(logoutAction());
-        // dispatch({ type: GET_RESET_MANSELECT, payload: '' });
 
-        localStorage.setItem('reduxState', '');
-        // ReduxReset("mypage");
-        // navigate("/", { replace: true });
-=======
-        // dispatch(logoutap());
         dispatch(callLogoutAPI());
+        // dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
-        // ReduxReset("mypage");
-        // navigate("/login", { replace: true });
+        // // ReduxReset("mypage");
+        // // navigate("/login", { replace: true });
         window.location.href="/";
->>>>>>> hdhye
+
 
     }
 
