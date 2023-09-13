@@ -11,40 +11,38 @@ import MypageNav from './MypageNav';
 
 
 function Profile() {
-
+   
 
     <MypageNav />
     const dispatch = useDispatch();
     const employee = useSelector(state => state.authes); // 회원번호 employee.empNo auth에 있는 계정정보를 다 담고 있음
-    const [image, setImage] = useState(null);
-    // const [imageUrl, setImageUrl] = useState(`{http://localhost:8080/images/basic.jpg}`);
+    const [image, setImage] = useState(null);   
+    
     const [imageUrl, setImageUrl] = useState(null);
     const imageInput = useRef();    // 이미지 업 데이트 
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
     const [imageLink, setImageLink] = useState('');
-
+    
     console.log("아이디 : ", id);
     console.log("마이페이지에 담긴 정보 : ", mypage);
-    // {`${image}`? `${imageUrl?.chName }` !== undefined ? `http://localhost:8080/images/${imageUrl?.chName}` : `${imageUrl}`:''}
-    //  employee empNo로 조회
+   
     useEffect(
         () => {
-            dispatch(callMypageProfileSelectAPI(employee.empNo));
-            /// empNo로 불러오기
-
+            dispatch(callMypageProfileSelectAPI(employee.empNo));       
+          
         }
-        , []); // 빈배열이면 랜더링 한번 되고 Apicalls를 준다.  
+        , []); 
 
 
-    const myInfo = mypage?.data?.myEmployee;
-
+    const myInfo = mypage?.data?.myEmployee;       
+   
     const picture = mypage?.data?.myProfileFile;
-
+    
 
     console.log("myInfo", myInfo);
     console.log("업데이트 사진", picture?.chName);
-    console.log("기본이미지유알엘", imageLink);
+    console.log("기본이미지유알엘", imageLink);      
     console.log("이미지유알엘", imageUrl);
     // //이미지
     useEffect(
@@ -63,13 +61,13 @@ function Profile() {
                 }
                 fileReader.readAsDataURL(image)
             }
-            console.log('check------->', mypage);
+            console.log('check------->',mypage);
             setImageUrl(mypage?.data?.myProfileFile);
             console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)
-            if (!imageLink) {
-                // 바꿀때만 상태값 바꿔주고 아니면 그대로 둔다.
+            if(!imageLink){
+                    
                 setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
-            }
+            } 
         },
         [image]);
 
@@ -80,28 +78,26 @@ function Profile() {
         const image2 = e.target.files[0];
         console.log('image check ', image2)
         if (image2) {
-
-            // setImageUrl(image2);
+         
+          
             setImage(image2);
             console.log('Img URL:', image2);
+            
         }
-        // setImage(imageUrl);
+       
     };
-    // image2를 어디서 쓰는게 아니고 setImage에 넣고 끝
-
-    // 이미지업로드 클릭
+     
     const onClickImageUpload = (e) => {
 
         imageInput.current.click();
-
+        
     };
 
     // 사진 등록
     const onClickRegistHandler = () => {
 
         const formData = new FormData();
-        formData.append("code", mypage?.data.code); // 코드필드값을 가져오는것
-        // data 객체의 필드명이 code인거같은데 필드명을 어디서 확인할 수 있는지 물어보기
+        formData.append("code", mypage?.data.code); 
 
         if (imageUrl) {
             formData.append("profileImage", image);
@@ -111,18 +107,18 @@ function Profile() {
         console.log('formData check : ', image);
         // 넘길 값 추가해보기
         dispatch(callProfileInsertAPI({
-            form: formData
+            form : formData
         }));
 
     };
 
-    console.log();
+        console.log();
     return (
 
         <>
             <section>
                 <MypageNav />
-                {/* <!-- 아이디 주민번호 입사일 직급 --> */}
+                
                 <div className="profile-form">
                     <div className="double">
                         <div className="content">
@@ -130,15 +126,17 @@ function Profile() {
                             <h3>프로필사진</h3>
                             <div className="profileRegistration"
                             >
-                                {console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
-                                {
-                                    <img
-                                        className=""
-                                        src={imageLink}
-                                        alt="preview"
-                                        style={{ width: 180, height: 120 }}
-                                    />
-                                }
+                              
+                                { console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
+            
+                                  <img
+                                    className=""
+                                    src={imageLink}
+                  
+                                    alt="preview"
+
+                                    style={{ width: 180, height: 120 }}
+                                />}
                                 <input
                                     style={{ display: 'none' }}
                                     type="file"
@@ -157,8 +155,7 @@ function Profile() {
 
                                 </button>
                             </div>
-
-                            {/* <!--  프로필사진을 클릭하면 수정 가능 --> */}
+                           
                             <div >
                             </div>
                             <h3>이름</h3>
