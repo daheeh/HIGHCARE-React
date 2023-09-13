@@ -134,7 +134,7 @@ function PmWork() {
 				} else {
 					window.alert("다시 시도해 주세요.");
 				}
-            
+                window.location.reload();
 			} catch (error) {
 				console.error("API error:", error);
 				window.alert("API 요청 중 오류가 발생했습니다.");
@@ -186,17 +186,17 @@ function PmWork() {
                         <th className="columnpm0">총 근무시간</th> */}
                     </tr>{/* {Array.isArray(result) && result */}
                     { console.log('======1> ' ,result.data)}
-                    {result.manage !== undefined && Array.isArray(result.manage) && result.manage
+                    {result?.manage !== undefined && Array.isArray(result?.manage) && result?.manage
                         .map((res) => (
-                            <tr key={res.manNo}>
-                                <td>{res.manNo}</td>
-                                <td>{res.empName}</td>
-                                <td>{res.manDate}</td>
-                                <td>{res.deptName}</td>
-                                <td>{res.jobName}</td>
-                                <td>{res.startTime}</td>
-                                <td>{res.endTime}</td>
-                                <td>{res.status}</td>
+                            <tr key={res?.manNo}>
+                                <td>{res?.manNo}</td>
+                                <td>{res?.empName}</td>
+                                <td>{res?.manDate}</td>
+                                <td>{res?.deptName}</td>
+                                <td>{res?.jobName}</td>
+                                <td>{res?.startTime}</td>
+                                <td>{res?.endTime}</td>
+                                <td>{res?.status}</td>
                                 {/* <td>{res.workTime}</td>
                                 <td>{res.totalWorkTime}</td> */}
                             </tr>
