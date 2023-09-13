@@ -28,13 +28,12 @@ function Exp1({ mode, data }) {
 	const approval = useSelector(state => state.approval);
 
 	console.log('Exp1 first : ', approval.data);
-
 	const [formCount, setFormCount] = useState(0);
 	const [formData, setFormData] = useState({
 
 		apvNo: approval.apvNo ? approval.apvNo : '',
 		title: '지출결의서',
-		writeDate: '',
+		writeDate: new Date(),
 		apvStatus: '결재예정',
 		isUrgency: 'F',
 		category: '지출',
@@ -46,7 +45,7 @@ function Exp1({ mode, data }) {
 		apvLines: approval.apvLines ? approval.apvLines : [],
 		apvFiles: approval.apvFiles ? approval.apvFiles : [],
 		apvExpForms: [{
-			requestDate: approval.requestDate ? approval.requestDate : '',
+			requestDate: approval.requestDate ? approval.requestDate : new Date(),
 			payee: approval.payee ? approval.payee : '',
 			bank: approval.bank ? approval.bank : '',
 			accountHolder: approval.accountHolder ? approval.accountHolder : '',
@@ -57,6 +56,7 @@ function Exp1({ mode, data }) {
 			comment: approval.comment ? approval.comment : '',
 		}]
 	});
+	console.log(formData.totalAmount);
 
 	const isEditMode = formData.apvNo ? true : false;
 	console.log('isEditMode 1 : ', isEditMode);
@@ -69,6 +69,7 @@ function Exp1({ mode, data }) {
 
 
 	const [amounts, setAmounts] = useState([0]);
+	const [totalAmount, setTotalAmount] = useState(0);
 
 	useEffect(() => {
 		const newAmounts = formData.apvExpForms.map(form => parseFloat(form.amount || 0));
@@ -84,19 +85,20 @@ function Exp1({ mode, data }) {
 		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
-	const [totalAmount, setTotalAmount] = useState(0);
 
 	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
-	const updateTotalAmount = () => {
-		const newTotalAmount = formData.apvExpForms.reduce((sum, form) => {
+	const updateTotalAmount = (v, i) => {
+		const newTotalAmount = formData.apvExpForms.reduce((sum, form, index) => {
+			if (i === index) return sum + parseInt(v ? v : 0);
 			return sum + parseFloat(form.amount || 0);
 		}, 0);
 
-		// setFormData((prevFormData) => ({
-		// 	...prevFormData,
-		// 	totalAmount: newTotalAmount,
-		// }));
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			totalAmount: newTotalAmount,
+		}));
 
+		console.log(newTotalAmount);
 		// totalAmount 상태 변수 업데이트
 		setTotalAmount(newTotalAmount);
 	};
@@ -107,19 +109,32 @@ function Exp1({ mode, data }) {
 
 		if (nameParts[0] === 'apvExpForms') {
 			const field = nameParts[2];
-			setFormData((prevFormData) => {
-				const updatedFormData = { ...prevFormData };
-				updatedFormData.apvExpForms[index][field] = value;
-				return updatedFormData;
-			});
+
+			if (field === 'amount') {
+				setFormData((prevFormData) => {
+					const updatedFormData = { ...prevFormData };
+					updatedFormData.apvExpForms[index][field] = value;
+					return updatedFormData;
+				});
+				updateTotalAmount(value, index);
+
+			} else {
+				setFormData((prevFormData) => {
+					const updatedFormData = { ...prevFormData };
+					updatedFormData.apvExpForms[index][field] = value;
+					return updatedFormData;
+				});
+			}
+
 		} else if (nameParts[0] === 'sharedProperties') {
+
 			if (name === 'sharedProperties.requestDate') {
 				const currentDate = new Date().toISOString().split('T')[0];
 				if (value < currentDate) {
 					window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
-					setSharedProperties((prevSharedProps) => ({
+					setSharedProperties(prevSharedProps => ({
 						...prevSharedProps,
-						requestDate: currentDate,
+						requestDate: currentDate
 					}));
 					return;
 				}
@@ -129,9 +144,21 @@ function Exp1({ mode, data }) {
 			setSharedProperties((prevSharedProps) => ({
 				...prevSharedProps,
 				[field]: value,
-			}));
-		} else {
 
+
+			}));
+			// apvExpForms 배열 내의 해당 속성 업데이트
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
+					...form,
+					[field]: value,
+				})),
+			}));
+
+			// updateTotalAmount();
+		} else {
+			// 다른 폼 데이터 속성 업데이트
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
@@ -145,6 +172,11 @@ function Exp1({ mode, data }) {
 		const newTotalAmount = updatedAmounts.reduce((sum, amount) => sum + amount, 0);
 		setTotalAmount(newTotalAmount);
 	};
+
+	function numberWithCommas(x) {
+		console.log(x);
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 	useEffect(() => {
 		const currentDate = new Date();
@@ -161,7 +193,6 @@ function Exp1({ mode, data }) {
 			isUrgency: newIsUrgency
 		}));
 	};
-
 
 	const initialSelectedEmployees = [{
 		degree: 0,
@@ -191,7 +222,6 @@ function Exp1({ mode, data }) {
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
-		// 이전 라인의 sharedProperties 값을 복사하여 새로운 라인에 적용
 		const newLine = {
 			...formData.apvExpForms[0],
 			details: '',
@@ -199,6 +229,7 @@ function Exp1({ mode, data }) {
 			amount: '',
 			comment: '',
 		};
+
 		setFormData(prevFormData => ({
 			...prevFormData,
 			apvExpForms: [...prevFormData.apvExpForms, newLine]
@@ -220,7 +251,7 @@ function Exp1({ mode, data }) {
 			setAmounts(prevAmounts => {
 				const updatedAmounts = [...prevAmounts];
 				updatedAmounts.pop();
-				return updatedAmounts;
+				return updateAmounts;
 			});
 		}
 	};
@@ -228,11 +259,10 @@ function Exp1({ mode, data }) {
 	const updateAmounts = (index, newAmount) => {
 		setAmounts(prevAmounts => {
 			const updatedAmounts = [...prevAmounts];
-			updatedAmounts[index] = parseFloat(newAmount || 0);
+			updatedAmounts[index] = parseFloat(newAmount);
 			return updatedAmounts;
 		});
 	};
-
 
 	const renderApvExpForm = () => {
 		return (
@@ -243,6 +273,7 @@ function Exp1({ mode, data }) {
 							<div className="column21">
 								<input
 									className="input1"
+									type="text"
 									name={`apvExpForms.${index}.details`}
 									value={form.details || ''}
 									onChange={e => onChangeHandler(e, index)}
@@ -251,6 +282,7 @@ function Exp1({ mode, data }) {
 							<div className="column22">
 								<input
 									className="input1"
+									type="text"
 									name={`apvExpForms.${index}.account`}
 									value={form.account || ''}
 									onChange={e => onChangeHandler(e, index)}
@@ -268,6 +300,7 @@ function Exp1({ mode, data }) {
 							<div className="column24">
 								<input
 									className="input1"
+									type="text"
 									name={`apvExpForms.${index}.comment`}
 									value={form.comment || ''}
 									onChange={e => onChangeHandler(e, index)}
@@ -374,7 +407,7 @@ function Exp1({ mode, data }) {
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(formData.totalAmount)}</div></div>
 						</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>

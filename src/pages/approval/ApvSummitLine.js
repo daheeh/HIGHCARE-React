@@ -10,21 +10,15 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 	const navigate = useNavigate();
 	const [isEditMode, setIsEditMode] = useState(false);
 
-
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
 		console.log('ApvSummitLine - refSelectedEmployees : ', refSelectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
-		console.log('ApvSummitLine - data : ', data);
 		// console.log('results : ', results.data);
 		console.log('approval : ', approval);
 
 
 	}, [selectedEmployees, refSelectedEmployees, authes, data, results, approval]);
-
-	// if (!selectedEmployees || !authes || !mode || !data || !approval || !results )  {
-	// 	return null;
-	// }
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
@@ -190,9 +184,8 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 	};
 
 	if (mode === 'create') {
-
 		return (
-			(results.apvNo) ?
+			(data.apvNo) ?
 				<>
 					<div className='apvLine'>
 						<div className="apvApvLine">
@@ -202,24 +195,26 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 								<div className="row3">{authes.dept}</div>
 								<div className="row4">{currentDateString}</div>
 							</div>
-
-							{selectedEmployees.slice(1, 4).map((emp, index) => (
-								<div className="apvApvLineBox" key={index + 1}>
-									<div className="row1">{index + 1}</div>
-									<div className="row2">{emp.empName} {emp.jobName}</div>
-									<div className="row3">{emp.deptName}</div>
-									<div className="row4"></div>
-								</div>
-							))}
+							{data.apvLines
+								.filter(emp => emp.degree !== 9)
+								.slice(1, 4).map((emp, index) => (
+									<div className="apvApvLineBox" key={index + 1}>
+										<div className="row1">{index + 1}</div>
+										<div className="row2">{emp.empName} {emp.jobName}</div>
+										<div className="row3">{emp.deptName}</div>
+										<div className="row4"></div>
+									</div>
+								))}
 						</div>
 						<div className='apvRefBox'>
 							<div className='apvRefBoxTitle'>참조결재 : </div>
-							{refSelectedEmployees.map((emp, index) => (
-								emp.degree === 9 && (
+							{data.apvLines
+								.filter(emp => emp.degree === 9).map((emp, index) => (
+								
 									<div className="apvRefLineList" key={index}>
 										<div className="row2"> {emp.empName} {emp.jobName} ({emp.deptName}) / </div>
 									</div>
-								)
+								
 							))}
 						</div>
 					</div>
@@ -257,10 +252,7 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 					</div>
 				</>
 		);
-
-
 	} else if (mode === 'view') {
-
 		return (
 			data && data?.apvLines.every(emp => emp.empNo !== authes.empNo) ?
 				<>

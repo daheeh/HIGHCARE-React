@@ -215,7 +215,7 @@ function Biz2({ mode, data }) {
 						<div className="apvContentBiz2">
 							<div className="column1">참석자</div>
 							<div className="column2">
-								<input className="input2" placeholder="참석자 입력"
+								<textarea className="apvTextarea" placeholder="참석자 입력"
 									name='participants' value={formData.apvMeetingLogs[0].participants}
 									onChange={onChangeHandler} />
 							</div>

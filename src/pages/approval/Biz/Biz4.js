@@ -22,7 +22,7 @@ const modalStyles = {
 		bottom: 'auto',
 		transform: 'translate(-50%, -50%)',
 		width: '1600px',
-		height: '1000px',
+		height: '2000px',
 		maxHeight: '70vh',
 		overflow: 'auto',
 	},

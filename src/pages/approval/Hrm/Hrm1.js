@@ -55,7 +55,6 @@ function Hrm1({ mode, data }) {
 
 
 	const isEditMode = formData.apvNo ? true : false;
-	console.log('isEditMode 1 : ', isEditMode);
 
 	useEffect(() => {
 		if (!isEditMode) {
