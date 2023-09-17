@@ -18,7 +18,7 @@ function PmAnnual() {
     const job = empinfo.job; 
 
     const [pageEnd, setPageEnd] = useState(1);
-    let pageInfo = result.pageInfo;
+    let pageInfo = result?.pageInfo;
     console.log(pageInfo);
     const pageNumber = [];
     if(pageInfo) {
@@ -86,10 +86,9 @@ function PmAnnual() {
                     </tbody>
                 </table>
             </div>
-            <div>  
+            
             <button className="pm-de-add">연차 신청 하기</button>
-            <button className='pm-de-adds'>연차 일괄 등록</button>
-            </div>
+            
             {/* 페이징 처리를 위한 버튼  */}
             <div style={{ listStyleType: "none", display: "flex", justifyContent: "center"}}>
             { Array.isArray(result) &&

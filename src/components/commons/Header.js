@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
 import LoginVerify from '../../utils/LoginVerify';
 import { decodeJwt } from "../../utils/decodeJwt";
-import { logoutAction } from '../../modules/authSlice';
-import { ReduxReset } from '../../utils/ReduxReset';
-import { GET_RESET_MANSELECT } from '../../modules/MypageModule';
+
 function Header() {
 
     const navigate = useNavigate();
@@ -28,7 +26,6 @@ function Header() {
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
     const onClickLogoutHandler = () => {
-
         dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
         window.location.href="/";

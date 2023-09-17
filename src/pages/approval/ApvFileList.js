@@ -26,10 +26,8 @@ function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
                     a.click();
                     window.URL.revokeObjectURL(url);
                 });
-
             })
             .catch((error) => {
-                // 에러 처리
                 console.error('파일 다운로드 에러: ', error);
             });
     };
@@ -42,7 +40,7 @@ function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
             <div>
                 <h3>첨부파일 목록 :</h3>
                 <ul>
-                    {data?.apvFiles?.map((file, index) => (
+                    {files?.map((file, index) => (
                         <li className="fileList" key={index}>
                             <a
                                 href={`/download/${file.originalFileName}`}
@@ -50,7 +48,7 @@ function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
                                     e.preventDefault();
                                     handleFileDownload(file.originalFileName);
                                 }}
-                            >{file.originalFileName}</a>
+                            >file.name? {file.name} : {file.originalFileName}</a>
                         </li>
                     ))}
                 </ul>

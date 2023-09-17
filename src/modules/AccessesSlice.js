@@ -31,5 +31,5 @@ const accessSlice = createSlice({
 })
 
 // export const {  } = accessSlice.actions; 
-// 리듀서 내보내기 -- store에 저장
+// 리듀서 내보내기 — store에 저장
 export default accessSlice.reducer; 

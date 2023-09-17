@@ -103,11 +103,8 @@ export const callTreeviewTwoAPI = () => {
                 }
             })
             .then(response => {
-                console.log('-----------------> \n', response);
                 return response.json()
             });
-    
-            console.log('[PmAPICalls] callTreeviewTwoAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
     
             dispatch({type: GET_TREEVIEW_TWO, payload: result.data});
         } catch(error) {
@@ -321,7 +318,7 @@ export const callAnnualAPI = ({currentPage}) => {
                 return response.json()
             });
     
-            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result.data);
+            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result);
 
             dispatch({ type: GET_ANNUAL, payload: result.data });
             return result;
@@ -367,35 +364,5 @@ export const callPmAnnualAPI = (empNo) => {
     };
 
 
-    export const callPlusAnnualAPI = () => {
-        console.log('[PmAPICalls] callPlusAnnualAPI Call');
-        
-        const requestURL = `http://localhost:8080/api/pm/employee/startDate`;
-        
-        
-        return async (dispatch, getState) => {
-        
-            try{
-                const result = await fetch(requestURL, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                        "Content-Type": "application/json",
-                        "Accept": "*/*"
-                    }
-                })
-                .then(response => {
-                    console.log('-----------------> \n', response);
-                    return response.json()
-                });
-        
-                console.log('[PmAPICalls] callPlusAnnualAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
-        
-                dispatch({type: GET_PM_ANNUAL, payload: result.data});
-            } catch(error) {
-                console.error('[PmAPICalls] Error in callPlusAnnualAPI: ', error);
-            }
-            };
-        };
 
 

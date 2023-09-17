@@ -11,7 +11,7 @@ export function AccountStatusVerify() {
     useEffect(() => {
 
         const roleString = authes.role;
-        const restrictedRoles = ["%PRE%", "DRAW"];
+        const restrictedRoles = ["PRE", "DRAW"];
         
         try {
             // restrictedRoles 배열에 포함되지 않는 경우에만 접속을 허용합니다.

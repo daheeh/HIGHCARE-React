@@ -22,7 +22,7 @@ const modalStyles = {
 		bottom: 'auto',
 		transform: 'translate(-50%, -50%)',
 		width: '1600px',
-		height: '1000px',
+		height: '2000px',
 		maxHeight: '70vh',
 		overflow: 'auto',
 	},
@@ -116,11 +116,11 @@ function Biz4({ mode, data }) {
 	useEffect(() => {
 		setFormData(prevFormData => ({
 			...prevFormData,
-			empPhone: empData.empPhone,
-			empEmail: empData.empEmail,
+			empPhone: empData.empPhone? empData.empPhone : '',
+			empEmail: empData.empEmail? empData.empEmail : '',
 		}))
-		console.log("empData.empPhone", empData.empPhone);
-		console.log("empData.empEmail", empData.empEmail);
+		// console.log("empData.empPhone", empData.empPhone);
+		// console.log("empData.empEmail", empData.empEmail);
 	}, [empData])
 
 	const onChangeHandler = (e) => {

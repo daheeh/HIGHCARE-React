@@ -108,10 +108,10 @@ function OAuthPage() {
           render={renderGoogleCustomButton}
 
         />
-        {/* <GoogleLogout
+        <GoogleLogout
         clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
         onLogoutSuccess={onLogoutSuccess}
-      /> */}
+      />
 
 
         {/* <input type="checkbox" hidden id="kakaolabel" /> */}
@@ -127,13 +127,13 @@ function OAuthPage() {
       {/* </div> */}
 
 
-      {/* <p>카카오 로그아웃</p>
+     <p>카카오 로그아웃</p>
         <button style={{ width: 100 }} id="kakaolabel"
           onClick={ () => {
             const kakaoUrl =`https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&logout_redirect_uri=http://localhost:3000/logout`;
             window.location.href = kakaoUrl;
             
-          }} /> */}
+          }} /> 
     </div>
 
 

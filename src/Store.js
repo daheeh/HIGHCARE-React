@@ -27,6 +27,7 @@ import conversationlistReducer from './modules/ConversationList';
 import AccessesSlice from './modules/AccessesSlice';
 
 import noticeReducer from './modules/NoticeModule';
+import pmAnnualReduccer from './modules/AnnualModule';
 
 //새로고침해도 state 값이 사라지지 않도록, localstorage에 reducer를 저장
 const persistedState = localStorage.getItem('reduxState')
@@ -54,7 +55,7 @@ const store = configureStore({
         resStatusReducer : resStatusReducer,
         reserReducer : reserReducer,
         commentReducer : commentReducer,
-
+        pmannual : pmAnnualReduccer,
         conversationlist: conversationlistReducer,
         accesses : AccessesSlice,
 

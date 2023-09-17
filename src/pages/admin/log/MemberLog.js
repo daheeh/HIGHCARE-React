@@ -20,19 +20,21 @@ function MemberLog() {
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 15;
 
+    const accessList = useSelector(state => state.accesses.accessList);
+
+    const paging = {
+        page: currentPage,
+        size: itemsPerPage,
+        data: '',
+    }
+
 
     useEffect(() => {
-
-        const paging = {
-            page: currentPage,
-            size: itemsPerPage,
-        }
 
         console.log("접속로그 페이지 시작");
         dispatch(selectAccess(paging));
     }, [currentPage])
 
-    let accessList = useSelector(state => state.accesses.accessList);
 
     // const searchMember = accesses.searchMember;
 
@@ -55,7 +57,6 @@ function MemberLog() {
     // useEffect(()=>{
     // //     (searchMember)
     // //    console.log("filterAccessList : ", filteredAccessList);
-
     // },[accesses])
 
     useEffect(() => {
@@ -67,9 +68,11 @@ function MemberLog() {
         console.log(days);
 
         if (startDate && endDate) {
+
+            paging.data = days 
             // 직접 입력한 날짜 범위 계산 및 API 호출
-            console.log("dfsmkofgmogwit4w4j3mtw");
-            dispatch(selectAccessByDateRange(days));
+    
+            dispatch(selectAccessByDateRange(paging));
         }
 
     }, [dateRange, startDate, endDate]);
@@ -134,12 +137,14 @@ function MemberLog() {
     };
 
     const handleSearchInputChange = (e) => {
+        
         setSearchKeyword(e.target.value);
     };
 
     // 검색 버튼 클릭 시 호출되는 함수
     const handleSearchClick = () => {
-        dispatch(selectSearchMemberLog(searchKeyword))
+        paging.data = searchKeyword;
+        dispatch(selectSearchMemberLog(paging))
     };
 
 
@@ -191,7 +196,7 @@ function MemberLog() {
                     <div>브라우저</div>
 
                 </div>
-                {Array.isArray(accessList.content) && accessList.content
+                {Array.isArray(accessList?.content) && accessList?.content
                     // .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                     .map(
                         (acc) => (
