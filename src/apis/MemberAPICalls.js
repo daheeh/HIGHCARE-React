@@ -110,29 +110,26 @@ export const ModifyInfoAPI = createAsyncThunk(
   'modify/members',
   async (data) => {
     try {
-      const response = '';
-      console.log('data :', data);
-
-        response = await axios.put(`http://localhost:8080/api/admin/member/${data.id}`
-          , data
-          , {
-            headers: {
-              "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-              "Content-Type": "application/json", // JSON 형식으로 보냄
-            }
+      let response = await axios.put(`http://localhost:8080/api/admin/member/${data.id}`,
+        data,
+        {
+          headers: {
+            "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+            "Content-Type": "application/json", // JSON 형식으로 보냄
           }
-        )
-        console.log("응답 : ", response.data);
-        alert(response.data.data);
-        const result = response.data.data;
-        return result;
-      
+        }
+      );
+
+      console.log("응답 : ", response.data);
+      alert(response.data.message);
+
+      const result = response.data.data;
+      return result;
     } catch (error) {
       throw error.response.data;
     }
   }
-)
-
+);
 
 export const WithDrawInfoAPI = createAsyncThunk(
   'delete/members',

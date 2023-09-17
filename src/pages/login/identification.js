@@ -38,8 +38,6 @@ function Identification() {
         await setShowDiv(authway === 'mail');
     }
 
-
-
     const ChangeProps = (e) => {
         setProps({
             ...props,
@@ -52,7 +50,6 @@ function Identification() {
         props.authType = e.target.name
         props.id = props[e.target.name];
         await dispatch(authCodeSendingAPI(props));
-
     }
 
     const timeOut = () => {
@@ -61,24 +58,19 @@ function Identification() {
     }
 
     const authCheckClick = async (e) => {
-
-        props.id = props[props.authType]; 
+        props.id = props[props.authType];
         console.log("props.id : ", props.id);
         // code false 면 인증코드 무효 처리 
         if (authes.requestCode) {
             await dispatch(authCheckAPI(props));
             await dispatch(updateAuthExpireTime(0))
-        }
-        else {
+        } else {
             alert('유효시간이 초과되었습니다.')
         }
-
     }
 
-
     const nextStepBtnClick = () => {
-        if (authes.requestMessage==='correct') {
-            
+        if (authes.requestMessage === 'correct') {
             return window.location.href = "/login/find/step2"
         } else {
             alert("인증번호가 올바르지 않습니다. 다시 입력해주세요.")
@@ -137,9 +129,9 @@ function Identification() {
                 <div className="nextbutton-container">
                     {/* <Link to="/login/find/step2"> */}
 
-                        <button className="nextbtn"
-                            onClick={nextStepBtnClick}
-                        >다음</button>
+                    <button className="nextbtn"
+                        onClick={nextStepBtnClick}
+                    >다음</button>
                     {/* </Link> */}
                 </div>
             </div>

@@ -39,7 +39,7 @@ export const kakaoAuth = createAsyncThunk(
 
         try {
             const response =
-                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}&browser=${props.browser}&device=${props.device}`);
+                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}`);
             console.log(response.data);
             console.log(response.data.data.accessToken);
             window.localStorage.setItem('accessToken', response.data.data.accessToken);

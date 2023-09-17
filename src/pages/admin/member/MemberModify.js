@@ -13,10 +13,11 @@ function MemberModify() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    let mem = useSelector(state => state.members);
+    // let mem = useSelector(state => state.members);
+    // const memberlist = mem.data;
 
-    const memberlist = mem.data;
-
+    // 선택멤버 
+    const selectMember = useSelector(state => state.members.selectMember);
     const { empNo } = useParams();
 
     const [member, setMember] = useState([]);
@@ -41,17 +42,16 @@ function MemberModify() {
 
     useEffect(() => {
 
-        const fetchData = async () => {  // 선택 멤버 정보 
-            await setMember(memberlist.filter(mem => mem.empNo == empNo)[0]);
-            setData({ ...data, id: member.memberId })
+        // const fetchData = () => {  // 선택 멤버 정보 
+            setMember(selectMember);
+            setData({ ...data, id: selectMember.memberId })
             // 선택멤버 계정 정보 
-            setAccstat(accountStatus(member.accessManager));
+            setAccstat(accountStatus(selectMember.accessManager));
 
+        // }
+        // fetchData();
 
-        }
-        fetchData();
-
-    }, [member]);
+    }, []);
 
     // 정보수정 활성화 버튼 
     const modifyActiveBtnClick = async () => {
@@ -77,17 +77,16 @@ function MemberModify() {
 
 
     // 수정버튼 
-    const modifyAccountStatus = () => {
+    const modifyAccountStatus = async () => {
         if (data.status) {
             if (radioStatus === 'isWithDraw') {
                 data.method = 'delete'
                 dispatch(WithDrawInfoAPI(data));
             } else {
                 data.method = 'put'
-                dispatch(ModifyInfoAPI(data));
-
+                 await dispatch(ModifyInfoAPI(data));
+                 navigate(-1);
             }
-            
             
         }
     }

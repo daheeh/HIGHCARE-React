@@ -13,15 +13,15 @@ function AdminPage() {
 
 
 	TokenVerification();
-	// AuthVarification();
+	AuthVarification();
 
 	const dispatch = useDispatch();
 
-	// useEffect(() => {
+	useEffect(() => {
 
-	// 	dispatch(allMemberListApi())
+		dispatch(allMemberListApi()); // 비동기 액션 실행
 
-	// },[])
+	},[])
 	return (
 
 		<section>

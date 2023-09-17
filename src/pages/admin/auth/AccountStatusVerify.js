@@ -14,13 +14,12 @@ export function AccountStatusVerify() {
         const restrictedRoles = ["PRE", "DRAW"];
         
         try {
-            // restrictedRoles 배열에 포함되지 않는 경우에만 접속을 허용합니다.
+            // restrictedRoles 포함되지 않는 경우에만 접속을 허용
             if (restrictedRoles.some((role) => roleString.includes(role))) {
                 alert("접속 권한 없음");
                 navigate("/login", { replace: true });
             }
         } catch (error) {
-            // JSON 파싱에 실패한 경우 또는 다른 예외 처리
             alert("권한 정보를 읽을 수 없습니다.");
         }
     }, [])

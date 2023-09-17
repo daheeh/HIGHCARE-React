@@ -3,6 +3,9 @@ import ServerErrorPage from './ServerErrorPage';
 import { PageNotFound } from './pageNotFound';
 import { BadRequestErrorPage, ForbiddenErrorPage, UnauthorizedErrorPage } from './ErrorPages';
 import { useNavigate } from 'react-router-dom';
+import { logoutAction } from '../modules/authSlice';
+import { Logout } from '@mui/icons-material';
+import { callLogoutAPI } from '../apis/AuthAPICalls';
 
 // Axios 요청 전에 실행되는 인터셉터
 axios.interceptors.request.use(
@@ -35,14 +38,15 @@ axios.interceptors.response.use(
         } else if (responseError.status === 401) {
             // window.location.href="/error/401"
 
-            console.log("권한이 없습니다.");
+            alert("권한이 없습니다.");
 
             // 401 에러 처리
         } else if (responseError.status === 403) {
-            // window.location.href="/error/403"
             // console.log(40333333);
-
-            console.log("인증되지 않은 사용자입니다.");
+            
+            alert("인증되지 않은 사용자입니다. 재로그인 해주세요.");
+            callLogoutAPI();
+            
 
             // 403 에러 처리
         } else if (responseError.status === 404) {
@@ -57,11 +61,12 @@ axios.interceptors.response.use(
             // console.log("인증되지 않은 사용자입니다.");
 
 
-            console.log("서버 에러 --------> ", responseError.data.message);
+            alert("api 요청 에러 ", responseError.data.message);
 
             if (responseError.data.message.includes("JWT")) {
                 // window.location.href="/error/403"
-                alert("인증되지 않은 사용자입니다.");
+                alert("인증되지 않은 사용자입니다. 재로그인 해주세요.");
+                
 
             }
             else if (responseError.data.message.includes("401")) {
@@ -76,7 +81,7 @@ axios.interceptors.response.use(
 
             }
             else if (responseError.status === 1001) {
-                console.log("--------> ", responseError.data.message);
+                alert("api 요청 에러 ", responseError.data.message);
 
                 alert(responseError.data.message);
             }
