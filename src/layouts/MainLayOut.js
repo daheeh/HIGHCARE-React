@@ -10,7 +10,7 @@ function MainLayOut() {
             <div className={MainLayOutCss.container}>
                 <div className={MainLayOutCss.box}>
                     <h2>업무일정</h2>
-                    <p>달력?</p>
+                    <p></p>
                     <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
                 <div className={MainLayOutCss.box}>
@@ -18,7 +18,7 @@ function MainLayOut() {
                     <ApvMainBox showCounts={true} />
                     <Link to="/approval" style={{color:'gray'}}>더보기</Link>
                 </div>
-                <div className={MainLayOutCss.box}>
+                {/* <div className={MainLayOutCss.box}>
                     <h2>공지사항</h2>
                     <div>
                             <Board3 />
@@ -32,7 +32,7 @@ function MainLayOut() {
                     <br/><br/>
                     <Link to="/reservation">예약하러 가기</Link>
 
-                </div>
+                </div> */}
             </div>
         </>
 

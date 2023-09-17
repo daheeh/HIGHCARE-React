@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ModifyInfoAPI, WithDrawInfoAPI, allMemberListApi, selectMember } from "../apis/MemberAPICalls";
+import { ModifyInfoAPI, WithDrawInfoAPI, allMemberListApi, requestMember, selectMember } from "../apis/MemberAPICalls";
 import { modifyMemberAPI } from "../apis/AuthAPICalls";
 
 const initialState = {
   data: {},
   treeviewMember: [],
   message: '',
+  selectMember: '',
+
 }
 
 
@@ -15,19 +17,17 @@ const memberSlice = createSlice({
   reducers: {
     selectAction: (state, { payload }) => {
       return payload;
-    }, 
-    memberByTreeview: (state, {payload}) => {
-      state.treeviewMember = payload; 
+    },
+    memberByTreeview: (state, { payload }) => {
+      state.treeviewMember = payload;
     },
     resetMemberAction: (state, action) => {
       state.treeviewMember = [];
-  },
-  resetRequestMemberAction: (state, action) => {
-    // state.data = {};
-  }
-  
+    },
+    selectMemberAction: (state, { payload }) => {
+      state.selectMember = payload;
+    },
 
-   
   },
   extraReducers: (builder) => {
     builder
@@ -49,20 +49,22 @@ const memberSlice = createSlice({
       .addCase(allMemberListApi.fulfilled, (state, { payload }) => {
         state.data = payload;
       })
-      .addCase(ModifyInfoAPI.fulfilled, ModifyInfoAPI.rejected, (state,  {payload} ) => {
+      .addCase(ModifyInfoAPI.fulfilled, ModifyInfoAPI.rejected, (state, { payload }) => {
         state.message = payload;
         alert(payload);
       })
-      .addCase(WithDrawInfoAPI.fulfilled, WithDrawInfoAPI.rejected, (state,  {payload} ) => {
+      .addCase(WithDrawInfoAPI.fulfilled, WithDrawInfoAPI.rejected, (state, { payload }) => {
         state.message = payload;
         alert(payload);
-
+      })
+      .addCase(requestMember.fulfilled, (state, { payload }) => {
+        // alert("회원 정보 수정 성공");
       })
   }
 })
 
 
 // 액션 생성자 내보내기 
-export const { selectAction, accountStatus, resetMemberAction, resetRequestMemberAction, memberByTreeview } = memberSlice.actions;
+export const { selectAction, accountStatus, resetMemberAction, resetRequestMemberAction, memberByTreeview, selectMemberAction } = memberSlice.actions;
 // 리듀서 내보내기 -- store에 저장
 export default memberSlice.reducer; 

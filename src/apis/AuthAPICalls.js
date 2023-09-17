@@ -61,10 +61,9 @@ export const callLogoutAPI = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            // 로그아웃시 로컬에 있는 리덕스, 토큰 초기화하기 
+            // 로그아웃시 로컬에 있는 리덕스, 토큰 등 초기화하기 
             localStorage.setItem('reduxState', '');
             ReduxReset('authes');
-
             localStorage.removeItem('accessToken');
             document.cookie = 'RefreshToken' || '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=C.kr;path=/;';
         }
@@ -84,9 +83,6 @@ export const jwtReissueAPI = (id) => {
             method: "GET",
             credentials: "include",
             headers: {
-                // "Content-Type": "application/json",
-                // "Accept": "*/*",
-                // "Access-Control-Allow-Origin": "*"
                 "Access-Control-Allow-Credentials": "*"
 
                 

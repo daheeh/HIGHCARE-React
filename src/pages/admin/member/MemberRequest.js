@@ -63,6 +63,8 @@ function MemberRequest() {
   const requestClick = async () => {
     await dispatch(requestMember(form));
     // resetRequestMemberAction();
+    // alert("회원 등록 성공");
+
   }
 
 

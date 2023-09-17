@@ -131,7 +131,7 @@ export const selectAccess = createAsyncThunk(
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
             });
-            console.log("[selectAccess]",response);
+            console.log("[selectAccess]",response.data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -141,9 +141,11 @@ export const selectAccess = createAsyncThunk(
 
 export const selectAccessByDateRange = createAsyncThunk(
     'selectDateRange/access',
-    async (days) => {
+    async (paging) => {
+        console.log("paging : ", paging);
+
         try {
-            const response = await axios.get(`http://localhost:8080/api/admin/access/date?start=${days.startdate}&end=${days.enddate}`, {
+            const response = await axios.get(`http://localhost:8080/api/admin/access/date?start=${paging.data.startdate}&end=${paging.data.enddate}&page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
@@ -160,18 +162,18 @@ export const selectAccessByDateRange = createAsyncThunk(
 
 export const selectSearchMemberLog = createAsyncThunk(
     'selectSearchMemberLog/access',
-    async (searchKeyword) => {
-        console.log("searchKeyword : ", searchKeyword);
+    async (paging) => {
+        console.log("paging : ", paging);
         try {
             // 검색어를 사용하여 새로운 API 요청
-            const response = await axios.get(`http://localhost:8080/api/admin/access/search?keyword=${searchKeyword}`, {
+            const response = await axios.get(`http://localhost:8080/api/admin/access/search?keyword=${paging.data}&page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
             });
 
             // 검색 결과를 상태에 저장
-            console.log("search response : ", response.data);
+            console.log("search response : ", response);
             return response.data;
 
         } catch (error) {
