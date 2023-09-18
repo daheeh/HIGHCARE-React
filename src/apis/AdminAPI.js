@@ -5,7 +5,7 @@ export const selectJobList = createAsyncThunk(
     'select/jobs',
     async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/job`,
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/job`,
                 {
                     headers: {
                         "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -25,7 +25,7 @@ export const selectDepartmentsList = createAsyncThunk(
     'select/departments',
     async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/department`,
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/department`,
                 {
                     headers: {
                         "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -46,7 +46,7 @@ export const selectMenuGroupList = createAsyncThunk(
     async () => {
         console.log("menugrouplist request start....");
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/menugroup`,
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/menugroup`,
                 {
                     headers: {
                         "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -66,7 +66,7 @@ export const selectMenuManagers = createAsyncThunk(
     'select/menuManagers',
     async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/managers`,
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/managers`,
                 {
                     headers: {
                         "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -86,7 +86,7 @@ export const insertMenuManagers = createAsyncThunk(
     async (sendData) => {
         console.log('넘겨받은 sendData : ', sendData);
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BASIC_URL}/admin/managers`, sendData,
+            const response = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/admin/managers`, sendData,
                 {
                     headers: {
                         "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -107,7 +107,7 @@ export const deleteManager = createAsyncThunk(
     async (ids) => {
         console.log('넘겨받은 ids : ', ids);
         try {
-            const response = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/admin/managers?ids=${ids}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/api/admin/managers?ids=${ids}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
@@ -126,7 +126,7 @@ export const selectAccess = createAsyncThunk(
     async (paging) => {
         console.log("paging===========> ",paging);
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/access?page=${paging.page}&size=${paging.size}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/access?page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
@@ -145,7 +145,7 @@ export const selectAccessByDateRange = createAsyncThunk(
         console.log("paging : ", paging);
 
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/access/date?start=${paging.data.startdate}&end=${paging.data.enddate}&page=${paging.page}&size=${paging.size}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/access/date?start=${paging.data.startdate}&end=${paging.data.enddate}&page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
@@ -166,7 +166,7 @@ export const selectSearchMemberLog = createAsyncThunk(
         console.log("paging : ", paging);
         try {
             // 검색어를 사용하여 새로운 API 요청
-            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/admin/access/search?keyword=${paging.data}&page=${paging.page}&size=${paging.size}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/access/search?keyword=${paging.data}&page=${paging.page}&size=${paging.size}`, {
                 headers: {
                     'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
                 },
