@@ -4,7 +4,7 @@ import{
 
 
 export const callResContentAPI = ({resourceCode}) => {
-    const requestURL = `http://localhost:8080/res/content?resourceCode=${resourceCode}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/content?resourceCode=${resourceCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",

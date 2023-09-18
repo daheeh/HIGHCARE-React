@@ -4,7 +4,7 @@ import{
 
 
 export const callResListAPI = ({categoryCode}) => {
-    const requestURL = `http://localhost:8080/res/resList?categoryCode=${categoryCode}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/resList?categoryCode=${categoryCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
