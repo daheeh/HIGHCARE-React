@@ -116,11 +116,11 @@ function Biz4({ mode, data }) {
 	useEffect(() => {
 		setFormData(prevFormData => ({
 			...prevFormData,
-			empPhone: empData.empPhone,
-			empEmail: empData.empEmail,
+			empPhone: empData.empPhone? empData.empPhone : '',
+			empEmail: empData.empEmail? empData.empEmail : '',
 		}))
-		console.log("empData.empPhone", empData.empPhone);
-		console.log("empData.empEmail", empData.empEmail);
+		// console.log("empData.empPhone", empData.empPhone);
+		// console.log("empData.empEmail", empData.empEmail);
 	}, [empData])
 
 	const onChangeHandler = (e) => {

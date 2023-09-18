@@ -48,7 +48,7 @@ function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
                                     e.preventDefault();
                                     handleFileDownload(file.originalFileName);
                                 }}
-                            >{file.name}</a>
+                            >file.name? {file.name} : {file.originalFileName}</a>
                         </li>
                     ))}
                 </ul>

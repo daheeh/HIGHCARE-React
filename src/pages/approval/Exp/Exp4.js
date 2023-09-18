@@ -334,7 +334,7 @@ function Exp4({ mode, data }) {
 								<input
 									className="input1"
 									name={`apvExpForms.${index}.comment`}
-									value={form.commedfnt || ''}
+									value={form.comment || ''}
 									onChange={e => onChangeHandler(e, index)}
 								/>
 							</div>
