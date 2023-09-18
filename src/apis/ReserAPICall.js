@@ -4,7 +4,7 @@ import{
 }from '../modules/reserModule';
 
 export const callMyResAPI = ({empNo,currentPage}) => {
-    const requestURL = `http://localhost:8080/res/reser?empNo=${empNo}&currentPage=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/reser?empNo=${empNo}&currentPage=${currentPage}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
@@ -22,7 +22,7 @@ export const callMyResAPI = ({empNo,currentPage}) => {
 }
 
 export const callAllResAPI = ({currentPage})=> {
-    const requestURL = `http://localhost:8080/res/reserAll?currentPage=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/reserAll?currentPage=${currentPage}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
