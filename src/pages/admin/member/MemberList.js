@@ -197,34 +197,29 @@ function MemberList() {
                         </select>
                     </div>
                 </div>
-                <div>
+                {Array.isArray(memberList) && memberList.map(
+                    (member) => (
+                        <div onClick={() => memberClick(member)}
+                            key={member.empNo} className={MemberListCss.category}
 
-                    {Array.isArray(memberList) && memberList.map(
-                        (member) => (
-                            <div onClick={() => memberClick(member)}
-                                key={member.empNo} className={MemberListCss.category}
-
-                            >
-                                <input type="checkbox" value={member.empNo}
-                                    checked={selectedItems.some(memNo => memNo == member.empNo)}
-                                    onChange={checkBox} />
-                                <div>{member.empNo}</div>
-                                <div>{member.employee.name}</div>
-                                <div>{member.employee.jobCode.jobName}</div>
-                                <div>{member.employee.deptCode.deptName}</div>
-                                <div>{member.memberId}</div>
-                                <div>{member.employee.email}</div>
-                                <div>
-                                    {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
-                                </div>
-                                <div>
-                                    {accountStatus(member.accessManager ? member.accessManager : '')}
-                                </div>
+                        >
+                            <input type="checkbox" value={member.empNo}
+                                checked={selectedItems.some(memNo => memNo == member.empNo)}
+                                onChange={checkBox} />
+                            <div>{member.empNo}</div>
+                            <div>{member.employee.name}</div>
+                            <div>{member.employee.jobCode.jobName}</div>
+                            <div>{member.employee.deptCode.deptName}</div>
+                            <div>{member.memberId}</div>
+                            <div>{member.employee.email}</div>
+                            <div>
+                                {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
                             </div>
-                        ))}
-
-
-                </div>
+                            <div>
+                                {accountStatus(member.accessManager ? member.accessManager : '')}
+                            </div>
+                        </div>
+                    ))}
                 <div className={MemberListCss.paging} style={{ marginLeft: 500 }}>
                     <div style={{ justifyContent: '', display: 'flex' }}>
                         <button>
