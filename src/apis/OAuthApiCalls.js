@@ -7,7 +7,7 @@ export const OauthLoginAPI = createAsyncThunk(
     'oauth/regist',
     async (data, thunkAPI) => {
         try {
-            const response = await axios.post(`http://localhost:8080/api/oauth/regist`, data,
+            const response = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/oauth/regist`, data,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export const kakaoAuth = createAsyncThunk(
 
         try {
             const response =
-                await axios.get(`http://localhost:8080/api/oauth/kakao?code=${props.code}&state=${props.id}`);
+                await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/oauth/kakao?code=${props.code}&state=${props.id}`);
             console.log(response.data);
             console.log(response.data.data.accessToken);
             window.localStorage.setItem('accessToken', response.data.data.accessToken);
