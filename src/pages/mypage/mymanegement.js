@@ -68,8 +68,6 @@ function MyManegement() {
 
                     <tbody>
                         {Array.isArray(mypageMan?.data) && mypageMan?.data
-                            // .slice((currentPage - 1) * itemPerpage, currentPage * itemPerpage)
-                            // slice를 하면 안됨 10개에서 쪼갤게 어딧어
                             .map((item) => (
                                 <tr className="column2" key={item?.manNo}>
                                     <td>{item?.manTime}</td>

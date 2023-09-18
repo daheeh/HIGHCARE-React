@@ -10,7 +10,7 @@ export const callMypageProfileSelectAPI = (empNo) => {
 
     console.log('[callMypageProfileSelectAPI Call]');
 
-    const requestURL = `http://localhost:8080/api/mypage/profile/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/profile/${empNo}`;
     console.log("리퀘스트유알엘",requestURL);
 
     return async (dispatch, getState) => {
@@ -23,7 +23,6 @@ export const callMypageProfileSelectAPI = (empNo) => {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
 
                 },
-                // body: JSON.stringify(),
 
             })
             .then(response => response.json());
@@ -42,7 +41,7 @@ export const callProfileInsertAPI = ({form}) => {
 
     console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form.get('profileImage'));
 
-    const requestURL = `http://localhost:8080/api/mypage/update`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/update`;
 
     return async (dispatch, getState) => {
 
@@ -71,7 +70,7 @@ export const callAnnSelectAPI = (empNo) => {
 
     console.log('[callAnnSelectAPI Call]', empNo);
 
-    const requestURL = `http://localhost:8080/api/mypage/anselect/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/anselect/${empNo}`;
     console.log("RequestURL : ", requestURL);
 
     return async (dispatch, getState) => {
@@ -106,7 +105,9 @@ export const CallManSelectAPI = (empNo) => {
 
     console.log('CallManSelectAPI Call');
 
-    const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}`;
+    // const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}`;
+    
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/manselect/${empNo}`;
 
     return async (dispatch, getState) => {
 

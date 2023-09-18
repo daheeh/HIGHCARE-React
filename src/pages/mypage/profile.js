@@ -22,8 +22,11 @@ function Profile() {
     const imageInput = useRef();    
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
+
     // const [imageLink, setImageLink] = useState(`http://localhost:8080/images/basicprofile.jpg`);
     const [imageLink, setImageLink] = useState(`http://localhost:8080/images/basicprofile.jpg`);
+    // const [imageLink, setImageLink] = useState('');
+
     
     console.log("아이디 : ", id);
     console.log("마이페이지에 담긴 정보 : ", mypage);
@@ -37,9 +40,10 @@ function Profile() {
 
 
     // const myInfo = mypage?.data?.myEmployee;  
-    const myInfo = mypage?.data && mypage?.data[1]?.myEmployee;     
+
+    const myInfo = mypage?.data && mypage?.data[0]?.myEmployee;     
    
-    const picture = mypage?.data && mypage?.data[1]?.myProfileFile;
+    const picture = mypage?.data && mypage?.data[0]?.myProfileFile;
     
 
     console.log("myInfo", myInfo);
@@ -127,10 +131,8 @@ function Profile() {
 
                             <h3>프로필사진</h3>
                             <div className="profileRegistration"
-                            >
-                              
+                            >                          
                                 { console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
-            
                                   <img
                                     className=""
                                     src={imageLink}
