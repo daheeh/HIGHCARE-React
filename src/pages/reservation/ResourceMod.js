@@ -14,7 +14,16 @@ import {
 
 function ResourceMod(){
     const dispatch =useDispatch();
+    const navigate = useNavigate();
     const res = useSelector(state => state.resReducer);
+    const authes = useSelector(state => state.authes);
+    const role = authes.role;
+    if(role.includes('ROLE_ADMIN')){
+    }else{
+        alert('권한이 없습니다.');
+        navigate("/",{replace: true})
+
+    }
     const resCategory = res.data;
     const resContent = useSelector(state => state.resContentReducer);
     const content = resContent.data;
@@ -23,7 +32,6 @@ function ResourceMod(){
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
-    const navigate = useNavigate();
 
     console.log('contentresourceCode : ' , content.resourceCode);
     const [form, setForm] = useState({
@@ -90,13 +98,12 @@ function ResourceMod(){
         dispatch(callDeleteAPI({
             resourceCode:content.resourceCode
         }));
-              navigate(`/reservation`, { replace: false });
-        window.location.reload()
+              navigate(`/`, { replace: false });
     }
     }
 
     const onClickResourceModHandler = () => {
-          if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+          if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime){
             alert('시간을 다시입력해주세여');
         }else{
         const formData = new FormData();
@@ -120,8 +127,8 @@ function ResourceMod(){
             form: formData
             
         })); 
-        navigate(`/reservation`, { replace: false });
-        window.location.reload()
+        navigate("/",{replace: true})
+
     }
     }
     }

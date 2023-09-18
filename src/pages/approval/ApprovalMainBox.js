@@ -17,6 +17,8 @@ function ApvMainBox({ showCounts }) {
     });
 
     useEffect(() => {
+        if(empNo){
+
         async function fetchcounts() {
             try {
                 const response = await fetch(`http://localhost:8080/api/approval/main?empNo=${empNo}`, {
@@ -37,8 +39,10 @@ function ApvMainBox({ showCounts }) {
                 console.error('Error fetching counts:', error);
             }
         }
-
+        
+        
         fetchcounts();
+    }
     }, [empNo]);
 
     return (
@@ -70,8 +74,8 @@ function ApvMainBox({ showCounts }) {
                         <div className="cell2">{counts ? counts.countTodayUrgency : 0}</div>
                     </div>
 
-                    <div className="apvMainBox">
-                        <div className="apvMainBoxRightBox">
+                    <div className="apvMainBox10">
+                        <div className="apvMainBoxRightBox10">
                             <div className="apvMainBoxRight">
                                 <div className="row1">결재 진행중</div>
                                 <div className="row2">{counts ? counts.countInProgress : 0}</div>

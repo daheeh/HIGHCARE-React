@@ -39,6 +39,7 @@ export const callResAddAPI = ({form})=>{
             })
         })
         .then(response => response.json());
+        alert(result.message)
         dispatch({type: POST_RES, payload: result});
     };
 }
@@ -64,6 +65,7 @@ export const callResRegistAPI = ({form}) => {
     }else{
         alert(result.message);
     dispatch({type: POST_RESR, payload: result});
+    
     }    
 }
     

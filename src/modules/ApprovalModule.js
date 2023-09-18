@@ -23,7 +23,6 @@ export const POST_APPROVAL_BIZ4 = 'approval/POST_APPROVAL_BIZ4';
 
 
 export const POST_APPROVAL_EXP1 = 'approval/POST_APPROVAL_EXP1';
-export const POST_APPROVAL_EXP2 = 'approval/POST_APPROVAL_EXP2';
 export const GET_APPROVAL_EXP4 = 'approval/GET_APPROVAL_EXP4';
 export const POST_APPROVAL_EXP4 = 'approval/POST_APPROVAL_EXP4';
 export const POST_APPROVAL_EXP6 = 'approval/POST_APPROVAL_EXP6';
@@ -51,7 +50,6 @@ const actions = createActions({
     [POST_APPROVAL_BIZ4]: () => { },
 
     [POST_APPROVAL_EXP1]: () => { },
-    [POST_APPROVAL_EXP2]: () => { },
     [GET_APPROVAL_EXP4]: () => { },
     [POST_APPROVAL_EXP4]: () => { },
     [POST_APPROVAL_EXP6]: () => { },
@@ -106,9 +104,6 @@ const approvalReducer = handleActions(
 
 
         [POST_APPROVAL_EXP1]: (state, { payload }) => {
-            return payload;
-        },
-        [POST_APPROVAL_EXP2]: (state, { payload }) => {
             return payload;
         },
         [GET_APPROVAL_EXP4]: (state, { payload }) => {

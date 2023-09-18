@@ -21,6 +21,7 @@ function PmMemberResist() {
   },[]);
 
   return (
+    <div className='marginbox'>
     <section>
       <PmNav/>
       <div className="apv-navibox">
@@ -36,12 +37,12 @@ function PmMemberResist() {
                 <div>
                   <div className="pm-content">
                     <div className="pm-memberinfo-title">이름</div>
-                    { resist.empName && resist.empName }
+                    { resist?.empName && resist?.empName }
                   </div>
                   <div className="pm-flex">
                     <div className="pm-content">
                       <div className="pm-memberinfo-title">주민등록번호</div>
-                      { resist.residentNo && resist.residentNo }
+                      { resist?.residentNo && resist?.residentNo }
                     </div>
                   </div>
                   <div className="pm-flex">
@@ -53,19 +54,19 @@ function PmMemberResist() {
                   <div className="pm-flex">
                     <div className="pm-content">
                       <div className="pm-memberinfo-title">최종학력</div>
-                      { resist.education && resist.education }
+                      { resist?.education && resist?.education }
                     </div>
                   </div>
                   <div className="pm-flex">
                     <div className="pm-content">
                       <div className="pm-memberinfo-title">주소</div>
-                      { resist.address && resist.address }
+                      { resist?.address && resist?.address }
                     </div>
                   </div>
                   <div className="pm-flex">
                     <div className="pm-content-last">
                       <div className="pm-memberinfo-title">이메일</div>
-                      { resist.empEmail && resist.empEmail }
+                      { resist?.empEmail && resist?.empEmail }
                     </div>
                   </div>
                 </div>
@@ -86,7 +87,7 @@ function PmMemberResist() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td  className="pm-test8">{department || ''}</td>
+                          <td className="pm-test8">{department || ''}</td>
                           <td className="pm-test8">{resist.job?.name || ''}</td>
                           <td className="pm-test8">{ resist?.telephone || '' }</td>
                           <td className="pm-test8">{ resist?.startDate || '' }</td>
@@ -110,33 +111,35 @@ function PmMemberResist() {
                         </tr>
                       </thead>
                       <tbody>
-                      {Array.isArray(resist.military) ? (
-  resist.military.map((item, index) => (
-    <tr key={index}>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-tests">{item?.status || ''}</td>
-      <td className="pm-test9">{item?.status || ''}</td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-tests">{resist.military?.status || ''}</td>
-    <td className="pm-test9">{resist.military?.status || ''}</td>
-  </tr>
-)}
-
-
-
-
-
+                      {resist.military && [...resist.military, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-test9">{item?.status || ''}</td>
+                          </tr>
+                        ))}
+                      {/* {Array.isArray(resist.military) ? (
+                        resist.military.map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-tests">{item?.status || ''}</td>
+                            <td className="pm-test9">{item?.status || ''}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-tests">{resist.military?.status || ''}</td>
+                          <td className="pm-test9">{resist.military?.status || ''}</td>
+                        </tr>
+                      )} */}
                       </tbody>
                     </table>
                   </div>
                 </div>
-
                 <div>
                   <div className="pm-contents">
                     <div className="pm-titleboxs">경력사항</div>
@@ -151,33 +154,38 @@ function PmMemberResist() {
                         </tr>
                       </thead>
                       <tbody>
-                      {Array.isArray(resist.career) ? (
-  resist.career.slice(0, 3).map((item, index) => (
-    <tr key={index}>
-      <td className="pm-tests">{item?.name || ''}</td>
-      <td className="pm-tests">{item?.job || ''}</td>
-      <td className="pm-tests">{item?.history ? item.history + '년' : ''}</td>
-      <td className="pm-tests">{item?.startDate || ''}</td>
-      <td className="pm-test9">{item?.endDate || ''}</td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td className="pm-tests">{resist.career?.name || ''}</td>
-    <td className="pm-tests">{resist.career?.job || ''}</td>
-    <td className="pm-tests">{resist.career?.history ? resist.career.history + '년' : ''}</td>
-    <td className="pm-tests">{resist.career?.startDate || ''}</td>
-    <td className="pm-test9">{resist.career?.endDate || ''}</td>
-  </tr>
-)}
-
-
-
+                      {resist.career && [...resist.career, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.name || ''}</td>
+                            <td className="pm-tests">{item?.job || ''}</td>
+                            <td className="pm-tests">{item?.history || ''}</td>
+                            <td className="pm-tests">{item?.startDate || ''}</td>
+                            <td className="pm-test9">{item?.endDate || ''}</td>
+                          </tr>
+                        ))}
+                      {/* {Array.isArray(resist.career) ? (
+                        resist.career.slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.name || ''}</td>
+                            <td className="pm-tests">{item?.job || ''}</td>
+                            <td className="pm-tests">{item?.history ? item.history + '년' : ''}</td>
+                            <td className="pm-tests">{item?.startDate || ''}</td>
+                            <td className="pm-test9">{item?.endDate || ''}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td className="pm-tests">{resist.career?.name || ''}</td>
+                          <td className="pm-tests">{resist.career?.job || ''}</td>
+                          <td className="pm-tests">{resist.career?.history ? resist.career.history + '년' : ''}</td>
+                          <td className="pm-tests">{resist.career?.startDate || ''}</td>
+                          <td className="pm-test9">{resist.career?.endDate || ''}</td>
+                        </tr>
+                      )} */}
                       </tbody>
                     </table>
                   </div>
                 </div>
-
                 <div>
                   <div className="pm-contents-last">
                     <div className="pm-titleboxs">자격증</div>
@@ -192,7 +200,35 @@ function PmMemberResist() {
                         </tr>
                       </thead>
                       <tbody>
-                      {Array.isArray(resist.certification) ? (
+                      {resist.certification && [...resist.certification, null, null, null].slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-test10">{item?.name || ''}</td>
+                            <td className="pm-test10">{item?.institution || ''}</td>
+                            <td className="pm-test10">{item?.startDate || ''}</td>
+                            <td className="pm-test10">{item?.startDate || ''}</td>
+                            <td className="pm-test10">{item?.status || ''}</td>
+                          </tr>
+                        ))}
+                      {/* {Array.isArray(resist.certification) ? (
+                        resist.certification.slice(0, 3).map((item, index) => (
+                          <tr key={index}>
+                            <td className="pm-tests">{item?.name || ''}</td>
+                            <td className="pm-tests">{item?.institution || ''}</td>
+                            <td className="pm-tests">{item?.startDate || ''}</td>
+                            <td className="pm-tests">{item?.endDate || ''}</td>
+                            <td className="pm-test9">상</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td className="pm-tests">{resist.certification?.name || ''}</td>
+                          <td className="pm-tests">{resist.certification?.institution || ''}</td>
+                          <td className="pm-tests">{resist.certification?.startDate || ''}</td>
+                          <td className="pm-tests">{resist.certification?.endDate || ''}</td>
+                          <td className="pm-test9">상</td>
+                        </tr>
+                      )} */}
+                      {/* {Array.isArray(resist.certification) ? (
   resist.certification.slice(0, 3).map((item, index) => (
     <tr key={index}>
       <td className="pm-tests">{item?.name || ''}</td>
@@ -203,14 +239,16 @@ function PmMemberResist() {
     </tr>
   ))
 ) : (
-  <tr>
-    <td className="pm-tests">{resist.certification?.name || ''}</td>
-    <td className="pm-tests">{resist.certification?.institution || ''}</td>
-    <td className="pm-tests">{resist.certification?.startDate || ''}</td>
-    <td className="pm-tests">{resist.certification?.endDate || ''}</td>
-    <td className="pm-test9">상</td>
-  </tr>
-)}
+  [...Array(3)].map((_, index) => (
+    <tr key={index}>
+      <td className="pm-tests">{resist.certification?.name || ''}</td>
+      <td className="pm-tests">{resist.certification?.institution || ''}</td>
+      <td className="pm-tests">{resist.certification?.startDate || ''}</td>
+      <td className="pm-tests">{resist.certification?.endDate || ''}</td>
+      <td className="pm-test9">상</td>
+    </tr>
+  ))
+)} */}
                       </tbody>
                     </table>
                   </div>
@@ -218,21 +256,15 @@ function PmMemberResist() {
               </div>
 
             <h6 className="pm-font"> 상기 내용은 사실과 다름없음을 확인합니다.</h6>
-            <h6 className="pm-font">년      월      일</h6>
+            <h6 className="pm-font">2023년      09월      17일</h6>
             <h6 className="pm-font2">작성자:     (인)</h6>
             </div>
           </div>
         </div>
         <br></br>
-        <div className="paging">
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-        </div>
       </div>
     </section>
+    </div>
   );
 }
 

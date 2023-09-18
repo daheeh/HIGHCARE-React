@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestMember, selectMember } from "../../../apis/MemberAPICalls";
 import { ReduxReset } from "../../../utils/ReduxReset";
 import { AdminNav } from "../AdminNav";
+import { useNavigate } from "react-router-dom";
+import { resetRequestMemberAction } from "../../../modules/memberSlice";
 
 // 가입요청 페이지 
 function MemberRequest() {
   // 리로드시 이전 사원조회 리덕스 날리기 
-  ReduxReset(`members`);
+  // ReduxReset(`members`);
 
   // 매니저 권한만 접근 가능
   // 가입요청 - 사번, 이름, 이메일(비밀번호 부여) 
@@ -58,8 +60,9 @@ function MemberRequest() {
 
   }
 
-  const requestClick = () => {
-    dispatch(requestMember(form));
+  const requestClick = async () => {
+    await dispatch(requestMember(form));
+    // resetRequestMemberAction();
   }
 
 

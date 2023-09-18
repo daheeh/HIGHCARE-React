@@ -8,29 +8,30 @@ import ApvSummitLine from '../ApvSummitLine';
 import './ApprovalBiz.css';
 import '../Approval.css';
 import { callApvBiz4API, callApvUpdateAPI } from '../../../apis/ApprovalAPICalls';
-import {GET_PM_MEMBER} from '../../../modules/PmMemberModule';
+import { GET_PM_MEMBER } from '../../../modules/PmMemberModule';
 import ApvFileList from '../ApvFileList';
 import { handleSubmission } from '../ApvSubmit';
 import { RESET_APPROVAL } from '../../../modules/ApprovalModule';
 import Biz4Offcial from './Biz4Offcial';
 
 const modalStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        transform: 'translate(-50%, -50%)',
-        width: '1600px',
-        height: '1000px',
-        maxHeight: '70vh',
-        overflow: 'auto',
-    },
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		transform: 'translate(-50%, -50%)',
+		width: '1600px',
+		height: '1000px',
+		maxHeight: '70vh',
+		overflow: 'auto',
+	},
 };
 
 function Biz4({ mode, data }) {
 
 	const dispatch = useDispatch();
+	dispatch({ type: RESET_APPROVAL });
 
 	const authes = useSelector(state => state.authes);
 	const empNo = authes.empNo;
@@ -67,7 +68,7 @@ function Biz4({ mode, data }) {
 				console.log('신청서 조회 결과: ', result.data);
 				setEmpData(result.data);
 				console.log('empData: ', empData);
-				
+
 			} catch (error) {
 				console.error('[ApprovalAPICalls] Biz4 Error in callApvBiz4ViewAPI: ', error);
 				throw error;
@@ -77,7 +78,7 @@ function Biz4({ mode, data }) {
 		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
 	}, [empNo, dispatch]);
 
-	
+
 
 	const [formData, setFormData] = useState({
 
@@ -104,7 +105,7 @@ function Biz4({ mode, data }) {
 	});
 
 	const isEditMode = formData.apvNo ? true : false;
-    console.log('isEditMode 1 : ', isEditMode);
+	console.log('isEditMode 1 : ', isEditMode);
 
 	useEffect(() => {
 		if (!isEditMode) {
@@ -112,13 +113,13 @@ function Biz4({ mode, data }) {
 		}
 	}, [isEditMode, dispatch]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		setFormData(prevFormData => ({
 			...prevFormData,
-			empPhone : empData.phone ,
-			empEmail : empData.empEmail,
-		}))	
-		console.log("empData.phone", empData.phone);
+			empPhone: empData.empPhone,
+			empEmail: empData.empEmail,
+		}))
+		console.log("empData.empPhone", empData.empPhone);
 		console.log("empData.empEmail", empData.empEmail);
 	}, [empData])
 
@@ -173,9 +174,9 @@ function Biz4({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
-
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -205,10 +206,11 @@ function Biz4({ mode, data }) {
 	const [isPreviewOpen, setPreviewOpen] = useState(false);
 	const handlePreviewClick = () => {
 		setPreviewOpen(true);
+
 	};
 	const handleModalClose = () => {
-        setPreviewOpen(false);
-    };
+		setPreviewOpen(false);
+	};
 
 
 	const APIPoint = isEditMode ? callApvUpdateAPI : callApvBiz4API;
@@ -219,6 +221,7 @@ function Biz4({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -228,6 +231,13 @@ function Biz4({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
+
+	    const autoExpandTextarea = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto'; 
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+
 	console.log('Biz4 formData : ', formData);
 
 
@@ -239,23 +249,27 @@ function Biz4({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">공문</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<button className='apvBtn3' onClick={handlePreviewClick}>미리보기</button>
 					<Modal
 						isOpen={isPreviewOpen}
 						onClose={() => setPreviewOpen(false)}
 						formData={formData}
+						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						style={modalStyles}>
 						<Biz4Offcial formData={formData} mode='preView' />
 
@@ -282,20 +296,22 @@ function Biz4({ mode, data }) {
 						<div className="apvContentDetailComent">
 							<textarea placeholder="내용 작성" name='contents1' className='apvTextarea'
 								value={formData.contents1}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 						</div>
 						<div className="apvContentDetail2">-아래-</div>
 						<div className="apvContentDetailComent2">
 							<textarea placeholder="상세 내용 작성" name='contents2' className='apvTextarea'
 								value={formData.contents2}
-								onChange={onChangeHandler} />
+								onChange={onChangeHandler}
+								onInput={autoExpandTextarea} />
 						</div>
 					</div>
-					<ApvFileList files={fileList} />
-                </div>
-            </div>
-        </section>
-    );
+					<ApvFileList files={fileList} data={formData} />
+				</div>
+			</div>
+		</section>
+	);
 }
 
 export default Biz4;

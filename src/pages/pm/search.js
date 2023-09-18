@@ -12,19 +12,34 @@ function PmMenu() {
     const dispatch = useDispatch();
     const results = useSelector(state => state.treeview);
     const [selectedStatus, setSelectedStatus] = useState('사원조회');
+ 
+    const [pageEnd, setPageEnd] = useState(1);
+    const pageInfo = results.pageInfo;
 
-    console.log(results);
-    useEffect(() => {
-        dispatch(callEmployeeAPI({ empNo: 1, pmStatus: '사원조회'}));
-    },[]);
-
-    const handleMenuItemClick = (pmStatus) => {
-        dispatch(callEmployeeAPI({ empNo: 1, pmStatus}));
-        setSelectedStatus(pmStatus);
+    const pageNumber = [];
+    if(pageInfo) {
+        for(let i = 1; i<= pageInfo.pageEnd; i++){
+            pageNumber.push(i);
+        }
     }
 
 
+    useEffect(() => {
+        console.log('--------------------->>>>>>>>>', currentPage);
+      
+        dispatch(callEmployeeAPI({currentPage}));
+        
+    },
+    [currentPage]);
+
+    // const handleMenuItemClick = (currentPage) => {
+    //     dispatch(callEmployeeAPI({ currentPage}));
+    //     setSelectedStatus(currentPage);
+    // }
+
+
 	return (
+        <div>
 <section>
 <PmNav/>
 <div className="apv-navibox">
@@ -49,35 +64,58 @@ function PmMenu() {
                         <th className="columnpm7">이메일</th>
                     </tr>
                     {Array.isArray(results.data) && results.data
-                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                         .map((result) => (
                             <tr key={result.empName}>
                                 <td>{result.empName}</td>
-                                <td>{result.jobCode}</td>
+                                <td>{result.job.name}</td>
                                 <td>{result.phone}</td>
-                                <td>{result.deptCode}</td>
+                                <td>{result.dt.name}</td>
                                 <td>{result.telephone}</td>
                                 <td>{result.startDate}</td>
                                 <td>{result.empEmail}</td>
                             </tr>
                         ))
                     }
+                    { console.log('================>',results.data)}
                     </tbody>
                 </table>
             </div>
             <div style={{width:'auto'}}>
-
-                <div className="paging">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
                 </div>
-            </div>
+
+            {/* 페이징 처리를 위한 버튼  */}
+            <div style={{ listStyleType: "none", display: "flex", justifyContent: "center", marginLeft: "780px" }}>
+            { Array.isArray(results) &&
+            <button 
+                onClick={() => setCurrentPage(currentPage - 1)} 
+                disabled={currentPage === 1}
+            >
+                &lt;
+            </button>
+            }
+            {pageNumber.map((num) => (
+            <li key={num} onClick={() => setCurrentPage(num)}>
+                <button
+                    style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                >
+                    {num}
+                </button>
+            </li>
+            ))}
+            { Array.isArray(results) && pageInfo != null &&
+            <button 
+                onClick={() => setCurrentPage(currentPage + 1)} 
+                disabled={currentPage === pageInfo.pageEnd || pageInfo.total == 0}
+            >
+                &gt;
+            </button>
+            }
+        </div>
         </div>
     </section>
-        
+        <br></br>
+        <br></br>
+        </div>
 	);
 }
 

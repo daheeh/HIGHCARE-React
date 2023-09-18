@@ -14,13 +14,15 @@ function ResourceAdd(){
     const dispatch =useDispatch();
     const [value, setValue] = useState('');
     const res = useSelector(state => state.resReducer);
+    const authes = useSelector(state => state.authes);
+    const navigate = useNavigate();
     const resCategory = res.data;
+    const role = authes.role;
     const [start, setStart] = useState(0);
     const [modal,setModal] = useState(false);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
-    const navigate = useNavigate();
     const [form, setForm] = useState({
         resourceName: '',
         area: '',
@@ -32,6 +34,12 @@ function ResourceAdd(){
     });
     useEffect(
         () => {
+            if(role.includes('ROLE_ADMIN')){
+            }else{
+                alert('권한이 없습니다.');
+                navigate("/",{replace: true})
+        
+            }
             dispatch(callResAPI());
             setStart(0);
         },[start]
@@ -49,7 +57,6 @@ function ResourceAdd(){
         }
     },
     [image]);
-
     const onChangeImageUpload = (e) => {
 
         const image = e.target.files[0];
@@ -87,7 +94,7 @@ function ResourceAdd(){
     };
 
     const onClickResourceRegistHandler = () => {
-        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime || form.startTime >=24 || form.endTime > 24){
+        if(form.startTime <0 || form.endTime <=0 || form.startTime >= form.endTime ){
             alert('시간을 다시입력해주세여');
         }else{
         const formData = new FormData();
@@ -109,8 +116,8 @@ function ResourceAdd(){
             dispatch(callResRegistAPI({
                 form: formData
             }));
-            navigate(`/reservation`, { replace: false });
-            window.location.reload()
+            navigate("/",{replace: true})
+
         }
     }
     }

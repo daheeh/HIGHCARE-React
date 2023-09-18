@@ -15,16 +15,15 @@ import {
     POST_APPROVAL_BIZ4,
 
     POST_APPROVAL_EXP1,
-    POST_APPROVAL_EXP2,
     GET_APPROVAL_EXP4,
     POST_APPROVAL_EXP4,
     POST_APPROVAL_EXP6,
     POST_APPROVAL_EXP7,
-
     POST_APPROVAL_HRM1,
     POST_APPROVAL_HRM3,
 
 } from '../modules/ApprovalModule';
+
 
 
 export const callApvMainToday1API = ({ empNo, apvStatus }) => {
@@ -48,13 +47,12 @@ export const callApvMainToday1API = ({ empNo, apvStatus }) => {
 
             console.log('[ApprovalAPICalls] callApvWriteBoxAPI RESULT : ', result.data);
 
-            dispatch({ type: GET_APROVAL_WRITEBOX, payload: result.data });
+            dispatch({ type: GET_APROVAL_MAIN_TODAY1, payload: result.data });
             return result;
         } catch (error) {
             console.error('[ApprovalAPICalls] Error in callApvWriteBoxAPI: ', error);
             throw error;
         }
-
     };
 };
 
@@ -201,8 +199,6 @@ export const callApvDeleteAPI = ({ apvNo }) => {
 };
 
 
-
-
 /* 전자결재 양식 - 업무 */
 
 /* 전자결재 - 업무 : biz1 기안서 */
@@ -217,14 +213,16 @@ export const callApvBiz1API = ({ requestData }) => {
     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
     // Convert selectedEmployees to an array if it's not already
-    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-        ? requestData.selectedEmployees
-        : [requestData.selectedEmployees];
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
 
-    // apvLineDTOsArray.forEach(emp => {
-    //     formData.append('apvLineDTOs', new Blob([JSON.stringify(emp)], { type: 'application/json' }));
-    // });
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
 
     if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
@@ -267,14 +265,15 @@ export const callApvUpdateAPI = ({ requestData }) => {
     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
     // Convert selectedEmployees to an array if it's not already
-    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-        ? requestData.selectedEmployees
-        : [requestData.selectedEmployees];
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
 
-    // apvLineDTOsArray.forEach(emp => {
-    //     formData.append('apvLineDTOs', new Blob([JSON.stringify(emp)], { type: 'application/json' }));
-    // });
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
 
     if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
@@ -322,10 +321,15 @@ export const callApvBiz2API = ({ requestData }) => {
     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
     // Convert selectedEmployees to an array if it's not already
-    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-        ? requestData.selectedEmployees
-        : [requestData.selectedEmployees];
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
 
     if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
@@ -364,17 +368,22 @@ export const callApvBiz3API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/biz3`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
-     if (requestData.attachedFiles.length > 0) {
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
@@ -410,17 +419,22 @@ export const callApvBiz4API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/biz4`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
-     if (requestData.attachedFiles.length > 0) {
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
@@ -437,7 +451,7 @@ export const callApvBiz4API = ({ requestData }) => {
             })
                 .then(response => response.json());
 
-            console.log('[ApprovalAPICalls] callApvBiz3API RESULT : ', result);
+            console.log('[ApprovalAPICalls] callApvBiz4API RESULT : ', result);
 
             dispatch({ type: POST_APPROVAL_BIZ4, payload: result });
             return result;
@@ -459,17 +473,22 @@ export const callApvExp1API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp1`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
- 
-     if (requestData.attachedFiles.length > 0) {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
@@ -499,54 +518,6 @@ export const callApvExp1API = ({ requestData }) => {
 };
 
 
-/* 전자결재 - 지출 : exp2 지출결의서 */
-export const callApvExp2API = ({ requestData }) => {
-
-    console.log('[ApprovalAPICalls] exp2 callApvExp1API Call');
-
-    const requestURL = `http://localhost:8080/api/approval/insert/exp2`;
-
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
- 
-     if (requestData.attachedFiles.length > 0) {
-        requestData.attachedFiles.forEach(file => {
-            formData.append('apvFileDTO', file);
-        });
-    }
-
-    return async (dispatch, getState) => {
-        try {
-            const result = await fetch(requestURL, {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
-                },
-                body: formData, // 멀티파트 데이터를 전송합니다.
-            })
-                .then(response => response.json());
-
-
-            console.log('[ApprovalAPICalls] exp2 callApvExp2API RESULT : ', result);
-
-            dispatch({ type: POST_APPROVAL_EXP2, payload: result });
-            return result;
-        } catch (error) {
-            console.error('[ApprovalAPICalls] exp2 Error in callApvExp2API: ', error);
-            throw error;
-        }
-    };
-};
-
-
-
 /* 전자결재 - 지출 : exp4 출장경비정산서 */
 export const callApvExp4API = ({ requestData }) => {
 
@@ -554,17 +525,22 @@ export const callApvExp4API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp4`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
- 
-     if (requestData.attachedFiles.length > 0) {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
@@ -580,7 +556,6 @@ export const callApvExp4API = ({ requestData }) => {
                 body: formData, // 멀티파트 데이터를 전송합니다.
             })
                 .then(response => response.json());
-
 
             console.log('[ApprovalAPICalls] exp4 callApvExp4API RESULT : ', result);
 
@@ -602,22 +577,26 @@ export const callApvExp6API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp6`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
- 
-     if (requestData.attachedFiles.length > 0) {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
     }
-
     return async (dispatch, getState) => {
         try {
             const result = await fetch(requestURL, {
@@ -649,17 +628,22 @@ export const callApvExp7API = ({ requestData }) => {
 
     const requestURL = `http://localhost:8080/api/approval/insert/exp7`;
 
-     // FormData 객체를 생성하여 데이터를 담기
-     const formData = new FormData();
-     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
- 
-     // Convert selectedEmployees to an array if it's not already
-     const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-         ? requestData.selectedEmployees
-         : [requestData.selectedEmployees];
-     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
- 
-     if (requestData.attachedFiles.length > 0) {
+    // FormData 객체를 생성하여 데이터를 담기
+    const formData = new FormData();
+    formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
+
+    // Convert selectedEmployees to an array if it's not already
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
+    formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
+
+    if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
             formData.append('apvFileDTO', file);
         });
@@ -706,10 +690,15 @@ export const callApvHrm1API = ({ requestData }) => {
     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
     // Convert selectedEmployees to an array if it's not already
-    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-        ? requestData.selectedEmployees
-        : [requestData.selectedEmployees];
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
 
     if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {
@@ -756,10 +745,15 @@ export const callApvHrm3API = ({ requestData }) => {
     formData.append('apvFormDTO', new Blob([JSON.stringify(requestData.formData)], { type: 'application/json' }));
 
     // Convert selectedEmployees to an array if it's not already
-    const apvLineDTOsArray = Array.isArray(requestData.selectedEmployees)
-        ? requestData.selectedEmployees
-        : [requestData.selectedEmployees];
+    const apvLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.selectedEmployees)
+        ? requestData.combinedSelectedEmployees.selectedEmployees
+        : [requestData.combinedSelectedEmployees.selectedEmployees];
     formData.append('apvLineDTOs', new Blob([JSON.stringify(apvLineDTOsArray)], { type: 'application/json' }));
+
+    const apvRefLineDTOsArray = Array.isArray(requestData.combinedSelectedEmployees.refSelectedEmployees)
+        ? requestData.combinedSelectedEmployees.refSelectedEmployees
+        : [requestData.combinedSelectedEmployees.refSelectedEmployees];
+    formData.append('apvRefLineDTOs', new Blob([JSON.stringify(apvRefLineDTOsArray)], { type: 'application/json' }));
 
     if (requestData.attachedFiles.length > 0) {
         requestData.attachedFiles.forEach(file => {

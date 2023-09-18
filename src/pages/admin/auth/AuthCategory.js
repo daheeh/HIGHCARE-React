@@ -1,11 +1,13 @@
 import { Fragment, useEffect, useState } from "react";
 import AuthSytle from "./AuthManager.module.css"
 import { useDispatch, useSelector } from "react-redux";
-import { insertMenuManagers, selectMenuGroupList } from "../../../apis/AdminAPI";
+import { deleteManager, insertMenuManagers, selectMenuGroupList } from "../../../apis/AdminAPI";
 import TreeView from "../../pm/treeview"
 import { callTreeviewOneAPI } from "../../../apis/PmAPICalls";
 import { memberByTreeview, resetMemberAction } from "../../../modules/memberSlice";
 import { allMemberListApi } from "../../../apis/MemberAPICalls";
+import { roleCode } from "../member/MemberList";
+
 
 // 권한분류별 카테고리 섹션 
 export function AuthCategory() {
@@ -13,10 +15,12 @@ export function AuthCategory() {
     const dispatch = useDispatch();
     // 메뉴 메뉴그룹 리스트 불러오기 
     const menuGroupList = useSelector(state => state.admins.menuGroupList);
+    console.log("menuGroupList : ", menuGroupList);
 
-    console.log("menuGroup : ", menuGroupList);
+    // console.log("menuGroup : ", menuGroupList);
     // 권한분류별 선택한 메뉴그룹을 담을 상태값  
     const [menuManagers, setMenuManagers] = useState('');
+
 
     useEffect(() => {
 
@@ -28,7 +32,8 @@ export function AuthCategory() {
             // 전체회원리스트 api 요청 
             dispatch(allMemberListApi());
 
-            return menuGroupList.menulist;
+            return menuGroupList;
+
         })();
         // 권한분류(메뉴그룹별) 카테고리 이동시 리렌더링 
     }, [menuManagers]);
@@ -39,12 +44,17 @@ export function AuthCategory() {
         setMenuManagers([...menuGroupList].filter(menu => menu.groupCode == code)[0]);
     }
 
+    const allManagerClick = () => {
+        window.location.reload();
+    }
+
     return (
         <section>
             <div className={AuthSytle.AuthCategoryBox}>
                 <div>권한 분류</div>
                 <div className={AuthSytle.CategoryList}>
 
+                    <div onClick={allManagerClick}>전체 관리자</div>
                     {/* 그룹리스트 순회하며 권한분류 관리자 카테고리 리스트 출력하기 */}
                     {Array.isArray(menuGroupList) && menuGroupList.length > 0 && menuGroupList.map(
                         (menugroup) => (
@@ -68,24 +78,22 @@ export function AuthCategory() {
 }
 
 // 트리뷰 모달창 
-function Modal({ isOpen, onClose }) {
+function Modal({ isOpen, onClose, accountList }) {
 
     const dispatch = useDispatch();
 
     // 트리뷰에서 불러온 사원정보를 담을 상태값 
     const [empInfo, setEmpInfo] = useState([]);
     // 전체회원 정보 불러오기 
-    const memberList = useSelector(state => state.members.data);
 
     if (!isOpen) return null;
 
     // 트리뷰 사원선택완료 버튼 클릭 이벤트 
     const selectCompleteClick = () => {
         onClose();
-        console.log('empinfo : ', empInfo);
+        // console.log('empinfo : ', empInfo);
 
-        console.log('memberList : ', memberList);
-        memberList.forEach(member => {
+        accountList.map(member => {
             if (empInfo.empNo == member.empNo) {
                 // 선택한 사원번호를 통해 회원정보에서 정보를 추출하여 트리뷰멤버 리듀서에 저장한다. 
                 dispatch(memberByTreeview(member));
@@ -110,15 +118,22 @@ function Modal({ isOpen, onClose }) {
 // 매니져 섹션 
 function AuthUser({ menuManagers }) {
 
+    console.log("menuManagers : ", menuManagers);
+
     const dispatch = useDispatch();
 
     // 회원 계정정보 불러오기 
     const accountList = useSelector(state => state.members.data);
+    console.log("2 data ===> : ", accountList);
+
     // 트리뷰에서 선택한 회원정보 리듀서에서 불러오기 
     const treeviewMember = useSelector(state => state.members.treeviewMember);
 
     // 트리뷰에서 불러온 회원정보를 담을 상태값 
     const [memberByTreeview, setMemberByTreeview] = useState('');
+
+    // const memberList = useSelector(state => state.members.data);
+    // console.log("3 memberList ===> : ", memberList);
 
 
     useEffect(() => {
@@ -137,7 +152,7 @@ function AuthUser({ menuManagers }) {
     }, [dispatch, treeviewMember])
 
 
-    console.log('memberByTreeview ', memberByTreeview);
+    // console.log('memberByTreeview ', memberByTreeview);
 
     // 트리뷰 모달창 상태값 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -167,14 +182,20 @@ function AuthUser({ menuManagers }) {
         }
     }
 
+    const removeManagerClick = () => {
+
+        dispatch(deleteManager(managerIds.join(',')));
+
+    }
+
     return (
 
         <>
             <div className={AuthSytle.AuthUserBox}>
                 <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                    <div>{menuManagers.groupName ? menuManagers.groupName : `공통`} 관리자</div>
+                    <div>{menuManagers.groupName ? menuManagers.groupName : `전체`} 관리자</div>
                     <button onClick={openModal}>추가</button>
-                    <button>삭제</button>
+                    <button onClick={removeManagerClick}>삭제</button>
                 </div>
                 <table>
                     <thead>
@@ -185,34 +206,69 @@ function AuthUser({ menuManagers }) {
                             <th>이메일</th>
                             <th>부서</th>
                             <th>직급</th>
-                            <th>등록일</th>
+                            <th>{menuManagers ? '등록일' : ''}</th>
                         </tr>
                     </thead>
                     <tbody style={{ fontSize: 16 }}>
-                        {Array.isArray(menuManagers.menulist) &&
-                            menuManagers.menulist.map((manager) => (
-                                <tr key={manager.menuCode} >
-                                    <td><input type="checkbox"
-                                        checked={managerIds.some(id => id == manager.id)}
-                                        onClick={(e) => managerCheckBoxClick(e, manager.id)} /></td>
-                                    {Array.isArray(accountList) &&
-                                        accountList.map((account) => {
-                                            if (account?.memberId === manager.id) {
-                                                return (
-                                                    <Fragment key={account.memberId}>
-                                                        <td>{account.employee.name}</td>
-                                                        <td>{account.memberId}</td>
-                                                        <td>{account.employee.email}</td>
-                                                        <td>{account.employee.deptCode.deptName}</td>
-                                                        <td>{account.employee.jobCode.jobName}</td>
-                                                    </Fragment>
-                                                );
-                                            }
-                                            return ''; // 일치하지 않는 경우 ''반환
-                                        })}
-                                    <td>{manager.registDate && manager.registDate.toString()}</td>
-                                </tr>
-                            ))}
+                        {menuManagers.groupCode ?
+
+
+                            (
+                                Array.isArray(menuManagers.menulist) &&
+                                menuManagers.menulist.map((manager) => (
+                                    <tr key={manager.menuCode} >
+                                        <td>
+                                            <input type="checkbox"
+                                                checked={managerIds.some(id => id == manager.id)}
+                                                onClick={(e) => managerCheckBoxClick(e, manager.id)} />
+                                        </td>
+                                        {Array.isArray(accountList) &&
+                                            accountList.map((account) => {
+                                                if (account?.memberId == manager.id) {
+                                                    return (
+                                                        <Fragment key={account.memberId}>
+                                                            <td>{account.employee.name}</td>
+                                                            <td>{account.memberId}</td>
+                                                            <td>{account.employee.email}</td>
+                                                            <td>{account.employee.deptCode.deptName}</td>
+                                                            <td>{account.employee.jobCode.jobName}</td>
+                                                        </Fragment>
+                                                    );
+                                                }
+                                                return ''; // 일치하지 않는 경우 ''반환
+                                            })}
+                                        <td>{manager.registDate && manager.registDate.toString()}</td>
+                                    </tr>
+                                ))
+                            )
+                            :
+
+                            (
+
+                                // menuManagers.menulist가 배열이 없는 경우
+                                Array.isArray(accountList) &&
+                                accountList
+                                    .filter((member) =>
+                                        member.roleList.some((role) =>
+                                            roleCode(role.authCode ? role.authCode : '').includes('매니져')
+                                        )
+                                    )
+                                    .map((member) => (
+                                        <tr key={member.id}>
+                                            <td>
+                                                <input type="checkbox"
+                                                    checked={managerIds.some(id => id == member.id)}
+                                                    onClick={(e) => managerCheckBoxClick(e, member.id)} />
+                                            </td>
+                                            <td>{member.employee.name}</td>
+                                            <td>{member.memberId}</td>
+                                            <td>{member.employee.email}</td>
+                                            <td>{member.employee.deptCode.deptName}</td>
+                                            <td>{member.employee.jobCode.jobName}</td>
+                                            <td></td>
+                                        </tr>
+                                    ))
+                            )}
 
                         {memberByTreeview?.empNo > 0 && (
                             <tr >
@@ -229,7 +285,7 @@ function AuthUser({ menuManagers }) {
                         )}
                     </tbody>
                 </table>
-                <Modal isOpen={isModalOpen} onClose={closeModal} />
+                <Modal isOpen={isModalOpen} onClose={closeModal} accountList={accountList} />
             </div>
             {/* 메뉴권한 설정 섹션에 매니저 아이디 배열을 넘긴다 */}
             <AuthSetting managerIds={managerIds} />
@@ -242,7 +298,7 @@ function AuthSetting({ managerIds }) {
     const dispatch = useDispatch();
 
 
-    console.log("넘겨받은 매니저 아이디 확인 managerIds : ", managerIds);
+    // console.log("넘겨받은 매니저 아이디 확인 managerIds : ", managerIds);
 
     // 메뉴권한 목록들 
     const menuGroupList = useSelector(state => state.admins.menuGroupList);
@@ -253,7 +309,7 @@ function AuthSetting({ managerIds }) {
     // 메뉴리스트에서 전체 메뉴코드만 추출하여 담음(공통 체크박스 선택시 사용됨)
     const allGroupCodes = menuGroupList.map((menugroup) => menugroup.groupCode);
 
-    let isChecked = ''; 
+    let isChecked = '';
     // 메뉴코드 체크박스 선택유무에 따라 선택된 메뉴코드들을 배열에 담는다. 
     function menuCheckBoxClick(e, groupCode) {
         isChecked = e.target.checked;
@@ -288,7 +344,7 @@ function AuthSetting({ managerIds }) {
             "id": managerIds
         })
     }, [managerIds, menuCodes])
-    console.log("sendData : ", sendData);
+    // console.log("sendData : ", sendData);
 
 
     // 선택한 매니저 정보와 선택한 메뉴그룹들 api insert 요청 
@@ -296,6 +352,13 @@ function AuthSetting({ managerIds }) {
 
         dispatch(insertMenuManagers(sendData));
     }
+
+    const cancelClick = () => {
+        window.location.reload();
+
+    }
+
+
 
 
     return (
@@ -309,11 +372,14 @@ function AuthSetting({ managerIds }) {
                     <div>
                     </div>
                     <div className={AuthSytle.settingList}>
+                        
 
                         {/* 등록된 메뉴그룹 리스트를 출력한다. */}
                         {Array.isArray(menuGroupList) && menuGroupList.length > 0 && menuGroupList.map(
                             (menugroup) => (
                                 <div key={menugroup.groupCode} className={AuthSytle.Category}>
+
+
                                     <label htmlFor={menugroup.groupCode}>
                                         <input
                                             type="checkbox"
@@ -328,10 +394,11 @@ function AuthSetting({ managerIds }) {
                             )
                         )}
 
+
                     </div>
                     <div style={{ textAlign: 'center' }}>
                         <button onClick={saveManagerClick}>저장</button>
-                        <button>취소</button></div>
+                        <button onClick={cancelClick}>취소</button></div>
                 </>
             )}
 

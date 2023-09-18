@@ -2,25 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
-
+function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, data, approval }) {
 
 	const currentDate = new Date();
 	const currentDateString = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
 	const results = useSelector(state => state.approval);
 	const navigate = useNavigate();
+	const [isEditMode, setIsEditMode] = useState(false);
 
 
 	useEffect(() => {
 		console.log('ApvSummitLine - selectedEmployees : ', selectedEmployees);
+		console.log('ApvSummitLine - refSelectedEmployees : ', refSelectedEmployees);
 		console.log('ApvSummitLine - authes : ', authes);
 		console.log('ApvSummitLine - data : ', data);
-		console.log('results : ', results.data);
+		// console.log('results : ', results.data);
 		console.log('approval : ', approval);
 
 
-	}, [selectedEmployees, authes, data, results, approval]);
+	}, [selectedEmployees, refSelectedEmployees, authes, data, results, approval]);
 
+	// if (!selectedEmployees || !authes || !mode || !data || !approval || !results )  {
+	// 	return null;
+	// }
 
 	const handleApprove = async (index) => {
 		const apvLineNo = selectedEmployees[index].apvLineNo;
@@ -127,10 +131,7 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 		}
 	};
 
-	const [isEditMode, setIsEditMode] = useState(false);
-
-
-	const title = results.title;
+	const title = results.title ? results.title : '';
 
 
 	const handleEdit = (apvNo) => {
@@ -188,112 +189,152 @@ function ApvSummitLine({ selectedEmployees, authes, mode, data, approval }) {
 
 	};
 
-
 	if (mode === 'create') {
 
 		return (
 			(results.apvNo) ?
 				<>
-					<div className="apvApvLine">
-						<div className="apvApvLineBox">
-							<div className="row1">기안자</div>
-							<div className="row2">{authes.name}  {authes.job}</div>
-							<div className="row3">{authes.dept}</div>
-							<div className="row4">{currentDateString}</div>
-						</div>
-
-						{selectedEmployees.slice(1, 4).map((emp, index) => (
-							<div className="apvApvLineBox" key={index + 1}>
-								<div className="row1">{index + 1}</div>
-								<div className="row2">{emp.empName} {emp.jobName}</div>
-								<div className="row3">{emp.deptName}</div>
-								<div className="row4"></div>
+					<div className='apvLine'>
+						<div className="apvApvLine">
+							<div className="apvApvLineBox">
+								<div className="row1">기안자</div>
+								<div className="row2">{authes.name}  {authes.job}</div>
+								<div className="row3">{authes.dept}</div>
+								<div className="row4">{currentDateString}</div>
 							</div>
-						))}
+
+							{selectedEmployees.slice(1, 4).map((emp, index) => (
+								<div className="apvApvLineBox" key={index + 1}>
+									<div className="row1">{index + 1}</div>
+									<div className="row2">{emp.empName} {emp.jobName}</div>
+									<div className="row3">{emp.deptName}</div>
+									<div className="row4"></div>
+								</div>
+							))}
+						</div>
+						<div className='apvRefBox'>
+							<div className='apvRefBoxTitle'>참조결재 : </div>
+							{refSelectedEmployees.map((emp, index) => (
+								emp.degree === 9 && (
+									<div className="apvRefLineList" key={index}>
+										<div className="row2"> {emp.empName} {emp.jobName} ({emp.deptName}) / </div>
+									</div>
+								)
+							))}
+						</div>
 					</div>
 				</>
 				:
 				<>
-					<div className="apvApvLine">
-						<div className="apvApvLineBox">
-							<div className="row1">기안자</div>
-							<div className="row2">{authes.name}  {authes.job}</div>
-							<div className="row3">{authes.dept}</div>
-							<div className="row4">{currentDateString}</div>
-						</div>
-
-						{selectedEmployees.slice(1, 4).map((emp, index) => (
-							<div className="apvApvLineBox" key={index + 1}>
-								<div className="row1">{index + 1}</div>
-								<div className="row2">{emp.empName} {emp.jobName}</div>
-								<div className="row3">{emp.deptName}</div>
-								<div className="row4"></div>
+					<div className='apvLine'>
+						<div className="apvApvLine">
+							<div className="apvApvLineBox">
+								<div className="row1">기안자</div>
+								<div className="row2">{authes.name}  {authes.job}</div>
+								<div className="row3">{authes.dept}</div>
+								<div className="row4">{currentDateString}</div>
 							</div>
-						))}
+
+							{selectedEmployees.slice(1, 4).map((emp, index) => (
+								<div className="apvApvLineBox" key={index + 1}>
+									<div className="row1">{index + 1}</div>
+									<div className="row2">{emp.empName} {emp.jobName}</div>
+									<div className="row3">{emp.deptName}</div>
+									<div className="row4"></div>
+								</div>
+							))}
+						</div>
+						<div className='apvRefBox'>
+							<div className='apvRefBoxTitle'>참조결재 : </div>
+							{refSelectedEmployees.map((emp, index) => (
+								emp.degree === 9 && (
+									<div className="apvRefLineList" key={index}>
+										<div className="row2"> {emp.empName} {emp.jobName} ({emp.deptName}) / </div>
+									</div>
+								)
+							))}
+						</div>
 					</div>
-
 				</>
-
-
-
 		);
 
 
 	} else if (mode === 'view') {
 
 		return (
-			<div className="apvApvLine">
-				{selectedEmployees.map((emp, index) => (
-					<div className="apvApvLineBox" key={index}>
-						<div className="row1">{index === 0 ? '기안자' : index}</div>
-						<div className="row2">{emp.empName} {emp.jobName}</div>
-						<div className="row3">{emp.deptName}</div>
-						<div className="row4">
-							{index === 0 && authes.empNo === emp.empNo ? (
-								<>
-									{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
-										data.apvStatus === "결재예정" || data.apvStatus === "결재반려" ? (
+			data && data?.apvLines.every(emp => emp.empNo !== authes.empNo) ?
+				<>
+					{/* <div className="warning">해당 기안에 권한이 없습니다</div>; */}
+				</>
+				:
+				<div className='apvLine'>
+					<div className="apvApvLine">
+						{selectedEmployees.map((emp, index) => (
+							emp.degree !== 9 && (
+								<div className="apvApvLineBox" key={index}>
+									<div className="row1">{index === 0 ? '기안자' : index}</div>
+									<div className="row2">{emp.empName} {emp.jobName}</div>
+									<div className="row3">{emp.deptName}</div>
+									<div className="row4">
+										{index === 0 && authes.empNo === emp.empNo ? (
 											<>
-												<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
-												<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+												{data.apvStatus !== "결재완료" || data.apvLines.length !== 1 ?
+													data.apvStatus === "결재예정" || data.apvStatus === "결재반려" ? (
+														<>
+															<button className='apvBtn2' onClick={() => handleEdit(emp.apvNo)}>수정</button>
+															<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+														</>
+													) :
+														<>
+															{emp.apvDate && <span>{emp.apvDate}</span>}
+														</>
+													:
+													<>
+														<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
+													</>}
 											</>
-										) :
-											<>
-												{emp.apvDate && <span>{emp.apvDate}</span>}
-											</>
-										:
-										<>
-											<button className='apvBtn2' onClick={() => handleDelete(emp.apvNo)}>취소</button>
-										</>}
-								</>
-							) : index !== 0 && authes.empNo === emp.empNo ? (
-								selectedEmployees[index - 1].isApproval === 'T' ? (
-									selectedEmployees[index].isApproval === 'T' ? (
-										<>
+										) : index !== 0 && authes.empNo === emp.empNo ? (
+											selectedEmployees[index - 1].isApproval === 'T' ? (
+												selectedEmployees[index].isApproval === 'T' ? (
+													<>
+														{emp.apvDate && <span>{emp.apvDate}</span>}
+													</>
+												) : (
+													<>
+														<button className='apvBtn2' onClick={() => handleApprove(index)}>승인</button>
+														<button className='apvBtn2' onClick={() => handleReject(index)}>반려</button>
+													</>
+												)
+											) : (
+												<>
+													{emp.apvDate && <span>{emp.apvDate}</span>}
+												</>
+											)
+										) : <>
 											{emp.apvDate && <span>{emp.apvDate}</span>}
-										</>
-									) : (
-										<>
-											<button className='apvBtn2' onClick={() => handleApprove(index)}>승인</button>
-											<button className='apvBtn2' onClick={() => handleReject(index)}>반려</button>
-										</>
-									)
-								) : (
-									<>
-										{emp.apvDate && <span>{emp.apvDate}</span>}
-									</>
-								)
-							) : <>
-								{emp.apvDate && <span>{emp.apvDate}</span>}
-							</>}
-						</div>
-					</div>
-				))}
-			</div>
-		);
+										</>}
+									</div>
+								</div>
+							)
+						))}
 
-	};
-}
+					</div>
+					<div className='apvRefBox'>
+						<div className='apvRefBoxTitle'>참조결재 : </div>
+						{selectedEmployees.map((emp, index) => (
+							emp.degree === 9 && (
+								<div className="apvRefLineList" key={index}>
+									<div className="row2"> {emp.empName} {emp.jobName} ({emp.deptName}) / </div>
+								</div>
+							)
+						))}
+					</div>
+				</div>
+		);
+	}
+
+};
+
 export default ApvSummitLine;
 
 

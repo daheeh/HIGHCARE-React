@@ -8,7 +8,6 @@ import { decodeJwt } from "../../utils/decodeJwt";
 import { logoutAction } from '../../modules/authSlice';
 import { ReduxReset } from '../../utils/ReduxReset';
 import { GET_RESET_MANSELECT } from '../../modules/MypageModule';
-
 function Header() {
 
     const navigate = useNavigate();
@@ -28,25 +27,23 @@ function Header() {
 
     const dispatch = useDispatch();  // action을 보낼 수 있다. 
 
-    const onClickLogoutHandler =  () => {
-        dispatch(logoutAction());
-        dispatch({ type: GET_RESET_MANSELECT, payload:''  });
+    const onClickLogoutHandler = () => {
 
+        dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
-ReduxReset("mypage");
-       navigate("/", { replace: true });
+        window.location.href="/";
 
-   }
+    }
 
     function BeforeLogin() {
 
         return (
             <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
-
                 <Link to="/login">
                     <button>
                         로그인
-                    </button> </Link>
+                    </button>
+                </Link>
             </div>
 
         )
@@ -57,9 +54,9 @@ ReduxReset("mypage");
         return (
             <div className={HeaderCSS.logininput} style={{ display: 'flex', alignItems: 'flex-end', marginBottom: 'auto', marginLeft: 'auto' }}>
                 <div style={{ fontWeight: 'bold', color: 'gray' }}>{loginInfo.dept} {loginInfo.name} {loginInfo.job}님 반갑습니다.</div>
-                <Link to="/modifyinfo">
+                <Link to="/mypage/profile">
                     <button>
-                        내정보수정
+                        마이페이지
                     </button>
                 </Link>
                 <button onClick={onClickLogoutHandler}>

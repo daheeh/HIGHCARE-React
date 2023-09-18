@@ -39,6 +39,14 @@ function Exp1View() {
         fetchData();
     }, [apvNo, dispatch]);
 
+    if (!data) {
+        return ;
+      }
+    
+        if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+        return <div className='apvNoUser'>권한이 없습니다</div>;
+      }
+
     const renderApvExpForm = (data) => {
         return (
             <>
@@ -84,7 +92,7 @@ function Exp1View() {
             </>
         );
     };
-    
+
 
     return (
         <section>

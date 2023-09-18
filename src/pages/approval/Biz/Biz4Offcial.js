@@ -10,7 +10,7 @@ import ApvFileList from '../ApvFileList';
 import { callApvViewAPI } from '../../../apis/ApprovalAPICalls';
 import { useReactToPrint } from 'react-to-print';
 
-function Biz4Offcial({ formData, mode }) {
+function Biz4Offcial({ formData, mode, selectedLine }) {
 
 	const authes = useSelector((state) => state.authes);
 	const empNo = authes.empNo;
@@ -34,6 +34,18 @@ function Biz4Offcial({ formData, mode }) {
 		fetchData();
 	}, [apvNo, dispatch]);
 
+	console.log('data : ', data);
+	console.log('formData : ', formData);
+
+
+	// if (!data) {
+	// 	return;
+	// }
+
+	if (!authes || (data && data?.apvLines.every(emp => emp.empNo !== authes.empNo))) {
+		return <div className='apvNoUser'>권한이 없습니다</div>;
+	}
+
 	return (
 		<section>
 			{mode === 'preView' && (
@@ -42,9 +54,11 @@ function Biz4Offcial({ formData, mode }) {
 						<div className="apvApvTitle"><img src="/images/HIGH CARE.png" /></div>
 						<ApvSummitLine
 							mode="view"
-							selectedEmployees={data?.apvLines || []}
+							selectedLine={selectedLine}
+							// selectedEmployees={formData?.apvLines || []}
+							// selectedEmployees={formData?.apvLines || []}
 							authes={authes}
-							data={data}
+							data={formData}
 						/>
 						<div className="apvOfficialTop">
 							<div className="apvOfficial1">(우) 12334 서울 종로구 인사동길 12 대일빌딩</div>
@@ -89,7 +103,7 @@ function Biz4Offcial({ formData, mode }) {
 
 			)
 			}
-
+:
 
 			<ApvMenu />
 			<div>
@@ -142,7 +156,7 @@ function Biz4Offcial({ formData, mode }) {
 						<div className="apvContentDetail2">-아래-</div>
 						<div className="apvContentDetailComent2">{data?.contents2}</div>
 					</div>
-					<ApvFileList files={data?.apvFiles || []} data={data} />
+					<ApvFileList files={data?.apvFiles || []} data={data} isEditMode={false} />
 					<div className="highcareStamp">
 						<div className="highcareText">하이케어</div>
 						<div><img src="/images/HIGHCARE-stamp.png" alt="High Care" className="highcareImage" /></div>

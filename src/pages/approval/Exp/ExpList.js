@@ -7,7 +7,7 @@ function ExpList() {
     const dragOverItem = useRef();
     const [list, setList] = useState([
         'approval/exp1',
-        'approval/exp2',
+        // 'approval/exp2',
         // 'approval/exp3',
         'approval/exp4',
         // 'approval/exp5',
@@ -17,7 +17,7 @@ function ExpList() {
 
     const linkTextMapping = {
         'approval/exp1': '지출결의서(단건)',
-        'approval/exp2': '지출결의서(다건)',
+        // 'approval/exp2': '지출결의서(다건)',
         // 'approval/exp3': '구매품의서xx',///
         'approval/exp4': '출장경비신청서',
         // 'approval/exp5': '개인경비신청서xx',

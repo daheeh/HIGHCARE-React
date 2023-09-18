@@ -10,7 +10,7 @@ export const callMypageProfileSelectAPI = (empNo) => {
 
     console.log('[callMypageProfileSelectAPI Call]');
 
-    const requestURL = `http://localhost:8080/api/mypage/profile/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/profile/${empNo}`;
     console.log("리퀘스트유알엘",requestURL);
 
     return async (dispatch, getState) => {
@@ -41,7 +41,7 @@ export const callProfileInsertAPI = ({form}) => {
 
     console.log('[callProfileInsertAPI] callProfileInsertAPI Call  {}', form.get('profileImage'));
 
-    const requestURL = `http://localhost:8080/api/mypage/update`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/update`;
 
     return async (dispatch, getState) => {
 
@@ -66,11 +66,11 @@ export const callProfileInsertAPI = ({form}) => {
     };
 };
 // 특정 사원의 정보를 조회하고 검색하는 식별자
-export const callAnnSelectAPI = (empNo, currentPage) => {
+export const callAnnSelectAPI = (empNo) => {
 
-    console.log('[callAnnSelectAPI Call]', empNo, currentPage);
+    console.log('[callAnnSelectAPI Call]', empNo);
 
-    const requestURL = `http://localhost:8080/api/mypage/anselect/${empNo}?offset=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/anselect/${empNo}`;
     console.log("RequestURL : ", requestURL);
 
     return async (dispatch, getState) => {
@@ -101,11 +101,13 @@ export const callAnnSelectAPI = (empNo, currentPage) => {
     }
 };
 
-export const CallManSelectAPI = (empNo, currentPage) => {
+export const CallManSelectAPI = (empNo) => {
 
-    console.log('CallManSelectAPI Call', currentPage);
+    console.log('CallManSelectAPI Call');
 
-    const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}?offset=${currentPage}`;
+    // const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}`;
+    
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/manselect/${empNo}`;
 
     return async (dispatch, getState) => {
 

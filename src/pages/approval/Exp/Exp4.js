@@ -26,7 +26,6 @@ function Exp4({ mode, data }) {
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
 	console.log('Exp4 first : ', approval.data);
 
 	const [resultData, setResultData] = useState([]);
@@ -134,8 +133,6 @@ function Exp4({ mode, data }) {
 		setAmounts(newAmounts);
 	}, [formData.apvExpForms]);
 
-
-
 	const [sharedProperties, setSharedProperties] = useState({
 		requestDate: approval.requestDate ? approval.requestDate : new Date(),
 		payee: approval.payee ? approval.payee : authes.name,
@@ -173,32 +170,32 @@ function Exp4({ mode, data }) {
 				updatedFormData.apvExpForms[index][field] = value;
 				return updatedFormData;
 			});
-			updateTotalAmount();
 		} else if (nameParts[0] === 'sharedProperties') {
-
+			
 			const field = nameParts[1];
 			setSharedProperties((prevSharedProps) => ({
 				...prevSharedProps,
 				[field]: value,
 			}));
-			// apvExpForms 배열 내의 해당 속성 업데이트
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
-					...form,
-					[field]: value,
-				})),
-			}));
-			updateTotalAmount();
 		} else {
-			// 다른 폼 데이터 속성 업데이트
+			
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
 			}));
-			updateTotalAmount();
 		}
+
+		const updatedAmounts = [...amounts];
+		updatedAmounts[index] = parseFloat(value || 0);
+		setAmounts(updatedAmounts);
+
+		const newTotalAmount = updatedAmounts.reduce((sum, amount) => sum + amount, 0);
+		setTotalAmount(newTotalAmount);
 	};
+
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	  }
 
 	useEffect(() => {
 		const currentDate = new Date();
@@ -241,8 +238,7 @@ function Exp4({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
-
+	}, [approval]);
 
 	const handleAddForm = () => {
 		setFormCount(prevCount => prevCount + 1);
@@ -335,7 +331,7 @@ function Exp4({ mode, data }) {
 		);
 	};
 
-
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -368,6 +364,7 @@ function Exp4({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -387,23 +384,25 @@ function Exp4({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">출장경비정산서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
 							<div className="column1">출장신청서 번호</div>
 							<div className="column2">
-								<select onChange={(e) => handleApvNoSelect(e.target.value)}>
+								<select className="option1" onChange={(e) => handleApvNoSelect(e.target.value)}>
 									<option className="input1" value="">선택</option>
 									{resultData && resultData.map((item, index) => (
 										<option key={index} value={item.apvNo}>
@@ -433,14 +432,11 @@ function Exp4({ mode, data }) {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-							{/* {Array.from({ length: formCount }).map((_, index) =>
-								renderApvExpForm(formData.apvExpForms[index] || {}, index)
-							)} */}
 							{renderApvExpForm(formData)}
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(totalAmount)}</div></div>
 						</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>
@@ -468,7 +464,7 @@ function Exp4({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData}/>
 				</div>
 			</div>
 		</section>

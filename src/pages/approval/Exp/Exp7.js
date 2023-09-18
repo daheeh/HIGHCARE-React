@@ -26,8 +26,7 @@ function Exp7({ mode, data }) {
 	const navigate = useNavigate();
 
 	const approval = useSelector(state => state.approval);
-
-	console.log('Exp7 first : ', approval.data);
+	console.log('Exp7 first : ', approval);
 
 	const [formCount, setFormCount] = useState(1);
 	const [formData, setFormData] = useState({
@@ -83,40 +82,38 @@ function Exp7({ mode, data }) {
 
 	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
 	const updateTotalAmount = () => {
-	  const newTotalAmount = formData.apvCorpCards.reduce((sum, form) => {
-		return sum + parseFloat(form.amount || 0);
-	  }, 0);
+		const newTotalAmount = formData.apvCorpCards.reduce((sum, form) => {
+			return sum + parseFloat(form.amount || 0);
+		}, 0);
 
-	  setFormData((prevFormData) => ({
-		...prevFormData,
-		totalAmount: newTotalAmount,
-	  }));
-  
-	  // totalAmount 상태 변수 업데이트
-	  setTotalAmount(newTotalAmount);
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			totalAmount: newTotalAmount,
+		}));
+
+		// totalAmount 상태 변수 업데이트
+		setTotalAmount(newTotalAmount);
 	};
 
 	const onChangeHandler = (e, index) => {
 		const { name, value } = e.target;
 		const nameParts = name.split('.');
 
-		if (nameParts[0] === 'apvCorpCards') {
+		if (nameParts[0] === 'apvExpForms') {
 			const field = nameParts[2];
 			setFormData((prevFormData) => {
 				const updatedFormData = { ...prevFormData };
-				updatedFormData.apvCorpCards[index][field] = value;
+				updatedFormData.apvExpForms[index][field] = value;
 				return updatedFormData;
 			});
-			updateTotalAmount();
 		} else if (nameParts[0] === 'sharedProperties') {
-
 			if (name === 'sharedProperties.requestDate') {
 				const currentDate = new Date().toISOString().split('T')[0];
 				if (value < currentDate) {
 					window.alert('지급요청일자는 현재일자보다 빠를 수 없습니다.');
-					setSharedProperties(prevSharedProps => ({
+					setSharedProperties((prevSharedProps) => ({
 						...prevSharedProps,
-						requestDate: currentDate
+						requestDate: currentDate,
 					}));
 					return;
 				}
@@ -127,24 +124,25 @@ function Exp7({ mode, data }) {
 				...prevSharedProps,
 				[field]: value,
 			}));
-			// apvExpForms 배열 내의 해당 속성 업데이트
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				apvCorpCards: prevFormData.apvCorpCards.map((form, i) => ({
-					...form,
-					[field]: value,
-				})),
-			}));
-			updateTotalAmount();
 		} else {
-			// 다른 폼 데이터 속성 업데이트
+
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
 			}));
-			updateTotalAmount();
 		}
+
+		const updatedAmounts = [...amounts];
+		updatedAmounts[index] = parseFloat(value || 0);
+		setAmounts(updatedAmounts);
+
+		const newTotalAmount = updatedAmounts.reduce((sum, amount) => sum + amount, 0);
+		setTotalAmount(newTotalAmount);
 	};
+
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 	useEffect(() => {
 		const currentDate = new Date();
@@ -186,7 +184,7 @@ function Exp7({ mode, data }) {
 
 			setSelectedEmployees(initialSelectedEmployees);
 		}
-	}, [approval, setSelectedEmployees]);
+	}, [approval]);
 
 
 	const handleAddForm = () => {
@@ -285,6 +283,7 @@ function Exp7({ mode, data }) {
 		);
 	};
 
+	const [refSelectedEmployees, setRefSelectedEmployees] = useState([]);
 	const [fileList, setFileList] = useState([]);
 	const handleFileUpload = (file) => {
 		if (file) {
@@ -317,6 +316,7 @@ function Exp7({ mode, data }) {
 			isEditMode,
 			formData,
 			selectedEmployees,
+			refSelectedEmployees,
 			navigate,
 			fileList,
 			APIPoint,
@@ -326,7 +326,6 @@ function Exp7({ mode, data }) {
 		console.log('submissionData', submissionData);
 		handleSubmission(null, submissionData);
 	};
-
 	console.log('Exp7 formData : ', formData);
 
 	return (
@@ -338,17 +337,19 @@ function Exp7({ mode, data }) {
 					onSubmit={handleSubmissionClick}
 					updateIsUrgency={updateIsUrgency}
 					setSelectedEmployees={setSelectedEmployees}
+					setRefSelectedEmployees={setRefSelectedEmployees}
 					fileList={fileList}
 					updateFileList={updateFileList}
-					data={data}
+					data={formData}
 				/>
 				<div className="containerApv">
 					<div className="apvApvTitle">법인카드사용보고서</div>
 					<ApvSummitLine
 						mode="create"
 						selectedEmployees={selectedEmployees}
+						refSelectedEmployees={refSelectedEmployees}
 						authes={authes}
-						approval={approval}
+						data={formData}
 					/>
 					<div className="apvContent">
 						<div className="apvContentTitleExp1">
@@ -386,14 +387,11 @@ function Exp7({ mode, data }) {
 						</div>
 
 						<div className="apvContentDetailExp1Content">
-							{/* {Array.from({ length: formCount }).map((_, index) =>
-								renderApvCorpCard(formData.apvCorpCards[index] || {}, index)
-							)} */}
 							{renderApvCorpCard(formData)}
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{totalAmount}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(totalAmount)}</div></div>
 						</div>
 						<div className="apvContentDetail3">위와 같이 법인카드 사용내역을 보고합니다.</div>
 					</div>
@@ -401,7 +399,7 @@ function Exp7({ mode, data }) {
 						<button onClick={handleAddForm}>라인추가</button>
 						<button onClick={handleRemoveForm}>라인삭제</button>
 					</div>
-					<ApvFileList files={fileList} />
+					<ApvFileList files={fileList} data={formData} />
 				</div>
 			</div>
 		</section>

@@ -5,9 +5,7 @@ import { AuthVarification } from "../auth/AuthVerification";
 import { AdminNav } from "../AdminNav";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { allMemberListApi } from "../../../apis/MemberAPICalls";
-import MemberModify from "./MemberModify";
-import ModifyInfo from "./ModifyInfo";
+import { allMemberListApi, requestAllMember } from "../../../apis/MemberAPICalls";
 
 
 function MemberList() {
@@ -20,15 +18,14 @@ function MemberList() {
 
     }, [])
 
-    const memberList = useSelector(state => state.members.data);
+    let mem = useSelector(state => state.members);
+    const memberList = mem.data;
 
     const [normalMember, setNormalMember] = useState(0);
     const [preMember, setPreMember] = useState(0);
     const [drawMember, setDrawMember] = useState(0);
 
     const [inactiveMember, setInactiveMember] = useState(0);
-
-    const role = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER', 'ROLE_PRE_USER', 'ROLE_WITHDRAW'];
 
     const [allChecked, setAllChecked] = useState(false); // 전체 선택 체크박스의 상태
 
@@ -85,9 +82,12 @@ function MemberList() {
         status: 'user',
         method: 'put'
     })
+    
+    // let [ids, setIds ] = useState([]); 
+
 
     const memberListRegist = () => {
-
+        dispatch(requestAllMember(selectedItems));
     }
 
 
@@ -108,7 +108,7 @@ function MemberList() {
                 }
             }
 
-            member.roleList.forEach((role) => {
+            member.roleList.map((role) => {
                 if (roleCode(role.authCode) === '임시회원') {
                     preCount++;
                 }
@@ -146,11 +146,11 @@ function MemberList() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: 1200 }} >
                     <div className={MemberListCss.crudBtn}>
                         {/* 임시회원상태만 클릭시 회원등록확정 alert창 띄워지고 권한 일반회원으로 변경됨 */}
-                        <button onClick={memberListRegist}>회원등록</button>
+                        {/* <button onClick={memberListRegist}>회원등록</button> */}
                     </div>
                     <div className={MemberListCss.excelBtn}>
-                        <button>목록다운로드</button>
-                        <button>일괄등록</button>
+                        {/* <button>목록다운로드</button>
+                        <button>일괄등록</button> */}
                     </div>
                 </div>
                 <div className={MemberListCss.category}>

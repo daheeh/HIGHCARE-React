@@ -14,15 +14,21 @@ function Calendar({setData}){
     const dateres = useSelector(state => state.dateReducer);
     const resContent = useSelector(state => state.resContentReducer);
     const content = resContent.data;
-
+    const today = new Date();
 
 
    const dateClick=(info)=>{
-        dispatch(callDateResAPI({
-            reservationDate : info.dateStr,
-            resourceCode : content.resourceCode
-        }));
-        setData(info.dateStr);
+        console.log('today : ' , today)
+        if(new Date(info.dateStr) <= today){
+            alert('예약불가능한 날짜입니다')
+        }else{
+            alert('예약 가능한 날짜입니다.')
+            dispatch(callDateResAPI({
+                reservationDate : info.dateStr,
+                resourceCode : content.resourceCode
+            }));
+            setData(info.dateStr);
+        }
     }
     
         return(
@@ -33,9 +39,9 @@ function Calendar({setData}){
                     initialView={'dayGridMonth'}
                     headerToolbar={
                         {
-                            start: 'today', 
+                            start: 'prev', 
                             center: 'title',
-                            end: 'prev,next' 
+                            end: 'next' 
                         }
                     }
                     height={"85vh"}

@@ -9,9 +9,9 @@ function ApvFile({ onFileUpload }) {
     };
 
     const handleUploadClick = async () => {
-        
-                    onFileUpload(selectedFile); // 업로드한 파일을 부모 컴포넌트에 알립니다.
-               
+
+        onFileUpload(selectedFile); // 업로드한 파일을 부모 컴포넌트에 알립니다.
+
     };
 
     return (

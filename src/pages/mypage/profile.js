@@ -34,12 +34,14 @@ function Profile() {
         , []); 
 
 
-    const myInfo = mypage?.data?.myEmployee;       
+    // const myInfo = mypage?.data?.myEmployee;  
+    const myInfo = mypage?.data && mypage?.data[0]?.myEmployee;     
    
-    const picture = mypage?.data?.myProfileFile;
+    const picture = mypage?.data && mypage?.data[0]?.myProfileFile;
     
 
     console.log("myInfo", myInfo);
+    console.log("picture", picture);
     console.log("업데이트 사진", picture?.chName);
     console.log("기본이미지유알엘", imageLink);      
     console.log("이미지유알엘", imageUrl);
@@ -62,7 +64,7 @@ function Profile() {
             }
             console.log('check------->',mypage);
             setImageUrl(mypage?.data?.myProfileFile);
-            console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)
+            console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)   // [1]
             if(!imageLink){
                     
                 setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
@@ -92,11 +94,10 @@ function Profile() {
         
     };
 
-    // 사진 등록
     const onClickRegistHandler = () => {
 
         const formData = new FormData();
-        formData.append("code", mypage?.data.code); 
+        formData.append("code", mypage?.data?.code); 
 
         if (imageUrl) {
             formData.append("profileImage", image);
@@ -104,7 +105,7 @@ function Profile() {
 
         console.log('!!!!!ImageRegistration RegistrationHandler', formData.get("code"));
         console.log('formData check : ', image);
-        // 넘길 값 추가해보기
+        
         dispatch(callProfileInsertAPI({
             form : formData
         }));
@@ -131,7 +132,6 @@ function Profile() {
                                   <img
                                     className=""
                                     src={imageLink}
-                  
                                     alt="preview"
 
                                     style={{ width: 180, height: 120 }}
@@ -151,7 +151,6 @@ function Profile() {
                                 <button style={{ fontSize: 16, width: 120, height: 30 }}
                                     onClick={onClickRegistHandler}
                                 >사진등록
-
                                 </button>
                             </div>
                            
@@ -195,5 +194,6 @@ function Profile() {
         </>
     )
 }
+
 
 export default Profile;

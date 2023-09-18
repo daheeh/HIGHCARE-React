@@ -6,6 +6,8 @@ import { ReduxReset } from "../utils/ReduxReset";
 // 수정 테스트-----
 export const callLoginAPI = (form) => {
 
+    console.log("login call data ----- ", form);
+
     const requestURL = `http://localhost:8080/api/auth/login`;
 
     return async (dispatch, getState) => {
@@ -20,15 +22,22 @@ export const callLoginAPI = (form) => {
             },
             body: JSON.stringify({
                 id: form.id,
-                password: form.password
+                password: form.password,
+                browser: form.browser,
+                device: form.device,
             })
         })
             .then(res => res.json());
 
         try {
-            dispatch(loginAction(response))
-            console.log("result.data : ", response.data);
-            window.localStorage.setItem('accessToken', response.data.accessToken);
+            if(response.status == 200) {
+                
+                dispatch(loginAction(response))
+                console.log("result.data : ", response.data);
+                window.localStorage.setItem('accessToken', response.data.accessToken);
+            } else {
+                throw new Error("로그인 실패"); 
+            }
 
 
         } catch (e) {
@@ -53,7 +62,7 @@ export const callLogoutAPI = () => {
             console.log(error);
         } finally {
             // 로그아웃시 로컬에 있는 리덕스, 토큰 초기화하기 
-            // localStorage.setItem('reduxState', '');
+            localStorage.setItem('reduxState', '');
             ReduxReset('authes');
 
             localStorage.removeItem('accessToken');
@@ -220,7 +229,7 @@ export const updatePasswordAPI = createAsyncThunk(
 
             const result = response.data; 
 
-            alert(result.message)
+            // alert(result.message)
       
             return result;
 

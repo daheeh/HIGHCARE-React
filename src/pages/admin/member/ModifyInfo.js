@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OAuthPage from "../../login/components/OAuthPage";
+import { Link, useNavigate } from "react-router-dom";
+import { Step2pass } from "../../login/findaccount";
+import { ModifyPass } from "./ModifyPass";
+import { decodeJwt } from "../../../utils/decodeJwt";
 
 
 function ModifyInfo() {
 
-    
 
-    // selector state를 통해 리듀서에 접근 
-    const loginMember = useSelector(state => state.authes);
-    const dispatch = useDispatch();  // action을 보낼 수 있다. 
+  const navigate = useNavigate();
 
+  useEffect(() => {
+  }, []);
 
-    useEffect(() => {
-    }, []);
+  const resetPasswordClick = () => {
+
+    navigate("/modifyinfo/password");
+  }
 
 
 
   return (
 
-    <div>
-      <OAuthPage />
+    <div style={{ textAlign: 'center' }}>
+      {/* <OAuthPage /> */}
+      <button style={{ width: 150, height: 50 }}
+        onClick={resetPasswordClick}
 
-      
+      >
+          비밀번호 수정
+      </button>
     </div>
 
   );

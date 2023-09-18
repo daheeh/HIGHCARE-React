@@ -54,7 +54,7 @@
 .apvContentDetailComent2{
     grid-column: 1 / span 8;
     padding: 30px;
-    height: 60px;
+    min-height: 60px;
     border-bottom: 1px solid #7B7B7B;
 }
 .apvContentDetailComent3{
@@ -63,9 +63,6 @@
     height: 0px;
     border-top: 1px solid #7B7B7B;
 }
-
-
-
 
 .apvContentHrm2{
     grid-column: 1 / span 8;

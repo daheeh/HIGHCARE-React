@@ -67,6 +67,14 @@ function Hrm1View() {
 		return weekendDays;
 	}
 
+	if (!data) {
+		return ;
+	  }
+	
+		if (!authes || data.apvLines.every(emp => emp.empNo !== authes.empNo)) {
+		return <div className='apvNoUser'>권한이 없습니다</div>;
+	  }
+
 	return (
 		<section>
 			<ApvMenu />
@@ -126,7 +134,7 @@ function Hrm1View() {
 							<textarea className='apvTextarea' value={data?.apvVacations[0].comment || ''}></textarea>
 						</div>
 					</div>
-					<ApvFileList files={data?.apvFiles || []} data={data} />
+					<ApvFileList files={data?.apvFiles || []} data={data} isEditMode={false} />
 				</div>
 			</div>
 		</section>

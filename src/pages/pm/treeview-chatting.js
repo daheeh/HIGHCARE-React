@@ -5,7 +5,7 @@ import './pm-member.css'
 import { useDispatch, useSelector } from "react-redux";
 import { callTreeviewOneAPI } from '../../apis/PmAPICalls';
 
-function TreeViewChatting({setEmpInfo}) {
+function TreeViewChatting({setEmpInfo, handleAddPartnerInWebSocket}) {
 
   const dispatch = useDispatch();
   const result = useSelector(state => state.treeview);
@@ -17,6 +17,8 @@ function TreeViewChatting({setEmpInfo}) {
     deptName: ''
   });
   
+  const [selectedTreeviewEmployee, setselectedTreeviewEmployee] = useState(null);
+
   console.log('-----------------------------------> ', result);
   useEffect(() => {
       dispatch(callTreeviewOneAPI());
@@ -34,12 +36,28 @@ function TreeViewChatting({setEmpInfo}) {
     })
   };
   
+  // 최하위 노드(사원)를 더블클릭 했을 때 해당 노드 정보 selectedTreeviewEmployee 상태변수에 저장
+  const handleNodeDoubleClick = (node) => {
+    if (!node.children || node.children.length === 0) {
+      const selectedEmployee ={
+        empNo: node.id,
+        empName: node.name,
+        jobName: node.jobName,
+        deptName: node.deptName,
+      };
+      setselectedTreeviewEmployee(selectedEmployee); 
+      handleAddPartnerInWebSocket(selectedEmployee.empName);  // ChatRoomList에 있는 handleAddPartner 호출해서 클릭한 사원 대화상대로 등록
+      console.log('[TreeviewChatting] call handleAddPartner ===================> ', selectedEmployee.empName);
+      console.log("selectedEmployee ====================> " ,selectedEmployee);
+    }
+  };
 
-  const employeeSelect = () => {
-      // 사용할 때 필요한 정보를 알아서 찾아가세요(일단어떻게 쓸지몰라서 콘솔에 찍는걸로만해놓음)
-      setEmpInfo(selectedNode);
-      console.log(selectedNode);
-  }
+  useEffect(() => {
+    if (selectedTreeviewEmployee) {
+      setEmpInfo(selectedTreeviewEmployee); // 상위 컴포넌트로 선택한 사원 정보 전달
+    }
+  }, [selectedTreeviewEmployee]);
+
 
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
@@ -54,7 +72,8 @@ function TreeViewChatting({setEmpInfo}) {
               width: node.droppable ? "200px" : "140px",
               cursor: "pointer",
             }}
-            onClick={() => handleNodeClick(node)} 
+            onClick={() => handleNodeClick(node)}
+            onDoubleClick={() => handleNodeDoubleClick(node)} // 더블 클릭 이벤트 추가 
           >
             {node.droppable && (
               <span onClick={onToggle}>{isOpen ? "[▼]" : "[▶]"}</span>
@@ -63,14 +82,7 @@ function TreeViewChatting({setEmpInfo}) {
           </div>
         )}
       />
-      
-      {/* {selectedNode && (
-        <div className="selectedNodeInfo">
-          <h2>선택한 노드 정보</h2>
-          <pre>{JSON.stringify(selectedNode, null, 2)}</pre>
-          <button onClick={employeeSelect}> 사원 선택</button>
-        </div>
-      )} */}
+
       
     </DndProvider>
   );

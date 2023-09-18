@@ -10,13 +10,14 @@ import '../social-login.css'
 
 
 
+
 function OAuthPage() {
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub; 
+  const id = decodeJwt(window.localStorage.getItem("accessToken"))?.sub;
   // const [id, setId] = useState('');
   //   setId(decodeJwt(window.localStorage.getItem("accessToken"))?.sub);
 
@@ -56,8 +57,8 @@ function OAuthPage() {
 
 
 
-    await dispatch(OauthLoginAPI(data));
-    await navigate("/", { replace: true }); 
+     dispatch(OauthLoginAPI(data));
+     navigate("/", { replace: true });
 
 
   };
@@ -68,45 +69,73 @@ function OAuthPage() {
   const onLogoutSuccess = async () => {
     console.log('SUCESS LOG OUT');
     await dispatch(callLogoutAPI());
-    await navigate("/", { replace: true }); 
+    await navigate("/", { replace: true });
 
   };
 
 
+  const renderGoogleCustomButton = ({ onClick, disabled }) => (
+    <button
+      onClick={() => {
+        onClick(); // 기본 로그아웃 클릭 동작 실행
+        onLogoutSuccess(); // 커스텀 로그아웃 클릭 처리 실행
+      }}
+      disabled={disabled}
+      style={{
+        background: `url('/images/google.png') center no-repeat`,
+        backgroundSize: 'contain',
+        color: 'white',
+        border: 'none',
+        borderRadius: '6px',
+        // padding: '8px 16px',
+        cursor: 'pointer',
+        width: '200px'
+      }}
+    >
+    </button>
+  );
+
   return (
-    <div>
-      <GoogleLogin
-        clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        buttonText="구글연동하기"
-      />
-      <GoogleLogout
+    <div style={{textAlign:'center', alignContent:'center'}}>
+      <div className='social-group'>
+
+        <p>구글 계정과 연동하기</p>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          buttonText="구글연동하기"
+          render={renderGoogleCustomButton}
+
+        />
+        {/* <GoogleLogout
         clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
         onLogoutSuccess={onLogoutSuccess}
-      />
+      /> */}
 
-      <div htmlFor="kakao" id=""
-        style={{ minHeight: '100px' }}>
 
-        <p>카카오 로그인 </p>
-        <button style={{ width: 100 }} id="kakaolabel"
-          onClick={ () => {
-            const kakaoUrl =`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&redirect_uri=http://localhost:3000/login/oauth/kakao&response_type=code&state=${id}`;
-            window.location.href = kakaoUrl;
-            
-          }} />
-        <p>카카오 로그아웃</p>
+        {/* <input type="checkbox" hidden id="kakaolabel" /> */}
+
+        {/* <div id="kakaolabel" > */}
+
+        <p>카카오 계정과 ß연동하기</p>
+        <div id="kakaolabel" onClick={() => {
+          const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&redirect_uri=http://localhost:3000/login/oauth/kakao&response_type=code&state=${id}`;
+          window.location.href = kakaoUrl;
+        }} />
+      </div>
+      {/* </div> */}
+
+
+      {/* <p>카카오 로그아웃</p>
         <button style={{ width: 100 }} id="kakaolabel"
           onClick={ () => {
             const kakaoUrl =`https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&logout_redirect_uri=http://localhost:3000/logout`;
             window.location.href = kakaoUrl;
             
-          }} />
-
-      </div>
-
+          }} /> */}
     </div>
+
 
   );
 }

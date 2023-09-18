@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useInsertionEffect, useState } from "react";
 import MemberModifyStyle from "./MemberModify.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { accountStatus } from "./MemberList";
-import { ModifyInfoAPI } from "../../../apis/MemberAPICalls";
+import { ModifyInfoAPI, WithDrawInfoAPI } from "../../../apis/MemberAPICalls";
 import { SendAndArchive } from "@mui/icons-material";
+import { AdminNav } from "../AdminNav";
 
 // 계정상태 유형 변경 
 function MemberModify() {
@@ -12,7 +13,9 @@ function MemberModify() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const memberlist = useSelector(state => state.members.data);
+    let mem = useSelector(state => state.members);
+
+    const memberlist = mem.data;
 
     const { empNo } = useParams();
 
@@ -78,15 +81,20 @@ function MemberModify() {
         if (data.status) {
             if (radioStatus === 'isWithDraw') {
                 data.method = 'delete'
+                dispatch(WithDrawInfoAPI(data));
             } else {
                 data.method = 'put'
+                dispatch(ModifyInfoAPI(data));
+
             }
-            dispatch(ModifyInfoAPI(data))
+            
+            
         }
     }
 
     return (
-        <div>
+        <section>
+      <AdminNav />
 
             <div className={MemberModifyStyle.container} >
             
@@ -172,7 +180,7 @@ function MemberModify() {
 
 
 
-        </div>
+        </section>
 
     );
 }

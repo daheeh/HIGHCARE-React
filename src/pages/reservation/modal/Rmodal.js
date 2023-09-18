@@ -43,9 +43,15 @@ function Rmodal(props) {
     };
 
     const onClickResHandler = () => {
-        if(form.endTime > content.endTime || form.endTime < content.startTime || form.endTime <= form.startTime || form.startTime > content.endTime || form.startTime < content.startTime || form.startTime > content.endTime){
+        // if(form.startTime >= form.endTime || form.startTime < content.startTime || form.endTime > content.endTime){
+        if(form.startTime >= form.endTime || form.startTime < content.startTime){
+
             document.getElementById(`endTime`).value = '';
             document.getElementById(`startTime`).value = '';
+            console.log('form.startTime', form.startTime);
+            console.log('content.startTime', content.startTime);
+            console.log('form.endTime', form.endTime);
+            console.log('content.endTime', content.endTime);
             alert("예약시간을 확인해주시기 바랍니다")
             setForm({
                 endTime: '',

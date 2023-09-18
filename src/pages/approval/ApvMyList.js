@@ -38,14 +38,14 @@ function ApvMyList({show}) {
     return (
         show ?
             <>
-                {formData.length > 0 &&
+                {formData && formData.length > 0 &&
                     formData.map((item, index) => (
                         <li key={index}>{item}</li>
                     ))}
             </>
             :
             <div className="apvMainListRList">
-                {formData.length > 0 &&
+                {formData && formData.length > 0 &&
                     formData.map((item, index) => (
                         <div className='dragList' key={index}>{item}</div>
                     ))}
