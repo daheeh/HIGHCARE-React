@@ -21,6 +21,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function MessageList(props) {
   
+  console.log("props =======> ", props);
   // 채팅방 구성하는 데이터 및 함수들 추출
   const {showMessage, setShowMessage, partner, list, host, sendToMessage, handleLeaveChat} = props;
   // inputMessage : 사용자가 입력한 메세지 저장
