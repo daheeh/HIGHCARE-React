@@ -6,20 +6,21 @@ import store from './Store';
 import Modal from 'react-modal';
 import FallbackErrorBoundary from './errors/FallbackErrorBoundary'
 
-import axios from './errors/AxiosInterceptor';
-import { AlternateEmail } from '@mui/icons-material';
-
 Modal.setAppElement('#root');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 const UnhandledRejection = (event) => {
+  console.log('Unhandled promise rejection: event', event);
+  // console.log('Unhandled promise rejection: event', event.reason.message);
   const error = event.reason;
-  console.error('Unhandled promise rejection:', error);
+  // console.error('Unhandled promise rejection:', error);
 
   if (error instanceof Error) {
-    console.error('Unhandled promise rejection:', error);
+    console.log('Unhandled promise rejection:', error);
+    alert(error.message)
+    // window.location.href ="/";
 
   } else if (error instanceof Response) {
     // Fetch 응답 에러 처리
@@ -27,7 +28,7 @@ const UnhandledRejection = (event) => {
     if (status === 400) {
       // window.location.href = "/error/400";
       console.log("400 error ");
-
+      // alert(error.message);
 
     } else if (status === 401) {
       console.log("권한이 없습니다.");

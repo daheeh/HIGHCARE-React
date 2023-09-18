@@ -181,7 +181,7 @@ function MemberList() {
                     <div>
                         <select name="authCode">
                             <option value="null" disabled hidden selected>유형</option>
-                            {Array.isArray(memberList) &&  Array.from(new Set(memberList.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
@@ -190,38 +190,39 @@ function MemberList() {
                     <div>
                         <select name="accountStatus">
                             <option value="null" disabled hidden selected>계정상태</option>
-                            {Array.isArray(memberList) &&  Array.from(new Set(memberList.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
                         </select>
                     </div>
                 </div>
-                {Array.isArray(memberList) && memberList.map(
-                    (member) => (
-                        <div onClick={() => memberClick(member)}
-                            key={member.empNo} className={MemberListCss.category}
-
-                        >
-                            <input type="checkbox" value={member.empNo}
-                                checked={selectedItems.some(memNo => memNo == member.empNo)}
-                                onChange={checkBox} />
-                            <div >{member.empNo}</div>
-                            <div  >{member.employee.name}</div>
-                            <div  >{member.employee.jobCode.jobName}</div>
-                            <div  >{member.employee.deptCode.deptName}</div>
-                            <div>{member.memberId}</div>
-                            <div >{member.employee.email}</div>
-                            <div  >
-                                {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
-                            </div>
-                            <div>
-                                {accountStatus(member.accessManager ? member.accessManager : '')}
-                            </div>
-                        </div>
-                    ))}
-
                 <div>
+
+                    {Array.isArray(memberList) && memberList.map(
+                        (member) => (
+                            <div onClick={() => memberClick(member)}
+                                key={member.empNo} className={MemberListCss.category}
+
+                            >
+                                <input type="checkbox" value={member.empNo}
+                                    checked={selectedItems.some(memNo => memNo == member.empNo)}
+                                    onChange={checkBox} />
+                                <div>{member.empNo}</div>
+                                <div>{member.employee.name}</div>
+                                <div>{member.employee.jobCode.jobName}</div>
+                                <div>{member.employee.deptCode.deptName}</div>
+                                <div>{member.memberId}</div>
+                                <div>{member.employee.email}</div>
+                                <div>
+                                    {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
+                                </div>
+                                <div>
+                                    {accountStatus(member.accessManager ? member.accessManager : '')}
+                                </div>
+                            </div>
+                        ))}
+
 
                 </div>
                 <div className={MemberListCss.paging} style={{ marginLeft: 500 }}>

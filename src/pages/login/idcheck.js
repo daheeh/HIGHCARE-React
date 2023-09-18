@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./identification.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -113,14 +113,16 @@ function PassReset() {
     };
 
 
+    const navigate = useNavigate();
+
     const passwordResetClick = async () => {
         if(props.memberId && props.password && authes.requestCode && authes.requestMessage === 'correct' 
         && ValidatePassword(props.password) ){
 
             await dispatch(updatePasswordAPI(props)); 
             await dispatch(resetAuthesAction());
-
-            return window.location.href = "/login"
+            await alert("비밀번호 변경 완료, 재로그인 해주세요.");
+            navigate("/login");
 
         } else {
             alert("유효한 요청이 아닙니다.")

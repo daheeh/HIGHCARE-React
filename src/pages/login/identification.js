@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./identification.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authCheckAPI, authCodeSendingAPI } from "../../apis/AuthAPICalls";
 import { AuthTimer } from "./components/AuthTimer";
@@ -9,8 +9,8 @@ import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 
 function Identification() {
 
-    const [authway, setAuthway] = useState('phone');
-    const [showDiv, setShowDiv] = useState(true);
+    const [authway, setAuthway] = useState('mail');
+    const [showDiv, setShowDiv] = useState(false);
     const authes = useSelector(state => state.authes);  // 
     const dispatch = useDispatch();
 
@@ -57,6 +57,8 @@ function Identification() {
         dispatch(updateAuthRequestCode(false));
     }
 
+    const navigate = useNavigate();
+
     const authCheckClick = async (e) => {
         props.id = props[props.authType];
         console.log("props.id : ", props.id);
@@ -64,6 +66,7 @@ function Identification() {
         if (authes.requestCode) {
             await dispatch(authCheckAPI(props));
             await dispatch(updateAuthExpireTime(0))
+
         } else {
             alert('유효시간이 초과되었습니다.')
         }
@@ -83,7 +86,7 @@ function Identification() {
         <div className="findAccount">
             <div className="find-step-container">
 
-                <div className="authimage-flex">
+                {/* <div className="authimage-flex">
                     <label htmlFor="phone" className="phoneimage" />
                     <label htmlFor="mail" className="mailimage" />
                 </div>
@@ -121,7 +124,7 @@ function Identification() {
                 </div>
                 {showDiv && (
                     PhoneAuth()
-                )}
+                )} */}
                 {!(showDiv) && (
                     mailAuth()
 

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
+// 접속 권한 검증
 export function AccountStatusVerify() {
 
     const authes = useSelector(state => state.authes);

@@ -85,7 +85,7 @@ function SocialLogin() {
     <button
       onClick={() => {
         onClick(); // 기본 로그아웃 클릭 동작 실행
-        onLogoutSuccess(); // 커스텀 로그아웃 클릭 처리 실행
+        // onLogoutSuccess(); // 커스텀 로그아웃 클릭 처리 실행
       }}
       disabled={disabled}
       style={{

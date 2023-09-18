@@ -36,13 +36,15 @@ export const callLoginAPI = (form) => {
                 console.log("result.data : ", response.data);
                 window.localStorage.setItem('accessToken', response.data.accessToken);
             } else {
-                throw new Error("로그인 실패"); 
+                console.log("result.data : ", response);
+
+                alert(response.message);
             }
 
 
         } catch (e) {
             console.error("로그인 문제발생", e.message);
-            ReduxReset('authes');
+            // ReduxReset('authes');
             // localStorage.setItem('reduxState', '');
 
         }

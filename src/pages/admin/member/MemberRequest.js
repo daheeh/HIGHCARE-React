@@ -60,8 +60,11 @@ function MemberRequest() {
 
   }
 
+  const navigate = useNavigate();
+
   const requestClick = async () => {
     await dispatch(requestMember(form));
+    navigate(-1);
     // resetRequestMemberAction();
     // alert("회원 등록 성공");
 

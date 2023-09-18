@@ -282,6 +282,9 @@ export const callPmInsertAPI = ({ formData }) => {
             // });
             .then(response => response.json());
 
+            if(result.status !==200){
+                throw new Error(result.message);
+            }
             console.log('[ApprovalAPICalls] callPmInsertAPI RESULT : ', result);
 
             dispatch({ type: POST_PM_INSERT, payload: result });
