@@ -3,7 +3,7 @@ import{
 } from '../modules/DateModule';
 
 export const callDateResAPI = ({reservationDate,resourceCode})=>{
-    const requestURL = `http://localhost:8080/res/dateRes?reservationDate=${reservationDate}&resourceCode=${resourceCode}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/dateRes?reservationDate=${reservationDate}&resourceCode=${resourceCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",

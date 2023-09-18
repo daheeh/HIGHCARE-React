@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom";
 
-
+// 어드민 관리자 권한 검증 
 export function AuthVarification() {
 
     const authes = useSelector(state => state.authes);

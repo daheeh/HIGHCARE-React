@@ -10,7 +10,7 @@ function MainLayOut() {
             <div className={MainLayOutCss.container}>
                 <div className={MainLayOutCss.box}>
                     <h2>업무일정</h2>
-                    <p>달력?</p>
+                    <p></p>
                     <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
                 <div className={MainLayOutCss.box}>

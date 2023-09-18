@@ -24,7 +24,7 @@ import{
 } from '../modules/NoticeModule';
 
 export const callNoticeAPI = () => {
-    const requestURL = `http://localhost:8080/bulletin/notice`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/notice`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
             method: "GET",
@@ -45,8 +45,8 @@ export const callNoticeAPI = () => {
 
 export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 //    export const callBulletinAPI = () => {
-   const requestURL = `http://localhost:8080/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}&empNo=${empNo}`;
-//    const requestURL = `http://localhost:8080/bulletin/board`;
+   const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/board?categoryCode=${categoryCode}&currentPage=${currentPage}&content=${content}&empNo=${empNo}`;
+//    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/board`;
 
    return async (dispatch, getState) => {
     const result = await fetch(requestURL,{
@@ -66,7 +66,7 @@ export const callBulletinAPI = ({categoryCode, currentPage,content,empNo}) => {
 
 }
 export const callBoardDetailSAPI = ({bulletinCode})=>{
-    const requestURL = `http://localhost:8080/bulletin/thr?bulletinCode=${bulletinCode}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/thr?bulletinCode=${bulletinCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
             method: "GET",
@@ -83,7 +83,7 @@ export const callBoardDetailSAPI = ({bulletinCode})=>{
     };
 }
 export const callBoardDetailAPI = ({bulletinCode})=>{
-    const requestURL = `http://localhost:8080/bulletin/thread?bulletinCode=${bulletinCode}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/thread?bulletinCode=${bulletinCode}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -102,7 +102,7 @@ export const callBoardDetailAPI = ({bulletinCode})=>{
 }
 
 export const callCommentDetailAPI = ({bulletinCode, currentPage})=>{
-    const requestURL = `http://localhost:8080/bulletin/comment?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/comment?bulletinCode=${bulletinCode}&currentPage=${currentPage}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -122,7 +122,7 @@ export const callCommentDetailAPI = ({bulletinCode, currentPage})=>{
 
 
 export const callBulletinNavAPI= ()=>{
-    const requestURL = `http://localhost:8080/bulletin/boardTitle`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/boardTitle`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -141,7 +141,7 @@ export const callBulletinNavAPI= ()=>{
 }
 
 export const callBoardNameAddAPI = ({form}) => {
-   const requestURL = `http://localhost:8080/bulletin/boardAdd`;
+   const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/boardAdd`;
 
    return async (dispatch, getState) => {
 
@@ -164,7 +164,7 @@ export const callBoardNameAddAPI = ({form}) => {
 }
 
 export const callRegisterAPI = ({form}) => {
-    const requestURL = `http://localhost:8080/bulletin/insertBoard`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/insertBoard`;
     console.log("form : " , form)
     return async (dispatch, getState) => {
         
@@ -194,7 +194,7 @@ export const callRegisterAPI = ({form}) => {
 }
 
 export const callCommentAPI = ({form}) =>{
-    const requestURL = `http://localhost:8080/bulletin/insertComment`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/insertComment`;
     console.log("form : ", form)
     return async (dispatch, getState) =>{
 
@@ -219,7 +219,7 @@ export const callCommentAPI = ({form}) =>{
     }
 }
 export const callUpdateAPI = ({form}) =>{
-    const requestURL = `http://localhost:8080/bulletin/updateBoard`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/updateBoard`;
 
     return async (dispatch, getState) => {
         const result = await  fetch(requestURL, {
@@ -243,7 +243,7 @@ export const callUpdateAPI = ({form}) =>{
     }
 }
 export const callDeleteAPI = ({form}) =>{
-    const requestURL = `http://localhost:8080/bulletin/deleteBoard`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/deleteBoard`;
 
     return async (dispatch, getState) => {
         const result = await  fetch(requestURL, {
@@ -268,7 +268,7 @@ export const callDeleteAPI = ({form}) =>{
 
 
 export const callCommentDeleteAPI = ({commentCode}) =>{
-    const requestURL = `http://localhost:8080/bulletin/deleteComment`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/deleteComment`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
@@ -289,7 +289,7 @@ export const callCommentDeleteAPI = ({commentCode}) =>{
     }
 }
 export const callCommentUpdateAPI = ({commentCode,commentContent})=>{
-        const requestURL = `http://localhost:8080/bulletin/updateComment`;
+        const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/updateComment`;
         return async (dispatch, getState) => {
             const result = await fetch(requestURL,{
                 method: "PUT",

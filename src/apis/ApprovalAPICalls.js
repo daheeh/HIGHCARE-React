@@ -29,7 +29,7 @@ import {
 export const callApvMainToday1API = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvMainToday1API Call');
-    const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
 
     return async (dispatch, getState) => {
 
@@ -63,7 +63,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
     console.log('[ApprovalAPICalls] callApvWriteBoxAPI Call');
     console.log('[ApprovalAPICalls] empNo : ', empNo,);
 
-    const requestURL = `http://localhost:8080/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/write?empNo=${empNo}&apvStatus=${apvStatus}`;
 
     return async (dispatch, getState) => {
 
@@ -95,7 +95,7 @@ export const callApvWriteBoxAPI = ({ empNo, apvStatus }) => {
 export const callApvReceiveBoxAPI = ({ empNo, apvStatus }) => {
 
     console.log('[ApprovalAPICalls] callApvReceiveBoxAPI Call');
-    const requestURL = `http://localhost:8080/api/approval/receive?empNo=${empNo}&apvStatus=${apvStatus}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/receive?empNo=${empNo}&apvStatus=${apvStatus}`;
 
     return async (dispatch, getState) => {
 
@@ -130,7 +130,7 @@ export const callApvViewAPI = ({ apvNo }) => {
 
     console.log('[ApprovalAPICalls] biz1 callApvBiz1ViewAPI Call');
 
-    const requestURL = `http://localhost:8080/api/approval/search/${apvNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/search/${apvNo}`;
 
     return async (dispatch, getState) => {
 
@@ -166,7 +166,7 @@ export const callApvDeleteAPI = ({ apvNo }) => {
 
     console.log('[ApprovalAPICalls] callApvDeleteAPI Call');
 
-    const requestURL = `http://localhost:8080/api/approval/delete/biz1`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/delete/biz1`;
 
     return async (dispatch, getState) => {
 
@@ -206,7 +206,7 @@ export const callApvBiz1API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] biz1 callApvBiz1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/biz1`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/biz1`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -258,7 +258,7 @@ export const callApvUpdateAPI = ({ requestData }) => {
 
     const apvNo = requestData.formData.apvNo;
 
-    const requestURL = `http://localhost:8080/api/approval/put/${apvNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/put/${apvNo}`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -314,7 +314,7 @@ export const callApvBiz2API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] biz2 callApvBiz2API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/biz2`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/biz2`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -366,7 +366,7 @@ export const callApvBiz3API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz3API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/biz3`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/biz3`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -417,7 +417,7 @@ export const callApvBiz4API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] callApvBiz3API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/biz4`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/biz4`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -471,7 +471,7 @@ export const callApvExp1API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] exp1 callApvExp1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/exp1`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/exp1`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -523,7 +523,7 @@ export const callApvExp4API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] exp4 callApvExp1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/exp4`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/exp4`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -575,7 +575,7 @@ export const callApvExp6API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] exp6 callApvExp1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/exp6`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/exp6`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -626,7 +626,7 @@ export const callApvExp7API = ({ requestData }) => {
 
     console.log('[ApprovalAPICalls] exp7 callApvExp1API Call');
 
-    const requestURL = `http://localhost:8080/api/approval/insert/exp7`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/exp7`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -683,7 +683,7 @@ export const callApvHrm1API = ({ requestData }) => {
     console.log('[ApprovalAPICalls] hrm1 callApvHrm1API Call');
     console.log('ApprovalAPICalls requestData', requestData);
 
-    const requestURL = `http://localhost:8080/api/approval/insert/hrm1`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/hrm1`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();
@@ -738,7 +738,7 @@ export const callApvHrm3API = ({ requestData }) => {
     console.log('[ApprovalAPICalls] hrm3 callApvHrm3API Call');
     console.log('ApprovalAPICalls requestData', requestData);
 
-    const requestURL = `http://localhost:8080/api/approval/insert/hrm3`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/approval/insert/hrm3`;
 
     // FormData 객체를 생성하여 데이터를 담기
     const formData = new FormData();

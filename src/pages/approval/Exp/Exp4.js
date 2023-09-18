@@ -58,7 +58,7 @@ function Exp4({ mode, data }) {
 			}
 		};
 
-		fetchRequest(); // useEffect 내부에서 fetchRequest를 호출
+		fetchRequest();
 	}, [empNo, dispatch]);
 
 	// 사용자가 apvNo를 선택했을 때 실행될 함수
@@ -127,6 +127,7 @@ function Exp4({ mode, data }) {
 
 
 	const [amounts, setAmounts] = useState([0]);
+	const [totalAmount, setTotalAmount] = useState(0);
 
 	useEffect(() => {
 		const newAmounts = formData.apvExpForms.map(form => parseFloat(form.amount || 0));
@@ -141,11 +142,11 @@ function Exp4({ mode, data }) {
 		accountNumber: approval.accountNumber ? approval.accountNumber : '',
 	});
 
-	const [totalAmount, setTotalAmount] = useState(0);
 
 	// 각 입력 필드의 변경에 따라 totalAmount를 업데이트하는 함수 정의
-	const updateTotalAmount = () => {
-		const newTotalAmount = formData.apvExpForms.reduce((sum, form) => {
+	const updateTotalAmount = (v, i) => {
+		const newTotalAmount = formData.apvExpForms.reduce((sum, form, index) => {
+			if (i === index) return sum + parseInt(v ? v : 0);
 			return sum + parseFloat(form.amount || 0);
 		}, 0);
 
@@ -154,6 +155,7 @@ function Exp4({ mode, data }) {
 			totalAmount: newTotalAmount,
 		}));
 
+		console.log(newTotalAmount);
 		// totalAmount 상태 변수 업데이트
 		setTotalAmount(newTotalAmount);
 	};
@@ -170,15 +172,27 @@ function Exp4({ mode, data }) {
 				updatedFormData.apvExpForms[index][field] = value;
 				return updatedFormData;
 			});
+			updateTotalAmount(value, index);
 		} else if (nameParts[0] === 'sharedProperties') {
 			
 			const field = nameParts[1];
 			setSharedProperties((prevSharedProps) => ({
 				...prevSharedProps,
 				[field]: value,
+
+
 			}));
+			// apvExpForms 배열 내의 해당 속성 업데이트
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				apvExpForms: prevFormData.apvExpForms.map((form, i) => ({
+					...form,
+					[field]: value,
+				})),
+			}));
+
 		} else {
-			
+			// 다른 폼 데이터 속성 업데이트
 			setFormData((prevFormData) => ({
 				...prevFormData,
 				[name]: value,
@@ -436,7 +450,7 @@ function Exp4({ mode, data }) {
 						</div>
 						<div className="apvContentDetailExp1Total">
 							<div className="column31">합계</div>
-							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(totalAmount)}</div></div>
+							<div className="column32"><div name='totalAmount' value={formData.totalAmount}>{numberWithCommas(formData.totalAmount)}</div></div>
 						</div>
 						<div className="apvContentTitleExp1-2">
 							<div className="column41">예금주</div>

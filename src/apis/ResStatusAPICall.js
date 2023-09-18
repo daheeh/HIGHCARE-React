@@ -5,7 +5,7 @@ import{
 } from '../modules/resultStatusModule';
 
 export const callResInsertAPI = ({form}) => {
-    const requestURL = `http://localhost:8080/res/status`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/status`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "POST",
@@ -37,7 +37,7 @@ export const callResInsertAPI = ({form}) => {
 
 
 export const callApprovalAPI = ({statusCode}) => {
-    const requestURL = `http://localhost:8080/res/approval`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/approval`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "PUT",
@@ -58,7 +58,7 @@ export const callApprovalAPI = ({statusCode}) => {
 }
 
 export const callRejectedAPI = ({statusCode}) => {
-    const requestURL = `http://localhost:8080/res/rejected`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/rejected`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "PUT",

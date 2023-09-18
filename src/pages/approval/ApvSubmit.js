@@ -6,8 +6,6 @@ export const handleSubmission = async (event, submissionData) => {
     console.log("handleSubmission");
     console.log("handleSubmission submissionData : ", submissionData);
 
-    // event.preventDefault();
-
     const { formData, selectedEmployees, refSelectedEmployees, navigate, fileList, APIPoint, dispatch } = submissionData;
 
     if (formData.empNo) {
@@ -30,7 +28,6 @@ export const handleSubmission = async (event, submissionData) => {
 
             // 결합된 데이터를 API로 전송
             const response = await dispatch(APIPoint({requestData}));
-
 
             if (response.status === 200) {
                 if (response.data === "기안 상신 실패") {

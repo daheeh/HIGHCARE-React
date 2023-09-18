@@ -42,8 +42,6 @@ import TreeView from "./pages/pm/treeview";
 import SecondTree from "./pages/pm/secondTree";
 import PmMemberInsert from "./pages/pm/pm-resist-insert"
 import Mypage from "./pages/mypage/mypage";
-import Worklog from "./pages/mypage/Worklog";
-import Businesscardregist from "./pages/mypage/businesscardregist";
 import Customerlog from "./pages/mypage/Customerlog";
 import BulletinMain from "./pages/bulletin/BulletinMain";
 import BulletinBoard from "./pages/bulletin/BulletinBoard";
@@ -74,11 +72,13 @@ import { BadRequestErrorPage, ForbiddenErrorPage, ServerErrorPage, UnauthorizedE
 import { PageNotFound } from "./errors/pageNotFound";
 import { ModifyPass } from "./pages/admin/member/ModifyPass";
 import { AccountStatusVerify } from "./pages/admin/auth/AccountStatusVerify";
+import OAuthPage from "./pages/login/components/OAuthPage";
+import { TempPwdVerify } from "./pages/admin/auth/TempPwdVerify";
 
 
 
 function App() {
-  
+
 
   return (
 
@@ -99,129 +99,130 @@ function App() {
           <Route path="/login/oauth/kakao" element={<CallbackKakao />} />
           <Route path="/logout" element={<MainLayOut />} />
 
-          <Route path="/manager/member/request" element={<MemberRequest />} />
+
 
 
           {/* 여기부터 토큰(로그인 권한 인증) 유효성 체크 적용됨  */}
-          <Route element={<AccountStatusVerify><TokenVerification /></AccountStatusVerify>} >
-          
+          <Route element={<TokenVerification />} >
 
-            <Route path="approval">
-              <Route index element={<ApvMain />} />
-              <Route path="receivebox" element={<ReceiveBox />} />
-              <Route path="writebox" element={<WriteBox />} />
+            <Route element={<AccountStatusVerify />}>
+              <Route element={<TempPwdVerify />}>
 
-              <Route path="biz1" element={<Biz1 />} />
-              <Route path="biz1/:apvNo" element={<Biz1View />} />
-              <Route path="biz2" element={<Biz2 />} />
-              <Route path="biz2/:apvNo" element={<Biz2View />} />
-              <Route path="biz3" element={<Biz3 />} />
-              <Route path="biz3/:apvNo" element={<Biz3View />} />
-              <Route path="biz4" element={<Biz4 />} />
-              <Route path="biz4/:apvNo" element={<Biz4Offcial />} />
 
-              <Route path="exp1" element={<Exp1 />} />
-              <Route path="exp1/:apvNo" element={<Exp1View />} />
-              <Route path="exp4" element={<Exp4 />} />
-              <Route path="exp4/:apvNo" element={<Exp4View />} />
-              <Route path="exp6" element={<Exp6 />} />
-              <Route path="exp6/:apvNo" element={<Exp6View />} />
-              <Route path="exp7" element={<Exp7 />} />
-              <Route path="exp7/:apvNo" element={<Exp7View />} />
+                <Route path="approval">
+                  <Route index element={<ApvMain />} />
+                  <Route path="receivebox" element={<ReceiveBox />} />
+                  <Route path="writebox" element={<WriteBox />} />
 
-              <Route path="hrm1" element={<Hrm1 />} />
-              <Route path="hrm1/:apvNo" element={<Hrm1View />} />
-              <Route path="hrm2" element={<Hrm2 />} />
-              <Route path="hrm2/:apvNo" element={<Hrm2View />} />
-              <Route path="hrm3" element={<Hrm3 />} />
-              <Route path="hrm3/:apvNo" element={<Hrm3View />} />
+                  <Route path="biz1" element={<Biz1 />} />
+                  <Route path="biz1/:apvNo" element={<Biz1View />} />
+                  <Route path="biz2" element={<Biz2 />} />
+                  <Route path="biz2/:apvNo" element={<Biz2View />} />
+                  <Route path="biz3" element={<Biz3 />} />
+                  <Route path="biz3/:apvNo" element={<Biz3View />} />
+                  <Route path="biz4" element={<Biz4 />} />
+                  <Route path="biz4/:apvNo" element={<Biz4Offcial />} />
+
+                  <Route path="exp1" element={<Exp1 />} />
+                  <Route path="exp1/:apvNo" element={<Exp1View />} />
+                  <Route path="exp4" element={<Exp4 />} />
+                  <Route path="exp4/:apvNo" element={<Exp4View />} />
+                  <Route path="exp6" element={<Exp6 />} />
+                  <Route path="exp6/:apvNo" element={<Exp6View />} />
+                  <Route path="exp7" element={<Exp7 />} />
+                  <Route path="exp7/:apvNo" element={<Exp7View />} />
+
+                  <Route path="hrm1" element={<Hrm1 />} />
+                  <Route path="hrm1/:apvNo" element={<Hrm1View />} />
+                  <Route path="hrm2" element={<Hrm2 />} />
+                  <Route path="hrm2/:apvNo" element={<Hrm2View />} />
+                  <Route path="hrm3" element={<Hrm3 />} />
+                  <Route path="hrm3/:apvNo" element={<Hrm3View />} />
+                </Route>
+
+
+
+                <Route path="/pm" element={<PmTest />} />
+                <Route path="/pm/search" element={<PmMenu />} />
+                <Route path="/pm/annual" element={<PmAnnual />} />
+                <Route path="/pm/cal" element={<PmCalender />} />
+                <Route path="/pm/de-resist" element={<PmResist />} />
+                <Route path="/pm/department" element={<PmDepartment />} />
+                <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
+                <Route path="/pm/pm-resist" element={<PmMemberResist />} />
+                <Route path="/pm/work" element={<PmWork />} />
+                <Route path="/pm/treeview" element={<TreeView />} />
+                <Route path="/pm/secondTree" element={<SecondTree />} />
+                <Route path="/pm/pm-resist-insert" element={<PmMemberInsert />} />
+
+                <Route path="/bulletin" element={<BulletinMain />}>
+                  {/* <Route index element={<Bulletin />} /> */}
+
+                  <Route path="board/:categoryCode" element={<BulletinBoard />} />
+
+                  <Route path="thread" element={<Thread />} />
+
+                  <Route path="thread/:bulletinCode" element={<Thread />} />
+                  <Route path="mod/:bulletinCode" element={<BullentinMod />} />
+
+                  <Route path="bulletinWrite" element={<BullentinWrite />} />
+                </Route>
+
+
+                <Route path="/reservation" element={<ReservationMain />}>
+                  <Route index element={<Reservation />} />
+                  <Route path="status" element={<ReservationStatus />} />
+                  <Route path="mystatus" element={<MyReservationStatus />} />
+                  <Route path="add" element={<ResourceAdd />} />
+                  <Route path="reserve" element={<Reserve />} />
+                  <Route path="mod" element={<ResourceMod />} />
+                </Route>
+                <Route path="/mypage" element={<Mypage />} />
+                <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
+                <Route path="/mypage/profile" element={<Profile />} />
+                <Route path="/mypage/myannual" element={<MypageAnnual />} />
+
+
+                <Route path="/modifyinfo" element={<OAuthPage />} />
+                <Route path="/modifyinfo/password" element={<ModifyPass />} />
+                <Route path="myinfo" element={<OAuthPage />} />
+
+                {/* <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} /> */}
+
+
+                <Route path="/bulletin" element={<BulletinMain />}>
+                  {/* <Route index element={<Bulletin />} /> */}
+
+                  <Route path="board/:categoryCode" element={<BulletinBoard />} />
+
+                  <Route path="thread" element={<Thread />} />
+
+                  <Route path="thread/:bulletinCode" element={<Thread />} />
+                  <Route path="mod/:bulletinCode" element={<BullentinMod />} />
+
+                  <Route path="bulletinWrite" element={<BullentinWrite />} />
+                </Route>
+
+
+                <Route path="/reservation" element={<ReservationMain />}>
+                  <Route index element={<Reservation />} />
+                  <Route path="status" element={<ReservationStatus />} />
+                  <Route path="mystatus" element={<MyReservationStatus />} />
+                  <Route path="add" element={<ResourceAdd />} />
+                  <Route path="reserve" element={<Reserve />} />
+                </Route>
+                <Route path="/mypage" element={<Mypage />} />
+                <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
+
+                <Route path="/mypage/profile" element={<Profile />} />
+                <Route path="/mypage/annual" element={<MypageAnnual />} />
+                <Route path="/mypage/mymanegement" element={<MyManegement />} />
+              </Route>
+
             </Route>
-
-
-
-            <Route path="/modifyinfo" element={<ModifyInfo />} />
-            <Route path="/modifyinfo/password" element={<ModifyPass/>}/>
-            <Route path="myinfo" element={<Myinfo />} />
-
-            <Route path="/pm" element={<PmTest />} />
-            <Route path="/pm/search" element={<PmMenu />} />
-            <Route path="/pm/annual" element={<PmAnnual />} />
-            <Route path="/pm/cal" element={<PmCalender />} />
-            <Route path="/pm/de-resist" element={<PmResist />} />
-            <Route path="/pm/department" element={<PmDepartment />} />
-            <Route path="/pm/member-annual" element={<PmMemberAnnual />} />
-            <Route path="/pm/pm-resist" element={<PmMemberResist />} />
-            <Route path="/pm/work" element={<PmWork />} />
-            <Route path="/pm/treeview" element={<TreeView />} />
-            <Route path="/pm/secondTree" element={<SecondTree />} />
-            <Route path="/pm/pm-resist-insert" element={<PmMemberInsert />} />
-
-            <Route path="/bulletin" element={<BulletinMain />}>
-              {/* <Route index element={<Bulletin />} /> */}
-
-              <Route path="board/:categoryCode" element={<BulletinBoard />} />
-
-              <Route path="thread" element={<Thread />} />
-
-              <Route path="thread/:bulletinCode" element={<Thread />} />
-              <Route path="mod/:bulletinCode" element={<BullentinMod />} />
-
-              <Route path="bulletinWrite" element={<BullentinWrite />} />
-            </Route>
-
-
-            <Route path="/reservation" element={<ReservationMain />}>
-              <Route index element={<Reservation />} />
-              <Route path="status" element={<ReservationStatus />} />
-              <Route path="mystatus" element={<MyReservationStatus />} />
-              <Route path="add" element={<ResourceAdd />} />
-              <Route path="reserve" element={<Reserve />} />
-              <Route path="mod" element={<ResourceMod />} />
-            </Route>
-            <Route path="/mypage" element={<Mypage />} />
-            <Route path="/mypage/list/regist" element={<Businesscardregist />} />
-            <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-            <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-            <Route path="/mypage/profile" element={<Profile />} />
-            <Route path="/mypage/myannual" element={<MypageAnnual />} />
-
-
-          </Route>
-          {/* <Route path="*" element={<ErrorComponent error={"notExistUrl"} />} /> */}
-
-
-          <Route path="/bulletin" element={<BulletinMain />}>
-            {/* <Route index element={<Bulletin />} /> */}
-
-            <Route path="board/:categoryCode" element={<BulletinBoard />} />
-
-            <Route path="thread" element={<Thread />} />
-
-            <Route path="thread/:bulletinCode" element={<Thread />} />
-            <Route path="mod/:bulletinCode" element={<BullentinMod />} />
-
-            <Route path="bulletinWrite" element={<BullentinWrite />} />
           </Route>
 
-
-          <Route path="/reservation" element={<ReservationMain />}>
-            <Route index element={<Reservation />} />
-            <Route path="status" element={<ReservationStatus />} />
-            <Route path="mystatus" element={<MyReservationStatus />} />
-            <Route path="add" element={<ResourceAdd />} />
-            <Route path="reserve" element={<Reserve />} />
-          </Route>
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/mypage/list/regist" element={<Businesscardregist />} />
-          <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
-          <Route path="/mypage/mytemplate/worklog" element={<Worklog />} />
-
-          <Route path="/mypage/profile" element={<Profile />} />
-          <Route path="/mypage/annual" element={<MypageAnnual />} />
-          <Route path="/mypage/mymanegement" element={<MyManegement />} />
-
-
-        {/* ******************************여기부터 관리자 권한 필요 ****************************** */}
+          {/* ******************************여기부터 관리자 권한 필요 ****************************** */}
 
           <Route element={<AuthVarification />}>
 
@@ -233,23 +234,27 @@ function App() {
               <Route path="member/log" element={<MemberLog />} />
               <Route path="member/log/:name" element={<MemberLog />} />
               <Route path="member/auth" element={<AuthManager />} />
+              <Route path="manager/member/request" element={<MemberRequest />} />
             </Route>
+
 
           </Route>
           {/* ******************************여기까지 관리자 권한 필요 ****************************** */}
 
-          <Route path="/error/400" element={<BadRequestErrorPage/>}/>
-          <Route path="/error/401" element={<UnauthorizedErrorPage/>}/>
-          <Route path="/error/403" element={<ForbiddenErrorPage/>}/>
-          <Route path="/error/404" element={<PageNotFound/>}/>
-          <Route path="/error/500" element={<ServerErrorPage/>}/>
+          <Route path="/error/400" element={<BadRequestErrorPage />} />
+          <Route path="/error/401" element={<UnauthorizedErrorPage />} />
+          <Route path="/error/403" element={<ForbiddenErrorPage />} />
+          <Route path="/error/404" element={<PageNotFound />} />
+          <Route path="/error/500" element={<ServerErrorPage />} />
 
-          </Route>
+        </Route>
 
       </Routes>
 
 
+
     </BrowserRouter >
+
 
   );
 }

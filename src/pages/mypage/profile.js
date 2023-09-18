@@ -11,38 +11,41 @@ import MypageNav from './MypageNav';
 
 
 function Profile() {
-
-
+   
     <MypageNav />
     const dispatch = useDispatch();
     const employee = useSelector(state => state.authes); 
+
     const [image, setImage] = useState(null);   
-    
     const [imageUrl, setImageUrl] = useState(null);
+
     const imageInput = useRef();    
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
-    const [imageLink, setImageLink] = useState('');
-
+    // const [imageLink, setImageLink] = useState(`http://localhost:8080/images/basicprofile.jpg`);
+    const [imageLink, setImageLink] = useState(`http://localhost:8080/images/basicprofile.jpg`);
+    
     console.log("아이디 : ", id);
     console.log("마이페이지에 담긴 정보 : ", mypage);
-
+   
     useEffect(
         () => {
-            dispatch(callMypageProfileSelectAPI(employee.empNo));
-      
-
+            dispatch(callMypageProfileSelectAPI(employee.empNo));       
+          
         }
         , []); 
 
-    const myInfo = mypage?.data?.myEmployee;
 
-    const picture = mypage?.data?.myProfileFile;
-
+    // const myInfo = mypage?.data?.myEmployee;  
+    const myInfo = mypage?.data && mypage?.data[1]?.myEmployee;     
+   
+    const picture = mypage?.data && mypage?.data[1]?.myProfileFile;
+    
 
     console.log("myInfo", myInfo);
+    console.log("picture", picture);
     console.log("업데이트 사진", picture?.chName);
-    console.log("기본이미지유알엘", imageLink);
+    console.log("기본이미지유알엘", imageLink);      
     console.log("이미지유알엘", imageUrl);
     // //이미지
     useEffect(
@@ -54,68 +57,70 @@ function Profile() {
                     const { result } = e.target;
                     if (result) {
                         console.log('check result : ', result)
-                        setImageUrl(result);    
+                        setImageUrl(result);    // payload의 결과
                         setImageLink(result);
                     }
 
                 }
                 fileReader.readAsDataURL(image)
             }
-            console.log('check------->', mypage);
+            console.log('check------->',mypage);
             setImageUrl(mypage?.data?.myProfileFile);
-            console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)
-            if (!imageLink) {
-  
+            console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)   // [1]
+            if(!imageLink){
+                    
                 setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
-            }
+            } 
         },
         [image]);
 
 
+    // 이미지 바뀌면 로드
     const onChangeImageUpload = (e) => {
 
         const image2 = e.target.files[0];
         console.log('image check ', image2)
         if (image2) {
-
+         
+          
             setImage(image2);
             console.log('Img URL:', image2);
+            
         }
-        
+       
     };
-
+     
     const onClickImageUpload = (e) => {
 
         imageInput.current.click();
-
+        
     };
 
-    
     const onClickRegistHandler = () => {
 
         const formData = new FormData();
-        formData.append("code", mypage?.data.code);
-        
+        formData.append("code", mypage?.data?.code); 
+
         if (imageUrl) {
             formData.append("profileImage", image);
         }
 
         console.log('!!!!!ImageRegistration RegistrationHandler', formData.get("code"));
         console.log('formData check : ', image);
-   
+        
         dispatch(callProfileInsertAPI({
-            form: formData
+            form : formData
         }));
 
     };
 
-    console.log();
+        console.log();
     return (
 
         <>
             <section>
                 <MypageNav />
-              
+                
                 <div className="profile-form">
                     <div className="double">
                         <div className="content">
@@ -123,15 +128,16 @@ function Profile() {
                             <h3>프로필사진</h3>
                             <div className="profileRegistration"
                             >
-                                {console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
-                                {
-                                    <img
-                                        className=""
-                                        src={imageLink}
-                                        alt="preview"
-                                        style={{ width: 180, height: 120 }}
-                                    />
-                                }
+                              
+                                { console.dir('check imageUrl ==============> ', `${imageUrl?.chName}`)}
+            
+                                  <img
+                                    className=""
+                                    src={imageLink}
+                                    alt="preview"
+
+                                    style={{ width: 180, height: 120 }}
+                                />
                                 <input
                                     style={{ display: 'none' }}
                                     type="file"
@@ -147,10 +153,9 @@ function Profile() {
                                 <button style={{ fontSize: 16, width: 120, height: 30 }}
                                     onClick={onClickRegistHandler}
                                 >사진등록
-
                                 </button>
                             </div>
-
+                           
                             <div >
                             </div>
                             <h3>이름</h3>
@@ -191,7 +196,6 @@ function Profile() {
         </>
     )
 }
-
 
 
 export default Profile;

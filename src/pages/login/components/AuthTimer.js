@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react"
 
-
 function AuthTimer({ expireTime, funcTimeout }) {
 
     const [counter, setCounter] = useState(0);
-
-
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     };
-
 
     useEffect(() => {
         const timer =
@@ -21,7 +17,6 @@ function AuthTimer({ expireTime, funcTimeout }) {
                     clearInterval(timer)
                 } else {
                     setCounter(counter - 1)
-                    // console.log(counter);
                 }
 
             }, 1000)
@@ -33,16 +28,11 @@ function AuthTimer({ expireTime, funcTimeout }) {
         setCounter(expireTime);
     }, [expireTime])
 
-
     if(isNaN(expireTime)) {
         return <label>00:00</label>
-    }
-
-    else {
-
+    } else {
         return <label style={{color:'red'}}>{formatTime(counter)}</label>
     }
-
 }
 
 export { AuthTimer };

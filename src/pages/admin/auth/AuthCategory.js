@@ -7,6 +7,7 @@ import { callTreeviewOneAPI } from "../../../apis/PmAPICalls";
 import { memberByTreeview, resetMemberAction } from "../../../modules/memberSlice";
 import { allMemberListApi } from "../../../apis/MemberAPICalls";
 import { roleCode } from "../member/MemberList";
+import { useNavigate } from "react-router-dom";
 
 
 // 권한분류별 카테고리 섹션 
@@ -14,7 +15,7 @@ export function AuthCategory() {
 
     const dispatch = useDispatch();
     // 메뉴 메뉴그룹 리스트 불러오기 
-    const menuGroupList = useSelector(state => state.admins.menuGroupList);
+    let menuGroupList = useSelector(state => state.admins.menuGroupList);
     console.log("menuGroupList : ", menuGroupList);
 
     // console.log("menuGroup : ", menuGroupList);
@@ -36,12 +37,17 @@ export function AuthCategory() {
 
         })();
         // 권한분류(메뉴그룹별) 카테고리 이동시 리렌더링 
-    }, [menuManagers]);
+    }, []);
 
     // 메뉴그룹별 클릭시 선택한 메뉴코드 전달 
     const menuGroupClick = (code) => {
         // 선택한 메뉴그룹 코드에 따라 메뉴리스트에서 정보 추출하여 담기  
-        setMenuManagers([...menuGroupList].filter(menu => menu.groupCode == code)[0]);
+        if(!code){
+            setMenuManagers(menuGroupList);
+        } else {
+
+            setMenuManagers([...menuGroupList].filter(menu => menu.groupCode == code)[0]);
+        }
     }
 
     const allManagerClick = () => {
@@ -54,7 +60,14 @@ export function AuthCategory() {
                 <div>권한 분류</div>
                 <div className={AuthSytle.CategoryList}>
 
-                    <div onClick={allManagerClick}>전체 관리자</div>
+                    {/* <div onClick={allManagerClick}>전체 관리자</div> */}
+                    <div
+                                className={AuthSytle.Category}
+                                key={null}
+                                onClick={() => menuGroupClick(null)}
+                            >
+                                전체 관리자
+                            </div>
                     {/* 그룹리스트 순회하며 권한분류 관리자 카테고리 리스트 출력하기 */}
                     {Array.isArray(menuGroupList) && menuGroupList.length > 0 && menuGroupList.map(
                         (menugroup) => (
@@ -182,10 +195,11 @@ function AuthUser({ menuManagers }) {
         }
     }
 
-    const removeManagerClick = () => {
+    const navigate = useNavigate();
+    const removeManagerClick = async () => {
 
-        dispatch(deleteManager(managerIds.join(',')));
-
+        await dispatch(deleteManager(managerIds.join(',')));
+        window.location.reload();
     }
 
     return (

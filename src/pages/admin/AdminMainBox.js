@@ -11,27 +11,23 @@ export function AdminMain1() {
     let memberList = useSelector(state => state.members.data);
     let [membercount, setMemberCount] = useState(0);
 
-    // dispatch(allMemberListApi());
-
     useEffect(() => {
 
-        const fetchData = () => {
-                dispatch(allMemberListApi()); // 비동기 액션 실행
+        if (Array.isArray(memberList)) {
 
-                let preCount = 0;
-                memberList.map((member) => {
-                    member.roleList.some(role => {
-                        if (roleCode(role.authCode).includes('임시회원')) {
-                            preCount++;
-                        }
-                    });
+            let preCount = 0;
+            memberList.map((member) => {
+                member.roleList.some(role => {
+                    if (roleCode(role.authCode).includes('임시회원')) {
+                        preCount++;
+                    }
                 });
-                // 데이터 처리 완료 후 상태 업데이트
-                setMemberCount(preCount);
+            });
+            // 데이터 처리 완료 후 상태 업데이트
+            setMemberCount(preCount);
         }
-        fetchData();
 
-    }, []);
+    }, [memberList]);
 
 
     return (
@@ -65,33 +61,26 @@ export function AdminMain1() {
 
 export function AdminMain2() {
 
-
     const dispatch = useDispatch();
     let mem = useSelector(state => state.members);
     const memberList = mem.data;
     let [membercount, setMemberCount] = useState(0);
 
-    // dispatch(allMemberListApi());
-
     useEffect(() => {
 
-        const fetchData = async () => {
-            if (Array.isArray(memberList)) {
-                // await dispatch(allMemberListApi()); // 비동기 액션 실행
+        if (Array.isArray(memberList)) {
 
-                let preCount = 0;
-                memberList.map((member) => {
-                    if (member.accessManager?.isInActive == 'Y') {
-                        preCount++;
-                    }
-                });
-                // 데이터 처리 완료 후 상태 업데이트
-                setMemberCount(preCount);
-            }
+            let preCount = 0;
+            memberList.map((member) => {
+                if (member.accessManager?.isInActive == 'Y') {
+                    preCount++;
+                }
+            });
+            // 데이터 처리 완료 후 상태 업데이트
+            setMemberCount(preCount);
         }
-        fetchData();
 
-    }, []);
+    }, [memberList]);
 
 
     return (
@@ -102,7 +91,7 @@ export function AdminMain2() {
             {Array.isArray(memberList) &&
                 memberList
                     .filter((member) =>
-                        member.accessManager?.isInActive == 'Y' 
+                        member.accessManager?.isInActive == 'Y'
                     )
                     .map((member) => {
                         return (

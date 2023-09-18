@@ -26,7 +26,7 @@ export const callEmployeeAPI = ({ currentPage  }) => {
 
     console.log('[PmAPICalls] callEmployeeAPI Call');
 
-    const requestURL = `http://localhost:8080/api/pm/all?offset=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/all?offset=${currentPage}`;
     
     
     return async (dispatch, getState) => {
@@ -58,7 +58,7 @@ export const callEmployeeAPI = ({ currentPage  }) => {
 export const callTreeviewOneAPI = () => {
 console.log('[PmAPICalls] callTreeviewOneAPI Call');
 
-const requestURL = `http://localhost:8080/api/pm/secondDept`;
+const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/secondDept`;
 
 return async (dispatch, getState) => {
 
@@ -89,7 +89,7 @@ return async (dispatch, getState) => {
 export const callTreeviewTwoAPI = () => {
     console.log('[PmAPICalls] callTreeviewTwoAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/selectDept`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/selectDept`;
     
     return async (dispatch, getState) => {
     
@@ -100,15 +100,11 @@ export const callTreeviewTwoAPI = () => {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Content-Type": "application/json",
                     "Accept": "*/*",
-                    "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                 }
             })
             .then(response => {
-                console.log('-----------------> \n', response);
                 return response.json()
             });
-    
-            console.log('[PmAPICalls] callTreeviewTwoAPI RESULT :>>>>>>>>>>>>>>>> ', result.data);
     
             dispatch({type: GET_TREEVIEW_TWO, payload: result.data});
         } catch(error) {
@@ -126,7 +122,7 @@ export const callManagementAPI = ({ currentPage }) => {
         const empNo = token.sub;
 
    
-        const requestURL = `http://localhost:8080/api/pm/management/${empNo}?offset=${currentPage}`;
+        const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/management/${empNo}?offset=${currentPage}`;
         
         return async (dispatch, getState) => {
         
@@ -156,7 +152,7 @@ export const callManagementAPI = ({ currentPage }) => {
 export const callMgStartAPI = ({ formData }) => {
     console.log('[PmAPICalls] callMgStartAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/management/insert`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/management/insert`;
     console.log('check1 ', formData);
     return async (dispatch, getState) => {
 
@@ -194,7 +190,7 @@ export const callMgStartAPI = ({ formData }) => {
 export const callMgEndAPI = ({ formData }) => {
     console.log('[PmAPICalls] callMgEndAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/management/update`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/management/update`;
     console.log('check2',formData)
     return async (dispatch, getState) => {
 
@@ -233,7 +229,7 @@ export const callMgEndAPI = ({ formData }) => {
 export const callPmMemberAPI = (empNo) => {
     console.log('[PmAPICalls] callPmMemberAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/member/detail/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/member/detail/${empNo}`;
     
 
     console.log('[PmAPICalls] callPmMemberAPI Call empNo', empNo);
@@ -266,7 +262,7 @@ export const callPmMemberAPI = (empNo) => {
 export const callPmInsertAPI = ({ formData }) => {
     console.log('[PmAPICalls] callPmInsertAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/member/all`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/member/all`;
     console.log('insert ', formData);
     return async (dispatch, getState) => {
 
@@ -286,6 +282,9 @@ export const callPmInsertAPI = ({ formData }) => {
             // });
             .then(response => response.json());
 
+            if(result.status !==200){
+                alert(result.message);
+            }
             console.log('[ApprovalAPICalls] callPmInsertAPI RESULT : ', result);
 
             dispatch({ type: POST_PM_INSERT, payload: result });
@@ -304,7 +303,7 @@ export const callPmInsertAPI = ({ formData }) => {
 export const callAnnualAPI = ({currentPage}) => {
     console.log('[PmAPICalls] callAnnualAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/annual?offset=${currentPage}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/annual?offset=${currentPage}`;
  
     return async (dispatch, getState) => {
 
@@ -322,7 +321,7 @@ export const callAnnualAPI = ({currentPage}) => {
                 return response.json()
             });
     
-            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result.data);
+            console.log('[PmAPICalls] callAnnualAPI RESULT : ', result);
 
             dispatch({ type: GET_ANNUAL, payload: result.data });
             return result;
@@ -337,7 +336,7 @@ export const callAnnualAPI = ({currentPage}) => {
 export const callPmAnnualAPI = (empNo) => {
     console.log('[PmAPICalls] callPmAnnualAPI Call');
     
-    const requestURL = `http://localhost:8080/api/pm/annual/detail/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/pm/annual/detail/${empNo}`;
     
 
     console.log('[PmAPICalls] callPmAnnualAPI Call empNo', empNo);
@@ -366,5 +365,7 @@ export const callPmAnnualAPI = (empNo) => {
         }
         };
     };
+
+
 
 

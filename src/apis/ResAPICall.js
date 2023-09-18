@@ -7,7 +7,7 @@ import{
 } from '../modules/reservationModule';
 
 export const callResAPI = () => {
-    const requestURL = `http://localhost:8080/res/res`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/res`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
@@ -24,7 +24,7 @@ export const callResAPI = () => {
 }
 
 export const callResAddAPI = ({form})=>{
-    const requestURL = `http://localhost:8080/res/category`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/category`;
     return async(dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "POST",
@@ -45,7 +45,7 @@ export const callResAddAPI = ({form})=>{
 }
 
 export const callResRegistAPI = ({form}) => {
-    const requestURL = `http://localhost:8080/res/regist`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/regist`;
     console.log('form : ' , form)
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -72,7 +72,7 @@ export const callResRegistAPI = ({form}) => {
 }
 
 export const callResModAPI = ({form})=> {
-    const requestURL = `http://localhost:8080/res/modRes`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/modRes`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "PUT",
@@ -93,7 +93,7 @@ export const callResModAPI = ({form})=> {
 }
 
 export const callDeleteAPI = ({resourceCode})=>{
-    const requestURL = `http://localhost:8080/res/deleteRes`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/res/deleteRes`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "PUT",

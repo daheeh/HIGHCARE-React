@@ -139,8 +139,8 @@ function Logininfo() {
                 </div>
                 <div className="save-and-find">
                     <div className="save-group">
-                        <input type="checkbox" id="saveid" />
-                        <label htmlFor="saveid">아이디 저장</label>
+                        {/* <input type="checkbox" id="saveid" /> */}
+                        {/* <label htmlFor="saveid">아이디 저장</label> */}
                     </div>
                     <div className="find-group">
                         <Link to="/login/find/step1">

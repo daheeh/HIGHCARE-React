@@ -5,7 +5,9 @@ import { AuthVarification } from "../auth/AuthVerification";
 import { AdminNav } from "../AdminNav";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { allMemberListApi, requestAllMember } from "../../../apis/MemberAPICalls";
+import { allMemberListApi, requestAllMember, selectMember } from "../../../apis/MemberAPICalls";
+import MemberModify from "./MemberModify";
+import { selectMemberAction } from "../../../modules/memberSlice";
 
 
 function MemberList() {
@@ -47,9 +49,9 @@ function MemberList() {
         }
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [selectedItems])
+    // }, [selectedItems])
 
     const checkBox = (e) => {
         // setAllChecked()
@@ -82,7 +84,7 @@ function MemberList() {
         status: 'user',
         method: 'put'
     })
-    
+
     // let [ids, setIds ] = useState([]); 
 
 
@@ -96,7 +98,7 @@ function MemberList() {
         let preCount = 0;
         let inactiveCount = 0;
 
-        memberList.forEach((member) => {
+        Array.isArray(memberList) && memberList.forEach((member) => {
             if (member.accessManager) {
                 if (member.accessManager.isLock === 'Y') {
                 } else if (member.accessManager.isInActive === 'Y') {
@@ -107,28 +109,25 @@ function MemberList() {
                 } else {
                 }
             }
-
             member.roleList.map((role) => {
                 if (roleCode(role.authCode) === '임시회원') {
                     preCount++;
                 }
             });
         });
-
         setPreMember(preCount);
         setInactiveMember(inactiveCount);
         setDrawMember(drawCount)
-        setNormalMember(memberList.length - preCount - inactiveCount - drawCount);
+        setNormalMember(memberList?.length - preCount - inactiveCount - drawCount);
     }, [memberList]);
 
 
 
+    // 멤버선택시 페이지 이동 
+    const [clickMember, setClickMember] = useState(null);
     const memberClick = (member) => {
+        dispatch(selectMemberAction(member));
         navigate(`/admin/member/modify/${member.empNo}`, { replace: false });
-
-        // return (
-        //     // <ModifyInfo member={member}/>
-        // )
 
     }
 
@@ -139,7 +138,7 @@ function MemberList() {
             <div style={{ marginTop: 20 }}>
                 <div className={MemberListCss.title}>회원목록
                     <div>
-                        <div>현재 멤버 수: {memberList.length}명 </div>
+                        <div>현재 멤버 수: {memberList?.length}명 </div>
                         <div>정상: {normalMember}명 / 임시: {preMember}명 / 차단: {inactiveMember}명 / 탈퇴(예정): {drawMember}명 </div>
                     </div>
                 </div>
@@ -162,7 +161,7 @@ function MemberList() {
                     <div>
                         <select name="jobCode">
                             <option value="null" disabled hidden selected>직급</option>
-                            {Array.from(new Set(memberList.map(member => member.employee.jobCode.jobName)))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => member.employee.jobCode.jobName)))
                                 .map(jobName => (
                                     <option key={jobName}>{jobName}</option>
                                 ))}
@@ -171,7 +170,7 @@ function MemberList() {
                     <div>
                         <select name="jobCode">
                             <option value="null" disabled hidden selected>부서</option>
-                            {Array.from(new Set(memberList.map(member => member.employee.deptCode.deptName)))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => member.employee.deptCode.deptName)))
                                 .map(deptName => (
                                     <option key={deptName}>{deptName}</option>
                                 ))}
@@ -182,7 +181,7 @@ function MemberList() {
                     <div>
                         <select name="authCode">
                             <option value="null" disabled hidden selected>유형</option>
-                            {Array.from(new Set(memberList.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
@@ -191,7 +190,7 @@ function MemberList() {
                     <div>
                         <select name="accountStatus">
                             <option value="null" disabled hidden selected>계정상태</option>
-                            {Array.from(new Set(memberList.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
+                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
@@ -200,31 +199,27 @@ function MemberList() {
                 </div>
                 {Array.isArray(memberList) && memberList.map(
                     (member) => (
-                        <div
+                        <div onClick={() => memberClick(member)}
                             key={member.empNo} className={MemberListCss.category}
 
                         >
                             <input type="checkbox" value={member.empNo}
                                 checked={selectedItems.some(memNo => memNo == member.empNo)}
                                 onChange={checkBox} />
-                            <div onClick={() => memberClick(member)} >{member.empNo}</div>
-                            <div onClick={() => memberClick(member)} >{member.employee.name}</div>
-                            <div onClick={() => memberClick(member)} >{member.employee.jobCode.jobName}</div>
-                            <div onClick={() => memberClick(member)} >{member.employee.deptCode.deptName}</div>
-                            <div onClick={() => memberClick(member)} >{member.memberId}</div>
-                            <div onClick={() => memberClick(member)} >{member.employee.email}</div>
-                            <div onClick={() => memberClick(member)} >
+                            <div>{member.empNo}</div>
+                            <div>{member.employee.name}</div>
+                            <div>{member.employee.jobCode.jobName}</div>
+                            <div>{member.employee.deptCode.deptName}</div>
+                            <div>{member.memberId}</div>
+                            <div>{member.employee.email}</div>
+                            <div>
                                 {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
                             </div>
-                            <div onClick={() => memberClick(member)}>
+                            <div>
                                 {accountStatus(member.accessManager ? member.accessManager : '')}
                             </div>
                         </div>
                     ))}
-
-                <div>
-
-                </div>
                 <div className={MemberListCss.paging} style={{ marginLeft: 500 }}>
                     <div style={{ justifyContent: '', display: 'flex' }}>
                         <button>

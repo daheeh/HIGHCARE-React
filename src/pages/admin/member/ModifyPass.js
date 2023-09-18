@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ValidatePassword from "../../login/components/ValidationPassword";
 import { updatePasswordAPI } from "../../../apis/AuthAPICalls";
-import { resetAuthesAction } from "../../../modules/authSlice";
+import { logoutAction, resetAuthesAction } from "../../../modules/authSlice";
 import { decodeJwt } from "../../../utils/decodeJwt";
 
 export function ModifyPass() {
@@ -64,8 +64,8 @@ export function ModifyPass() {
         && ValidatePassword(props.password) ){
 
             await dispatch(updatePasswordAPI(props)); 
-
-            alert("비밀번호 변경 완료");
+            await alert("비밀번호 변경 완료, 재로그인 해주세요.");
+            dispatch(logoutAction());
 
         } else {
             alert("유효한 요청이 아닙니다.")

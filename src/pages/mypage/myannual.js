@@ -10,13 +10,10 @@ function MypageAnnual() {
 
     const dispatch = useDispatch();
     const employee = useSelector(state => state.authes) 
-   
-
-    console.log("employee====", employee);    
 
     const mypage = useSelector(state => state?.mypage?.data);
 
-    const numAnnData = useSelector(state => state?.mypage?.data[0]);
+    const numAnnData = useSelector(state => state?.mypage?.data);
     const pageInfo = useSelector(state => state?.mypage?.pageInfo);
 
 
@@ -39,9 +36,6 @@ function MypageAnnual() {
         () => {
             dispatch(callAnnSelectAPI(employee.empNo, currentPage));
 
-            console.log('=============><><><>', currentPage)
-            console.log('=============><><><>', totalPages)
-            console.log('=============><><><>', itemPerpage)
         }
         , [currentPage]);
 
@@ -62,30 +56,30 @@ function MypageAnnual() {
             <div className="packingmy">
 
 
-                <div className="apvMainBox">
-                    <div className="apvMainBoxRightBox">
-                        <div className="apvMainBoxRight">
+                <div className="myMainBox">
+                    <div className="myMainBoxRightBox" style={{display:'flex'}}>
+                        <div className="myMainBoxRight">
                             <div className="row1">
                                 총연차
-                                <div className="annRow">{numAnnData?.ban}</div>
+                                <div className="annRow">{numAnnData && numAnnData[0]?.ban}</div>
                             </div>
                         </div>
-                        <div className="apvMainBoxRight">
+                        <div className="myMainBoxRight">
                             <div className="row1">
                                 잔여연차
-                                <div className="annRow">{numAnnData?.totalAn}</div>
+                                <div className="annRow">{numAnnData && numAnnData[0]?.totalAn}</div>
                             </div>
                         </div>
-                        <div className="apvMainBoxRight">
+                        <div className="myMainBoxRight">
                             <div className="row1">
                                 조정연차
-                                <div className="annRow">{numAnnData?.addAn}</div>
+                                <div className="annRow">{numAnnData && numAnnData[0]?.addAn}</div>
                             </div>
                         </div>
-                        <div className="apvMainBoxRight">
+                        <div className="myMainBoxRight">
                             <div className="row1">
                                 사용연차
-                                <div className="annRow">{numAnnData?.useAn}</div>
+                                <div className="annRow">{numAnnData && numAnnData[0]?.useAn}</div>
                             </div>
                         </div>
 

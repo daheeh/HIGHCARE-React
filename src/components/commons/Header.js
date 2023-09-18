@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import { callLoginAPI, callLogoutAPI } from '../../apis/AuthAPICalls';
 import LoginVerify from '../../utils/LoginVerify';
 import { decodeJwt } from "../../utils/decodeJwt";
+
 import { logoutAction } from '../../modules/authSlice';
 import { ReduxReset } from '../../utils/ReduxReset';
 
 import { GET_RESET_MANSELECT } from '../../modules/MypageModule';
+
 
 
 function Header() {
@@ -32,13 +34,15 @@ function Header() {
 
     const onClickLogoutHandler = () => {
 
+
+
         dispatch(callLogoutAPI());
         // dispatch(callLogoutAPI());
         localStorage.setItem('reduxState', '');
+
         // // ReduxReset("mypage");
         // // navigate("/login", { replace: true });
         window.location.href="/";
-
 
     }
 

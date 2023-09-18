@@ -8,7 +8,7 @@ export const callLoginAPI = (form) => {
 
     console.log("login call data ----- ", form);
 
-    const requestURL = `http://localhost:8080/api/auth/login`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/auth/login`;
 
     return async (dispatch, getState) => {
 
@@ -36,13 +36,15 @@ export const callLoginAPI = (form) => {
                 console.log("result.data : ", response.data);
                 window.localStorage.setItem('accessToken', response.data.accessToken);
             } else {
-                throw new Error("로그인 실패"); 
+                console.log("result.data : ", response);
+
+                alert(response.message);
             }
 
 
         } catch (e) {
             console.error("로그인 문제발생", e.message);
-            ReduxReset('authes');
+            // ReduxReset('authes');
             // localStorage.setItem('reduxState', '');
 
         }
@@ -61,10 +63,9 @@ export const callLogoutAPI = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            // 로그아웃시 로컬에 있는 리덕스, 토큰 초기화하기 
+            // 로그아웃시 로컬에 있는 리덕스, 토큰 등 초기화하기 
             localStorage.setItem('reduxState', '');
             ReduxReset('authes');
-
             localStorage.removeItem('accessToken');
             document.cookie = 'RefreshToken' || '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=C.kr;path=/;';
         }
@@ -77,16 +78,13 @@ export const jwtReissueAPI = (id) => {
 
     console.log(id);
 
-    const requestURL = `http://localhost:8080/api/auth/reissue?id=${id}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/auth/reissue?id=${id}`;
 
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: "GET",
             credentials: "include",
             headers: {
-                // "Content-Type": "application/json",
-                // "Accept": "*/*",
-                // "Access-Control-Allow-Origin": "*"
                 "Access-Control-Allow-Credentials": "*"
 
                 
@@ -125,7 +123,7 @@ export const authCodeSendingAPI = createAsyncThunk(
 
         try {
             const response =
-                await axios.post(`http://localhost:8080/api/auth/find/${props.authType}`
+                await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/auth/find/${props.authType}`
                 , props
                     // , {
                     //     headers: {
@@ -177,7 +175,7 @@ export const authCheckAPI = createAsyncThunk(
 
         try {
             const response =
-                await axios.post(`http://localhost:8080/api/auth/find/authcheck`
+                await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/auth/find/authcheck`
                     , props
                     // , {
                     //     headers: {
@@ -191,7 +189,7 @@ export const authCheckAPI = createAsyncThunk(
             const result = response.data.data; 
 
             if(result.requestMessage === 'correct'){
-                alert("인증 확인되었습니다.")
+                alert("인증 확인되었습니다. 다음버튼을 눌러 진행해주세요.")
             } else {
                 alert("인증코드가 올바르지 않습니다. 다시 시도해주세요.");
             }
@@ -216,7 +214,7 @@ export const updatePasswordAPI = createAsyncThunk(
 
         try {
             const response =
-                await axios.post(`http://localhost:8080/api/auth/password`
+                await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/auth/password`
                     , props
                     , {
                         headers: {
