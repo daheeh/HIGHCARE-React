@@ -21,7 +21,7 @@
 //         }
 //         axios({
 //             method:"get",
-//             url: "http://localhost:8080/user/search/"+userId+"/"+partnerId
+//             url: "http://highcare.coffit.today:8080/user/search/"+userId+"/"+partnerId
 //         })
 //         .then((response)=>{
 //             if(response.data===101){

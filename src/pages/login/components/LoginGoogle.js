@@ -25,7 +25,7 @@ const SocialOauth = () => {
           onSuccess={onSuccess2}
           onFailure={onFailure}
           cookiePolicy={"single_host_origin"}
-          redirectUri={"http://localhost:8080/api/oauth/jwt/google"}
+          redirectUri={"http://highcare.coffit.today:8080/api/oauth/jwt/google"}
         />
       </div> */}
       {/* <div id="facebook">

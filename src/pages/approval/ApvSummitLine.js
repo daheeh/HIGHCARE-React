@@ -29,7 +29,7 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 
 
 		try {
-			const requestURL = `http://localhost:8080/api/approval/put/line/${apvLineNo}?apvNo=${apvNo}&apvStatus=${apvStatus}`;
+			const requestURL = `http://highcare.coffit.today:8080/api/approval/put/line/${apvLineNo}?apvNo=${apvNo}&apvStatus=${apvStatus}`;
 			const response = await fetch(requestURL, {
 				method: 'PUT',
 				headers: {
@@ -65,7 +65,7 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 		console.log('apvNo: ', apvNo);
 
 		try {
-			const requestURL = `http://localhost:8080/api/approval/put/line/${apvLineNo}?apvNo=${apvNo}&apvStatus=${apvStatus}`;
+			const requestURL = `http://highcare.coffit.today:8080/api/approval/put/line/${apvLineNo}?apvNo=${apvNo}&apvStatus=${apvStatus}`;
 			const response = await fetch(requestURL, {
 				method: 'PUT',
 				headers: {
@@ -97,7 +97,7 @@ function ApvSummitLine({ selectedEmployees, refSelectedEmployees, authes, mode, 
 		console.log('apvNo: ', apvNo);
 
 		try {
-			const requestURL = `http://localhost:8080/api/approval/delete/${apvNo}`;
+			const requestURL = `http://highcare.coffit.today:8080/api/approval/delete/${apvNo}`;
 			const response = await fetch(requestURL, {
 				method: 'DELETE',
 				headers: {

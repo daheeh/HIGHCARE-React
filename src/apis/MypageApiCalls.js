@@ -105,7 +105,7 @@ export const CallManSelectAPI = (empNo) => {
 
     console.log('CallManSelectAPI Call');
 
-    // const requestURL = `http://localhost:8080/api/mypage/manselect/${empNo}`;
+    // const requestURL = `http://highcare.coffit.today:8080/api/mypage/manselect/${empNo}`;
     
     const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/manselect/${empNo}`;
 

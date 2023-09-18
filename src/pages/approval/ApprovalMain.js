@@ -29,7 +29,7 @@ function ApvMain() {
     // useEffect(() => {
     //     async function fetchcounts() {
     //         try {
-    //             const response = await fetch(`http://localhost:8080/api/approval/main?empNo=${empNo}`, {
+    //             const response = await fetch(`http://highcare.coffit.today:8080/api/approval/main?empNo=${empNo}`, {
     //                 method: "GET",
     //                 headers: {
     //                     "Accept": "*/*",
