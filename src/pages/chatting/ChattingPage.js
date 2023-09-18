@@ -60,7 +60,7 @@ import "../chatting/ChatTextBalloon.css";
     
         //웹소켓 연결 설정
         const webSocketLogin = useCallback(() => {
-            ws.current = new WebSocket("ws://localhost:8080/ws-stomp"); // 웹소켓 연결
+            ws.current = new WebSocket("ws://highcare.coffit.today:8080/ws-stomp"); // 웹소켓 연결
     
             ws.current.onmessage = (message) => {
                 const dataSet = JSON.parse(message.data);   // 웹소켓에서 받은 메세지데이터 파싱

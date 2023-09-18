@@ -5,7 +5,7 @@
 
 //     axios( {
 //         method:'POST',
-//         url: `https://localhost:8080/api/auth/test`,
+//         url: `https://highcare.coffit.today:8080/api/auth/test`,
 //         data: {
 
 //         }
@@ -16,7 +16,7 @@
 
 //     }
 // }
-export const BASIC_URL = "http://localhost:8080/api";
+export const BASIC_URL = "http://highcare.coffit.today:8080/api";
 export const AUTH_URL = BASIC_URL + "/auth"; 
 export const ADMIN_URL = BASIC_URL + "/admin"; 
 
