@@ -29,7 +29,7 @@ import { decodeJwt } from "../../utils/decodeJwt";
             const authes = useSelector(state => state.authes);
             console.log('auth=============================>', authes);
             const empNo = authes.empNo;
-            const empName = authes?.name;
+            const empName = authes.name;
             const empDept = authes.dept;
             const empJob = authes.job;
             const userId = decodeJwt(window.localStorage.getItem("accessToken")).sub;            
