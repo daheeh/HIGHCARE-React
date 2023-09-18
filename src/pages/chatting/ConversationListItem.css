@@ -5,6 +5,11 @@
   width: 350px;
 }
 
+
+.ChattingRoomList_chattingRoomLists__H5vq7 {
+  flex-direction: row-reverse;
+}
+
 .ChattingRoomList_chattingRoomInfo__4uP3t {
   display: flex;
   height: 85px;
@@ -33,6 +38,14 @@
   text-align: center;
   flex-direction: column;
 }
+
+
+/* .conversation-list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 350px;
+  } */
 
 .conversation-list-item {
     display: flex;
