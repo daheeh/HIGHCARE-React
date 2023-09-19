@@ -44,7 +44,8 @@ function Calendar({setData}){
                             end: 'next' 
                         }
                     }
-                    height={"85vh"}
+                    height={"50vh"}
+                    dayMinWidth={"450px"}
                     dateClick={dateClick}
                     locale={'ko'}
                 />

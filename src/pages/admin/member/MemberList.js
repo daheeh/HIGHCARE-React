@@ -12,16 +12,34 @@ import { selectMemberAction } from "../../../modules/memberSlice";
 
 function MemberList() {
 
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(() => {
-
-        dispatch(allMemberListApi());
-
-    }, [])
 
     let mem = useSelector(state => state.members);
     const memberList = mem.data;
+
+    // 페이징 변수 
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 20;
+    const paging = {
+        page: currentPage,
+        size: itemsPerPage,
+        data: '',
+    }
+
+    const totalPages = memberList ? memberList.totalPages : 0;
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber - 1);
+    };
+
+
+    useEffect(() => {
+
+        dispatch(allMemberListApi(paging));
+
+    }, [currentPage])
+
 
     const [normalMember, setNormalMember] = useState(0);
     const [preMember, setPreMember] = useState(0);
@@ -41,36 +59,33 @@ function MemberList() {
 
         if (!allChecked) {
             // 전체 선택 체크박스가 체크되면 모든 아이템을 선택된 아이템 목록에 추가
-            const allEmpNos = memberList.map((member) => member.empNo);
-            setSelectedItems(allEmpNos);
+            const allIds = memberList?.content.map((member) => member.memberId);
+            setSelectedItems(allIds);
         } else {
             // 전체 선택 체크박스가 해제되면 모든 아이템을 선택된 아이템 목록에서 제거
             setSelectedItems([]);
         }
     };
 
-    // useEffect(() => {
-
-    // }, [selectedItems])
 
     const checkBox = (e) => {
         // setAllChecked()
-        const empNo = e.target.value;
+        const memberId = e.target.value;
         const isChecked = e.target.checked;
 
         if (allChecked) {
             setAllChecked(false);
-            setSelectedItems([empNo]);
+            setSelectedItems([memberId]);
         }
 
         // 선택 상태를 업데이트
         setSelectedItems((prevSelectedItems) => {
-            if (isChecked && !prevSelectedItems.includes(empNo)) {
+            if (isChecked && !prevSelectedItems.includes(memberId)) {
                 // 선택 상태를 추가하고 중복을 피하기 위해 체크
-                return [...prevSelectedItems, empNo];
+                return [...prevSelectedItems, memberId];
             } else if (!isChecked) {
                 // 선택 상태를 제거
-                return prevSelectedItems.filter((item) => item !== empNo);
+                return prevSelectedItems.filter((item) => item !== memberId);
             }
             // 선택 상태가 변경되지 않았을 경우 이전 상태를 그대로 반환
             return prevSelectedItems;
@@ -85,10 +100,10 @@ function MemberList() {
         method: 'put'
     })
 
-    // let [ids, setIds ] = useState([]); 
 
 
     const memberListRegist = () => {
+        console.log("selectItems-----", selectedItems);
         dispatch(requestAllMember(selectedItems));
     }
 
@@ -98,7 +113,7 @@ function MemberList() {
         let preCount = 0;
         let inactiveCount = 0;
 
-        Array.isArray(memberList) && memberList.forEach((member) => {
+        Array.isArray(memberList?.content) && memberList?.content.forEach((member) => {
             if (member.accessManager) {
                 if (member.accessManager.isLock === 'Y') {
                 } else if (member.accessManager.isInActive === 'Y') {
@@ -118,7 +133,7 @@ function MemberList() {
         setPreMember(preCount);
         setInactiveMember(inactiveCount);
         setDrawMember(drawCount)
-        setNormalMember(memberList?.length - preCount - inactiveCount - drawCount);
+        setNormalMember(memberList?.content.length - preCount - inactiveCount - drawCount);
     }, [memberList]);
 
 
@@ -131,6 +146,9 @@ function MemberList() {
 
     }
 
+    console.log("--==-=-=-=-=-=-=-=-=-=-=-", memberList);
+
+
 
     return (
         <section>
@@ -138,14 +156,14 @@ function MemberList() {
             <div style={{ marginTop: 20 }}>
                 <div className={MemberListCss.title}>회원목록
                     <div>
-                        <div>현재 멤버 수: {memberList?.length}명 </div>
+                        <div>현재 멤버 수: {memberList?.content.length}명 </div>
                         <div>정상: {normalMember}명 / 임시: {preMember}명 / 차단: {inactiveMember}명 / 탈퇴(예정): {drawMember}명 </div>
                     </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: 1200 }} >
                     <div className={MemberListCss.crudBtn}>
                         {/* 임시회원상태만 클릭시 회원등록확정 alert창 띄워지고 권한 일반회원으로 변경됨 */}
-                        {/* <button onClick={memberListRegist}>회원등록</button> */}
+                        {/* <button onClick={memberListRegist}>일반회원 전환</button> */}
                     </div>
                     <div className={MemberListCss.excelBtn}>
                         {/* <button>목록다운로드</button>
@@ -161,7 +179,7 @@ function MemberList() {
                     <div>
                         <select name="jobCode">
                             <option value="null" disabled hidden selected>직급</option>
-                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => member.employee.jobCode.jobName)))
+                            {Array.isArray(memberList?.content) && Array.from(new Set(memberList?.content.map(member => member.employee.jobCode.jobName)))
                                 .map(jobName => (
                                     <option key={jobName}>{jobName}</option>
                                 ))}
@@ -170,7 +188,7 @@ function MemberList() {
                     <div>
                         <select name="jobCode">
                             <option value="null" disabled hidden selected>부서</option>
-                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => member.employee.deptCode.deptName)))
+                            {Array.isArray(memberList?.content) && Array.from(new Set(memberList?.content.map(member => member.employee.deptCode.deptName)))
                                 .map(deptName => (
                                     <option key={deptName}>{deptName}</option>
                                 ))}
@@ -180,8 +198,10 @@ function MemberList() {
                     <div>이메일</div>
                     <div>
                         <select name="authCode">
-                            <option value="null" disabled hidden selected>유형</option>
-                            {Array.isArray(memberList) && Array.from(new Set(memberList.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
+                            <option value="null" disabled hidden selected>
+                                유형
+                            </option>
+                            {Array.isArray(memberList?.content) && Array.from(new Set(memberList?.content.flatMap(member => member.roleList.map(role => roleCode(role.authCode)))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
@@ -190,47 +210,50 @@ function MemberList() {
                     <div>
                         <select name="accountStatus">
                             <option value="null" disabled hidden selected>계정상태</option>
-                            {Array.isArray(memberList) && Array.from(new Set(memberList.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
+                            {Array.isArray(memberList?.content) && Array.from(new Set(memberList?.content.map(member => accountStatus(member.accessManager ? member.accessManager : ''))))
                                 .map(code => (
                                     <option key={code}>{code}</option>
                                 ))}
                         </select>
                     </div>
                 </div>
-                {Array.isArray(memberList) && memberList.map(
-                    (member) => (
-                        <div onClick={() => memberClick(member)}
-                            key={member.empNo} className={MemberListCss.category}
+                {Array.isArray(memberList?.content) && memberList?.content
+                    .map(
+                        (member) => (
+                            <div
+                                key={member.empNo} className={MemberListCss.category}
 
-                        >
-                            <input type="checkbox" value={member.empNo}
-                                checked={selectedItems.some(memNo => memNo == member.empNo)}
-                                onChange={checkBox} />
-                            <div>{member.empNo}</div>
-                            <div>{member.employee.name}</div>
-                            <div>{member.employee.jobCode.jobName}</div>
-                            <div>{member.employee.deptCode.deptName}</div>
-                            <div>{member.memberId}</div>
-                            <div>{member.employee.email}</div>
-                            <div>
-                                {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
+                            >
+                                <input type="checkbox" value={member.memberId}
+                                    checked={selectedItems.some(memNo => memNo == member.memberId)}
+                                    onChange={checkBox} />
+                                <div onClick={() => memberClick(member)}>{member.empNo}</div>
+                                <div onClick={() => memberClick(member)}>{member.employee.name}</div>
+                                <div onClick={() => memberClick(member)}>{member.employee.jobCode.jobName}</div>
+                                <div onClick={() => memberClick(member)}>{member.employee.deptCode.deptName}</div>
+                                <div onClick={() => memberClick(member)}>{member.memberId ? member.memberId : ''}</div>
+                                <div onClick={() => memberClick(member)}>{member.employee.email}</div>
+                                <div onClick={() => memberClick(member)}>
+                                    {member.roleList.map(role => roleCode(role.authCode ? role.authCode : ''))[0]}
+                                </div>
+                                <div>
+                                    {accountStatus(member.accessManager ? member.accessManager : '')}
+                                </div>
                             </div>
-                            <div>
-                                {accountStatus(member.accessManager ? member.accessManager : '')}
-                            </div>
+                        ))}
+                <div className={MemberListCss.paging}>
+                    <div style={{ justifyContent: '', marginLeft: '600px', display: 'flex', marginTop: 30 }}>
+                        <div className="paging">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <span
+                                    key={index + 1}
+                                    onClick={() => handlePageChange(index + 1)}
+                                    className={`pagingBtn ${currentPage === index + 1 ? "active" : ""}`}
+                                >
+                                    {index + 1}
+                                </span>
+                            ))}
                         </div>
-                    ))}
-                <div className={MemberListCss.paging} style={{ marginLeft: 500 }}>
-                    <div style={{ justifyContent: '', display: 'flex' }}>
-                        <button>
-                            <div className={MemberListCss.leftbtn} />
-                        </button>
-                        <button>
-                            <div className={MemberListCss.centerbtn} />
-                        </button>
-                        <button>
-                            <div className={MemberListCss.rightbtn} />
-                        </button>
                     </div>
                 </div>
                 <div style={{ justifyContent: '', marginLeft: '400px', display: 'flex', alignItems: 'flex-end' }}>
@@ -266,10 +289,12 @@ export const roleCode = (roleCode) => {
             return '일반회원';
         case 'ROLE_PRE_USER':
             return '임시회원'
-        case 'ROLE_WITHDRAW':
-            return '탈퇴회원';
+        case 'ROLE_DRAW_USER':
+            return '탈퇴(예정)회원';
+        case null:
+            return '탈퇴(예정)회원';
         default:
-            return 'none';
+            return '탈퇴(예정)회원';
     }
 
 }
