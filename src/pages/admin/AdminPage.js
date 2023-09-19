@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { TokenVerification } from './auth/TokenVerification';
 import { AuthVarification } from './auth/AuthVerification';
 import { AdminNav } from './AdminNav';
 import AdminPageStyle from './AdminPage.module.css'
 import { allMemberListApi } from '../../apis/MemberAPICalls';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MemberList from './member/MemberList';
 import { AdminMain1, AdminMain2 } from './AdminMainBox';
 
@@ -17,11 +17,26 @@ function AdminPage() {
 
 	const dispatch = useDispatch();
 
+	let members = useSelector(state => state.members);
+    let memberList = members.data;
+
+
+	  // 페이징 변수 
+	  const [currentPage, setCurrentPage] = useState(0);
+	  const itemsPerPage = 20;
+	  const paging = {
+		  page: currentPage,
+		  size: itemsPerPage,
+		  data: '',
+	  }
+
 	useEffect(() => {
 
-		dispatch(allMemberListApi()); // 비동기 액션 실행
+		dispatch(allMemberListApi(paging)); // 비동기 액션 실행
 
-	},[])
+	},[members.message])
+
+
 	return (
 
 		<section>
@@ -30,10 +45,10 @@ function AdminPage() {
 			<div className={AdminPageStyle.container}>
 				<div className={AdminPageStyle.box}>
 					<div>
-						<h2>임시회원 신청 현황</h2>
+						<h2>임시회원 신청 현황</h2>	
 					</div>
 					<div className={AdminPageStyle.innerbox}>
-						<AdminMain1 />
+						<AdminMain1 memberList={memberList} />
 					</div>
 					<div>
 						<Link to="/admin/member" style={{ color: 'gray' }}>더보기</Link>
@@ -45,7 +60,7 @@ function AdminPage() {
 						<h2>차단회원</h2>
 					</div>
 					<div className={AdminPageStyle.innerbox}>
-						<AdminMain2 />
+						<AdminMain2 memberList={memberList} />
 					</div>
 					<div>
 						<Link to="/admin/member" style={{ color: 'gray' }}>더보기</Link>

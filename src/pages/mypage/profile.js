@@ -23,8 +23,8 @@ function Profile() {
     const id = decodeJwt(window.localStorage.getItem("accessToken")).sub;
     const mypage = useSelector(state => state.mypage);
 
-    // const [imageLink, setImageLink] = useState(`http://highcare.coffit.today:8080/images/basicprofile.jpg`);
-    const [imageLink, setImageLink] = useState(`http://highcare.coffit.today:8080/images/basicprofile.jpg`);
+    // const [imageLink, setImageLink] = useState(`${process.env.REACT_APP_BASIC_URL}/images/basicprofile.jpg`);
+    const [imageLink, setImageLink] = useState(`${process.env.REACT_APP_BASIC_URL}/images/basicprofile.jpg`);
     // const [imageLink, setImageLink] = useState('');
 
     
@@ -73,7 +73,7 @@ function Profile() {
             console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)   // [1]
             if(!imageLink){
                     
-                setImageLink(`http://highcare.coffit.today:8080/images/${mypage?.data?.myProfileFile?.chName}`);
+                setImageLink(`${process.env.REACT_APP_BASIC_URL}}/images/${mypage?.data?.myProfileFile?.chName}`);
             } 
         },
         [image]);

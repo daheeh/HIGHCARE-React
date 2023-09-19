@@ -33,7 +33,7 @@ const adminSlice = createSlice({
 
         // })
         .addCase(WithDrawInfoAPI.fulfilled, (state, {payload})=> {
-            alert(payload);
+            // alert(payload);
 
         }) 
 

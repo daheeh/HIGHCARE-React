@@ -107,7 +107,7 @@ export const jwtReissueAPI = (id) => {
 
 export const modifyMemberAPI = () => {
 
-    // const requestURL = `http://highcare.coffit.today:8080/api/admin/modifymember`;
+    // const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/admin/modifymember`;
 
     return async (dispatch, getState) => {
         console.log("수정할 회원의 정보를 가져옵니다.");

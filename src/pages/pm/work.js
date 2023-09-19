@@ -94,7 +94,7 @@ function PmWork() {
                     if(response.data === 'stSuceess'){
 
                         window.alert("출근하였습니다");
-                    
+                        window.location.reload();
                     } else {
                         window.alert("이미 출근이 완료되었습니다. ");
                         

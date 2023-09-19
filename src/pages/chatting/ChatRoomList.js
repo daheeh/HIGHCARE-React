@@ -46,7 +46,7 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
     //     })
     //     .then((response) => {
     //       for (const key in response.data) {
-    //         dispatch(insertPartner(
+    //         dispatch(insertPartner(ho
     //           {
     //             partner: response.data[key].partner,
     //             list:[...response.data[key].messageList]
@@ -68,7 +68,8 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
       })
       .then((response) => {
           // 현재 로그인한 사용자와 관련된 채팅방만 필터링하여 저장
-          const filteredConversations = response.data.filter(conversation => conversation.startsWith(empName + ":"));
+          console.log(response);
+          const filteredConversations = response.data.filter(conversation => conversation.startsWith(userId + ":"));
           for (const key in filteredConversations) {
               dispatch(insertPartner(
                   {
@@ -77,9 +78,10 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
                   }
               ))
           }
+          console.log('response =========> ' , response);
       })
       .catch((error) => {
-  
+        console.log("사용자 채팅방 로딩 실패");
       })    
   }
 
@@ -110,7 +112,6 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
         if(existingPartner) {
         // 이미 대화상대랑 채팅방 있으면 업데이트
             dispatch(insertPartner({
-              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
               partner:name,
               list: existingPartner.list, // 기존 대화 기록 유지
             })
@@ -118,7 +119,6 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
         } else {
           // 상대랑 채팅방 없을 경우 추가
             dispatch(insertPartner({
-              // photo:process.env.REACT_APP_USER_BASE_IMAGE,
               partner:name,
               list: [], // 기존 대화 기록 유지
             })
