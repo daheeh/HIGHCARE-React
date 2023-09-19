@@ -2,16 +2,20 @@ import { Link } from "react-router-dom"
 import MainLayOutCss from "./MainLayOut.module.css"
 import ApvMainBox from "../pages/approval/ApprovalMainBox";
 import Board3 from "./prevBoard/board3";
+import PmWorkMain from "../pages/pm/pmWorkMain";
 
 function MainLayOut() {
 
     return (
         <>
             <div className={MainLayOutCss.container}>
-                <div className={MainLayOutCss.box}>
-                    <h2>업무일정</h2>
-                    <p></p>
-                    <a href="#" style={{color:'gray'}}>더 보기</a>
+            <div className={MainLayOutCss.box}>
+                    <h2>출 / 퇴근</h2>
+
+                <PmWorkMain/>
+                    <br/><br/>
+                    <Link to="/pm/work">더보기</Link>
+                    
                 </div>
                 <div className={MainLayOutCss.box}>
                     <h2>결재문서</h2>
@@ -27,11 +31,9 @@ function MainLayOut() {
                 </div>
 
                 <div className={MainLayOutCss.box}>
-                    <h2>시설예약</h2>
-
-                    <br/><br/>
-                    <Link to="/reservation">예약하러 가기</Link>
-
+                    <h2>업무일정</h2>
+                    <p></p>
+                    <a href="#" style={{color:'gray'}}>더 보기</a>
                 </div>
             </div>
         </>

@@ -16,35 +16,6 @@ function PmMemberInsert() {
 
   const [tableData, setTableData] = useState([]);
 
-  // const pmSubmission = async () => {
-  //   setType("resist");
-  //   if (empNo !== undefined) {
-  //     try {
-  //       const formData = {};
-  //       console.log("------------------>", formData);
-        
-  //       console.log(
-  //         "-----------------------------------response",
-  //         response.status
-  //       );
-  //       if (response.status === 200) {
-  //         if (response.data === "stSuceess") {
-  //           window.alert("등록하였습니다");
-  //         } else {
-  //           window.alert("이미 등록이 완료되었습니다. ");
-  //         }
-  //         window.location.reload();
-  //       } else {
-  //         window.alert("다시 시도해 주세요.");
-  //       }
-  //     } catch (error) {
-  //       console.error("API error:", error);
-  //       window.alert("API 요청 중 오류가 발생했습니다.");
-  //     }
-  //   } else {
-  //     window.alert("재로그인 요청");
-  //   }
-  // };
 
   const deleteFormData = (formData) => {
     for (let [key, value] of formData) {
@@ -81,7 +52,7 @@ function PmMemberInsert() {
         </div>
         <br />
         <form onSubmit={onSumbitHandler}>
-          <div className="pm-section">
+          <div className="pm-section2">
             <div className="div4" >
               <div className="div5">
                 <div className="pm-photobox"></div>
@@ -115,7 +86,7 @@ function PmMemberInsert() {
                     </div>
                   </div>
                   <div className="pm-flex">
-                    <div className="pm-content">
+                    <div className="pm-content-last2">
                       <div className="pm-memberinfo-title">이메일</div>
                       <input className="pm-input" name="empEmail" />
                     </div>
@@ -124,34 +95,34 @@ function PmMemberInsert() {
               </div>
               <div>
                 <div>
-                  <div className="pm-contents">
-                    <div className="pm-titleboxs">입사정보</div>
-                    <table>
+                  <div className="pm-contents2">
+                    <div className="pm-titleboxs1">입사정보</div>
+                    <table className="tables">
                       <thead>
                         <tr>
-                          <th className="pm-test2">부서코드</th>
-                          <th className="pm-test2">직급코드</th>
-                          <th className="pm-test2">부서전화번호</th>
-                          <th className="pm-test2">입사일</th>
-                          <th className="pm-test4">퇴사일</th>
+                          <th className="pm-test22">부서코드</th>
+                          <th className="pm-test22">직급코드</th>
+                          <th className="pm-test22">부서전화번호</th>
+                          <th className="pm-test22">입사일</th>
+                          <th className="pm-test43">퇴사일</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td className="pm-test8">
-                            <input className="pm-input" name="deptCode" />
+                            <input className="pm-inputs" name="deptCode" />
                           </td>
                           <td className="pm-test8">
-                            <input className="pm-input" name="jobCode" />
+                            <input className="pm-inputs" name="jobCode" />
                           </td>
                           <td className="pm-test8">
-                            <input className="pm-input" name="telephone" />
+                            <input className="pm-inputs" name="telephone" />
                           </td>
                           <td className="pm-test8">
-                            <input className="pm-input" name="startDate" />
+                            <input className="pm-inputs" name="startDate" />
                           </td>
-                          <td className="pm-test9">
-                            <input className="pm-input" name="endDate" />
+                          <td className="pm-test99">
+                            <input className="pm-inputs" name="endDate" />
                           </td>
                         </tr>
                       </tbody>
@@ -162,7 +133,7 @@ function PmMemberInsert() {
                 <div>
                   <div className="pm-contents">
                     <div className="pm-titleboxs">병역사항</div>
-                    <table>
+                    <table className="tables">
                       <thead>
                         <tr>
                           <th className="pm-test2">입대일</th>
@@ -194,15 +165,15 @@ function PmMemberInsert() {
 
                 <div>
                   <div className="pm-contents">
-                    <div className="pm-titleboxs">경력사항</div>
-                    <table>
+                    <div className="pm-titleboxs2">경력사항</div>
+                    <table className="tables">
                       <thead>
                         <tr>
-                          <th className="pm-test2">회사명</th>
-                          <th className="pm-test2">직위</th>
-                          <th className="pm-test2">근속년수</th>
-                          <th className="pm-test2">입사일</th>
-                          <th className="pm-test4">퇴사일</th>
+                          <th className="pm-test23">회사명</th>
+                          <th className="pm-test23">직위</th>
+                          <th className="pm-test23">근속년수</th>
+                          <th className="pm-test23">입사일</th>
+                          <th className="pm-test43">퇴사일</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -232,14 +203,14 @@ function PmMemberInsert() {
 
                 <div>
                   <div className="pm-contents-last">
-                    <div className="pm-titleboxs">자격증</div>
+                    <div className="pm-titleboxs3">자격증</div>
                     <table>
                       <thead>
                         <tr>
-                          <th className="pm-test2">자격증이름</th>
-                          <th className="pm-test2">발급기관</th>
-                          <th className="pm-test2">발급일</th>
-                          <th className="pm-test2">만료일</th>
+                          <th className="pm-test23">자격증이름</th>
+                          <th className="pm-test23">발급기관</th>
+                          <th className="pm-test23">발급일</th>
+                          <th className="pm-test23">만료일</th>
                           <th className="pm-test4">활용수준</th>
                         </tr>
                       </thead>
@@ -278,7 +249,7 @@ function PmMemberInsert() {
           </div>
           <button
           value="사원 등록 하기"
-          className="pm-work-button"
+          className="pm-work-buttonn"
         >사원 등록 하기</button>
         </form>
         {/* <input
