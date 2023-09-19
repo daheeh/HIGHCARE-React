@@ -362,9 +362,11 @@ function AuthSetting({ managerIds }) {
 
 
     // 선택한 매니저 정보와 선택한 메뉴그룹들 api insert 요청 
-    const saveManagerClick = () => {
+    const saveManagerClick = async () => {
 
-        dispatch(insertMenuManagers(sendData));
+        await dispatch(insertMenuManagers(sendData));
+        window.location.reload();
+
     }
 
     const cancelClick = () => {

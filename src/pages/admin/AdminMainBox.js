@@ -5,18 +5,19 @@ import { useEffect, useState } from "react";
 import { accountStatus, roleCode } from "./member/MemberList";
 
 
-export function AdminMain1() {
+export function AdminMain1({memberList}) {
 
     const dispatch = useDispatch();
-    let memberList = useSelector(state => state.members.data);
+    // let members = useSelector(state => state.members);
+    // let memberList = members.data;
     let [membercount, setMemberCount] = useState(0);
 
     useEffect(() => {
 
-        if (Array.isArray(memberList)) {
+        if (Array.isArray(memberList?.content)) {
 
             let preCount = 0;
-            memberList.map((member) => {
+            memberList?.content.map((member) => {
                 member.roleList.some(role => {
                     if (roleCode(role.authCode).includes('임시회원')) {
                         preCount++;
@@ -35,8 +36,8 @@ export function AdminMain1() {
             <div>
                 <div> 현재 : {membercount}명 </div>
             </div>
-            {Array.isArray(memberList) &&
-                memberList
+            {Array.isArray(memberList?.content) &&
+                memberList?.content
                     .filter((member) =>
                         member.roleList.some((role) =>
                             roleCode(role.authCode ? role.authCode : '').includes('임시회원')
@@ -50,7 +51,7 @@ export function AdminMain1() {
                                 <div>{member.employee.name}</div>
                                 <div>{member.employee.jobCode.jobName}</div>
                                 <div>{member.employee.deptCode.deptName}</div>
-                                <div>{member.memberId}</div>
+                                <div>{member.memberId ? member.memberId : ''}</div>
                                 <div>{member.employee.email}</div>
                             </div>
                         )
@@ -59,19 +60,21 @@ export function AdminMain1() {
     )
 }
 
-export function AdminMain2() {
+export function AdminMain2({memberList}) {
+
+    console.log("-----------", memberList);
 
     const dispatch = useDispatch();
-    let mem = useSelector(state => state.members);
-    const memberList = mem.data;
+    // let mem = useSelector(state => state.members);
+    // const memberList = mem.data;
     let [membercount, setMemberCount] = useState(0);
 
     useEffect(() => {
 
-        if (Array.isArray(memberList)) {
+        if (Array.isArray(memberList?.content)) {
 
             let preCount = 0;
-            memberList.map((member) => {
+            memberList.content.map((member) => {
                 if (member.accessManager?.isInActive == 'Y') {
                     preCount++;
                 }
@@ -88,8 +91,8 @@ export function AdminMain2() {
             <div>
                 <div> 현재 : {membercount}명 </div>
             </div>
-            {Array.isArray(memberList) &&
-                memberList
+            {Array.isArray(memberList?.content) &&
+                memberList.content
                     .filter((member) =>
                         member.accessManager?.isInActive == 'Y'
                     )

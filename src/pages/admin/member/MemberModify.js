@@ -10,15 +10,15 @@ import { AdminNav } from "../AdminNav";
 // 계정상태 유형 변경 
 function MemberModify() {
 
+    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    // let mem = useSelector(state => state.members);
-    // const memberlist = mem.data;
-
     // 선택멤버 
     const selectMember = useSelector(state => state.members.selectMember);
     const { empNo } = useParams();
+
+    console.log("selectMember", selectMember);
 
     const [member, setMember] = useState([]);
 
@@ -44,9 +44,9 @@ function MemberModify() {
 
         // const fetchData = () => {  // 선택 멤버 정보 
             setMember(selectMember);
-            setData({ ...data, id: selectMember.memberId })
+            setData({ ...data, id: selectMember?.memberId })
             // 선택멤버 계정 정보 
-            setAccstat(accountStatus(selectMember.accessManager));
+            setAccstat(accountStatus(selectMember?.accessManager));
 
         // }
         // fetchData();
@@ -60,7 +60,7 @@ function MemberModify() {
 
     // 라디오버튼 
     const handleRadioChange = (e) => {
-        // setRadioStatus(e.target.id);
+        setRadioStatus(e.target.id);
         console.log('1');
         setData({ ...data, status: e.target.id })
         console.log('2');
@@ -79,13 +79,17 @@ function MemberModify() {
     // 수정버튼 
     const modifyAccountStatus = async () => {
         if (data.status) {
-            if (radioStatus === 'isWithDraw') {
+            console.log("radiiosstaut ", radioStatus);
+            if (radioStatus == 'isWithDraw') {
                 data.method = 'delete'
-                dispatch(WithDrawInfoAPI(data));
+                await dispatch(WithDrawInfoAPI(data));
+                navigate(-1);
+
             } else {
                 data.method = 'put'
                  await dispatch(ModifyInfoAPI(data));
                  navigate(-1);
+                //  window.location.reload();
             }
             
         }

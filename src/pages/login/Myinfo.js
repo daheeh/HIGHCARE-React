@@ -14,7 +14,7 @@ function Myinfo() {
     const [user, setUser] = useState(null);
 
     const getUser = async () => {
-        let res = await axios.get("http://highcare.coffit.today:8080/api/admin/", config);
+        let res = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/`, config);
         setUser(res.data);
     };
 
