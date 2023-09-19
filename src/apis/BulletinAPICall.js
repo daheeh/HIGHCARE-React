@@ -24,12 +24,12 @@ import{
 } from '../modules/NoticeModule';
 
 export const callNoticeAPI = () => {
-    const requestURL = `${process.env.REACT_APP_BASIC_URL_FRONT}/bulletin/notice`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/bulletin/notice`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                // "Authorization": "Bearer " + (window.localStorage.getItem("accessToken") || ""),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }

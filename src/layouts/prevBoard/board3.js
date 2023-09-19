@@ -4,24 +4,26 @@ import { useEffect, useState } from 'react';
 import {
     callNoticeAPI
 } from '../../apis/BulletinAPICall';
+
 function Board3() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const notice = useSelector(state => state.noticeReducer);
     const noticeList = notice.data;
- 
-    useEffect(
-        () =>{
-            dispatch(callNoticeAPI());
-        },[]
-        );
+    console.log('noticeList', noticeList);
 
-        const onClickTableTr = (bulletinCode) => {
-            navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
-        }
-    
+    useEffect(
+        () => {
+            dispatch(callNoticeAPI());
+        }, []
+    );
+
+    const onClickTableTr = (bulletinCode) => {
+        navigate(`/bulletin/thread/${bulletinCode}`, { replace: false });
+    }
+
     return (
-        <table style={{cursor:'pointer'}}>
+        <table style={{ cursor: 'pointer' }}>
             <thead>
                 <tr>
                     <th>제목</th>
@@ -30,19 +32,19 @@ function Board3() {
                 </tr>
             </thead>
             <tbody>
-                {Array.isArray(noticeList)  && noticeList.map(
+                {Array.isArray(noticeList) && noticeList.map(
                     (board) => (
-                        <tr
-                        key={board.bulletinCode}
-                        onClick={ () => onClickTableTr(board.bulletinCode) }>
-                    <td>{board.title}</td>
-                    <td>{board.bulletinEmployee.empName}</td>
-                    <td>{board.modifiedDate}</td>
-                       
+                        <tr 
+                            key={board.bulletinCode}
+                            onClick={() => onClickTableTr(board.bulletinCode)}>
+                            <td>{board.title}</td>
+                            <td>{board.bulletinEmployee.empName}</td>
+                            <td>{board.modifiedDate}</td>
+
                         </tr>))
-                
-            }
-                </tbody>
+
+                }
+            </tbody>
         </table>
     )
 
