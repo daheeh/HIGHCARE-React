@@ -31,7 +31,7 @@ function MainLayOut() {
         <>
             <div className={MainLayOutCss.container}>
                 <div className={MainLayOutCss.box}>
-                    <Link to="/pm/work"><h2>출 / 퇴근</h2></Link>
+                    <Link to="/pm/work"><h2>출근 | 퇴근</h2></Link>
                     {empNo && <PmWorkMain />}
 
 
