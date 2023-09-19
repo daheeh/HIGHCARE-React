@@ -64,11 +64,11 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
     const getConversations = () => {
       axios({
           method: "get",
-          url: 'http://highcare.coffit.today:8080/user/fetchAllUsers/' + userId  // userid: 로그인된 회원의 아이디
+          url: 'http://localhost:8080/user/fetchAllUsers/' + empName  // userid: 로그인된 회원의 아이디
       })
       .then((response) => {
           // 현재 로그인한 사용자와 관련된 채팅방만 필터링하여 저장
-          const filteredConversations = response.data.filter(conversation => conversation.startsWith(userId + ":"));
+          const filteredConversations = response.data.filter(conversation => conversation.startsWith(empName + ":"));
           for (const key in filteredConversations) {
               dispatch(insertPartner(
                   {
@@ -169,7 +169,7 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
                         } 
 
                         <SockJsClient
-                        url="http://highcare.coffit.today:8080/chat"
+                        url="http://localhost:8080/chat"
                         topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
                           recevieMessage(msg);
