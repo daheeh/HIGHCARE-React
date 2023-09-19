@@ -187,7 +187,7 @@ function PmMemberResist() {
                             <td className="pm-test10">{item?.institution || ''}</td>
                             <td className="pm-test10">{item?.startDate || ''}</td>
                             <td className="pm-test10">{item?.startDate || ''}</td>
-                            <td className="pm-test10">{item?.status || ''}</td>
+                            <td className="pm-test11">{item?.status || ''}</td>
                           </tr>
                         ))}
                       </tbody>

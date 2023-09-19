@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { callMgStartAPI, callManagementAPI, callMgEndAPI } from '../../apis/PmAPICalls';
 // import { callManagementAPI } from '../../apis/PmAPICalls';
 // import { callMgEndAPI } from '../../apis/PmAPICalls';
+
 import { useNavigate } from 'react-router-dom';
 import { async } from '@dabeng/react-orgchart';
 
@@ -17,6 +18,7 @@ function PmWorkMain() {
     const authes = useSelector(state => state.authes);
     const empNo = authes.empNo;
     const empName = authes.name;
+
     const deptName = authes.dept;
     const jobName = authes.job;
 
@@ -61,24 +63,23 @@ function PmWorkMain() {
         // 여기 result.data로 변경한것을 result로 다시변경
         if (result.manage) {
             console.log("result >>>>>222: ", result.manage);
-            let status = type === 'start' ? '출근' : '퇴근';
-
+            let status = type === 'start'? '출근' : '퇴근';
+           
             setFormData(form => ({
-                ...form,
-                empNo: empNo,
-                empName: empName,
-                manDate: '',
-                deptName: deptName,
-                jobName: jobName,
-                startTime: '',
-                endTime: '',
-                status: status,
-                workTime: '',
-                totalWorkTime: '',
+              ...form, 
+              empNo:empNo,
+              empName: empName,
+              manDate: '',
+              deptName: deptName,
+              jobName:  jobName,
+              startTime: '',
+              endTime: '',
+              status: status,
+              workTime: '',
+              totalWorkTime: '',
             }));
-        }
-        console.log("form ==============================: ", formData);
-
+          }
+          console.log("form ==============================: ", formData);
 
     }, [currentPage]);
 
@@ -86,15 +87,17 @@ function PmWorkMain() {
 
     const pmSubmission = async () => {
         setType('start');
-        if (empNo !== undefined) {
-            try {
-                const response = await dispatch(callMgStartAPI({ formData }));
+
+        if (empNo !== 0) {
+			try {
+				const response = await dispatch(callMgStartAPI({ formData }));
+                // window.location.reload();
                 console.log("-----------------------------------response", response.status);
                 if (response.status === 200) {
                     if (response.data === 'stSuceess') {
 
                         window.alert("출근하였습니다");
-                        window.location.reload();
+                        // window.location.reload();
                     } else {
                         window.alert("이미 출근이 완료되었습니다. ");
 

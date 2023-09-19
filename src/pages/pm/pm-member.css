@@ -1420,6 +1420,14 @@ display: flex;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
+
+.pm-test11{
+    width: 205px;
+    height: 26px;
+    text-align: center;
+    /* border-right: 1px solid black; */
+    border-bottom: 1px solid black;
+}
 /* 왼쪽 제목 */
 .pm-titleboxs{
     display: flex;
