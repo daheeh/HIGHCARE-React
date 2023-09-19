@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './pm-member.css'
 import PmNav from './pmNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { callMgStartAPI, callManagementAPI, callMgEndAPI  } from '../../apis/PmAPICalls';
-// import { callManagementAPI } from '../../apis/PmAPICalls';
-// import { callMgEndAPI } from '../../apis/PmAPICalls';
+// import { callMgStartAPI, callManagementAPI, callMgEndAPI  } from '../../apis/PmAPICalls';
+import { callManagementAPI } from '../../apis/PmAPICalls';
+import { callMgStartAPI } from '../../apis/PmAPICalls';
+import { callMgEndAPI } from '../../apis/PmAPICalls';
 import { useNavigate } from 'react-router-dom';
 import { async } from '@dabeng/react-orgchart';
 
@@ -15,6 +16,7 @@ function PmWorkMain() {
     const itemsPerPage = 10;
 
     const authes = useSelector(state => state.authes);
+    console.log(authes);
 	const empNo = authes.empNo;
 	const empName = authes.name;
     const deptName = authes.dept;
@@ -65,7 +67,7 @@ function PmWorkMain() {
            
             setFormData(form => ({
               ...form, 
-              empNo: empNo,
+              empNo:empNo,
               empName: empName,
               manDate: '',
               deptName: deptName,
@@ -86,15 +88,16 @@ function PmWorkMain() {
 
     const pmSubmission = async () => {
         setType('start');
-        if (empNo !== undefined) {
+        if (empNo !== 0) {
 			try {
 				const response = await dispatch(callMgStartAPI({ formData }));
+                // window.location.reload();
                 console.log("-----------------------------------response", response.status);
 				if (response.status === 200) {
                     if(response.data === 'stSuceess'){
 
                         window.alert("출근하였습니다");
-                        window.location.reload();
+                        // window.location.reload();
                     } else {
                         window.alert("이미 출근이 완료되었습니다. ");
                         
