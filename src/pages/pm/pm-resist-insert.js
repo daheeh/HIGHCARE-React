@@ -37,7 +37,14 @@ function PmMemberInsert() {
       console.log(key, value);
     }
     const response = await dispatch(callPmInsertAPI({ formData }));
+    if(response.data === '사원 등록 성공'){
 
+      window.alert("사원 등록을 성공하였습니다.");
+  
+  } else {
+      window.alert("다시 시도해 주세요");
+      
+  }
     console.log(response);
   }
   const authSubmission = async () => {};
