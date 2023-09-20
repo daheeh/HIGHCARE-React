@@ -40,7 +40,6 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
 
     // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
     const getConversations = () => {
-<<<<<<< HEAD
       axios({
           method: "get",
           url: `${process.env.REACT_APP_BASIC_URL}/user/fetchAllUsers/` + empName  // userid: 로그인된 회원의 아이디
@@ -63,30 +62,6 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
         console.log("사용자 채팅방 로딩 실패");
       })    
   }
-
-
-=======
-        axios({
-          method:"get",
-          url: 'http://localhost:8080/user/fetchAllUsers/'+ empName  // userid: 로그인된 회원의 아이디
-        })
-        .then((response) => {
-                    console.log(response);
->>>>>>> hdhye
-
-          for (const key in response.data) {
-            dispatch(insertPartner(
-              {
-                partner: response.data[key].partner,
-                list:[...response.data[key].messageList]
-              }
-            ))
-          }           
-        })
-        .catch((error) => {
-          console.log("사용자 채팅방 로딩 실패");
-        })    
-      }
 
 
       const sendToMessage = (from, to, msg) =>{
