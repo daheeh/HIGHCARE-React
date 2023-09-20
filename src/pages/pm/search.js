@@ -7,7 +7,7 @@ import { callEmployeeAPI } from '../../apis/PmAPICalls';
 function PmMenu() {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 15;
 
     const dispatch = useDispatch();
     const results = useSelector(state => state.treeview);
@@ -20,6 +20,7 @@ function PmMenu() {
     if(pageInfo) {
         for(let i = 1; i<= pageInfo.pageEnd; i++){
             pageNumber.push(i);
+            console.log('page----->>', pageInfo);
         }
     }
 
@@ -65,7 +66,7 @@ function PmMenu() {
                     </tr>
                     {Array.isArray(results.data) && results.data
                         .map((result) => (
-                            <tr key={result.empName}>
+                            <tr key={result.empNo}>
                                 <td>{result.empName}</td>
                                 <td>{result.job.name}</td>
                                 <td>{result.phone}</td>
