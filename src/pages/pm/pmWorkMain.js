@@ -16,14 +16,14 @@ function PmWorkMain() {
     const itemsPerPage = 10;
 
     const authes = useSelector(state => state.authes);
-    const empNo = authes.empNo;
-    const empName = authes.name;
+    // const empNo = authes.empNo;
+    // const empName = authes.name;
 
-    const deptName = authes.dept;
-    const jobName = authes.job;
+    // const deptName = authes.dept;
+    // const jobName = authes.job;
 
-
-    console.log("empNo : ", empNo);
+    const [test, setTest] = useState({});
+    // console.log("empNo : ", empNo);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -61,24 +61,24 @@ function PmWorkMain() {
         // Redux action을 dispatch하여 API 호출 및 데이터 업데이트 수행
         dispatch(callManagementAPI({ currentPage }));
         // 여기 result.data로 변경한것을 result로 다시변경
-        if (result.manage) {
-            console.log("result >>>>>222: ", result.manage);
+        // if (result.manage) {
+        //     console.log("result >>>>>222: ", result.manage);
+        // }
             let status = type === 'start'? '출근' : '퇴근';
            
             setFormData(form => ({
               ...form, 
-              empNo:empNo,
-              empName: empName,
+              empNo:authes.empNo,
+              empName: authes.empName,
               manDate: '',
-              deptName: deptName,
-              jobName:  jobName,
+              deptName: authes.deptName,
+              jobName:  authes.jobName,
               startTime: '',
               endTime: '',
               status: status,
               workTime: '',
               totalWorkTime: '',
             }));
-          }
           console.log("form ==============================: ", formData);
 
     }, [currentPage]);
@@ -88,7 +88,7 @@ function PmWorkMain() {
     const pmSubmission = async () => {
         setType('start');
 
-        if (empNo !== 0) {
+        if (authes.empNo !== 0) {
 			try {
 				const response = await dispatch(callMgStartAPI({ formData }));
                 // window.location.reload();
@@ -120,7 +120,7 @@ function PmWorkMain() {
         setType('end');
 
 
-        if (empNo !== undefined) {
+        if (authes.empNo !== undefined) {
             try {
                 const response = await dispatch(callMgEndAPI({ formData }));
                 console.log("-----------------------------------response", response);

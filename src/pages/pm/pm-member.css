@@ -457,6 +457,11 @@ font-size: 16px;
     background-color:  rgb(199, 199, 199);
 
 }
+
+.pmmainbox-first:hover{
+    background-color:  rgb(199, 199, 199);
+}
+
 .pm-work-button:hover{
     background-color: #FFC338;
 }
@@ -1570,11 +1575,20 @@ display: flex;
 }
 
 .pmmainbox{
-    margin: 70px;
-    width: 230px;
-    height: 200px;
-    border: 5px solid rgb(153, 151, 151);
-    border-radius: 6px;
+    margin: 70px 40px 30px 0px;
+    width: 420px;
+    height: 300px;
+    background-color: white;
+    border: 3px solid #10479A;
+    /* border-radius: 6px; */
+}
+.pmmainbox-first{
+    margin: 70px 40px 30px 130px;
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    border: 3px solid #10479A;
+    /* border-radius: 6px; */
 }
 
 .pmmainbox2{
@@ -1597,17 +1611,20 @@ display: flex;
 
 .pmtopline{
     margin: 20px 0px 0px 0px;
-    width: 1200px;
+    padding-bottom: 10px;
+    width: 1600px;
     height: 100px;
     border-top: 1px solid black; 
     border-bottom: 1px solid black;
 }
 
 .pmmainbox-font{
+    margin-top: 55px;
     text-align: center;
-    color: #000;
+    color: #092857;
     padding: 70px;
-    font-size: 20px;
+    font-size: 30px;
+    font-family: NanumGothic !important;
 }
 
 .marginbox {
@@ -1624,4 +1641,10 @@ display: flex;
 
 .mainmargin-pm{
     margin-left: 130px;
+}
+
+.divpmbox{
+    width: 1600px;
+    height: 850px;
+    background-color: #dbdbdb;
 }
