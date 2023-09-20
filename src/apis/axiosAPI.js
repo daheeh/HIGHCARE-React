@@ -16,7 +16,7 @@
 
 //     }
 // }
-export const BASIC_URL = "http://highcare.coffit.today:8080/api";
+export const BASIC_URL = "http://localhost:8080/api";
 export const AUTH_URL = BASIC_URL + "/auth"; 
 export const ADMIN_URL = BASIC_URL + "/admin"; 
 

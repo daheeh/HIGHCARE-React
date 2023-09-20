@@ -75,7 +75,7 @@ Quill.register('modules/ImageResize', ImageResize);
                     console.log('file[0]',file[0]);
                     console.log('file : ',file);
                     console.log(formData);
-                    const res = await axios.post('http://highcare.coffit.today:8080/uploadImage', formData);
+                    const res = await axios.post('http://localhost:8080/uploadImage', formData);
 
                     quillRef.current.getEditor().deleteText(range.index, 1);
                     quillRef.current.getEditor().insertEmbed(range.index, "image", res.data);

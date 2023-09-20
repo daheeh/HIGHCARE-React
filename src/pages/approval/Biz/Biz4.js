@@ -50,7 +50,7 @@ function Biz4({ mode, data }) {
 	useEffect(() => {
 		const fetchRequest = async () => {
 			try {
-				const requestURL = `http://highcare.coffit.today:8080/api/pm/member/detail/${empNo}`;
+				const requestURL = `http://localhost:8080/api/pm/member/detail/${empNo}`;
 
 				const result = await fetch(requestURL, {
 					method: "GET",

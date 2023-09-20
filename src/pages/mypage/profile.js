@@ -73,7 +73,7 @@ function Profile() {
             console.log(`=============>  ${mypage?.data?.myProfileFile?.chName}`)   // [1]
             if(!imageLink){
                     
-                setImageLink(`${process.env.REACT_APP_BASIC_URL}}/images/${mypage?.data?.myProfileFile?.chName}`);
+                setImageLink(`http://localhost:8080/images/${mypage?.data?.myProfileFile?.chName}`);
             } 
         },
         [image]);
