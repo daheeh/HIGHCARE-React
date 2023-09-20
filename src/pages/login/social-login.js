@@ -62,7 +62,6 @@ function SocialLogin() {
     data.name = response.profileObj.name;
 
 
-
      dispatch(OauthLoginAPI(data));
     // await navigate("/", { replace: true }); 
 

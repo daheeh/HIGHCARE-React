@@ -13,7 +13,7 @@ function ApvMyList({show}) {
     useEffect(() => {
         async function fetchCounts() {
             try {
-                const response = await fetch(`http://localhost/api/approval/apvList?empNo=${empNo}`, {
+                const response = await fetch(`${process.env.REACT_APP_BASIC_URL}/api/approval/apvList?empNo=${empNo}`, {
                     method: 'GET',
                     headers: {
                         Accept: '*/*',
