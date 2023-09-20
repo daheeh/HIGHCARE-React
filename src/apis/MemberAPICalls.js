@@ -86,6 +86,7 @@ export const requestAllMember = createAsyncThunk(
 export const allMemberListApi = createAsyncThunk(
   'all/members',
   async (paging) => {
+    console.log("call all Members List API ====== ");
     try {
       const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/memberlist?page=${paging.page}&size=${paging.size}`,
         {

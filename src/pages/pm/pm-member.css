@@ -367,7 +367,7 @@ font-size: 16px;
 }
 
 .margin-main{
-    color:#0267ff;
+color:#0267ff;
 
     margin-top: 20px;
     margin-bottom: 30px;
@@ -1619,12 +1619,12 @@ display: flex;
 }
 
 .pmmainbox-font{
-    margin-top: 55px;
+margin-top: 55px;
     text-align: center;
     color: #092857;
     padding: 70px;
     font-size: 30px;
-    font-family: NanumGothic !important;
+font-family: NanumGothic !important;
 }
 
 .marginbox {

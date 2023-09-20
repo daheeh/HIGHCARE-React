@@ -35,7 +35,8 @@ function Exp4({ mode, data }) {
 	useEffect(() => {
 		const fetchRequest = async () => {
 			try {
-				const requestURL = `http:/highcare.coffit.today:8080/api/approval/search/exp4/${empNo}`;
+				// const requestURL = `http:/highcare.coffit.today:8080/api/approval/search/exp4/${empNo}`;
+				const requestURL = `http:/localhost:8080/api/approval/search/exp4/${empNo}`;
 
 				const result = await fetch(requestURL, {
 					method: "GET",

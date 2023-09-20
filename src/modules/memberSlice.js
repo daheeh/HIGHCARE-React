@@ -37,12 +37,12 @@ const memberSlice = createSlice({
       .addCase(selectMember.fulfilled, (state, { payload }) => {
         // 비동기 작업 성공하면 업데이트됨 
         console.log("fulfilled...!!");
-        state.data = payload.data;
+        state.selectMember = payload.data;
 
       })
       .addCase(selectMember.rejected, (state, action) => {
         // 비동기 작업이 실패한 경우 -> 나중에 에러 처리 수정하기 
-        state.data = '';
+        state.selectMember = '';
         console.log("rejected!!!!!!");
         console.error(action.error);
       })

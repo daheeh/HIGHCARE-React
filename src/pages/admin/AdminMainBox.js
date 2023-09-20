@@ -12,6 +12,7 @@ export function AdminMain1({memberList}) {
     // let memberList = members.data;
     let [membercount, setMemberCount] = useState(0);
 
+     
     useEffect(() => {
 
         if (Array.isArray(memberList?.content)) {
@@ -19,7 +20,7 @@ export function AdminMain1({memberList}) {
             let preCount = 0;
             memberList?.content.map((member) => {
                 member.roleList.some(role => {
-                    if (roleCode(role.authCode).includes('임시회원')) {
+                    if (roleCode(role.authCode ? role.authCode : '').includes('임시회원')) {
                         preCount++;
                     }
                 });
@@ -34,28 +35,37 @@ export function AdminMain1({memberList}) {
     return (
         <>
             <div>
-                <div> 현재 : {membercount}명 </div>
+                {/* <div> 현재 : {membercount}명 </div> */}
             </div>
             {Array.isArray(memberList?.content) &&
-                memberList?.content
-                    .filter((member) =>
-                        member.roleList.some((role) =>
-                            roleCode(role.authCode ? role.authCode : '').includes('임시회원')
-                        )
-                    )
-                    .map((member) => {
-                        return (
-                            <div style={{ maxWidth: 1000 }}
-                                key={member.empNo} className={MemberListCss.category}>
-                                <div>{member.empNo}</div>
-                                <div>{member.employee.name}</div>
-                                <div>{member.employee.jobCode.jobName}</div>
-                                <div>{member.employee.deptCode.deptName}</div>
-                                <div>{member.memberId ? member.memberId : ''}</div>
-                                <div>{member.employee.email}</div>
-                            </div>
-                        )
-                    })}
+    (() => {
+        let uniqueMembers = {}; // Use an object to track unique members
+
+        return memberList?.content
+            .filter((member) =>
+                member.roleList.some((role) =>
+                    roleCode(role.authCode ? role.authCode : '').includes('임시회원')
+                )
+            )
+            .map((member) => {
+                if (!uniqueMembers[member.memberId]) {
+                    uniqueMembers[member.memberId] = true;
+
+                    return (
+                        <div style={{ maxWidth: 1000 }} key={member.empNo} className={MemberListCss.category}>
+                            <div>{member.empNo}</div>
+                            <div>{member.employee.name}</div>
+                            <div>{member.employee.jobCode.jobName}</div>
+                            <div>{member.employee.deptCode.deptName}</div>
+                            <div>{member.memberId ? member.memberId : ''}</div>
+                            <div>{member.employee.email}</div>
+                        </div>
+                    );
+                }
+                return null; 
+            });
+    })()
+}
         </>
     )
 }
