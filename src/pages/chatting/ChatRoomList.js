@@ -39,51 +39,53 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
 
 
     // 대화상대 목록을 가져오는 API 호출(사용자의 대화 상대 목록 관리)
-    // const getConversations = () => {
-    //     axios({
-    //       method:"get",
-    //       url: 'http://highcare.coffit.today:8080/user/fetchAllUsers/'+ userId  // userid: 로그인된 회원의 아이디
-    //     })
-    //     .then((response) => {
-    //       for (const key in response.data) {
-    //         dispatch(insertPartner(ho
-    //           {
-    //             partner: response.data[key].partner,
-    //             list:[...response.data[key].messageList]
-    //           }
-    //         ))
-    //       }           
-    //     })
-    //     .catch((error) => {
-    //       console.log("사용자 채팅방 로딩 실패");
-    //     })    
-    //   }
-
-
-
     const getConversations = () => {
-      axios({
-          method: "get",
-          url: 'http://localhost:8080/user/fetchAllUsers/' + empName  // userid: 로그인된 회원의 아이디
-      })
-      .then((response) => {
-          // 현재 로그인한 사용자와 관련된 채팅방만 필터링하여 저장
-          console.log(response);
-          const filteredConversations = response.data.filter(conversation => conversation.startsWith(userId + ":"));
-          for (const key in filteredConversations) {
-              dispatch(insertPartner(
-                  {
-                      partner: filteredConversations[key].partner,
-                      list: [...filteredConversations[key].messageList]
-                  }
-              ))
-          }
-          console.log('response =========> ' , response);
-      })
-      .catch((error) => {
-        console.log("사용자 채팅방 로딩 실패");
-      })    
-  }
+        axios({
+          method:"get",
+          url: 'http://localhost:8080/user/fetchAllUsers/'+ empName  // userid: 로그인된 회원의 아이디
+        })
+        .then((response) => {
+            //         console.log(response);
+
+          for (const key in response.data) {
+            dispatch(insertPartner(
+              {
+                partner: response.data[key].partner,
+                list:[...response.data[key].messageList]
+              }
+            ))
+          }           
+        })
+        .catch((error) => {
+          console.log("사용자 채팅방 로딩 실패");
+        })    
+      }
+
+
+
+  //   const getConversations = () => {
+  //     axios({
+  //         method: "get",
+  //         url: 'http://localhost:8080/user/fetchAllUsers/' + empName  // userid: 로그인된 회원의 아이디
+  //     })
+  //     .then((response) => {
+  //         // 현재 로그인한 사용자와 관련된 채팅방만 필터링하여 저장
+  //         console.log(response);
+  //         const filteredConversations = response.data.filter(conversation => conversation.startsWith(userId + ":"));
+  //         for (const key in filteredConversations) {
+  //             dispatch(insertPartner(
+  //                 {
+  //                     partner: filteredConversations[key].partner,
+  //                     list: [...filteredConversations[key].messageList]
+  //                 }
+  //             ))
+  //         }
+  //         // console.log('response =========> ' , response);
+  //     })
+  //     .catch((error) => {
+  //       console.log("사용자 채팅방 로딩 실패");
+  //     })    
+  // }
 
 
 

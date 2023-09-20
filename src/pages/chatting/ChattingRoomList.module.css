@@ -25,6 +25,7 @@
     padding-left: 15px;
     font-size: small;
     text-align: center;
+    flex-direction: column;
 }
 
 .roomInfoText {
