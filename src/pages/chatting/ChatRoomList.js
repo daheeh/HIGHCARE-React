@@ -144,7 +144,8 @@ function ChatRoomList({userId, empName, selectedEmployee}, ref) {
                         } 
 
                         <SockJsClient
-                        url="http://highcare.coffit.today:8080/chat"
+                        // url="http://highcare.coffit.today:8080/chat"
+                        url="http://localhost:8080/chat"
                         topics={topics} // WebSocket 주제 설정 => WebSocket 연결 시 해당 주제 구독
                         onMessage={msg => {
                           recevieMessage(msg);
