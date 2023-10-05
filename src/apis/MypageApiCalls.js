@@ -10,6 +10,7 @@ export const callMypageProfileSelectAPI = (empNo) => {
 
     console.log('[callMypageProfileSelectAPI Call]');
 
+    // const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/profile/${empNo}`;
     const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/profile/${empNo}`;
     console.log("리퀘스트유알엘",requestURL);
 
@@ -66,11 +67,11 @@ export const callProfileInsertAPI = ({form}) => {
     };
 };
 // 특정 사원의 정보를 조회하고 검색하는 식별자
-export const callAnnSelectAPI = (empNo) => {
+export const callAnnSelectAPI = (empNo, currentPage) => {
 
     console.log('[callAnnSelectAPI Call]', empNo);
 
-    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/anselect/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/anselect/${empNo}?offset=${currentPage}`;
     console.log("RequestURL : ", requestURL);
 
     return async (dispatch, getState) => {
@@ -101,13 +102,14 @@ export const callAnnSelectAPI = (empNo) => {
     }
 };
 
-export const CallManSelectAPI = (empNo) => {
+export const CallManSelectAPI = (empNo, currentPage) => {
 
     console.log('CallManSelectAPI Call');
+    console.log('currnetPage check!!!', currentPage);  
 
     // const requestURL = `http://highcare.coffit.today:8080/api/mypage/manselect/${empNo}`;
     
-    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/manselect/${empNo}`;
+    const requestURL = `${process.env.REACT_APP_BASIC_URL}/api/mypage/manselect/${empNo}?offset=${currentPage}`;
 
     return async (dispatch, getState) => {
 

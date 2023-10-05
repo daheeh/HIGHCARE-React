@@ -1,17 +1,21 @@
-.apvMainBoxRight {
+.myMainBoxRight {
     display: flex;
     flex-direction: column;
     margin: 30px 10px;
     border-radius: 6px;
     border: 4px solid #10479A;
-    width: 200px;
-    height: 140px;
+    width: 500px;
+    height: 130px;
     padding: 10px 12px;
-    justify-content: center;
-    align-items: flex-start;
+    /* justify-content: center; */
+    /* align-items: flex-start; */
+    justify-content: center; /* 수직 중앙 정렬 */
+    align-items: center; /* 수평 중앙 정렬 */
+    text-align: center;
+
 }
 
-.apvMainBoxRight .row1 {
+.myMainBoxRight .row1 {
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -23,7 +27,7 @@
     /* border-bottom: 2px solid #10479A; */
 }
 
-.apvMainBoxRight .row2 {
+.myMainBoxRight .row2 {
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -31,4 +35,9 @@
     height: 100px;
     width: 200px;
     font-size: 24px;
+}
+
+.myMainBoxRightBox{
+    margin: 90px  130px  130px  300px;
+
 }

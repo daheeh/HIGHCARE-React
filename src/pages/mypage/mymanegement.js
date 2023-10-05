@@ -26,7 +26,7 @@ function MyManegement() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemPerpage = 10;
 
-    const totalPages = Math.ceil( totalPage?.pageInfo?.total  / itemPerpage);
+    const totalPages = Math.ceil( totalPage?.pageInfo?.total / itemPerpage);
     console.log("TOTAL : ------", totalPages);
 
     useEffect(
@@ -74,10 +74,9 @@ function MyManegement() {
                                     <td>{item?.stime}</td>
                                     <td>{item?.etime}</td>
                                 </tr>
-
                             ))
                         }
-
+                        
                     </tbody>
                 </table>
                 <div className="pagingmypage">
