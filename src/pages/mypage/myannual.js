@@ -56,27 +56,27 @@ function MypageAnnual() {
             <div className="packingmy">
 
 
-                <div className="myMainBox">
-                    <div className="myMainBoxRightBox" style={{display:'flex'}}>
-                        <div className="myMainBoxRight">
+                <div className="AnnualmyMainBox">
+                    <div className="AnnualmyMainBoxRightBox" style={{display:'flex'}}>
+                        <div className="AnnualmyMainBoxRight">
                             <div className="row1">
                                 총연차
                                 <div className="annRow">{numAnnData && numAnnData[0]?.ban}</div>
                             </div>
                         </div>
-                        <div className="myMainBoxRight">
+                        <div className="AnnualmyMainBoxRight">
                             <div className="row1">
                                 잔여연차
                                 <div className="annRow">{numAnnData && numAnnData[0]?.totalAn}</div>
                             </div>
                         </div>
-                        <div className="myMainBoxRight">
+                        <div className="AnnualmyMainBoxRight">
                             <div className="row1">
                                 조정연차
                                 <div className="annRow">{numAnnData && numAnnData[0]?.addAn}</div>
                             </div>
                         </div>
-                        <div className="myMainBoxRight">
+                        <div className="AnnualmyMainBoxRight">
                             <div className="row1">
                                 사용연차
                                 <div className="annRow">{numAnnData && numAnnData[0]?.useAn}</div>

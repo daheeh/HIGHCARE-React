@@ -1,0 +1,124 @@
+a {
+    text-decoration: none;
+    margin-right: 0px;
+}
+
+body {
+    font-family: NanumGothic;
+    list-style-type: none;
+}
+
+section {
+    font-size: 20px;
+}
+
+.containermy {
+    width: 1500px;
+    padding: 0px 50px 50px 50px;
+    width: auto;
+    height: auto;
+}
+
+/* 왼쪽 메뉴바 */
+.leftMenu {
+    display: flex;
+}
+
+/* 왼쪽 아이콘 메뉴바 */
+.leftMenu1 {
+    background: #10479A;
+    width: 80px;
+    height: 1000px;
+}
+
+/* 왼쪽 카테고리 메뉴바*/
+.leftMenu2 {
+    height: 1000px;
+    border-color: #000;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.mainLogo>img {
+    margin: 20px 0px 34px 26px;
+    width: 205px;
+    height: 36px;
+}
+
+.myMainTitle {
+    color: #000;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.myNaviBox {
+    width: 247px;
+    height: 768px;
+    padding: 12px;
+    border-right: #000;
+    box-sizing: border-box
+}
+
+.myNaviBoxTop {
+    display: flex;
+    width: 197px;
+    height: 50px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: #FFC338;
+    color: #000;
+    text-align: center;
+    font-size: 24px;
+}
+
+.myNaviBoxUl li:hover {
+    background-color: #EEE;
+    font-weight: 600;
+}
+
+/* .myNaviBoxMainTitle {
+    display: flex;
+    width: 197px;
+    height: 34px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background: #10479A;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+} */
+
+.myNaviBoxMainTitle {
+    display: flex;
+    width: 197px;
+    height: 34px;
+    padding: 10px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background: #10479A;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    transition: background-color 0.3s; /* 호버 배경색 전환 애니메이션을 추가 */
+}
+
+.myNaviBoxMainTitle:hover {
+    background-color: #FFC338; /* 호버 배경색을 변경합니다. 원하는 색상으로 변경 */
+}
+
+.myNaviBoxEmp {
+    height: 10px;
+}
+
+
+

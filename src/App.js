@@ -63,6 +63,7 @@ import Profile from "./pages/mypage/profile";
 import ModifyInfo from "./pages/admin/member/ModifyInfo";
 import MypageAnnual from "./pages/mypage/myannual";
 import MyManegement from "./pages/mypage/mymanegement";
+// import Businesscard from "./pages/mypage/businesscardregist";
 import Myinfo from "./pages/login/Myinfo";
 import { CallbackKakao } from "./pages/login/components/CallbackKakao";
 import { TokenVerification } from "./pages/admin/auth/TokenVerification";
@@ -178,9 +179,12 @@ function App() {
                   <Route path="mod" element={<ResourceMod />} />
                 </Route>
                 <Route path="/mypage" element={<Mypage />} />
-                <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
+                <Route path="/mypage/customlog" element={<Customerlog />} />
                 <Route path="/mypage/profile" element={<Profile />} />
                 <Route path="/mypage/myannual" element={<MypageAnnual />} />
+                <Route path="/mypage/mymanegement" element={<MyManegement />} />
+                {/* <Route path="/mypage/businesscardregist" element={<Businesscard />} /> */}
+               
 
 
                 <Route path="/modifyinfo" element={<OAuthPage />} />
@@ -211,12 +215,8 @@ function App() {
                   <Route path="add" element={<ResourceAdd />} />
                   <Route path="reserve" element={<Reserve />} />
                 </Route>
-                <Route path="/mypage" element={<Mypage />} />
-                <Route path="/mypage/mytemplate/customlog" element={<Customerlog />} />
 
-                <Route path="/mypage/profile" element={<Profile />} />
-                <Route path="/mypage/annual" element={<MypageAnnual />} />
-                <Route path="/mypage/mymanegement" element={<MyManegement />} />
+
               </Route>
 
             </Route>
@@ -254,9 +254,8 @@ function App() {
 
 
     </BrowserRouter >
-
-
   );
 }
 
 export default App;
+

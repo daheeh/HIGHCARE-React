@@ -8,7 +8,7 @@ function ApvFileList({ files, onRemoveFile, data, isEditMode }) {
 
     const handleFileDownload = (fileName) => {
         // 파일 다운로드 API를 호출하는 코드
-        fetch(`http://highcare.coffit.today:8080/api/approval/download/${fileName}`, {
+        fetch(`http://localhost:8080/api/approval/download/${fileName}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + window.localStorage.getItem('accessToken'),
