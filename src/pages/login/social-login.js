@@ -62,7 +62,6 @@ function SocialLogin() {
     data.name = response.profileObj.name;
 
 
-
      dispatch(OauthLoginAPI(data));
     // await navigate("/", { replace: true }); 
 
@@ -130,7 +129,7 @@ function SocialLogin() {
         <input type="checkbox" hidden id="kakao" />
         <div htmlFor="kakao" id="kakaolabel" >
           <div onClick={() => {
-            const kakaoUrl =`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&redirect_uri=http://highcare.coffit.today:3000/login/oauth/kakao&response_type=code`;
+            const kakaoUrl =`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_BASIC_URL_FRONT}/login/oauth/kakao&response_type=code`;
             window.location.href = kakaoUrl;
           }}/>
           

@@ -164,7 +164,7 @@ export const callMgStartAPI = ({ formData }) => {
                     "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
                     "Accept": "*/*",
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "*", 
                 },
                 body: JSON.stringify(formData),
             })
@@ -206,11 +206,11 @@ export const callMgEndAPI = ({ formData }) => {
                 },
                 body: JSON.stringify(formData),
             })
-            // .then(response => {
-            //     console.log('-----------------> \n', response);
-            //     return response.json()
-            // });
-            .then(response => response.json());
+            .then(response => {
+                console.log('-----------------> \n', response);
+                return response.json()
+            });
+            // .then(response => response.json());
 
             console.log('[ApprovalAPICalls] callMgEndAPI RESULT : ', result);
 

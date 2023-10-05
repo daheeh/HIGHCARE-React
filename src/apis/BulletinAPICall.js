@@ -29,7 +29,7 @@ export const callNoticeAPI = () => {
         const result = await fetch(requestURL,{
             method: "GET",
             headers: {
-                "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
+                // "Authorization": "Bearer " + (window.localStorage.getItem("accessToken") || ""),
                 "Content-Type": "application/json",
                 "Accept": "*/*"
             }

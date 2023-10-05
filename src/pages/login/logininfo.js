@@ -107,11 +107,6 @@ function Logininfo() {
 
     }
 
-    
-
-    console.log(browserInfo());
-    console.log(deviceInfo());
-
 
     return (
         <div  style={{marginTop:100}}>

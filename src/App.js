@@ -105,8 +105,8 @@ function App() {
           {/* 여기부터 토큰(로그인 권한 인증) 유효성 체크 적용됨  */}
           <Route element={<TokenVerification />} >
 
-            <Route element={<AccountStatusVerify />}>
               <Route element={<TempPwdVerify />}>
+            <Route element={<AccountStatusVerify />}>
 
 
                 <Route path="approval">

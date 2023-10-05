@@ -33,7 +33,7 @@ function Calendar({setData}){
     
         return(
             <>
-            <div style={{ margin:15, display:'grid',gridTemplateColumns:"2fr 1fr"}}>
+            <div style={{ margin:15, display:'',gridTemplateColumns:"2fr 1fr"}}>
                 <FullCalendar   
                     plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
                     initialView={'dayGridMonth'}
@@ -44,7 +44,8 @@ function Calendar({setData}){
                             end: 'next' 
                         }
                     }
-                    height={"85vh"}
+                    height={"40vh"}
+                    dayMinWidth={"500px"}
                     dateClick={dateClick}
                     locale={'ko'}
                 />

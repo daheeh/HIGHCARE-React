@@ -21,8 +21,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function MessageList(props) {
   
+  console.log("props =======> ", props);
   // 채팅방 구성하는 데이터 및 함수들 추출
-  const {showMessage, setShowMessage, partner, list, host, sendToMessage, handleLeaveChat, handleClose} = props;
+  const {showMessage, setShowMessage, partner, list, host, sendToMessage, handleLeaveChat} = props;
   // inputMessage : 사용자가 입력한 메세지 저장
   const [inputMessage, setInputMessage] = useState("");
   
@@ -34,13 +35,13 @@ export default function MessageList(props) {
 
 
   // 채팅방 닫기
-  const handleClose2  = () => {
-    console.log('afsgdfgdgsdfgsdfgsdfgsdgsdfg');
-       console.log('11111111111111afsgdfgdgsdfgsdfgsdfgsdgsdfg');
-    
-    handleClose(); // 부모 컴포넌트에서 전달받은 handleClose 함수 호출
+  const handleClose = () => {
+    console.log("Before: showMessage =========> ", showMessage);
+    setShowMessage(false);
+    console.log("채팅방 닫기 동작");
+    console.log("After: showMessage =======> ", showMessage);
   };
-
+  
 
   // 채팅방 나가기
   const handleExit = () => {
@@ -161,7 +162,7 @@ export default function MessageList(props) {
           <ChatRoomToolbar
             title={partner}
             leftItems={[
-              <ChatToolbarButton icon={faChevronLeft} action={handleClose2} key="back">
+              <ChatToolbarButton icon={faChevronLeft} action={handleClose} key="back">
                 </ChatToolbarButton>
             ]}
             rightItems={[

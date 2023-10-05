@@ -21,7 +21,7 @@ function MemberRequest() {
   const dispatch = useDispatch();
   const loadMember = useSelector(state => state.members);
 
-  const { name, jobName, deptName, phone, email } = loadMember.data;
+  const { name, jobName, deptName, phone, email } = loadMember.selectMember;
   const [empNo, setEmpNo] = useState("");
   const [form, setForm] = useState({
     empNo: '',
@@ -64,7 +64,7 @@ function MemberRequest() {
 
   const requestClick = async () => {
     await dispatch(requestMember(form));
-    navigate(-1);
+    window.location.href = "http://localhost:3000/admin/manager/member/request";
     // resetRequestMemberAction();
     // alert("회원 등록 성공");
 

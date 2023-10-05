@@ -58,7 +58,7 @@ export const requestAllMember = createAsyncThunk(
   async (ids,) => {   // post요청은 url, data, header순 
     console.log('ids', ids);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/admin/allmemberjoin`, ids,
+      const response = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/admin/allusers`, ids,
         {
           headers: {
             "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -85,9 +85,10 @@ export const requestAllMember = createAsyncThunk(
 
 export const allMemberListApi = createAsyncThunk(
   'all/members',
-  async () => {
+  async (paging) => {
+    console.log("call all Members List API ====== ");
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/memberlist`,
+      const response = await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/admin/memberlist?page=${paging.page}&size=${paging.size}`,
         {
           headers: {
             "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),
@@ -133,10 +134,9 @@ export const WithDrawInfoAPI = createAsyncThunk(
   'delete/members',
   async (data) => {
     try {
-      const response = '';
       console.log('data :', data);
 
-      response = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/api/admin/member/${data.id}`
+      let response = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/api/admin/member/${data.id}`
         , {
           headers: {
             "Authorization": "Bearer " + window.localStorage.getItem("accessToken"),

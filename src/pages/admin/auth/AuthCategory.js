@@ -5,7 +5,7 @@ import { deleteManager, insertMenuManagers, selectMenuGroupList } from "../../..
 import TreeView from "../../pm/treeview"
 import { callTreeviewOneAPI } from "../../../apis/PmAPICalls";
 import { memberByTreeview, resetMemberAction } from "../../../modules/memberSlice";
-import { allMemberListApi } from "../../../apis/MemberAPICalls";
+import { allMemberListApi, selectMember } from "../../../apis/MemberAPICalls";
 import { roleCode } from "../member/MemberList";
 import { useNavigate } from "react-router-dom";
 
@@ -42,7 +42,7 @@ export function AuthCategory() {
     // 메뉴그룹별 클릭시 선택한 메뉴코드 전달 
     const menuGroupClick = (code) => {
         // 선택한 메뉴그룹 코드에 따라 메뉴리스트에서 정보 추출하여 담기  
-        if(!code){
+        if (!code) {
             setMenuManagers(menuGroupList);
         } else {
 
@@ -62,12 +62,12 @@ export function AuthCategory() {
 
                     {/* <div onClick={allManagerClick}>전체 관리자</div> */}
                     <div
-                                className={AuthSytle.Category}
-                                key={null}
-                                onClick={() => menuGroupClick(null)}
-                            >
-                                전체 관리자
-                            </div>
+                        className={AuthSytle.Category}
+                        key={null}
+                        onClick={() => menuGroupClick(null)}
+                    >
+                        전체 관리자
+                    </div>
                     {/* 그룹리스트 순회하며 권한분류 관리자 카테고리 리스트 출력하기 */}
                     {Array.isArray(menuGroupList) && menuGroupList.length > 0 && menuGroupList.map(
                         (menugroup) => (
@@ -106,7 +106,7 @@ function Modal({ isOpen, onClose, accountList }) {
         onClose();
         // console.log('empinfo : ', empInfo);
 
-        accountList.map(member => {
+        accountList.content.map(member => {
             if (empInfo.empNo == member.empNo) {
                 // 선택한 사원번호를 통해 회원정보에서 정보를 추출하여 트리뷰멤버 리듀서에 저장한다. 
                 dispatch(memberByTreeview(member));
@@ -165,6 +165,7 @@ function AuthUser({ menuManagers }) {
     }, [dispatch, treeviewMember])
 
 
+
     // console.log('memberByTreeview ', memberByTreeview);
 
     // 트리뷰 모달창 상태값 
@@ -199,7 +200,8 @@ function AuthUser({ menuManagers }) {
     const removeManagerClick = async () => {
 
         await dispatch(deleteManager(managerIds.join(',')));
-        window.location.reload();
+        // await dispatch(allMemberListApi());
+        window.location.href = "/admin"
     }
 
     return (
@@ -236,21 +238,34 @@ function AuthUser({ menuManagers }) {
                                                 checked={managerIds.some(id => id == manager.id)}
                                                 onClick={(e) => managerCheckBoxClick(e, manager.id)} />
                                         </td>
-                                        {Array.isArray(accountList) &&
-                                            accountList.map((account) => {
-                                                if (account?.memberId == manager.id) {
-                                                    return (
-                                                        <Fragment key={account.memberId}>
-                                                            <td>{account.employee.name}</td>
-                                                            <td>{account.memberId}</td>
-                                                            <td>{account.employee.email}</td>
-                                                            <td>{account.employee.deptCode.deptName}</td>
-                                                            <td>{account.employee.jobCode.jobName}</td>
-                                                        </Fragment>
-                                                    );
-                                                }
-                                                return ''; // 일치하지 않는 경우 ''반환
-                                            })}
+                                        {Array.isArray(accountList.content) &&
+                                            (() => {
+                                                const uniqueMembers = {}; // 중복된 memberId를 추적하는 객체
+
+                                                return accountList.content.map((account) => {
+                                                    if (account?.memberId === manager.id) {
+                                                        // manager.id와 일치하는 경우만 처리
+
+                                                        // 중복된 memberId 체크
+                                                        if (!uniqueMembers[account.memberId]) {
+                                                            // 중복이 아닌 경우, 중복을 방지하기 위해 uniqueMembers 객체에 추가
+                                                            uniqueMembers[account.memberId] = true;
+
+                                                            return (
+                                                                <Fragment key={account.memberId}>
+                                                                    <td>{account.employee.name}</td>
+                                                                    <td>{account.memberId}</td>
+                                                                    <td>{account.employee.email}</td>
+                                                                    <td>{account.employee.deptCode.deptName}</td>
+                                                                    <td>{account.employee.jobCode.jobName}</td>
+                                                                </Fragment>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null; // 일치하지 않는 경우 또는 중복된 경우, 아무것도 반환하지 않음
+                                                });
+                                            })()
+                                        }
                                         <td>{manager.registDate && manager.registDate.toString()}</td>
                                     </tr>
                                 ))
@@ -260,28 +275,43 @@ function AuthUser({ menuManagers }) {
                             (
 
                                 // menuManagers.menulist가 배열이 없는 경우
-                                Array.isArray(accountList) &&
-                                accountList
-                                    .filter((member) =>
-                                        member.roleList.some((role) =>
-                                            roleCode(role.authCode ? role.authCode : '').includes('매니져')
+                                Array.isArray(accountList.content) &&
+                                (() => {
+                                    const uniqueMembers = {}; // 중복된 멤버를 추적하는 객체
+
+                                    return accountList.content
+                                        .filter((member) =>
+                                            member.roleList.some((role) =>
+                                                roleCode(role.authCode ? role.authCode : '').includes('매니져')
+                                            )
                                         )
-                                    )
-                                    .map((member) => (
-                                        <tr key={member.id}>
-                                            <td>
-                                                <input type="checkbox"
-                                                    checked={managerIds.some(id => id == member.id)}
-                                                    onClick={(e) => managerCheckBoxClick(e, member.id)} />
-                                            </td>
-                                            <td>{member.employee.name}</td>
-                                            <td>{member.memberId}</td>
-                                            <td>{member.employee.email}</td>
-                                            <td>{member.employee.deptCode.deptName}</td>
-                                            <td>{member.employee.jobCode.jobName}</td>
-                                            <td></td>
-                                        </tr>
-                                    ))
+                                        .map((member) => {
+                                            // 중복된 멤버를 체크
+                                            if (!uniqueMembers[member.memberId]) {
+                                                // 중복이 아닌 경우, 중복을 방지하기 위해 uniqueMembers 객체에 추가
+                                                uniqueMembers[member.memberId] = true;
+
+                                                return (
+                                                    <tr key={member.memberId}>
+                                                        <td>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={managerIds.some(id => id === member.memberId)}
+                                                                onClick={(e) => managerCheckBoxClick(e, member.memberId)}
+                                                            />
+                                                        </td>
+                                                        <td>{member.employee.name}</td>
+                                                        <td>{member.memberId}</td>
+                                                        <td>{member.employee.email}</td>
+                                                        <td>{member.employee.deptCode.deptName}</td>
+                                                        <td>{member.employee.jobCode.jobName}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                );
+                                            }
+                                            return null; // 중복된 경우 아무것도 반환하지 않음
+                                        });
+                                })()
                             )}
 
                         {memberByTreeview?.empNo > 0 && (
@@ -360,11 +390,14 @@ function AuthSetting({ managerIds }) {
     }, [managerIds, menuCodes])
     // console.log("sendData : ", sendData);
 
+    const navigate = useNavigate();
 
     // 선택한 매니저 정보와 선택한 메뉴그룹들 api insert 요청 
-    const saveManagerClick = () => {
+    const saveManagerClick = async () => {
 
-        dispatch(insertMenuManagers(sendData));
+        await dispatch(insertMenuManagers(sendData));
+        window.location.href = "/admin"
+
     }
 
     const cancelClick = () => {
@@ -386,7 +419,7 @@ function AuthSetting({ managerIds }) {
                     <div>
                     </div>
                     <div className={AuthSytle.settingList}>
-                        
+
 
                         {/* 등록된 메뉴그룹 리스트를 출력한다. */}
                         {Array.isArray(menuGroupList) && menuGroupList.length > 0 && menuGroupList.map(

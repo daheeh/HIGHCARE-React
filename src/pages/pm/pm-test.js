@@ -7,9 +7,10 @@ function PmTest(){
             <PmNav/>
             <div>
             <div className="pmtopline"><h1>인사 관리</h1></div>
+            <div className="divpmbox">
             <div className="pmdisplay">
             <div className="pmdisplay">
-            <div className="pmmainbox">
+            <div className="pmmainbox-first">
                 <h1 className="pmmainbox-font"><Link to="/pm/search">사원 조회</Link></h1>
             <div className="pm-de"></div>
             </div>
@@ -25,7 +26,7 @@ function PmTest(){
             </div>
             <div></div>
             <div className="pmdisplay">
-            <div className="pmmainbox">
+            <div className="pmmainbox-first">
                 <h1 className="pmmainbox-font"><Link to="/pm/annual">연차 조회</Link></h1>
             <div className="pm-de"></div>
             </div>
@@ -36,6 +37,7 @@ function PmTest(){
             <div className="pmmainbox">
                 <h1 className="pmmainbox-font"><Link to="/pm/secondTree">조직도</Link></h1>
             <div className="pm-de"></div>
+            </div>
             </div>
             </div>
             </div>
