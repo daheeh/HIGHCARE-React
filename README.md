@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# HIGHCARE-REACT
+하이케어 그룹웨어 프로젝트 - 프론트엔드
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+## 🖥️ 프로젝트 소개
+사내 효율적인 업무소통 및 협업을 위한 그룹웨어 플랫폼
+<br>
+<br>
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/f5e53f43-b07f-45c2-822e-37911e5a7c01" />
+<br>
+<br>
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/7f9704e2-67ca-470b-b697-be22ecdd1e4c" />
+<br>
 
-In the project directory, you can run:
+## 🕒 개발 기간
+* 23.08. - 23.09.14
 
-### `npm start`
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🧑‍🤝‍🧑 멤버구성
+ - **팀원1 : 홍다희 - 실시간 채팅**
+ - 팀원2 : 김나경 - 전자결재
+ - 팀원3 : 전아림 - 인사관리, 조직도
+ - 팀원4 : 조혜란 - 마이페이지
+ - 팀원5 : 허유일 - 시설 예약, 게시판
+ - 팀원6 : 황다혜 - 소셜로그인, 회원가입, 권한관리
+ - 공통  : 서비스 기획 및 ERD설계, REST API 개발
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br>
 
-### `npm test`
+### ⚙️ 개발 환경
+- `Javascript(ES6)`
+- `React.js`
+- **IDE** : VSCode
+- **Database** : Oracle(18c), Redis(7.x)
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📌 맡은 기능  
+#### [실시간 채팅](https://github.com/daheeh/HIGHCARE-React/tree/main/src/pages/chatting)  
 
-### `npm run build`
+- **WebSocket을 통한 실시간 메세지 송수신**  
+  - WebSocket과 STOMP 프로토콜을 사용해 실시간 메세지 송수신  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Redis를 통한 채팅 데이터 저장 및 캐싱**  
+  - Redis의 Pub/Sub 구조로 WebSocket과 연동하여 확장성과 안정성 확보  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br>
 
-### `npm run eject`
+- **Storage를 통한 데이터 중복 캐싱으로 안정성 확보**  
+  - 사용자와 채팅방 데이터를 관리하는 `UserStorage`, `ConversationStorage`로 데이터 중복 방지  
+  - 데이터 캐싱을 통해 빠른 응답시간과 안정성 유지  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
